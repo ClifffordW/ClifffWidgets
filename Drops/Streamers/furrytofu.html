@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+
+	<style>
+		.drops {
+			--glow1: rgb(222, 0, 222);
+			--glow2: rgb(255, 189, 255);
+			--glow3: rgb(162, 3, 162);
+		}
+
+		@font-face {
+			font-family: Hammerhead;
+			src: url(https://skylllaw.github.io/SkinDrops/fonts/HammerheadBold.ttf);
+		}
+
+		@font-face {
+			font-family: Belisa;
+			src: url(https://skylllaw.github.io/SkinDrops/fonts/belisa_plumilla.ttf);
+		}
+
+		b {
+			font-family: "Hammerhead";
+			text-shadow: 1px 1px black;
+			margin: 0;
+			padding: 0px;
+			height: 100%;
+			width: 100%;
+
+			right: 550px;
+			bottom: 42px;
+
+			display: none;
+			color: #c3b091;
+			position: block;
+
+		}
+
+
+
+		@keyframes ftlak-head {
+			0% {
+				filter: drop-shadow(0 0 .85rem var(--glow1));
+				transform: translateY(5px) rotate(-45deg);
+			}
+
+			25% {
+				filter: drop-shadow(0 0 .66rem var(--glow2));
+
+			}
+
+			50% {
+				filter: drop-shadow(0 0 .55rem var(--glow3));
+				transform: translateY(20px) rotate(-45deg);
+			}
+
+			to {
+				filter: drop-shadow(0 0 .85rem var(--glow1));
+				transform: translateY(5px) rotate(-45deg);
+			}
+		}
+
+
+
+
+
+		.drops {
+
+			position: fixed;
+			width: 100%;
+			height: auto;
+			filter: drop-shadow(1px 1px 5px black);
+
+
+
+			padding-top: 10%;
+			padding-left: 10%;
+			padding-top: ;
+
+		}
+
+		.bg-item,
+		.bg-portrait,
+		.bg-flair {
+			width: 25%;
+			height: auto;
+		}
+
+
+		.bg-item {
+			animation: imganimation 2.8s ease-in-out infinite;
+		}
+
+		.bg-portrait {
+			animation: imganimation 3s ease-in-out infinite;
+		}
+
+		.bg-flair {
+			animation: imganimation 3.4s ease-in-out infinite;
+
+		}
+
+		/* For the wardrobe */
+		img {
+
+			filter: drop-shadow(0 0 0.25rem #004E78);
+
+		}
+
+
+
+		.bg-hatmachine {
+			position: absolute;
+			left: 500px;
+			top: 120px;
+			width: 90px;
+		}
+
+
+
+
+		.streamer-head {
+			transform: rotate(15deg);
+			animation: ftlak-head 3.4s ease-in-out infinite;
+			filter: drop-shadow(0 1px 4px black);
+			filter: drop-shadow(0 0 0.15rem red);
+			border-radius: 25%;
+
+			left: 8.56%;
+			height: 25%;
+			z-index: 1;
+			position: absolute;
+		}
+
+		.partyhat {
+			display: ;
+			filter: drop-shadow(0 1px 4px black);
+
+			top: 19%;
+			left: 48%;
+			height: 30%;
+			z-index: 2;
+			position: absolute;
+			transform: rotate(35deg);
+		}
+	</style>
+
+	<!-- <div class="h"> Happy 2nd Year Anniversary Longshot! </div> -->
+
+	<div class="drops">
+
+
+		<!-- <img class="partyhat2" src="https://i.pinimg.com/originals/6e/a7/b5/6ea7b5ac3d63422d2231dbd64953d786.png">
+ -->
+		<img class="streamer-head" src="https://static-cdn.jtvnw.net/emoticons/v2/306760314/static/light/3.0">
+
+
+	</div>
+	<script type="text/javascript" src="https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/drop_item_longshot.js">
+		javascript not supported in browser
+	</script>
+
+
+</body>
+
+</html>

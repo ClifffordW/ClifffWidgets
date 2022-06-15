@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <b class="skinname"></b>
+
+
+
+
+
+
+
+
+
+
+    <img class="bundle" src="https://kleiitems.s3.us-east-1.amazonaws.com/dst/512x512/mysterybox_ice_4.png">
+
+
+
+  </body>
+</html>
+
+<style>
+
+    .bundle {
+        --glow1: darkcyan;
+        --glow2: lightblue;
+        --chestcolor: 0deg;
+
+    }
+    
+
+
+
+
+    @keyframes drop-animated {
+      0% {
+        filter: drop-shadow(0 0 0.50rem var(--glow1)) hue-rotate(var(--chestcolor));
+          transform: rotate(0deg) translateY(3px) scaleX(1);
+      }
+
+
+    50% {
+        filter: drop-shadow(0 0 1rem var(--glow2)) hue-rotate(var(--chestcolor));
+          transform: rotate(-1.6deg) translateY(-3px) scaleX(.95);
+      }
+      to {
+        
+
+        filter: drop-shadow(0 0 0.50rem var(--glow1)) hue-rotate(var(--chestcolor));
+          transform: rotate(0deg) translateY(3px) scaleX(1);
+
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.bundle {
+    width: 100%;
+    height: auto;
+
+    display: block;
+    margin: auto;
+    padding-top: 0%;
+
+
+
+
+    animation: drop-animated 2.1s ease-in-out infinite;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

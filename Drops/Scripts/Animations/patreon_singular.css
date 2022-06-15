@@ -1,0 +1,11 @@
+.patreon {
+    content: url("https://clifffordw.github.io/ClifffWidgets/Drops/patreon_dropget.png");
+    position: absolute;
+    display: flex;
+    z-index: 1;
+    width: 25%;
+    margin-left: 80%;
+    margin-top: -40%;
+
+
+}

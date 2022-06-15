@@ -1,0 +1,309 @@
+    <body>
+        <div class="bg-filter"></div>
+
+        <div class="drop-box">
+
+            <div class="drops">
+
+            </div>
+            <!-- <div class="droptext">Current Drop</div> -->
+
+        </div>
+
+        <div class="headerbox">
+            <p class="title">Skin Drops</p>
+
+        </div>
+
+
+        <div class="box">
+
+            <b>To Setup the Widget please contact me on my discord Cliffford W.#1203</b>
+            <b>The widget is completely free.
+                But if you want you can donate me some, i'm saving for a new rig/laptop anyways. anything is
+                welcome.
+            </b>
+
+            <a href="https://www.paypal.com/paypalme/clifffw">
+                <img class="paypal" src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg">
+            </a>
+
+            <a href="https://www.patreon.com/dropget">
+                <img class="patreon1"
+                    src="https://www.freepnglogos.com/uploads/patreon-logo-png/update-patreon-goals-time-focus-upgrades--patreon-logo-transparent-21.png">
+            </a>
+
+
+        </div>
+
+
+
+
+        <script type="text/javascript" src="https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/drop_item_longshot.js">
+            javascript not supported in browser
+        </script>
+
+    </body>
+
+
+
+
+
+
+    <style>
+        @font-face {
+            font-family: Hammerhead;
+            src: url(https://clifffordw.github.io/ClifffWidgets/fonts/HammerheadBold.ttf);
+        }
+
+
+        @keyframes imganimation {
+            0% {
+                filter: drop-shadow(0 0 1rem var(--glow1));
+                transform: translateY(5px);
+            }
+
+            25% {
+                filter: drop-shadow(0 0 1rem var(--glow2));
+
+            }
+
+            50% {
+                filter: drop-shadow(0 0 0.5rem var(--glow3));
+                transform: translateY(20px);
+            }
+
+            to {
+                filter: drop-shadow(0 0 1rem var(--glow1));
+                transform: translateY(5px);
+            }
+        }
+
+        .headerbox {
+            z-index: 1;
+            align-items: center;
+            margin: auto;
+
+
+            margin-bottom: 2%;
+            position: relative;
+            display: block;
+
+            background: rgba(0, 0, 0, 0.582);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            width: 25%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .paypal {
+
+            padding-top: 5%;
+            position: relative;
+            display: block;
+            margin: auto;
+            width: 25%;
+            height: auto;
+
+        }
+
+        .paypal:hover,
+        .patreon1:hover {
+
+            filter: brightness(150%);
+
+        }
+
+
+        .patreon1 {
+
+            padding-top: 5%;
+            position: relative;
+            display: block;
+            margin: auto;
+            margin-bottom: 5%;
+            width: 25%;
+            height: auto;
+
+        }
+
+
+
+        .box {
+            z-index: 1;
+            margin-bottom: 20%;
+            display: block;
+            margin: auto;
+            position: relative;
+            background: rgba(0, 0, 0, 0.596);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            width: 50%;
+            height: auto;
+            border-radius: 16px;
+        }
+
+        .drop-box {
+
+
+            position: fixed;
+            align-items: center;
+
+            z-index: 1;
+
+            left: 0%;
+            top: 0;
+
+            background: rgba(48, 48, 48, 0.185);
+            backdrop-filter: blur(42px);
+            -webkit-backdrop-filter: blur(42px);
+            width: 15%;
+            height: 100%;
+            border-radius: 8px;
+        }
+
+
+
+        footer {
+            width: 50px;
+            height: 15%;
+            bottom: 50px;
+        }
+
+        .drops {
+
+
+
+            bottom: 10%;
+
+
+            --glow1: #7c17dc;
+            --glow2: #dc8717;
+            --glow3: #242424;
+
+            z-index: 2;
+            position: relative;
+            align-items: center;
+            left: auto;
+            right: auto;
+
+
+
+
+
+        }
+
+        .bg-item,
+        .bg-portrait,
+        .bg-flair {
+
+            position: relative;
+            width: 65%;
+            height: auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+        .bg-item {
+            margin-top: 50%;
+            animation: imganimation 2.8s ease-in-out infinite;
+        }
+
+        .bg-portrait {
+            margin-top: 50%;
+            animation: imganimation 3s ease-in-out infinite;
+        }
+
+        .bg-flair {
+            margin-top: 50%;
+            animation: imganimation 3.4s ease-in-out infinite;
+
+        }
+
+
+
+        b {
+            font-family: "Hammerhead";
+            color: antiquewhite;
+            font-size: 2em;
+            margin-left: auto;
+            margin-right: auto;
+
+            margin-top: 5%;
+
+            width: 50%;
+            text-align: center;
+            display: block;
+            position: relative;
+            z-index: 999999;
+        }
+
+
+        .droptext {
+            font-family: "Hammerhead";
+            color: rgb(255, 191, 107);
+            font-size: 30px;
+            left: 20%;
+            top: 100%;
+            right: auto;
+            width: 50%;
+            text-align: center;
+            position: absolute;
+            z-index: 999999;
+            text-shadow: 2px 2px black;
+
+
+
+
+
+        }
+
+
+        .title {
+            font-family: "Hammerhead";
+            color: antiquewhite;
+            font-size: 50px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 5%;
+
+
+            text-align: center;
+            text-shadow: 2px 2px black;
+
+        }
+
+
+
+
+
+        .bg-filter {
+            display: block;
+            margin: auto;
+            bottom: 0%;
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            background-color: rgba(0, 0, 0, 0.623);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+
+        body {
+
+
+            background-image: url("https://steamcdn-a.akamaihd.net/steamcommunity/public/images/clans/6835324/167b13506676680e41042044448221e875d49586.png");
+
+            background-size: cover;
+            background-position: top center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>

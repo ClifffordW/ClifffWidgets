@@ -1,0 +1,38 @@
+@keyframes anim-appear {
+    0% {
+        filter: drop-shadow(0 0 1rem var(--glow1));
+        transform: rotate(-360deg) translateY(5px) scale(0);
+    }
+
+
+
+    50% {
+        transform: rotate(9deg) translateY(0px) scale(.95);
+        filter: drop-shadow(0 0 2.5rem var(--glow3));
+    }
+
+    to {
+
+
+        transform: rotate(0deg) translateY(5px) scale(1);
+        filter: drop-shadow(0 0 1rem var(--glow1));
+
+    }
+}
+
+.patreon {
+    content: url("https://clifffordw.github.io/ClifffWidgets/Drops/patreon_dropget.png");
+    position: absolute;
+    display: flex;
+    z-index: 5;
+    width: 5%;
+    margin-left: 2%;
+    margin-top: -7%;
+
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1, infinite;
+    animation-name: anim-appear, imganimation;
+    animation-duration: 3.4s, 2.8s;
+    animation-delay: 0s, 3.4s;
+
+}

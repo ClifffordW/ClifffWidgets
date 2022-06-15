@@ -1,0 +1,267 @@
+
+<!-- Longshot Giveaway 2.0 -->
+
+
+<html>
+  <body>
+    <b class="skinname">Longcatto Jam</b>
+
+
+
+
+  <img class="glow" src="https://accounts.klei.com/assets/images/glow-1.png">
+  <img class="glow2" src="https://accounts.klei.com/assets/images/glow-1.png">
+
+
+
+
+    <img class="bundle" src="">
+
+    <img class="chest" src="https://clifffordw.github.io/ClifffWidgets/Giveaways/Crates/mysterybox_classic_open.gif">
+
+
+
+<audio  id="reveal" autoplay loop>
+  <source src="https://clifffordw.github.io/ClifffWidgets/longcatto_jam.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+
+<script>
+var vid = document.getElementById("reveal");
+
+  vid.volume = 0.15;
+
+</script>
+
+
+
+
+
+  </body>
+</html>
+
+<style>
+
+
+
+b
+{
+        font-family: "Hammerhead";
+        text-shadow: 1px 1px black;
+        margin: auto;
+        padding: 0px;
+        z-index: 90 !important;
+
+        font-size: 40px;
+
+        margin-left: 25%;
+        margin-top: 85%;
+
+        color: gold;
+        position: absolute;
+}
+
+
+
+.bundle {
+  --glow1: gold;
+  --glow2: gold;
+  --skin: url("https://clifffordw.github.io/ClifffWidgets/longcatto_jam_bpmvar.gif");
+}
+
+.chest
+{
+  --chestcolor: 70deg;
+  --saturate_chest: 1500%;
+}
+
+
+.glow, .glow2
+{
+    --hue: 0deg;
+    --saturate: 1000%;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@keyframes spin1 {
+    0% {
+
+        transform: rotate(360deg);
+    }
+
+    25% {
+
+        transform: rotate(0deg);
+    }
+
+    to {
+
+        transform: rotate(-360deg);
+    }
+}
+
+
+
+
+@keyframes spin2 {
+    0% {
+
+        transform: rotate(-360deg);
+    }
+
+    25% {
+
+        transform: rotate(0deg);
+    }
+
+    to {
+
+        transform: rotate(360deg);
+    }
+}
+
+.glow {
+  filter: hue-rotate(var(--hue)) saturate(var(--saturate));
+    width: 100%;
+    height: auto;
+    position: fixed;
+    opacity: .4;
+    z-index: 1;
+
+    animation: spin1 75s linear infinite;
+}
+
+
+
+
+
+
+
+
+
+.glow2 {
+    filter: hue-rotate(var(--hue)) saturate(var(--saturate));
+    width: 100%;
+    height: auto;
+    z-index: 1;
+    opacity: .6;
+    position: fixed;
+    animation: spin2 65s linear infinite;
+}
+
+
+
+
+
+
+
+    @keyframes drop-animated {
+      0% {
+        filter: drop-shadow(0 0 0.50rem var(--glow1));
+          transform: rotate(-1deg) translateY(3px) scaleX(1);
+      }
+
+
+    50% {
+        filter: drop-shadow(0 0 1rem var(--glow2));
+          transform: rotate(-3.6deg) translateY(-3px) scaleX(.95);
+      }
+      to {
+        
+
+        filter: drop-shadow(0 0 0.50rem var(--glow1));
+          transform: rotate(-1deg) translateY(3px) scaleX(1);
+
+      }
+    }
+
+
+
+
+
+
+
+
+
+.bundle {
+    content: var(--skin);
+    width: 50%;
+    height: auto;
+
+    display: block;
+    margin: auto;
+    padding-top: 20%;
+    padding-left: 27%;
+    position: fixed;
+    z-index: 1;
+
+
+    animation: drop-animated 1.6s ease-in-out infinite;
+
+}
+
+
+
+.chest {
+    width: 40%;
+    height: auto;
+
+    display: block;
+    margin: auto;
+    padding-top: 0%;
+    margin-left: 30%;
+    position: absolute;
+    filter: hue-rotate(var(--chestcolor)) saturate(var(--saturate_chest));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
+

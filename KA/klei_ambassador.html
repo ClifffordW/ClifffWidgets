@@ -1,0 +1,131 @@
+<img class="bg" src="https://clifffordw.github.io/ClifffWidgets/KA/ka_backdrop.svg">
+<img class="logo" src="https://clifffordw.github.io/ClifffWidgets/KA/ka_logo.svg">
+<img class="text" src="https://clifffordw.github.io/ClifffWidgets/KA/ka_text.svg">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    @keyframes drop-appear {
+        0% {
+
+
+
+
+
+            filter: drop-shadow(0 0 0.50rem var(--glow1));
+            transform: rotate(-360deg) translateY(5px) scale(0);
+        }
+
+
+
+        50% {
+            filter: drop-shadow(0 0 0.80rem var(--glow3));
+            transform: rotate(9deg) translateY(0px) scale(.95);
+        }
+
+        to {
+
+
+            filter: drop-shadow(0 0 0.50rem var(--glow1));
+            transform: rotate(-.3deg) translateY(5px) scale(1);
+
+        }
+    }
+
+
+
+    @keyframes drop-animated {
+        0% {
+            filter: drop-shadow(0 0 0.50rem var(--glow1));
+            transform: rotate(-.3deg) translateY(5px) scale(1);
+        }
+
+
+        25% {
+            filter: drop-shadow(0 0 0.80rem var(--glow2));
+        }
+
+        50% {
+            filter: drop-shadow(0 0 0.80rem var(--glow3));
+            transform: rotate(0.3deg) translateY(0px) scale(.98);
+        }
+
+        to {
+
+
+            filter: drop-shadow(0 0 0.50rem var(--glow1));
+            transform: rotate(-.3deg) translateY(5px) scale(1);
+
+        }
+    }
+
+
+
+
+
+
+    .logo,
+    .bg,
+    .text {
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: 1, infinite;
+        animation-name: drop-appear, drop-animated;
+        animation-duration: 1.9s, 2.8s;
+        animation-delay: 0s, 1.9s;
+
+
+        position: absolute;
+        width: 90%;
+        height: auto;
+
+
+
+        margin-left: 5%;
+        margin-top: 5%;
+
+
+
+    }
+
+
+
+
+    @media (prefers-color-scheme: light) {
+
+        .bg,
+        .text {
+
+
+            filter: invert(100%) !important;
+
+        }
+    }
+
+    @media (prefers-color-scheme: dark) {
+
+        .bg,
+        .text {
+
+            filter: invert(0%) !important;
+
+        }
+    }
+</style>

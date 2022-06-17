@@ -1,18 +1,26 @@
 div:after {
-    position: absolute;
+    position: fixed;
     content: '';
-    top: 0;
+    top: 15%;
     left: 0;
-    right: 0;
+    right: 15%;
     z-index: -1;
-    height: 185px;
-    width: 480px;
+    height: 95%;
+    width: auto;
     margin: 0 auto;
-    filter: blur(20px) opacity(40%);
-    transform: scale(.80);
-    background: linear-gradient(150deg, var(--glow1), var(--glow2));
+    filter: blur(80px) opacity(40%);
+    transform: scale(.70);
+    background: linear-gradient(150deg, black, var(--glow2));
     background-size: 200% 200%;
     animation: animateGlow 10s ease infinite;
+
+
+
+}
+
+div {
+    position: fixed;
+
 
 
 
@@ -21,8 +29,7 @@ div:after {
 
 
 
-
-@keyframes redesign_div {
+@keyframes animateGlow {
     0% {
         background-position: 0% 50%
     }
@@ -38,7 +45,8 @@ div:after {
 
 
 
-@keyframes redesign_drop {
+
+@keyframes imganimation {
     0% {
         filter: drop-shadow(0 0 0.25rem var(--glow1));
         transform: translateY(3px);
@@ -56,17 +64,14 @@ div:after {
     }
 }
 
+.drops {
 
 
-.bg-item {
-    animation: redesign_drop 2.8s ease-in-out infinite !important;
-}
+    animation-duration: 1.6s;
 
-.bg-portrait {
-    animation: redesign_drop 3s ease-in-out infinite !important;
-}
+    animation-name: imganimation !important;
 
-.bg-flair {
-    animation: redesign_drop 3.4s ease-in-out infinite !important;
+    animation-timing-function: ease-in-out;
 
+    animation-iteration-count: infinite;
 }

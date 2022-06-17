@@ -42,36 +42,3 @@ div {
         background-position: 0% 50%
     }
 }
-
-
-
-
-@keyframes imganimation {
-    0% {
-        filter: drop-shadow(0 0 0.25rem var(--glow1));
-        transform: translateY(3px);
-    }
-
-
-    50% {
-        filter: drop-shadow(0 0 0.55rem var(--glow2));
-        transform: translateY(0px);
-    }
-
-    to {
-        filter: drop-shadow(0 0 0.25rem var(--glow1));
-        transform: translateY(3px);
-    }
-}
-
-.drops {
-
-
-    animation-duration: 1.6s;
-
-    animation-name: imganimation !important;
-
-    animation-timing-function: ease-in-out;
-
-    animation-iteration-count: infinite;
-}

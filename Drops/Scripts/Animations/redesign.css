@@ -42,3 +42,9 @@ div {
         background-position: 0% 50%
     }
 }
+
+
+.drops {
+    filter: drop-shadow(1px 1px 5px black) !important;
+
+}

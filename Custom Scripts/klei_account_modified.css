@@ -8,13 +8,48 @@
     .panel,
     .navbar,
     .navbar .nav-lang-list .nav-link,
-    .account-rewards-page .card-deck .card-body {
+    .account-rewards-page .card-deck {
         background-color: #00000094;
         backdrop-filter: blur(8px) saturate(0.6);
     }
 
+    .card-body {
+        background-color: #262626 !important;
+
+    }
+
+    .input-group-text {
+        background-color: #262626cc !important;
+    }
+
+
+    .account-merge-resume-page .user-profile .profile-information {
+
+        background-color: #292929;
+
+    }
+
+
+    .account-merge-resume-page .user-profile .profile-footer {
+
+        background-color: #1e1e1e;
+
+    }
+
+    [type="radio"]:checked+label:before,
+    [type="radio"]:not(:checked)+label:before {
+
+        background: #1e1e1e;
+    }
+
     .navbar {
         z-index: 0;
+    }
+
+    .image-box {
+        background-color: #00000000 !important;
+        filter: drop-shadow(0 0 .41rem rgba(0, 0, 0, 1));
+
     }
 
     .navbar .nav-lang-list {
@@ -106,11 +141,15 @@
 
 
     .account-rewards-page .card,
-    .account-rewards-page .card .card-footer,
+    .account-rewards-page .card,
         {
         background-color: #10101069;
         backdrop-filter: blur(5px);
 
+    }
+
+    .card-footer {
+        background-color: #222121;
     }
 
     .account-rewards-page .rewards-deck .card-body {
@@ -121,7 +160,7 @@
 
     .input-group-text,
     .account-rewards-page .rewards-deck .card-body {
-        background-color: #2828288c;
+        background-color: #6cc17e30;
     }
 
 }
@@ -134,7 +173,13 @@
 
 
 
-
+.platform-image.LP_STEAM,
+.platform-image.LP_NINTENDO,
+.platform-image.LP_EPIC,
+.platform-image.LP_RAIL,
+.platform-image.LP_XBL {
+    background-image: none;
+}
 
 
 
@@ -143,7 +188,29 @@
         color: black;
     }
 
+    /*Merge Platforms*/
+    .platform-icon.LP_STEAM,
+    .platform-icon.LP_NINTENDO,
+    .platform-icon.LP_EPIC,
+    .platform-icon.LP_RAIL {
+        filter: invert(1);
 
+    }
+
+    .platform-icon.LP_RAIL {
+        filter: brightness(0%);
+    }
+
+
+
+
+
+
+    .image-box {
+        background-color: #00000000 !important;
+        filter: drop-shadow(0 0 .15rem rgba(0, 0, 0, 1));
+
+    }
 
     footer,
     .panel,
@@ -259,11 +326,27 @@
     }
 
 
+
+    /*Merge Platforms*/
+    .platform-icon.LP_STEAM,
+    .platform-icon.LP_NINTENDO,
+    .platform-icon.LP_EPIC,
+    .platform-icon.LP_RAIL {
+        filter: invert(0);
+
+    }
+
+    .platform-icon.LP_RAIL {
+        filter: brightness(500%) saturate(0);
+    }
+
     .points-single {
 
 
         background-color: #ffffff24 !important;
         transition: 0.3s !important;
+        border: 3px solid;
+        border-color: transparent;
     }
 
     .platform-badge {
@@ -271,6 +354,7 @@
 
         border-radius: 8px !important;
         filter: invert(100%) brightness(200%) contrast(150%);
+
 
     }
 
@@ -280,6 +364,7 @@
 
         // background-color: #763924 !important;
         background-color: highlight !important;
+        border-color: #ffffff;
 
 
 
@@ -315,7 +400,7 @@
 @media (prefers-color-scheme: light) {
     .points-single {
 
-
+        border: 3px solid transparent;
         background-color: #F5F5F5 !important;
         transition: 0.3s !important;
     }
@@ -332,7 +417,7 @@
 .points-single:hover {
 
 
-
+    border-color: #21212170;
     // background-color: #763924 !important;
     background-color: highlight !important;
 

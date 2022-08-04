@@ -3,9 +3,9 @@ var myVar =
     `
 <link  rel="stylesheet" href="https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/Animations/anim.css">
     
-<img class="bg-flair" src="https://items.kleientertainment.com/images/DST/PROFILEFLAIR_BOAT_NAUTICAL/verylarge">
-<img class="bg-portrait" src="https://items.kleientertainment.com/images/DST/PLAYERPORTRAIT_BG_BOATNAUTICAL/verylarge">
-<img class="bg-item" src="https://items.kleientertainment.com/images/DST/BOAT_NAUTICAL/verylarge">
+<img class="bg-flair" src="https://items.kleientertainment.com/images/DST/PROFILEFLAIR_HIVEHAT_AN/verylarge">
+<img class="bg-portrait" src="https://items.kleientertainment.com/images/DST/PLAYERPORTRAIT_BG_HIVEHATAN/verylarge">
+<img class="bg-item" src="https://items.kleientertainment.com/images/DST/HIVEHAT_AN/verylarge">
 <img class="partyhat" src="https://clifffordw.github.io/ClifffWidgets/Drops/Seasonal Icons/winterfeast.png">
 <img class="wip" src="https://i.imgur.com/QqHArTg.png">
 <img class="patreon" src="">`;

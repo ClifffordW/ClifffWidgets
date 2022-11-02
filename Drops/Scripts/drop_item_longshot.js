@@ -1,10 +1,18 @@
 let root = document.documentElement;
 var myVar =
     `
-<link  rel="stylesheet" href="https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/Animations/anim.css">
-    
-<img class="bg-flair" src="https://items.kleientertainment.com/images/DST/PROFILEFLAIR_PANFLUTE_AN/verylarge">
-<img class="bg-portrait" src="https://items.kleientertainment.com/images/DST/PLAYERPORTRAIT_BG_PANFLUTEAN/verylarge">
+<link  rel="stylesheet" href="anim.css">
+
+<img class="flair-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Flair/default.png">
+
+<img class="bg-flair" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/flair.png">
+
+<img class="portrait-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Portrait/default.png">
+<img class="bg-portrait" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/portrait.png">
+
+
+<img class="item-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Item/default.png">
+
 <img class="bg-item" src="https://items.kleientertainment.com/images/DST/PANFLUTE_AN/verylarge">
 <img class="partyhat" src="https://clifffordw.github.io/ClifffWidgets/Drops/Seasonal Icons/winterfeast.png">
 <img class="wip" src="https://i.imgur.com/QqHArTg.png">

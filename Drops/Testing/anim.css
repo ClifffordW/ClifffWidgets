@@ -168,9 +168,30 @@
 
 
 
+@keyframes drop-appear-clock-glowless {
+    0% {
+        transform: rotate(360deg) translateY(5px) scale(0);
+    }
 
 
-.bg-item {
+
+    50% {
+        transform: rotate(9deg) translateY(0px) scale(.95);
+    }
+
+    to {
+
+
+        transform: rotate(0deg) translateY(5px) scale(1);
+
+    }
+}
+
+
+
+
+
+.bg-item, .item-frame {
     animation-timing-function: ease-in-out;
     animation-iteration-count: 1, infinite;
     animation-name: drop-appear, imganimation;
@@ -178,7 +199,7 @@
     animation-delay: 0s, 2.8s;
 }
 
-.bg-portrait {
+.bg-portrait, .portrait-frame {
     animation-timing-function: ease-in-out;
     animation-iteration-count: 1, infinite;
     animation-name: drop-appear-clock, imganimation;
@@ -193,4 +214,59 @@
     animation-duration: 3.4s, 2.8s;
     animation-delay: 0s, 3.4s;
 
+}
+
+
+
+
+
+
+
+
+.bg-flair
+{
+    
+    
+    animation-name: drop-appear-glowless, imganimation-glowless !important;
+}
+
+ .bg-portrait
+{
+    
+    
+    animation-name: drop-appear-clock-glowless, imganimation-glowless  !important;
+}
+
+
+
+
+
+.flair-frame, .portrait-frame {
+    width: 25%;
+    height: auto;
+    position: fixed;
+    z-index: 5;
+    
+    
+}
+
+.item-frame {
+    width: 25%;
+    height: auto;
+    position: fixed;
+    z-index: 5;
+
+    animation-duration: 3s, 2.8s !important;
+    
+
+
+}
+
+.bg-item
+{
+    animation-name: drop-appear-glowless, imganimation-glowless !important;
+    animation-duration: 3s, 2.82s !important;
+    width: 15%;
+    margin-left: 5%;
+    margin-bottom: 4%;
 }

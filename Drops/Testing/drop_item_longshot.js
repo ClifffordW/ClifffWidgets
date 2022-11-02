@@ -10,6 +10,9 @@ var myVar =
 <img class="portrait-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Portrait/feast.png">
 <img class="bg-portrait" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/portrait.png">
 
+
+<img class="item-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Item/feast.png">
+
 <img class="bg-item" src="https://items.kleientertainment.com/images/DST/PANFLUTE_AN/verylarge">
 <img class="partyhat" src="https://clifffordw.github.io/ClifffWidgets/Drops/Seasonal Icons/winterfeast.png">
 <img class="wip" src="https://i.imgur.com/QqHArTg.png">
@@ -71,7 +74,6 @@ document.getElementsByClassName('patreon')[0].style.display = "none"
 document.getElementsByClassName('bg-flair')[0].style.filter = "brightness(100%) drop-shadow(0mm 0mm 2mm rgb(0, 0, 0))";
 document.getElementsByClassName('bg-portrait')[0].style.filter = "brightness(100%) drop-shadow(0mm 0mm 2mm rgb(0, 0, 0))";
 document.getElementsByClassName('bg-item')[0].style.filter = "brightness(100%) drop-shadow(0mm 0mm 2mm rgb(0, 0, 0))";
-document.getElementsByClassName('flair-frame')[0].style.filter = "brightness(100%) drop-shadow(0mm 0mm 2mm rgb(0, 0, 0))";
 
 
 

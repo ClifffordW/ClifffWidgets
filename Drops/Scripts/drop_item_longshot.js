@@ -1,7 +1,7 @@
 let root = document.documentElement;
 var myVar =
     `
-<link  rel="stylesheet" href="anim.css">
+<link  rel="stylesheet" href="https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/Animations/anim.css">
 
 <img class="flair-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Flair/default.png">
 

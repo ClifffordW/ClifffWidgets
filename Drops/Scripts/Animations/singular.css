@@ -27,10 +27,7 @@
     display: none !important;
 }
 
-.item-frame, .portrait-frame, .flair-frame
-{
-    display: none !important;
-}
+
 
 
 .patreon {
@@ -74,4 +71,10 @@
     animation: drops 1.6s ease-in-out infinite;
 
 
+}
+
+
+.item-frame, .portrait-frame, .flair-frame
+{
+    display: none !important;
 }

@@ -27,6 +27,12 @@
     display: none !important;
 }
 
+.item-frame, .portrait-frame, .flair-frame
+{
+    display: none !important;
+}
+
+
 .patreon {
     position: absolute !important;
     display: flex !important;

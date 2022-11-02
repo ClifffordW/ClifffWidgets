@@ -190,6 +190,60 @@
 
 
 
+@keyframes item-appear-glowless {
+    0% {
+        transform: rotate(-360deg) translateY(5px) scale(0);
+    }
+
+
+
+    50% {
+        transform: rotate(25deg) translateY(0px) scale(.95);
+    }
+
+    to {
+
+
+        transform: rotate(15deg) translateY(5px) scale(1);
+
+    }
+}
+
+
+
+@keyframes item-glowless {
+    0% {
+
+        transform: rotate(15deg) translateY(5px) scale(1);
+    }
+
+    25% {
+
+
+    }
+
+    50% {
+ 
+        transform: rotate(5deg) translateY(20px) scale(.98);
+    }
+
+    to {
+      
+        transform: rotate(15deg) translateY(5px) scale(1);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 .bg-item, .item-frame {
     animation-timing-function: ease-in-out;
@@ -245,7 +299,7 @@
     width: 25%;
     height: auto;
     position: fixed;
-    z-index: 5;
+    z-index: 0;
     
     
 }
@@ -264,7 +318,7 @@
 
 .bg-item
 {
-    animation-name: drop-appear-glowless, imganimation-glowless !important;
+    animation-name: item-appear-glowless, item-glowless !important;
     animation-duration: 3s, 2.82s !important;
     width: 15%;
     margin-left: 5%;

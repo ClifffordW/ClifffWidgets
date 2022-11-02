@@ -100,11 +100,29 @@
 
 		.bg-item,
 		.bg-portrait,
-		.bg-flair {
+		.bg-flair
+		{
+			display: none;
 			width: 25%;
 			height: auto;
 		}
+		
 
+		.bg-flair
+		{
+			display: block;
+			
+			animation-name: drop-appear-glowless, imganimation-glowless !important;
+		}
+
+		.flair-frame {
+			width: 25%;
+			height: auto;
+			position: fixed;
+			z-index: 5;
+			display: ;
+			
+		}
 
 		.bg-item {
 			animation: imganimation 2.8s ease-in-out infinite;
@@ -174,7 +192,7 @@
 			src="https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_916a7e68de4c4c07b3013adc2a1c4628/static/light/3.0">
 
 	</div>
-	<script type="text/javascript" src="https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/drop_item_longshot.js">
+	<script type="text/javascript" src="drop_item_longshot.js">
 		javascript not supported in browser
 	</script>
 

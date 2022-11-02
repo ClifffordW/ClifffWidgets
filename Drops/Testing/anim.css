@@ -1,0 +1,196 @@
+@keyframes imganimation {
+    0% {
+        filter: drop-shadow(0 0 .85rem var(--glow1));
+        transform: translateY(5px) scale(1);
+    }
+
+    25% {
+        filter: drop-shadow(0 0 0.66rem var(--glow2));
+
+    }
+
+    50% {
+        filter: drop-shadow(0 0 0.55rem var(--glow3));
+        transform: translateY(20px) scale(.98);
+    }
+
+    to {
+        filter: drop-shadow(0 0 .85rem var(--glow1));
+        transform: translateY(5px) scale(1);
+    }
+}
+
+
+@keyframes imganimation-glowless {
+    0% {
+
+        transform: translateY(5px) scale(1);
+    }
+
+    25% {
+
+
+    }
+
+    50% {
+ 
+        transform: translateY(20px) scale(.98);
+    }
+
+    to {
+      
+        transform: translateY(5px) scale(1);
+    }
+}
+
+
+@keyframes drop-appear {
+    0% {
+        filter: drop-shadow(0 0 .25rem var(--glow1));
+        transform: rotate(-360deg) translateY(5px) scale(0);
+    }
+
+
+
+    50% {
+        filter: drop-shadow(0 0 .45rem var(--glow3));
+        transform: rotate(9deg) translateY(0px) scale(.95);
+    }
+
+    to {
+
+
+        filter: drop-shadow(0 0 0.85rem var(--glow1));
+        transform: rotate(0deg) translateY(5px) scale(1);
+
+    }
+}
+
+
+@keyframes drop-appear-glowless {
+    0% {
+        transform: rotate(-360deg) translateY(5px) scale(0);
+    }
+
+
+
+    50% {
+        transform: rotate(9deg) translateY(0px) scale(.95);
+    }
+
+    to {
+
+
+        transform: rotate(0deg) translateY(5px) scale(1);
+
+    }
+}
+
+
+
+
+@keyframes singular-animated {
+    0% {
+        filter: drop-shadow(0 0 0.50rem var(--glow1));
+        transform: rotate(-3deg) translateY(5px) scale(1);
+    }
+
+
+    25% {
+        filter: drop-shadow(0 0 0.80rem var(--glow2));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 0.80rem var(--glow3));
+        transform: rotate(1.6deg) translateY(0px) scale(.95);
+    }
+
+    to {
+
+
+        filter: drop-shadow(0 0 0.50rem var(--glow1));
+        transform: rotate(-3deg) translateY(5px) scale(1);
+
+    }
+}
+
+
+
+
+@keyframes singular-appear {
+    0% {
+        filter: drop-shadow(0 0 0.50rem var(--glow1));
+        transform: rotate(-360deg) translateY(5px) scale(0);
+    }
+
+
+
+    50% {
+        filter: drop-shadow(0 0 0.80rem var(--glow3));
+        transform: rotate(9deg) translateY(0px) scale(.95);
+    }
+
+    to {
+
+
+        filter: drop-shadow(0 0 0.50rem var(--glow1));
+        transform: rotate(-3deg) translateY(5px) scale(1);
+
+    }
+}
+
+
+
+
+
+
+@keyframes drop-appear-clock {
+    0% {
+        filter: drop-shadow(0 0 .25rem var(--glow1));
+        transform: rotate(360deg) translateY(5px) scale(0);
+    }
+
+
+
+    50% {
+        filter: drop-shadow(0 0 .45rem var(--glow3));
+        transform: rotate(9deg) translateY(0px) scale(.95);
+    }
+
+    to {
+
+
+        filter: drop-shadow(0 0 0.85rem var(--glow1));
+        transform: rotate(0deg) translateY(5px) scale(1);
+
+    }
+}
+
+
+
+
+
+.bg-item {
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1, infinite;
+    animation-name: drop-appear, imganimation;
+    animation-duration: 2.8s, 2.8s;
+    animation-delay: 0s, 2.8s;
+}
+
+.bg-portrait {
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1, infinite;
+    animation-name: drop-appear-clock, imganimation;
+    animation-duration: 3s, 2.8s;
+    animation-delay: 0s, 3s;
+}
+
+.bg-flair, .flair-frame {
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1, infinite;
+    animation-name: drop-appear, imganimation;
+    animation-duration: 3.4s, 2.8s;
+    animation-delay: 0s, 3.4s;
+
+}

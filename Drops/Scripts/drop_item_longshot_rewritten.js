@@ -3,15 +3,15 @@ var myVar =
     `
 <link  rel="stylesheet" href="https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/Animations/anim_rewritten.css">
 
-<img class="flair-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Flair/default.png">
+<img class="flair-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Flair/feast.png">
 
 <img class="bg-flair" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/flair.png">
 
-<img class="portrait-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Portrait/default.png">
+<img class="portrait-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Portrait/feast.png">
 <img class="bg-portrait" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/portrait.png">
 
 
-<img class="item-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Item/default.png">
+<img class="item-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Item/feast.png">
 
 <img class="bg-item" src="https://items.kleientertainment.com/images/DST/PANFLUTE_AN/verylarge">
 <img class="partyhat" src="https://clifffordw.github.io/ClifffWidgets/Drops/Seasonal Icons/winterfeast.png">

@@ -18,7 +18,7 @@
 @keyframes portraits-appear {
     0% {
         filter: drop-shadow(0 0 20rem black);
-        transform: translateY(5px) scale(0);
+        transform: translateY(5px) scale(0) ;
     }
 
     25% {
@@ -33,7 +33,7 @@
 
     to {
         filter: drop-shadow(0 0 .80rem var(--glow1));
-        transform: translateY(5px) scale(1);
+        transform: translateY(5px) scale(1) ;
     }
 }
 

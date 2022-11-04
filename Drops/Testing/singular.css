@@ -1,0 +1,80 @@
+@import url(https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/Animations/anim.css);
+
+
+@keyframes drops {
+    0% {
+        filter: drop-shadow(0 0 0.50rem var(--glow1));
+
+    }
+
+
+    50% {
+        filter: drop-shadow(0 0 0.80rem var(--glow2));
+    }
+
+    to {
+        filter: drop-shadow(0 0 0.50rem var(--glow1));
+    }
+}
+
+
+
+
+
+
+.bg-flair,
+.bg-portrait {
+    display: none !important;
+}
+
+
+
+
+.patreon {
+    position: absolute !important;
+    display: flex !important;
+    z-index: 1 !important;
+    width: 15% !important;
+    margin-left: 65% !important;
+    margin-top: -20% !important;
+}
+
+
+.streamer-head {
+    position: absolute !important;
+    display: flex !important;
+    z-index: 1 !important;
+    width: 10% !important;
+    height: auto !important;
+    margin-left: 10% !important;
+    margin-top: 70% !important;
+}
+
+.bg-item {
+
+    width: 100% !important;
+    display: block !important;
+    margin: auto !important;
+    top: -50px !important;
+    animation-name: singular-appear, singular-animated !important;
+
+}
+
+.drops {
+    width: 90% !important;
+    height: auto !important;
+    top: 0px !important;
+    left: -50px !important;
+
+
+
+    animation: drops 1.6s ease-in-out infinite;
+
+
+}
+
+
+.item-frame, .portrait-frame, .flair-frame
+{
+    display: none !important;
+}

@@ -13,7 +13,7 @@ var myVar =
 
 <img class="item-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Item/feast.png">
 
-<img class="bg-item" src="https://items.kleientertainment.com/images/DST/PANFLUTE_AN/verylarge">
+<img class="bg-item" src="https://items.kleientertainment.com/images/DST/MUSHROOM_LIGHT2_AN/verylarge">
 <img class="partyhat" src="https://clifffordw.github.io/ClifffWidgets/Drops/Seasonal Icons/winterfeast.png">
 <img class="wip" src="https://i.imgur.com/QqHArTg.png">
 <img class="patreon" src="">`;

@@ -308,7 +308,7 @@
     width: 25%;
     height: auto;
     position: fixed;
-    z-index: 1;
+    z-index: 0;
 
     animation-duration: 3s, 2.8s !important;
     

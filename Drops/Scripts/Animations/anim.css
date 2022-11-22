@@ -308,7 +308,7 @@
     width: 25%;
     height: auto;
     position: fixed;
-    z-index: 5;
+    z-index: 1;
 
     animation-duration: 3s, 2.8s !important;
     
@@ -316,13 +316,17 @@
 
 }
 
+
+
+
 .bg-item
 {
     animation-name: item-appear-glowless, item-glowless !important;
     animation-duration: 3s, 2.82s !important;
-    width: 15%;
-    margin-left: 5%;
+    width: 20%;
+    margin-left: 2%;
     margin-bottom: 4%;
+    z-index: 2;
 }
 
 

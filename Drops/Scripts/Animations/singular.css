@@ -33,7 +33,7 @@
 .patreon {
     display: none;
     position: absolute !important;
-    display: flex !important;
+    display: none;
     z-index: 1 !important;
     width: 15% !important;
     margin-left: 65% !important;

@@ -249,6 +249,12 @@
 
 }
 
+
+.patreon
+{
+    display: none;
+}
+
 .item-frame, .bg-item, .streamer {
 
     animation-duration: 2.8s, 2.8s;

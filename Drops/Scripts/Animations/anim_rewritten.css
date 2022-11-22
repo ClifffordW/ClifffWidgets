@@ -229,9 +229,10 @@
 
 .bg-item
 {
+    z-index: 7;
     animation-name: item-last-apear, item-last;
-    width: 15%;
-    margin-left: 5%;
+    width: 20%;
+    margin-left: 2%;
     margin-bottom: 4%;
 }
 

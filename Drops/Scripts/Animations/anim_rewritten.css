@@ -6,7 +6,7 @@
 }
         
         
-.bg-item,
+
 .bg-portrait,
 .bg-flair
 {
@@ -229,7 +229,7 @@
 
 .bg-item
 {
-    z-index: 7;
+    z-index: 2;
     animation-name: item-last-apear, item-last;
     width: 20%;
     margin-left: 2%;
@@ -288,7 +288,7 @@
     width: 25%;
     height: auto;
     position: fixed;
-    z-index: 5;
+    z-index: 1;
 
 
     

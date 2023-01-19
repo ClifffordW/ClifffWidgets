@@ -2,9 +2,9 @@ let root = document.documentElement;
 var myVar =
     `
     
-<img class="bg-flair" src="https://items.kleientertainment.com/images/DST/PROFILEFLAIR_PANFLUTE_AN/verylarge">
-<img class="bg-portrait" src="https://items.kleientertainment.com/images/DST/PLAYERPORTRAIT_BG_PANFLUTEAN/verylarge">
-<img class="bg-item" src="https://items.kleientertainment.com/images/DST/PANFLUTE_AN/verylarge">
+<img class="bg-flair" src="https://items.kleientertainment.com/images/DST/PROFILEFLAIR_MUSHROOM_LIGHTAN/verylarge">
+<img class="bg-portrait" src="https://items.kleientertainment.com/images/DST/PLAYERPORTRAIT_BG_MUSHROOMLIGHTAN/verylarge">
+<img class="bg-item" src="https://items.kleientertainment.com/images/DST/MUSHROOM_LIGHT_AN/verylarge">
 <img class="partyhat" src="https://clifffordw.github.io/ClifffWidgets/Drops/Seasonal Icons/winterfeast.png">
 <img class="wip" src="https://i.imgur.com/QqHArTg.png">
 <img class="patreon" src="">`;

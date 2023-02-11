@@ -87,13 +87,12 @@ body {
     background-repeat:no-repeat;
     background-attachment: fixed;
     background-size:100%;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(10px)
+    backdrop-filter: blur(10px);
 }
 
 #PageFooter{
 
-    backdrop-filter: blur(50px);
+    backdrop-filter: blur(10px);
     background-repeat: no-repeat;
     background-size:cover;
     
@@ -110,8 +109,8 @@ pane article {
 
 pane, #MasterLog logs log, #BuddyChatPromoColumn {
   background:rgba(0, 0, 0, 0.85) !important;
-  backdrop-filter: blur(41px);
-  -webkit-backdrop-filter: blur(21px)
+  backdrop-filter: blur(15px);
+
   border:2px solid #ffffff17 !important;
   border-radius:10px;
 }
@@ -264,7 +263,7 @@ module.PageModule {
   border-radius:0px;
   margin-left:2.5px;
   margin-right:2.5px;
-  animation: glow 7s infinite ease-in-out;
+  
 }
 
 .PostReplies .PostReplies > .PostsListModule {

@@ -88,6 +88,7 @@ body {
     background-attachment: fixed;
     background-size:100%;
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(10px)
 }
 
 #PageFooter{
@@ -110,6 +111,7 @@ pane article {
 pane, #MasterLog logs log, #BuddyChatPromoColumn {
   background:rgba(0, 0, 0, 0.85) !important;
   backdrop-filter: blur(41px);
+  -webkit-backdrop-filter: blur(21px)
   border:2px solid #ffffff17 !important;
   border-radius:10px;
 }

@@ -157,7 +157,7 @@ body {
 #VisitorsModule .LatestVisitorsGrid, #ViewsModule .Grid {
     background: #386c3e2b;
     border-radius: 10px;
-    padding-bottom: 35px;
+    padding-bottom: 35px !important;
   }
   
   

@@ -240,7 +240,7 @@ pane, #MasterLog logs log, #BuddyChatPromoColumn {
 
 @keyframes glow {
     0% {
-        filter: drop-shadow(0 0 0rem rgba(1, 58, 1, 0.247));
+        filter: drop-shadow(0 0 0rem rgba(1, 37, 1, 0.521));
     }
 
 
@@ -249,15 +249,15 @@ pane, #MasterLog logs log, #BuddyChatPromoColumn {
     }
 
     to {
-        filter: drop-shadow(0 0 0rem rgba(1, 58, 1, 0.247));
+        filter: drop-shadow(0 0 0rem rgba(1, 37, 1, 0.521));
     }
 }
 
 
 
 module.PageModule {
-  background:rgba(1, 58, 1, 0.247);
-  backdrop-filter: blur(10px);
+  background: rgba(1, 37, 1, 0.521);
+  backdrop-filter: blur(15px);
   border:2px solid #ffffff17 !important;
   border-radius:0px;
   margin-left:2.5px;

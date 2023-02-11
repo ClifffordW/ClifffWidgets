@@ -277,7 +277,7 @@ pane, #MasterLog logs log, #BuddyChatPromoColumn {
     --DefaultGreyColor: #c6c6c6;
     --DefaultOrangeColor: #ff8800;
     --DefaultYellowColor: #ffff00;
-    --StateLabelBackground: #ffffff/*#55cdd477*/;
+    --StateLabelBackground: #274428;
   
     --MasterLogBackgroundColor: #0e1317;
     --MasterLogFontSize: 0.9em;
@@ -427,8 +427,8 @@ module.PageModule {
 }
 
 #ImportantLinks li a {
-  background:#ffffff !important;
-  color:black !important;
+  background:#274428 !important;
+  color:#ffffff4a !important;
 }
 
 #ImportantLinks li a:hover {

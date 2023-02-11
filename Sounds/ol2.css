@@ -210,7 +210,7 @@ pane, #MasterLog logs log, #BuddyChatPromoColumn {
 }
  
 ::-webkit-scrollbar-thumb {
-  background-color: #ff6400;
+  background-color: #b3ffb9;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -234,7 +234,7 @@ pane, #MasterLog logs log, #BuddyChatPromoColumn {
 /*partial scrollbar code for Firefox - hamstar*/
 @supports not selector(::-webkit-scrollbar) {
   * {
-    scrollbar-color: #ff6400 #000000;
+    scrollbar-color: #bff7c4 #000000;
     /*scrollbar-width: thin;*/
   }
 }

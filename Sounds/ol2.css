@@ -98,6 +98,66 @@ body {
     
 }
 
+
+.Record .PreviewWrapper:hover, .Avatar img:hover
+{
+  transition:  .2s;
+  
+  scale: 110%;
+  border-radius: 10px;
+  filter: drop-shadow(0rem 0rem .75rem green) saturate(100%);
+  
+
+}
+
+.Record .PreviewWrapper
+{
+  transition:  .2s;
+  filter:  saturate(50%);
+  
+
+}
+
+.Avatar img
+{
+  transition:  .2s;
+
+  
+
+}
+
+
+
+.Record .PreviewImage
+{
+  border-radius: 8px !important;
+}
+
+
+
+#MedalsModule li:hover
+{
+
+  scale:130%;
+  transition:  .2s;
+  border-radius: 10px;
+  filter: drop-shadow(0rem 0rem .75rem green) saturate(100%);
+}
+
+
+#MedalsModule li
+
+{
+
+  transition: .2s;
+}
+
+
+
+
+
+
+
 #ResponsibilitiesModule div dl dd ul li {
     border:none;
     box-shadow:none;

@@ -226,6 +226,30 @@ pane, #MasterLog logs log, #BuddyChatPromoColumn {
  
 }
 
+
+
+a.Name.gbhsUsed, td.SubmissionType {
+  font-family: 'Outlast2';
+  font-size: 19px;
+  transition: .2s;
+}
+
+
+a:hover, .Linklike:hover {
+  color: var(--LinkHoverColor);
+  font-size: 21px;
+}
+
+
+
+
+
+
+
+
+
+
+
 #SecondaryNav pane {border:none !important;background:transparent !important;}
 
 #SecondaryNav.Expanded {

@@ -235,9 +235,15 @@ a.Name.gbhsUsed, td.SubmissionType {
 }
 
 
+a,.Linklike {
+
+  transition: 0.2s !important;
+}
+
+
 a:hover, .Linklike:hover {
   color: var(--LinkHoverColor);
-  font-size: 21px;
+  font-size: 24px !important;
 }
 
 

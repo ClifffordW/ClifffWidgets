@@ -1,7 +1,6 @@
 let root = document.documentElement;
 var myVar =
     `
-    <link  rel="stylesheet" href="https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/Animations/anim.css">
 <img class="bg-flair" src="https://items.kleientertainment.com/images/DST/PROFILEFLAIR_MUSHROOM_LIGHTAN/verylarge">
 <img class="bg-portrait" src="https://items.kleientertainment.com/images/DST/PLAYERPORTRAIT_BG_MUSHROOMLIGHTAN/verylarge">
 <img class="bg-item" src="https://items.kleientertainment.com/images/DST/MUSHROOM_LIGHT_AN/verylarge">

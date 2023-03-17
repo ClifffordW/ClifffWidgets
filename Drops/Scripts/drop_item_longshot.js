@@ -5,7 +5,7 @@ var myVar =
 
 <img class="bg-flair" src="https://items.kleientertainment.com/images/DST/PROFILEFLAIR_GREENSTAFF_AN/verylarge">
 <img class="bg-portrait" src="https://items.kleientertainment.com/images/DST/PLAYERPORTRAIT_BG_GREENSTAFFAN/verylarge">
-<img class="item-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Item/feast.png">
+<img class="item-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Item/default.png">
 
 <img class="bg-item" src="https://items.kleientertainment.com/images/DST/GREENSTAFF_AN/verylarge">
 <img class="partyhat" src="https://clifffordw.github.io/ClifffWidgets/Drops/Seasonal Icons/winterfeast.png">

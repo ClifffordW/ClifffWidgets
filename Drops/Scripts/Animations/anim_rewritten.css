@@ -63,20 +63,24 @@
 
 @keyframes items-appear {
     0% {
+        filter: drop-shadow(0 0 20rem var(--glow1));
         transform: translateY(5px) scale(0);
         opacity: 0%;
     }
 
     25% {
+        filter: drop-shadow(0 0 10rem var(--glow1));
         opacity: 0%;
     }
 
     50% {
+        filter: drop-shadow(0 0 5rem var(--glow1));
         transform: translateY(20px) scale(0);
         opacity: 0%;
     }
 
     to {
+        filter: drop-shadow(0 0 .85rem var(--glow1));
         transform: translateY(5px) scale(1);
         opacity: 100% ;
     }
@@ -86,18 +90,21 @@
 
 @keyframes items {
     0% {
+        filter: drop-shadow(0 0 .85rem var(--glow1));
         transform: translateY(5px) scale(1);
     }
 
     25% {
-
+        filter: drop-shadow(0 0 0.66rem var(--glow2));
     }
 
     50% {
+        filter: drop-shadow(0 0 0.55rem var(--glow3));
         transform: translateY(20px) scale(.98);
     }
 
     to {
+        filter: drop-shadow(0 0 .85rem var(--glow1));
         transform: translateY(5px) scale(1);
     }
 }

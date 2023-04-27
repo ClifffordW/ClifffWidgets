@@ -3,11 +3,11 @@ var myVar =
 `
 <link  rel="stylesheet" href="https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/Animations/anim_rewritten.css">
 
-<img class="bg-flair" src="https://items.kleientertainment.com/images/DST/PROFILEFLAIR_GREENSTAFF_AN/verylarge">
-<img class="bg-portrait" src="https://items.kleientertainment.com/images/DST/PLAYERPORTRAIT_BG_GREENSTAFFAN/verylarge">
+<img class="bg-flair" src="https://items.kleientertainment.com/images/DST/PROFILEFLAIR_RUINS_BATAN/verylarge">
+<img class="bg-portrait" src="https://items.kleientertainment.com/images/DST/PLAYERPORTRAIT_BG_RUINSBATAN/verylarge">
 <img class="item-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Item/default.png">
 
-<img class="bg-item" src="https://items.kleientertainment.com/images/DST/GREENSTAFF_AN/verylarge">
+<img class="bg-item" src="https://items.kleientertainment.com/images/DST/RUINS_BAT_AN/verylarge">
 <img class="partyhat" src="https://clifffordw.github.io/ClifffWidgets/Drops/Seasonal Icons/winterfeast.png">
 <img class="wip" src="https://i.imgur.com/QqHArTg.png">
 <img class="patreon" src="">`;

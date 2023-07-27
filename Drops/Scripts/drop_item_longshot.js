@@ -4,10 +4,10 @@ const drops = document.getElementsByClassName("drops")[0];
 const body =
     `
     <link rel="stylesheet" href="https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/Animations/anim_rewritten.css">
-    <img class="bg-flair" src="https://items.kleientertainment.com/images/DST/PROFILEFLAIR_RUINSHAT_AN/verylarge">
-    <img class="bg-portrait" src="https://items.kleientertainment.com/images/DST/PLAYERPORTRAIT_BG_RUINSHATAN/verylarge">
+    <img class="bg-flair" src="https://items.kleientertainment.com/images/DST/PROFILEFLAIR_ARMOR_RUINSAN/verylarge">
+    <img class="bg-portrait" src="https://items.kleientertainment.com/images/DST/PLAYERPORTRAIT_BG_ARMORRUINSAN/verylarge">
     <img class="item-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Item/default.png">
-    <img class="bg-item" src="https://items.kleientertainment.com/images/DST/RUINSHAT_AN/verylarge">
+    <img class="bg-item" src="https://items.kleientertainment.com/images/DST/ARMOR_RUINS_AN/verylarge">
     <img class="partyhat" src="https://clifffordw.github.io/ClifffWidgets/Drops/Seasonal Icons/winterfeast.png">
     <img class="wip" src="https://i.imgur.com/QqHArTg.png">
     <img class="patreon" src="">

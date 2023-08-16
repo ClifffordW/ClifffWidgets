@@ -468,3 +468,139 @@ module.PageModule {
 #ImportantLinks li a:hover span {
   color:#ffffff !important;
 }
+
+
+:root
+{
+	--defaultCursor  : url('http://files.gamebanana.com/bitpit/mac_os_x_default.png'),    default !important;
+	--helpCursor     : url('http://files.gamebanana.com/bitpit/mac_os_x_help.png'),       help !important;
+	--grabCursor     : url('https://i.stack.imgur.com/VYB5Y.png'),                        grab !important;
+	--grabbingCursor : url('https://i.stack.imgur.com/EjHIC.png'),                        grabbing !important;
+	--moveCursor     : url('http://files.gamebanana.com/bitpit/mac_os_x_move.png') 12 12, move !important;
+	--pointerCursor  : url('http://files.gamebanana.com/bitpit/mac_os_x_pointer.png'),    pointer !important;
+}
+
+/*** Default Cursor ***/
+/* -- This is the main cursor which switches to secondary cursors where applicable. -- */
+
+body,
+.lg-outer #lg-dropdown-overlay /* Profile.css <large> */
+{
+	cursor : var(--defaultCursor);
+}
+
+
+
+/*** Help Cursor ***/
+/* -- This is the cursor meant for places which give info on hover/click like Tooltips, stamps, etc. -- */
+
+.RichText .Spoiler,                                  /* GenericPage.css */
+#MedalsModule li,                                    /* Profile.css <small> */
+.PostsListModule .Posts>li article .PostStamps:hover /* Profile.css <large> */
+{
+	cursor : var(--helpCursor);
+}
+
+
+
+/** Grab and Grabbing Cursors ***/
+/* -- These cursors appear over objects that can be grabbed. I don't know where they are being used in GB. -- */
+
+/* Profile.css <large> */
+.lg-outer .lg-thumb-outer.lg-grab .lg-thumb-item,
+.lg-outer.lg-grab img.lg-object
+{
+	cursor : var(--grabCursor);
+}
+
+/* Profile.css <large> */
+.lg-outer .lg-thumb-outer.lg-grabbing .lg-thumb-item,
+.lg-outer.lg-grabbing img.lg-object
+{
+	cursor : var(--grabbingCursor);
+}
+
+
+
+/*** Move Cursor ***/
+/* -- This cursor indicates controls or buttons that can be moved or can be dragged to move an associated object. -- */
+/* -- The '12 12' are X and Y origin coordinates for the cursor. The place where this cursor will render will consider 12px 12px as the center of the custom cursor image instead of the default 0px 0px. -- */
+
+input[type=range]::-webkit-slider-thumb,
+.PageModule>.ModuleTools .MoveButton,
+body.ModuleMoverMode .ContentColumn>module,
+.Editor .ViewModes .Wysiwyg .RichText img,
+.Editor .WysiwygPalettes .ImageInserter ul li,
+.Editor .WysiwygPalettes .BitpitFileInserter ul li,
+.Editor .WysiwygPalettes .UsernameInserter ul li,
+.Editor .WysiwygPalettes .CannedResponseInserter ul li,
+spriteIcon.MiscIcon.SortHandle,
+.SpriteIcon.MiscIcon.SortHandle
+{
+	cursor : var(--moveCursor);
+}
+
+
+
+/*** Pointer Cursor ***/
+/* -- This is the second major cursor next to the default one. It appears over clickable elements like links and buttons. -- */
+
+/* GenericPage.css */
+a,
+.Linklike,
+button,
+.ButtonLike,
+input[type=range]::-webkit-slider-runnable-track,
+select,
+.SelectLike,
+.BeaconParent .Beacon,
+.ExpandableToggle,
+.PageModule>.RelatedLinksButton,
+.MainForm .InputsWrapper .OptionalInput>legend,
+fieldset#Userid .AdvancedElement_InputSuggestionsList li,
+.AdvancedListSettingsModule>.Content .OrderAndSortControls fieldset legend,
+.AdvancedElement_FloatingButtonTabs li,
+.AdvancedElement_InputSuggestionsList li,
+.AdvancedElement_Tabs li,
+.AdvancedElement_GraphicalSelect .OptionsWrapper .Options li,
+.AdvancedElement_Switch.List ul li,
+#MasterLog log .CloseButton,
+.Modal .CloseModal,
+.Editor .ViewModeSwitchers span,
+.Editor .WysiwygPalettes>h4,
+#PrimaryNav controls,
+#SecondaryNav controls,
+body[data-_sDeviceType=desktop][data-_sNavItemActivation=Click] #SecondaryNav module>icon:hover,
+body[data-_sDeviceType=desktop][data-_sNavItemActivation=Click] #SecondaryNav module>widget:hover,
+body[data-_sDeviceType=desktop][data-_sNavItemActivation=Click] #PrimaryNav module>icon:hover,
+body[data-_sDeviceType=desktop][data-_sNavItemActivation=Click] #PrimaryNav module>widget:hover,
+#HiddenColumnToggleButton,
+#AlertsNavModule pane .Controls .MarkAllAsSeen,
+#ActivityNavModule pane .Controls .MarkAllAsSeen,
+#AlertsNavModule pane .Broadcasts .Unseen .BroadcastStatusWrapper,
+#ActivityNavModule pane .Broadcasts .Unseen .BroadcastStatusWrapper,
+#GamesNavModule widget ul li,
+#BuddiesNavModule pane #BuddyChatInitiators li,
+.RichText .TableOfContents ul li,
+
+/* index.css */
+#FeaturesSliderModule .Slides .Slide,
+#FeaturesSliderModule .Slides .ExpandedSlide,
+#FeaturesSliderModule .Slides .Slide .Info .Name,
+#FeaturesSliderModule .Slides .ExpandedSlide .Info .Name,
+#SubmissionsListAdvancedListSettingsModule .RecentGames li,
+#SubmissionsListAdvancedListSettingsModule .SelectedGames li,
+
+/* Profile.css <large> */
+#ThanksToggleModule .Content #ShowThanksOptionsToggle.ModalLauncher,
+#UpdatesModule .ToggleContentButton,
+.lg-actions .lg-next,
+.lg-actions .lg-prev,
+.lg-toolbar .lg-icon,
+.lg-outer .lg-thumb-item,
+.lg-outer .lg-toogle-thumb,
+.lg-outer .lg-video .lg-video-play,
+.lg-outer .lg-pager-cont
+{
+	cursor : var(--pointerCursor);
+}

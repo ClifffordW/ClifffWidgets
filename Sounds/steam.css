@@ -1,183 +1,112 @@
-:root
-{
-	--AuxiliaryColumnBackground: transparent;
-	--BodyBackground: #000000 url("https://files.gamebanana.com/bitpit/steam_bg.png") top center no-repeat fixed;
-	--BodyWrapperBackground: #000000 url("https://files.gamebanana.com/bitpit/steam_bg.png") top center no-repeat fixed;
-	--ButtonHoverBackgroundColor: #353E4E;
-	--ButtonHoverFontColor: #FCFCFC;
-	--DefaultTextFontFamily: "Motiva Sans", Arial, Helvetica, sans-serif;
-	--DefaultTechnicalFontFamily: "Motiva Sans", Arial, Helvetica, sans-serif;
-	--DefaultTextColor: #969696;
-	--InputBackgroundColor: #0F1117;
-    --InputHoverBackgroundColor: #0F1117;
-    --InputFocusBackgroundColor: #0F1117;
-	--LinkColor: #FFFFFF;
-	--LinkHoverColor: #56A1CC;
+/* Fruitglass Importer */
+/* by bonkmaykr        */
+/* at bonkmaykr.xyz    */
+
+/* IMPORTS - DO NOT REMOVE*/
+@import url("https://bonkmaykrq.github.io/gbubers/fruitglass.css");
+
+/* OPTIONAL IMPORTS - YOU MAY ENABLE/DISABLE THESE*/
+/*@import url("https://bonkmaykrq.github.io/gbubers/snippets/scanlines.css");*/
+
+/* VARIABLES */
+:root {
+        --fgPrimaryTextColor:200, 200, 200;
+        --fgSecondaryTextColor:140, 140, 140;
+        --fgAccentContrastTextColor:0, 0, 0; /*used for text selection, etc*/
+        --fgAccentHighlightContrastTextColor:0, 0, 0; /*used for button hovers, etc*/
+       
+        --fgAccentColor:46, 245, 254;
+        --fgAccentHighlight:0, 247, 232;
+        --fgPrimaryColor:0, 0, 0;
+        --fgSecondaryColor:97, 18, 13;
+        --fgNavbarColor:0, 0, 0;
+        --fgModuleOpacity:0.2; /*from 0 to 1 in decimal*/
+       
+        /*Image backgrounds should always be on layer 1.*/
+        /*Layer 2 is used as backup until layer 1 loads.*/
+        --fgBackground1:url("https://files.gamebanana.com/bitpit/zeta.gif");
+        --fgBackground2:#000000;
+        --fgWrapperBackground:#000000a0;
+       
+        /*Controls the intensity of gaussian blur effects*/
+        /*      !! WARNING !! - Module blurring will heavily reduce the framerate on low-end devices*/
+        /*      If you want performance, set fgModuleBlur to 0px. Effectiveness may vary. */
+        /*      When that doesn't work, feel free to remove the backdrop filter entirely. */
+        --fgUIBlur:7px;
+        --fgModuleBlur:10px;
+
+                /*Sizing Options*/
+                --fgNavbarRadius:15px; /*Setting this too high can cause problems. Try to keep it below 20px*/
+                --fgPrimaryNavbarThickness:5px;
+                --fgPrimaryNavbarPadding:0;
+                --fgPrimaryNavbarMargin:5px;
+                --fgSecondaryNavbarThickness:2px;
+                --fgSecondaryNavbarPadding:0;
+                --fgSecondaryNavbarMargin:10px;
+                --fgModuleRadius:15px;
+                --fgModuleThickness:5px;
+                --fgModulePadding:.5em 1em 1em 1em;
+                --fgModuleMargin:8px 2.5px 0px 2.5px;
+
+                /*Gamebanana built-in settings*/
+        --DefaultBlueColor: #00ffff;
+        --DefaultRedColor: #ff7777;
+        --DefaultRedDarkColor: #ff9977;
+        --DefaultGreenColor: #77ff77;
+        --DefaultGreenDarkColor: #99ff77;
+        --DefaultPurpleColor: #9977ff;
+        --DefaultGreyColor: rgb(var(--fgSecondaryTextColor));
+        --DefaultOrangeColor: #ff8800;
+        --DefaultYellowColor: #E93500;
+               
+                /*Custom cursors*/
+        --defaultCursor:        url("https://files.gamebanana.com/bitpit/duelist.gif"),default !important;
+        --textCursor:   url("https://files.gamebanana.com/bitpit/duelist.gif"),text !important;
+        --pointerCursor:   url("https://files.gamebanana.com/bitpit/bloodblade.gif"),default !important;
+       
+                /*Unused variables, caused font loading problems. Feel free to ignore*/
+/*
+                --fgFont:;
+                --fgHeaderFont:;*/
 }
 
-#SiteLogo img,
-#SiteLogo spriteicon
+
+@font-face {
+    font-family:Halo;
+    src:url(https://files.gamebanana.com/bitpit/halo3.ttf);
+}
+
+@font-face {
+    font-family:Nunito;
+    src:url(https://files.gamebanana.com/bitpit/nunito-regular_1b89e.ttf);
+}
+
+h1, h2, h3, module > h2 {font-family:Halo !important;}
+.RichText h1, .RichText h2, .RichText h3 {font-family:Nunito !important;}
+#BodyWrapper {font-family:Nunito;} 
+
+#SiteLogo img
 {
-	display : none;
+        display : none;
 }
 
 #SiteLogo:after
 {
-	content: url("https://files.gamebanana.com/bitpit/steam_gb.png") !important;
+        content : url('https://files.gamebanana.com/bitpit/116233-logo-halo-download-free-imag_30aa1.png');
 }
 
-#SubNavigator, #HeadlineWrapper overlay
+@media (max-width : 1000px)
 {
-	background: #171A21;
-}
 
-#TopNav, #SideNav, #MainContentHeader.Fixed
-{
-	background: linear-gradient(to right, rgba(109, 38, 44, 0.301), rgba(50, 255, 193, 0.103)) !important;
-}
+        #SiteLogo .SacredBanana
+        {
+                display : none;
+        }
 
-#SubNavigator .BasicSubNavigator, #SubNavigator .DropdownMenuSubNavigator
-{
-    display: flex;
-	justify-content: center;
-	text-transform: uppercase;
-	font-weight: normal;
-}
-
-#ContentGrid
-{
-	background: linear-gradient(to right, rgba(109, 38, 44, 0.301), rgba(50, 255, 193, 0.103));
-}
-
-#PrimaryNav, #SecondaryNav
-{
-	background: #171A21 !important;
-}
-
-#HeadlineWrapper overlay h1
-{
-	background: #FFFFFF;
-	background-clip: text;
-	-webkit-background-clip: text;
-	color: transparent;
-	font-size: 72px;
-	text-shadow: none;
-}
-
-#HeadlineWrapper overlay h2
-{
-	background: #FFF;
-	color: #000;
-	display: none;
-	text-shadow: none;
-}
-
-#PageTitle::after
-{
-	background: #FFFFFF;
-	background-clip: text;
-	-webkit-background-clip: text;
-    content: "Average TF2CutContent Enjoyer";
-    display: block;
-	font-family: "Motiva Sans", Arial, Helvetica, sans-serif;
-    font-size: 34px;
-	text-shadow: none;
-	text-transform: none;
-	margin-top: -15px;
-}
-
-.PageModule>h2, .PageModule>.Content
-{
-	backdrop-filter: blur(15px);
-	background: rgba( 0, 0, 0, 0.3 );
-    border-radius: 3px;
-    padding: 6px 9px;
-}
-
-.PageModule>h2
-{
-	color: #FFFFFF;
-}
-
-.PageModule
-{
-	border-right: var(--AuxiliaryColumnBorder);
-}
-
-#BuddiesModule h2, #MedalsModule h2, #ResponsibilitiesModule h2, #PointsModule h2, #tpm__sLatestProfileVisitors h2, #CoreStatsModule h2
-{
-	text-align: left;
-}
-
-#MedalsModule, #ResponsibilitiesModule, #BuddiesModule, #PointsModule, #tpm__sLatestProfileVisitors, #CoreStatsModule
-{
-	text-align: center;
-}
-
-#CoreStatsModule ul 
-{
-	display: -ms-flexbox;
-	display: -ms-flex;
-	display: -webkit-flex;
-	display: flex;
-	justify-content: center;
-	-webkit-flex-wrap: wrap;
-	-ms-flex-wrap: wrap;
-	flex-wrap: wrap;
-}
-
-.ExtendedContentButton, button, .ButtonLike
-{
-	background: #2B3444;
-	color: #E8E9EB;
-	font-family: "Motiva Sans", Arial, Helvetica, sans-serif;
-	text-transform: none;
-}
-
-div.Content, div.InputWrapper
-{
-	border-radius: 3px;
-}
-
-img.PreviewImage, recordCell.Preview img
-{
-	border-radius: 4px;
-	max-height: 112px;
-}
-
-.PostsListModule .Posts>li .PostReplies .PostsListModule .Content, form.Mainform
-{
-	border-radius: 3px;
-	padding: 10px;
-}
-
-input[type=text], input[type=password], input[type=password], input[type=number], input[type=email], input[type=num], input[type=tel], select, .SelectLike, option, .OptionLike, optgroup, textarea, .TextareaLike
-{
-	background: #0F1117;
-}
-
-.MainForm .InputsWrapper fieldset .InputWrapper
-{
-	background: #20222F;
-	border-radius: 3px;
-}
-
-#AddIdeaLink span
-{
-	color: #FFE033;
-}
-
-::-webkit-scrollbar-thumb
-{
-    width: 10px;
-    background-color: #434953;
-    border-radius: 10px;
-    z-index: 12;
-    border: 4px solid rgba(0, 0, 0, 0);
-    background-clip: padding-box;
-    margin: 4px;
-    min-height: 32px;
-    min-width: 32px;
+        #SiteLogo:after
+        {
+                content : url('https://files.gamebanana.com/bitpit/h__gb_6c2f9.png');
+        }
 }
 
 

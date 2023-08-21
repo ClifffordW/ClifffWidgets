@@ -1,1 +1,1 @@
-Drops are currently inactive! You can associate your twitch.tv account to Klei Account. Simply head on over to https://accounts.klei.com After that just watch the stream for the required time.
+Drops are active! You can associate your twitch.tv account to Klei Account. Simply head on over to https://accounts.klei.com After that just watch the stream for the required time: Current Set - Flock's Collection - Icon (30 Minutes) - Portrait (1 Hour 30 Minutes) - Camellia Flowerbed (3 Hours). Be sure to collect your drop at https://www.twitch.tv/drops/inventory

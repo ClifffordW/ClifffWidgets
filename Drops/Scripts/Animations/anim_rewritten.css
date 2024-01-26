@@ -68,7 +68,7 @@
 @keyframes items-appear {
     0% {
         filter: drop-shadow(0 0 20rem var(--glow1));
-        transform: translateY(5px) scale(0);
+        transform: rotate(12deg) translateY(5px) scale(0);
         opacity: 0%;
     }
 
@@ -79,14 +79,16 @@
 
     50% {
         filter: drop-shadow(0 0 5rem var(--glow1));
-        transform: translateY(20px) scale(0);
+        transform: rotate(12deg) translateY(20px) scale(0);
         opacity: 0%;
     }
 
     to {
         filter: drop-shadow(0 0 .85rem var(--glow1));
-        transform: translateY(5px) scale(1);
+
         opacity: 100% ;
+        transform: rotate(12deg) translateY(5px) scale(1);
+
     }
 }
 
@@ -95,21 +97,28 @@
 @keyframes items {
     0% {
         filter: drop-shadow(0 0 .85rem var(--glow1));
-        transform: translateY(5px) scale(1);
+
+        transform: rotate(12deg) translateY(5px) scale(1);
+
     }
 
     25% {
         filter: drop-shadow(0 0 0.66rem var(--glow2));
+
     }
 
     50% {
         filter: drop-shadow(0 0 0.55rem var(--glow3));
-        transform: translateY(20px) scale(.98);
+        transform: translateY(15px) scale(.98);
+        transform: rotate(2deg) translateY(20px) scale(0.95);
+
     }
 
     to {
         filter: drop-shadow(0 0 .85rem var(--glow1));
         transform: translateY(5px) scale(1);
+        transform: rotate(12deg) translateY(5px) scale(1);
+
     }
 }
 
@@ -181,46 +190,60 @@
 @keyframes item-last-apear {
     0% {
 
-        transform: rotate(15deg) translateY(5px) scale(0);
+        filter: drop-shadow(0 0 20rem var(--glow1));
+
+        transform: rotate(12deg) translateY(5px) scale(0);
     }
 
     25% {
 
+        filter: drop-shadow(0 0 10rem var(--glow1));
 
     }
 
     50% {
  
+        filter: drop-shadow(0 0 5rem var(--glow1));
+
         transform: rotate(5deg) translateY(20px) scale(0);
     }
 
     to {
       
-        transform: rotate(15deg) translateY(5px) scale(1);
+        filter: drop-shadow(0 0 .85rem var(--glow1));
+
+        transform: rotate(12deg) translateY(5px) scale(1);
     }
 }
 
 @keyframes item-last {
     0% {
 
-        transform: rotate(15deg) translateY(5px) scale(1);
+        filter: drop-shadow(0 0 .85rem var(--glow1));
+
+        transform: rotate(12deg) translateY(5px) scale(1);
     }
 
     25% {
+        filter: drop-shadow(0 0 0.66rem var(--glow2));
 
 
     }
 
     50% {
- 
+        filter: drop-shadow(0 0 0.55rem var(--glow3));
+
         transform: rotate(5deg) translateY(20px) scale(.98);
     }
 
     to {
+        filter: drop-shadow(0 0 .85rem var(--glow1));
+
       
-        transform: rotate(15deg) translateY(5px) scale(1);
+        transform: rotate(12deg) translateY(5px) scale(1);
     }
 }
+
 
 
 

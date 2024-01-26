@@ -178,9 +178,29 @@ display: block;
             src="https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_cf9ffc906350454fbe43a3ecc2bac270/static/light/3.0">
 
     </div>
-    <script type="text/javascript" src="https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/drop_item_longshot.js">
-        javascript not supported in browser
-    </script>
+    <script>
+        // Define the variable to determine which script to use
+        var used_script = getComputedStyle(document.querySelector('.drops')).getPropertyValue('--usedscript').trim();
+        
+        // Create a script element
+        var scriptElement = document.createElement('script');
+        
+        // Set the src attribute based on the condition
+        if (used_script === 'dst') {
+          scriptElement.src = 'https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/drop_item_longshot.js';
+        } else if (used_script === 'cotl') {
+          scriptElement.src = 'https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/drop_item_longshot_cotl.js'; // Replace with your alternative script
+        
+        } else  {
+          scriptElement.src = 'https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/drop_item_longshot.js'; // Replace with your alternative script
+        } 
+        
+        
+        
+        
+        // Append the script element to the document's head
+        document.head.appendChild(scriptElement);
+        </script>
 
 
 </body>

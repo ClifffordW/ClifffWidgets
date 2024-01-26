@@ -6,7 +6,6 @@ const body =
     <link rel="stylesheet" href="https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/Animations/anim_rewritten.css">
     <img class="bg-flair" src="https://twitch.cultofthelamb.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpea.300d6c41.png&w=384&q=100">
     <img class="bg-portrait" src="https://twitch.cultofthelamb.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fowe.ea42d1ed.png&w=384&q=100">
-    <img class="item-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Item/default.png">
     <img class="bg-item" src="https://twitch.cultofthelamb.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fgeeh.c5752ea5.png&w=384&q=100">
     <img class="partyhat" src="https://clifffordw.github.io/ClifffWidgets/Drops/Seasonal Icons/winterfeast.png">
     <img class="wip" src="https://i.imgur.com/QqHArTg.png">

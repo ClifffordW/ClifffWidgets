@@ -87,7 +87,7 @@
         filter: drop-shadow(0 0 .85rem var(--glow1));
 
         opacity: 100% ;
-        transform: rotate(12deg) translateY(5px) scale(1);
+        transform: rotate(-2deg) translateY(5px) scale(1);
 
     }
 }
@@ -98,7 +98,7 @@
     0% {
         filter: drop-shadow(0 0 .85rem var(--glow1));
 
-        transform: rotate(12deg) translateY(5px) scale(1);
+        transform: rotate(-2deg) translateY(5px) scale(1);
 
     }
 
@@ -117,7 +117,7 @@
     to {
         filter: drop-shadow(0 0 .85rem var(--glow1));
         transform: translateY(5px) scale(1);
-        transform: rotate(12deg) translateY(5px) scale(1);
+        transform: rotate(-2deg) translateY(5px) scale(1);
 
     }
 }
@@ -212,7 +212,7 @@
       
         filter: drop-shadow(0 0 .85rem var(--glow1));
 
-        transform: rotate(12deg) translateY(5px) scale(1);
+        transform: rotate(-2deg) translateY(5px) scale(1);
     }
 }
 
@@ -221,7 +221,7 @@
 
         filter: drop-shadow(0 0 .85rem var(--glow1));
 
-        transform: rotate(12deg) translateY(5px) scale(1);
+        transform: rotate(-2deg) translateY(5px) scale(1);
     }
 
     25% {
@@ -240,7 +240,7 @@
         filter: drop-shadow(0 0 .85rem var(--glow1));
 
       
-        transform: rotate(12deg) translateY(5px) scale(1);
+        transform: rotate(-2deg) translateY(5px) scale(1);
     }
 }
 
@@ -257,6 +257,7 @@
     animation-name: var(--item_anim), items;
     animation-timing-function: ease-in-out;
     animation-iteration-count: 1, infinite;
+    animation-duration: 3.4s, 3.4s !important;
 
 }
 
@@ -268,6 +269,7 @@
     width: 20%;
     margin-left: 2%;
     margin-bottom: 4%;
+    animation-duration: 2.8s, 3.4s !important;
 }
 
 
@@ -278,6 +280,7 @@
     animation-name: var(--frame_anim), portraits !important;
     animation-timing-function: ease-in-out;
     animation-iteration-count: 1, infinite;
+    animation-duration: 2.8s, 3.4s !important;
     
 
 
@@ -291,14 +294,14 @@
 
 .item-frame, .bg-item, .streamer {
 
-    animation-duration: 2.8s, 2.8s;
+    animation-duration: 2.8s, 3.4s;
     animation-delay: 0s, 2.8s;
 
 }
 
 .portrait-frame, .bg-portrait {
 
-    animation-duration: 3s, 2.8s;
+    animation-duration: 3s, 3.4s !important;
     animation-delay: 0s, 3s;
 }
 
@@ -382,7 +385,7 @@
 @keyframes streamer {
     0% {
         filter: drop-shadow(0 0 0.5rem var(--glow1));
-        transform: translateY(5px) rotate(-45deg);
+        transform: rotate(-2deg) translateY(5px) rotate(-45deg);
     }
 
     25% {
@@ -392,12 +395,12 @@
 
     50% {
         filter: drop-shadow(0 0 1.25rem var(--glow3));
-        transform: translateY(20px) rotate(-45deg);
+        transform: rotate(2deg) translateY(20px) rotate(-45deg);
     }
 
     to {
         filter: drop-shadow(0 0 0.5rem var(--glow1));
-        transform: translateY(5px) rotate(-45deg);
+        transform: rotate(-2deg) translateY(5px) rotate(-45deg);
     }
 }
 
@@ -420,19 +423,19 @@
 
 
 /* Streamer */
-.streamer {
+.streamer-head {
     transform: rotate(15deg);
     
 
     border-radius: 0%;
     display:  !important;
     height: 25%;
-    z-index: -1;
+    z-index: 1;
     position: absolute;
 
 
     animation-timing-function: ease-in-out;
     animation-iteration-count: 1, infinite;
-    animation-name: streamer-appear, streamer;
+    animation-name: streamer-appear, streamer !important;
 
 }

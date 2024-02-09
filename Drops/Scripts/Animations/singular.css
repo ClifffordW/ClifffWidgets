@@ -1,4 +1,5 @@
-@import url(https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/Animations/anim.css);
+@import url(https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/Animations/anim_rewritten.css);
+
 
 
 @keyframes drops {
@@ -41,11 +42,14 @@
 }
 
 
+
+
+
 .streamer-head {
     position: absolute !important;
-    display: none;
+    /* display: none; */
     z-index: 1 !important;
-    width: 10% !important;
+    width: 15% !important;
     height: auto !important;
     margin-left: 10% !important;
     margin-top: 70% !important;
@@ -53,10 +57,12 @@
 
 .bg-item {
 
-    width: 100% !important;
+    width: 98% !important;
     display: block !important;
     margin: auto !important;
     top: -50px !important;
+
+
     animation-name: singular-appear, singular-animated !important;
 
 }
@@ -64,12 +70,12 @@
 .drops {
     width: 90% !important;
     height: auto !important;
-    top: 0px !important;
+    top: -40px !important;
     left: -50px !important;
 
 
 
-    animation: drops 1.6s ease-in-out infinite;
+    /* animation: drops 1.6s ease-in-out infinite; */
 
 
 }

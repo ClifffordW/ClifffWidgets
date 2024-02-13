@@ -177,7 +177,7 @@
 
 @keyframes item-last-apear {
     0% {
-
+        filter: drop-shadow(0 0 .15rem var(--glow1));
         transform: perspective(1000px) rotateY(0deg)  scale(0) rotateX(5deg)  translateX(0) translateY(0) translateZ(0);
     }
 
@@ -192,7 +192,7 @@
     }
 
     to {
-
+        filter: drop-shadow(0 0 .85rem var(--glow1));
          transform: perspective(1000px) rotateY(-3deg) scale(1)  rotateX(5deg) translateX(0) translateY(0) translateZ(0);
     }
 }
@@ -272,20 +272,20 @@
 
 .item-frame, .bg-item, .streamer {
 
-    animation-duration: 3.8s, 7.8s;
+    animation-duration: 3.8s, 4.8s;
     animation-delay: 0s, 3.8s;
 
 }
 
 .portrait-frame, .bg-portrait {
 
-    animation-duration: 3s, 6.8s;
+    animation-duration: 3s, 5.8s;
     animation-delay: 0s, 3s;
 }
 
 .flair-frame, .bg-flair {
 
-    animation-duration: 3.4s, 8.8s;
+    animation-duration: 3.4s, 6.8s;
     animation-delay: 0s, 3.4s;
 
 
@@ -414,7 +414,7 @@
     animation-iteration-count: 1, infinite;
     animation-name: streamer-appear, streamer-3d ;
 
-    animation-duration: 3.8s, 7.8s;
+    animation-duration: 3.8s, 4.8s;
     animation-delay: 0s, 3.8s;
 
 

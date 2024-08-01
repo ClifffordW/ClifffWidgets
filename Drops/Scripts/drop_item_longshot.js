@@ -5,7 +5,7 @@ const body =
     `
     <link rel="stylesheet" href="https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/Animations/anim_rewritten_test.css">
     <img class="bg-flair" src="https://items.kleientertainment.com/images/DST/PROFILEFLAIR_POTTEDFERN_ROSE/verylarge">
-    <img class="bg-portrait" src="https://items.kleientertainment.com/images/DST/PLAYERPORTRAIT_BG_POTTEDFERN_ROSE/verylarge">
+    <img class="bg-portrait" src="https://items.kleientertainment.com/images/DST/PLAYERPORTRAIT_BG_POTTEDFERNROSE/verylarge">
     <img class="item-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Item/default.png">
     <img class="bg-item" src="https://items.kleientertainment.com/images/DST/POTTEDFERN_ROSE/verylarge">
     <img class="partyhat" src="https://clifffordw.github.io/ClifffWidgets/Drops/Seasonal Icons/winterfeast.png">

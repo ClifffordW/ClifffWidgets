@@ -4,16 +4,57 @@ const drops = document.getElementsByClassName("drops")[0];
 const body =
     `
     <link rel="stylesheet" href="https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/Animations/anim_rewritten_test.css">
-    <img class="bg-flair" src="https://items.kleientertainment.com/images/DST/PROFILEFLAIR_POTTEDFERN_ROSE/verylarge">
-    <img class="bg-portrait" src="https://items.kleientertainment.com/images/DST/PLAYERPORTRAIT_BG_POTTEDFERNROSE/verylarge">
+    <img class="bg-flair" src="https://items.kleientertainment.com/images/DST/WILSON_MAGMA/verylarge">
+    <img class="bg-portrait" src="https://items.kleientertainment.com/images/DST/WILSON_MAGMA/verylarge">
     <img class="item-frame" src="https://clifffordw.github.io/ClifffWidgets/Drops/Dropcons/Frames/Item/default.png">
-    <img class="bg-item" src="https://items.kleientertainment.com/images/DST/POTTEDFERN_ROSE/verylarge">
+    <img class="bg-item" src="https://items.kleientertainment.com/images/DST/WILSON_MAGMA/verylarge">
     <img class="partyhat" src="https://clifffordw.github.io/ClifffWidgets/Drops/Seasonal Icons/winterfeast.png">
     <img class="wip" src="https://i.imgur.com/QqHArTg.png">
     <img class="patreon" src="">
     `;
 
+
+      // Fetch the JSON data
+      fetch('https://corsproxy.io/?' + encodeURIComponent('https://cdn.forums.klei.com/drops/current_campaign.json'))
+      .then(response => response.json())
+      .then(data => {
+          // Extract image URLs
+          const iconUrl = data['Don\'t Starve Together']['icon'];
+          const itemUrl = data['Don\'t Starve Together']['item'];
+          const portraitUrl = data['Don\'t Starve Together']['portrait'];
+      
+          // Create image elements with class names
+          const iconImage = document.createElement('img');
+          iconImage.src = iconUrl;
+          iconImage.classList.add('bg-flair'); // Add the class name
+      
+          const itemImage = document.createElement('img');
+          itemImage.src = itemUrl;
+          itemImage.classList.add('bg-item'); // Add the class name
+      
+          const portraitImage = document.createElement('img');
+          portraitImage.src = portraitUrl;
+          portraitImage.classList.add('bg-portrait'); // Add the class name
+      
+          // Append images to your HTML component (e.g., 'drops' div)
+          document.getElementsByClassName("bg-flair")[0].src = iconImage.src
+          document.getElementsByClassName("bg-portrait")[0].src = portraitImage.src
+          document.getElementsByClassName("bg-item")[0].src = itemImage.src
+
+
+          
+          
+      })
+      .catch(error => {
+          console.error('Error fetching data:', error);
+      });
+    
+
 drops.insertAdjacentHTML("beforeEnd", body);
+
+
+
+
 
 // ANNIVERSARY — https://i.pinimg.com/originals/6e/a7/b5/6ea7b5ac3d63422d2231dbd64953d786.png
 // WINTERFEAST — https://clifffordw.github.io/ClifffWidgets/Drops/Seasonal Icons/feast.png

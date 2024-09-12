@@ -27,6 +27,9 @@ const body =
           const iconUrl = data['Don\'t Starve Together']['icon'];
           const itemUrl = data['Don\'t Starve Together']['item'];
           const portraitUrl = data['Don\'t Starve Together']['portrait'];
+
+          const collectionName = data['Don\'t Starve Together']['collectionName'];
+          const englishName = data['Don\'t Starve Together']['englishName'];
       
           // Create image elements with class names
           const iconImage = document.createElement('img');
@@ -46,6 +49,8 @@ const body =
           document.getElementsByClassName("bg-portrait")[0].src = portraitImage.src
           document.getElementsByClassName("bg-item")[0].src = itemImage.src
 
+
+          
 
           
           

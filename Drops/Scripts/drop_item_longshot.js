@@ -16,7 +16,8 @@ const body =
     
     
       // Fetch the JSON data
-      fetch('https://corsproxy.io/?https://cdn.forums.klei.com/drops/current_campaign.json')
+      
+      fetch('https://cdn.forums.klei.com/drops/current_campaign.json')
       .then(response => response.json())
       .then(data => {
           // Extract image URLs

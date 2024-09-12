@@ -55,6 +55,28 @@ const body =
       });
     
 
+
+
+      fetch('https://cdn.forums.klei.com/drops/current_campaign.json')
+      .then(response => response.json())
+      .then(data => {
+          // Extract necessary data
+
+          const iconUrl = data['Don\'t Starve Together']['icon'];
+          const portraitUrl = data['Don\'t Starve Together']['portrait'];
+          const itemUrl = data['Don\'t Starve Together']['item'];
+  
+          // Create the message
+          const message = `Drops are active! You can associate your twitch.tv account to Klei Account. Simply head on over to https://accounts.klei.com. After that just watch the stream for the required time: Current Set - ${collectionName} - <img src="${iconUrl}" class="bg-flair" alt="Icon" /> (30 Minutes) - <img src="${portraitUrl}" class="bg-portrait" alt="Portrait" /> (1 Hour 30 Minutes) - ${englishName} (3 Hours). Be sure to collect your drop at https://www.twitch.tv/drops/inventory`;
+  
+          // Display the message
+          document.getElementById('drops-message').innerHTML = message;
+      })
+      .catch(error => {
+          console.error('Error fetching data:', error);
+      });
+  
+
 drops.insertAdjacentHTML("beforeEnd", body);
 
 

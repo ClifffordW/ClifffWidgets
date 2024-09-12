@@ -1,14 +1,1 @@
-<?php
-// Fetch the JSON data from the Klei URL
-$json = file_get_contents('https://cdn.forums.klei.com/drops/current_campaign.json');
-
-// Decode the JSON data into an associative array
-$data = json_decode($json, true);
-
-// Extract the 'collectionName' and 'englishName'
-$collectionName = $data['Don\'t Starve Together']['collectionName'];
-$englishName = $data['Don\'t Starve Together']['englishName'];
-
-// Return the result as plain text
-echo "collectionName: $collectionName, englishName: $englishName";
-?>
+Drops are active! You can associate your twitch.tv account to Klei Account. Simply head on over to https://accounts.klei.com After that just watch the stream for the required time: Current Set - Rose Collection - Icon (30 Minutes) - Portrait (1 Hour 30 Minutes) - Rosebloom Bearger Vest (3 Hours). Be sure to collect your drop at https://www.twitch.tv/drops/inventory

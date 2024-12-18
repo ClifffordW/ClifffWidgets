@@ -2,10 +2,6 @@
 <html lang="en">
 
 <head>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -24,12 +20,6 @@
     <meta name="twitter:title" content="Don't Starve Together Drop">
     <meta name="twitter:description" content="Exclusive drops for Don't Starve Together! Check out the current drop and claim your reward.">
     <meta name="twitter:image" content="https://clifffordw.github.io/ClifffWidgets/Webpage/index.html">
-
-
-
-
-
-
 
     <style>
         /* Font import */
@@ -74,7 +64,7 @@
             backdrop-filter: blur(10px);
             overflow-y: auto;
             position: relative;
-            z-index: 1;
+            z-index: 2;  /* Adjust z-index for window content */
         }
 
         h1 {
@@ -148,6 +138,21 @@
         .drop-btns a:hover {
             background-color: #cc5200;
             transform: translateY(-3px);
+        }
+
+        /* Disclaimer styles */
+        .disclaimer {
+            position: fixed;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px 8px 0px 0px;
+            font-size: 1.2rem;
+            z-index: 3; /* Ensure the disclaimer appears above other elements */
+            text-align: center;
         }
 
         /* Modal and Preview */
@@ -255,6 +260,11 @@
 
 <body>
 
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+        <p>This project is not affiliated with Klei Entertainment. Skindata is provided by Klei API. Made with help from ChatGPT.</p>
+    </div>
+
     <div class="container">
         <!-- Header Navigation -->
         <div class="header-nav">
@@ -284,7 +294,6 @@
             <p>If you are interested in using the widget, you can contact me on Discord: <b>zero2su</b>.</p>
             <iframe src="https://clifffordw.github.io/ClifffWidgets/Drops/Streamers/eternal_grudge.html" frameborder="0"></iframe>
         </div>
-
     </div>
 
     <!-- Audio for Background Music -->
@@ -347,10 +356,6 @@
             currentDropSection.classList.add('hidden');
         };
     </script>
-
-
-
-
 
 </body>
 

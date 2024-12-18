@@ -8,19 +8,6 @@
     <title>Don't Starve Together Drop</title>
     <link rel="icon" href="https://clifffordw.github.io/ClifffWidgets/Webpage/dst.ico" type="image/x-icon">
 
-    <!-- Open Graph Meta Tags for Social Media Previews -->
-    <meta property="og:title" content="Don't Starve Together Drop">
-    <meta property="og:description" content="Exclusive drops for Don't Starve Together! Check out the current drop and claim your reward.">
-    <meta property="og:image" content="https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview.png"> <!-- Thumbnail image for the preview -->
-    <meta property="og:url" content="https://clifffordw.github.io/ClifffWidgets/Webpage/index.html"> <!-- The URL of your page -->
-    <meta property="og:type" content="website">
-
-    <!-- Optional: Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Don't Starve Together Drop">
-    <meta name="twitter:description" content="Exclusive drops for Don't Starve Together! Check out the current drop and claim your reward.">
-    <meta name="twitter:image" content="https://clifffordw.github.io/ClifffWidgets/Webpage/index.html">
-
     <style>
         /* Font import */
         @font-face {
@@ -52,21 +39,27 @@
             position: relative;
         }
 
+        /* Fullscreen Container */
         .container {
-            width: 90%;
-            max-width: 1000px;
-            height: 90%;
-            background: rgba(0, 0, 0, 0.7);
+            width: 100%;
+            height: 100%;
             padding: 40px;
+            box-sizing: border-box;
+            background: rgba(0, 0, 0, 0.7);
             border-radius: 12px;
             text-align: center;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
             overflow-y: auto;
-            position: relative;
-            z-index: 2;  /* Adjust z-index for window content */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
         }
 
+        /* Text and Button Styles */
         h1 {
             font-size: 4rem;
             margin-bottom: 30px;
@@ -87,9 +80,10 @@
             border-radius: 12px;
         }
 
+        /* Header Navigation Buttons */
         .header-nav {
-            display: flex;
-            gap: 40px;
+            display: flex;  /* Flexbox for horizontal button arrangement */
+            gap: 20px; /* Space between buttons */
             margin-bottom: 30px;
             justify-content: center;
         }
@@ -117,22 +111,25 @@
         }
 
         .drop-btns {
-            display: flex;
-            justify-content: space-around;
-            gap: 30px;
-            margin-top: 30px;
+            display: flex;  /* Flexbox for horizontal alignment */
+            gap: 20px;  /* Space between buttons */
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
         }
 
         .drop-btns a {
-            display: block;
-            text-decoration: none;
             padding: 18px 30px;
             background-color: #FF6633;
             color: white;
+            border: none;
             border-radius: 8px;
             font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
             font-size: 1.5rem;
+            text-align: center;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         .drop-btns a:hover {
@@ -140,61 +137,39 @@
             transform: translateY(-3px);
         }
 
-        /* Disclaimer styles */
-        .disclaimer {
-            position: fixed;
-            top: 6px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px 8px 0px 0px;
-            font-size: 1.2rem;
-            z-index: 3; /* Ensure the disclaimer appears above other elements */
-            text-align: center;
-        }
-
-        /* Modal and Preview */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
+        /* Footer Styles */
+        footer {
+            position: absolute;
+            bottom: 20px;
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 800px;
-            width: 80%;
             text-align: center;
-            color: #fff;
+            color: #d1d1d1;
+            font-size: 1rem;
+            z-index: 5;
         }
 
-        iframe {
-            width: 100%;
-            height: 400px;
+        footer img {
+            width: 50px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        footer a {
+            color: #FF6633;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        #widget-drop-preview iframe {
+            width: 60%;
+            height: 50vh;
             border: none;
-            margin-top: 20px;
         }
 
-        .hidden {
-            display: none;
-        }
-
-        audio {
-            display: none;
-        }
-
-        /* Media Queries for Mobile */
+        /* Media Queries for Responsiveness */
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.5rem;
@@ -255,15 +230,15 @@
                 padding: 15px;
             }
         }
+
+        /* Initially hide both sections */
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
-
-    <!-- Disclaimer -->
-    <div class="disclaimer">
-        <p>This project is not affiliated with Klei Entertainment. Skindata is provided by Klei API. Made with help from ChatGPT.</p>
-    </div>
 
     <div class="container">
         <!-- Header Navigation -->
@@ -289,72 +264,74 @@
         </div>
 
         <!-- Widget Drop Preview Section -->
-        <div id="widget-drop-preview">
+        <div id="widget-drop-preview" class="hidden">
             <h2>Widget Drop Preview</h2>
             <p>If you are interested in using the widget, you can contact me on Discord: <b>zero2su</b>.</p>
             <iframe src="https://clifffordw.github.io/ClifffWidgets/Drops/Streamers/eternal_grudge.html" frameborder="0"></iframe>
         </div>
     </div>
 
-    <!-- Audio for Background Music -->
-    <audio id="bg-music" autoplay loop>
-        <source src="https://example.com/dont-starve-background-music1.mp3" type="audio/mpeg">
-        <source src="https://example.com/dont-starve-background-music2.mp3" type="audio/mpeg">
-        <source src="https://example.com/dont-starve-background-music3.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+    <!-- Footer with Disclaimer -->
+    <footer>
+        <img src="https://support.klei.com/hc/theming_assets/01HZPD6TCSEKT66X1B1ASZBB0B" alt="Klei Entertainment Logo">
+        <span>I am not affiliated with Klei Entertainment. Skin data is provided by Klei's API. <a
+                href="https://www.klei.com/" target="_blank">Visit Klei Entertainment</a></span>
+    </footer>
 
     <script>
         // Fetch the current campaign drop details
-        fetch('https://cdn.forums.klei.com/drops/current_campaign.json')
-            .then(response => response.json())
-            .then(data => {
-                // Extract the current drop details
-                const dropName = data['Don\'t Starve Together']['englishName'];
-                const dropGif = data['Don\'t Starve Together']['gif'];
-                const campaignEnd = data['Don\'t Starve Together']['campaignEnd'];  // Extract campaign end date
+        // Fetch the current campaign drop details
+fetch('https://cdn.forums.klei.com/drops/current_campaign.json')
+    .then(response => response.json())
+    .then(data => {
+        const dropName = data['Don\'t Starve Together']['englishName'];
+        const dropGif = data['Don\'t Starve Together']['gif'];
+        const campaignEnd = data['Don\'t Starve Together']['campaignEnd'];
 
-                // Parse the campaign end date
-                const campaignEndDate = new Date(campaignEnd);
-                const currentDate = new Date();
+        const campaignEndDate = new Date(campaignEnd);
+        const currentDate = new Date();
 
-                // Check if the campaign has ended
-                if (campaignEndDate < currentDate) {
-                    document.getElementById('drop-name').textContent = "Current drop unavailable";
-                    document.getElementById('drop-gif').style.display = 'none';  // Remove the GIF if unavailable
-                    document.querySelector('.drop-btns').style.display = 'none';  // Hide the buttons
+        // Check if the campaign has ended
+        if (campaignEndDate < currentDate) {
+            // Campaign unavailable, show "Widget Drop Preview"
+            document.getElementById('drop-name').textContent = "Current drop unavailable";
+            document.getElementById('drop-gif').style.display = 'none';
+            document.querySelector('.drop-btns').style.display = 'none';
 
-                    // Show the grayscale effect and disable the "Current Drop" button
-                    document.getElementById('current-drop-btn').classList.add('grayscale');
-                } else {
-                    // Update the UI with the drop details
-                    document.getElementById('drop-name').textContent = dropName;
-                    document.getElementById('drop-gif').src = dropGif;
+            // Hide the current drop section and show the widget drop preview section
+            document.getElementById('current-drop-btn').classList.add('grayscale');
+            currentDropSection.classList.add('hidden');
+            widgetDropPreviewSection.classList.remove('hidden');
+        } else {
+            // Campaign available, show "Current Drop"
+            document.getElementById('drop-name').textContent = dropName;
+            document.getElementById('drop-gif').src = dropGif;
 
-                    // Enable the "Current Drop" button and remove grayscale effect
-                    document.getElementById('current-drop-btn').classList.remove('grayscale');
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching drop data:', error);
-                document.getElementById('drop-name').textContent = "Error loading drop information";
-            });
-
-        // Set initial view to Widget Drop Preview
-        let currentDropSection = document.getElementById('current-drop');
-        let widgetDropPreviewSection = document.getElementById('widget-drop-preview');
-
-        // Toggle to Current Drop section
-        document.getElementById('current-drop-btn').onclick = function () {
+            // Ensure the "Current Drop" section is shown and the "Widget Drop Preview" is hidden
+            document.getElementById('current-drop-btn').classList.remove('grayscale');
             currentDropSection.classList.remove('hidden');
             widgetDropPreviewSection.classList.add('hidden');
-        };
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching drop data:', error);
+        document.getElementById('drop-name').textContent = "Error loading drop information";
+    });
 
-        // Toggle to Widget Drop Preview section
-        document.getElementById('widget-drop-btn').onclick = function () {
-            widgetDropPreviewSection.classList.remove('hidden');
-            currentDropSection.classList.add('hidden');
-        };
+// Handle button clicks to toggle visibility between sections
+let currentDropSection = document.getElementById('current-drop');
+let widgetDropPreviewSection = document.getElementById('widget-drop-preview');
+
+document.getElementById('current-drop-btn').onclick = function () {
+    currentDropSection.classList.remove('hidden');
+    widgetDropPreviewSection.classList.add('hidden');
+};
+
+document.getElementById('widget-drop-btn').onclick = function () {
+    widgetDropPreviewSection.classList.remove('hidden');
+    currentDropSection.classList.add('hidden');
+};
+
     </script>
 
 </body>

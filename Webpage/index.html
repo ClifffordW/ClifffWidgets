@@ -159,7 +159,7 @@
         }
 
         .header-nav button.grayscale {
-            filter: grayscale(100%) brightness(45%) ;
+            filter: grayscale(100%) brightness(45%);
             pointer-events: none;
         }
 
@@ -353,6 +353,10 @@
                 href="https://www.klei.com/" target="_blank">Visit Klei Entertainment</a></span>
     </footer>
 
+
+    <audio id="electricity-sound" src="https://clifffordw.github.io/ClifffWidgets/Webpage/BLACKOUT_OFF.wav"
+        preload="auto"></audio>
+
     <script>
         // Fetch the current campaign drop details
         // Fetch the current campaign drop details
@@ -410,7 +414,224 @@
             currentDropSection.classList.add('hidden');
         };
 
+
+
+
+
+
+
+
     </script>
+
+
+
+    <style>
+        /* Smooth fade-in for the background */
+        body {
+            animation: fadeInBackground 3s ease;
+        }
+
+        @keyframes fadeInBackground {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* More dramatic flicker like after a blackout */
+        @keyframes blackoutFlicker {
+            0% {
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.3;
+            }
+
+            20% {
+                opacity: 0.1;
+            }
+
+            30% {
+                opacity: 0.5;
+            }
+
+            40% {
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+
+            60% {
+                opacity: 0.4;
+            }
+
+            70% {
+                opacity: 0.8;
+            }
+
+            80% {
+                opacity: 0.9;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Apply the fade-in and blackout flicker with a 1.5s delay */
+        .flicker-in-element {
+            animation: fadeIn 0.25s ease, blackoutFlicker 0.25s ease-in-out;
+            animation-iteration-count: 3;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+
+
+
+    
+
+
+
+    <style>
+        /* Full blackout overlay */
+        #blackout-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            opacity: 1;
+            z-index: 10;
+            visibility: hidden;
+            /* Initially hidden */
+        }
+
+        /* Hide all elements during blackout */
+        .blackout-active * {
+            visibility: hidden;
+        }
+    </style>
+
+    <!-- Blackout overlay -->
+    <div id="blackout-overlay"></div>
+
+    <!-- Blackout sound (optional) -->
+    <audio id="blackout-sound" src="https://clifffordw.github.io/ClifffWidgets/Webpage/BLACKOUT.wav"
+        preload="auto"></audio>
+
+
+
+        <script>
+            // Function to start the blackout effect
+            function triggerBlackoutOff() {
+                // Play the sound
+                const soundEffect = document.getElementById('electricity-sound');
+                soundEffect.volume = 0.25;
+                soundEffect.play();
+
+
+        
+                // Mark the page as visited to avoid autoplay sound on future visits
+                localStorage.setItem('visited', 'true');
+        
+                // Add the flicker animation to the elements with different random delays
+                const bodyElements = document.querySelectorAll('.container, h1, .drop-info, .drop-btns, footer');
+        
+                bodyElements.forEach(el => {
+                    // Random delay between 1.5s and 3s for each element
+                    const randomDelay = Math.random() * 0 + 0.25; // Random delay between 1.5s and 3s
+                    el.style.animationDelay = `${randomDelay}s`;
+        
+                    // Apply flicker-in-element class to trigger flicker
+                    el.classList.add('flicker-in-element');
+                });
+            }
+        
+            // Function to remove flicker after animation ends
+            window.onload = function () {
+                setTimeout(() => {
+                    const bodyElements = document.querySelectorAll('.flicker-in-element');
+                    bodyElements.forEach(el => {
+                        el.classList.remove('flicker-in-element');
+                    });
+                }, 1500); // Adjust to the total duration of the flicker animation (2s + random delay)
+            };
+        
+            function BlackoutSFX() {
+                const blackoutSound = document.getElementById('blackout-sound');
+                blackoutSound.volume = 0.25;
+                blackoutSound.play();
+            }
+        
+            function triggerBlackout() {
+                // Play blackout sound
+                BlackoutSFX();
+        
+                // Show blackout overlay
+                const blackoutOverlay = document.getElementById('blackout-overlay');
+                blackoutOverlay.style.visibility = 'visible';
+        
+                // Add blackout class to body to hide content
+                document.body.classList.add('blackout-active');
+        
+                // Wait for 4 seconds, then bring everything back
+                setTimeout(() => {
+                    // Hide the blackout overlay
+                    blackoutOverlay.style.visibility = 'hidden';
+        
+                    // Remove blackout effect
+                    document.body.classList.remove('blackout-active');
+                    triggerBlackoutOff();
+                }, 12000); // Blackout lasts for 12 seconds
+            }
+        
+            // Function to determine whether the blackout happens (5% chance)
+            function shouldTriggerBlackout() {
+                // Generate a random number between 0 and 1
+                const randomChance = Math.random();
+                return randomChance <= 0.05; // 5% chance
+            }
+        
+            // Trigger the blackout after a certain time or event (e.g., on page load or button click)
+            window.onload = function () {
+                if (shouldTriggerBlackout()) {
+                    setTimeout(BlackoutSFX, 2400);  // Wait 2 seconds before triggering blackout sound
+                    setTimeout(triggerBlackout, 4600);  // Wait 4.6 seconds before triggering blackout
+                }
+            };
+        </script>
+        
+
+
+
+
+
+
+
+
+
+
 
 </body>
 

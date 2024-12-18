@@ -112,19 +112,17 @@
         }
 
         .streamer-head {
-            transform: rotate(15deg);
-            animation: ftlak-head 3.4s ease-in-out infinite;
-            filter: drop-shadow(0 1px 4px black);
-            filter: drop-shadow(0 0 0.15rem red);
-            border-radius: 0%;
-            display: block;
-            height: 25%;
-            z-index: -1;
-            position: absolute;
-            top: 120px;
-            left: 500px;
-            width: auto;
-        }
+			transform: rotate(15deg);
+			animation: ftlak-head 3.4s ease-in-out infinite;
+			filter: drop-shadow(0 1px 4px black);
+			filter: drop-shadow(0 0 0.15rem red);
+			border-radius: 25%;
+
+			height: 25%;
+			z-index: 1;
+			position: absolute;
+            content: var(--streamer-head-url);
+		}
 
         .partyhat {
             display: block;
@@ -143,9 +141,11 @@
 
     <div class="drops">
         <!-- Image source will be dynamically set by CSS variable -->
-        <img class="streamer-head" src="var(--streamer-head-url)">
+        <img class="streamer-head" src="">
     </div>
-
+	<script type="text/javascript" src="https://clifffordw.github.io/ClifffWidgets/Drops/Scripts/drop_item_longshot.js">
+		javascript not supported in browser
+	</script>
 </body>
 
 </html>

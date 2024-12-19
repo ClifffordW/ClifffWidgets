@@ -31,6 +31,15 @@
     <meta property="og:site_name" content="Don't Starve Together Drop">
     <meta property="og:locale" content="en_US">
 
+    <!-- Klei Ambassadors CSS and JS -->
+    <link href="https://kleiforums.s3.amazonaws.com/ambassadors/streamerslist.css?1" rel="stylesheet">
+    <script src="https://kleiforums.s3.amazonaws.com/ambassadors/streamerslist.js?1"></script>
+
+
+
+
+
+
 
 
     <style>
@@ -50,7 +59,12 @@
 
         body {
             font-family: Hammerhead, sans-serif;
-            background: url('https://steamuserimages-a.akamaihd.net/ugc/1773874858626954718/C5E06E4D9614B79735DF657A98F5E55ECC241D44/') no-repeat center center fixed;
+            background: url('https://pbs.twimg.com/media/ELEI-yRU4AA3fJe?format=jpg&name=4096x4096') no-repeat center center fixed;
+            /*             background: url('https://steamuserimages-a.akamaihd.net/ugc/1773874858626954718/C5E06E4D9614B79735DF657A98F5E55ECC241D44/') no-repeat center center fixed;
+ */
+
+
+
             background-size: cover;
             color: #d1d1d1;
             display: flex;
@@ -70,7 +84,7 @@
             height: 100%;
             padding: 40px;
             box-sizing: border-box;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.5);
             border-radius: 12px;
             text-align: center;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
@@ -139,11 +153,14 @@
             /* Space between buttons */
             margin-bottom: 30px;
             justify-content: center;
+            
         }
 
         .header-nav button {
             padding: 18px 30px;
-            background-color: #FF6633;
+            
+            background: linear-gradient(135deg, #ff45001a, #ff480079);
+
             color: white;
             border: none;
             border-radius: 8px;
@@ -151,32 +168,43 @@
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease;
             font-size: 1.5rem;
+           
+            
         }
 
         .header-nav button:hover {
-            background-color: #cc5200;
+            
+            background: linear-gradient(135deg, #ff440052, #ff4800a4);
             transform: translateY(-3px);
+            
         }
 
+
+
         .header-nav button.grayscale {
-            filter: grayscale(100%) brightness(45%);
+            filter: saturate(0%) brightness(80%);
             pointer-events: none;
         }
 
         .drop-btns {
             display: flex;
             /* Flexbox for horizontal alignment */
-            gap: 20px;
+            gap: 40px;
             /* Space between buttons */
             align-items: center;
             /* Center vertically */
             justify-content: center;
+
             /* Center horizontally */
+        }
+
+        .linkacc {
+            margin: 15px;
         }
 
         .drop-btns a {
             padding: 18px 30px;
-            background-color: #FF6633;
+            background: linear-gradient(135deg, #4c00ffdc, #6e00ffab);
             color: white;
             border: none;
             border-radius: 8px;
@@ -193,6 +221,7 @@
             background-color: #cc5200;
             transform: translateY(-3px);
         }
+        
 
         /* Footer Styles */
         footer {
@@ -310,7 +339,11 @@
         <!-- Header Navigation -->
         <div class="header-nav">
             <button id="current-drop-btn">Current Drop</button>
-            <button id="widget-drop-btn">Widget Drop Preview</button>
+
+
+            <button id="ambassadors-btn">Klei Ambassadors</button>
+            <button id="widget-drop-btn">Ambassador's Widget</button>
+
         </div>
 
         <!-- Current Drop Section -->
@@ -329,29 +362,237 @@
                 <p><b>Current Drop:</b> <span id="drop-name">Loading...</span></p>
             </div>
 
+            <div id="drop-info" class="drop-info-text horizontal-timers">
+                <!-- Drop details will be inserted here -->
+            </div>
+
             <div class="drop-btns">
-                <a href="https://accounts.klei.com/account/rewards" target="_blank">Link Your Account</a>
-                <a href="https://forums.kleientertainment.com/ambassador-list/" class="secondary" target="_blank">Klei
-                    Ambassadors</a>
+                <div class="linkacc">
+                    <a href="https://accounts.klei.com/account/rewards" target="_blank">Link Your Account</a>
+                </div>
             </div>
         </div>
 
 
+        <div id="ambassadors-section" class="hidden">
+            <!-- The list of streams will be injected here -->
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", async function () {
+                try {
+                    // Fetch the JSON data
+                    const response = await fetch("https://kleiforums.s3.amazonaws.com/gameimages/amblist.json");
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+
+                    // Select the div to display the streams
+                    const streamListDiv = document.getElementById("ambassadors-section");
+
+                    // Generate HTML for each stream
+                    const streamHTML = data
+                        .map(stream => `
+                            <div class="stream">
+                                <img class="profile-icon" src="${stream.ProfileIcon}" alt="${stream.Name}'s profile icon">
+                                <div class="stream-details">
+                                    <h2>${stream.Name}</h2>
+                                    <p><b>Title:</b> ${stream.Title}</p>
+                                    <p><b>Game:</b> ${stream.Game}</p>
+                                    <a href="${stream.StreamURL}" target="_blank">Watch Stream</a>
+                                </div>
+                                <img class="thumbnail" src="${stream.ThumbnailURL}" alt="${stream.Name}'s thumbnail">
+                            </div>
+                        `)
+                        .join("");
+
+                    // Inject the generated HTML into the div
+                    streamListDiv.innerHTML = streamHTML;
+                } catch (error) {
+                    console.error("Error fetching or parsing JSON:", error);
+                }
+            });
+        </script>
+
+        <style>
+            .stream {
+                display: flex;
+                align-items: center;
+                margin: 20px 0;
+                border: 3px solid #ddd;
+                border-image: linear-gradient(to right, #ff45001a 25%, #6e00ffab 75%) 1;
+                padding: 10px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                background: linear-gradient(135deg, #ff45001a, #6e00ffab);
+                backdrop-filter: blur(15px);
+
+            }
+
+
+            .profile-icon {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                margin-right: 15px;
+            }
+
+            .thumbnail {
+                width: 120px;
+                height: 68px;
+                margin-left: 15px;
+                border-radius: 4px;
+            }
+
+            .stream-details {
+                flex-grow: 1;
+                color: #e77137;
+
+            }
+
+            .stream-details h2 {
+                margin: 0;
+                font-size: 1.2em;
+
+            }
+
+            .stream-details p {
+                margin: 5px 0;
+                color: white;
+            }
+
+            .stream-details a {
+                display: inline-block;
+                margin-top: 10px;
+                text-decoration: none;
+                color: #007bff;
+                font-weight: bold;
+            }
+
+            .stream-details a:hover {
+                text-decoration: underline;
+            }
+        </style>
+
+
+        <style>
+            /* Flex container for horizontal alignment */
+            .horizontal-timers {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 16px;
+                /* Space between items */
+                justify-content: center;
+                /* Center-align items horizontally */
+                color: white;
+            }
+
+            /* Individual timer block styling */
+            .horizontal-timers p {
+                backdrop-filter: blur(30px);
+                background: linear-gradient(135deg, #5900ff2a, #ff3c0038);
+                border: 1px solid #252525;
+                border-radius: 8px;
+                text-align: center;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                font-size: 1rem;
+                min-width: 120px;
+                /* Ensure consistent width */
+
+
+            }
+
+            .horizontal-timers {
+                position: relative;
+                bottom: 90px;
+
+            }
+
+            .ambasadorname {
+                color: #fff;
+                font-size: 4rem;
+            }
+
+            .ambasadorname_text {
+                font-size: 2.1rem;
+            }
+
+ 
+        </style>
+
+
+
+
+
         <!-- Widget Drop Preview Section -->
         <div id="widget-drop-preview" class="hidden">
-            <h2>Widget Drop Preview</h2>
-            <p>If you are interested in using the widget, you can contact me on Discord: <b>zero2su</b>.</p>
+            <div class="ambasadorname" <h2>Ambassador's Widget Preview</h2>
+            </div>
+            <div class="ambasadorname_text" <p>If you are interested in using the widget, you can contact me on Discord:
+                <b>zero2su</b>.</p>
+            </div>
+
             <iframe src="https://clifffordw.github.io/ClifffWidgets/Drops/Streamers/eternal_grudge.html"
                 frameborder="0"></iframe>
         </div>
     </div>
 
-    <!-- Footer with Disclaimer -->
     <footer>
-        <img src="https://support.klei.com/hc/theming_assets/01HZPD6TCSEKT66X1B1ASZBB0B" alt="Klei Entertainment Logo">
-        <span>I am not affiliated with Klei Entertainment. Skin data is provided by Klei's API. <a
-                href="https://www.klei.com/" target="_blank">Visit Klei Entertainment</a></span>
+        <span>
+            I am not affiliated with <img src="https://support.klei.com/hc/theming_assets/01HZPD6TCSEKT66X1B1ASZBB0B" alt="Klei Entertainment Logo" class="footer-logo">. 
+            Skin data is provided by Klei's API. 
+            <a href="https://www.klei.com/" target="_blank">Visit Klei Entertainment</a>
+        </span>
     </footer>
+    
+    <style>
+
+
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+            backdrop-filter: blur(10px); /* Apply blur effect to the background */
+            color: white; /* White text color for better contrast */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10; /* Ensure it's on top of other elements */
+        }
+    
+        footer span {
+            font-size: 14px;
+            line-height: 1.5;
+            display: flex;
+            align-items: center; /* Align text and logo vertically */
+            justify-content: center;
+        }
+    
+        .footer-logo {
+            width: 20px; /* Adjust the logo size */
+            height: auto;
+            margin: 0 5px; /* Space between the logo and text */
+        }
+    
+        footer a {
+            color: #ffcc66; /* Light orange for the link */
+            text-decoration: none;
+        }
+    
+        footer a:hover {
+            text-decoration: underline;
+            color: #ffe680; /* Brighten the link color on hover */
+        }
+    </style>
+    
+
+    
 
 
     <audio id="electricity-sound" src="https://clifffordw.github.io/ClifffWidgets/Webpage/BLACKOUT_OFF.wav"
@@ -372,25 +613,60 @@
 
                 // Check if the campaign has ended
 
+
                 if (campaignEndDate < currentDate) {
                     // Campaign unavailable, show "Widget Drop Preview"
                     document.getElementById('drop-name').textContent = "Current drop unavailable";
                     document.getElementById('drop-gif').style.display = 'none';
                     document.querySelector('.drop-btns').style.display = 'none';
 
+
+
+                    document.getElementById('current-drop-btn').textContent = "Drop Unavailable";
+
                     // Hide the current drop section and show the widget drop preview section
                     document.getElementById('current-drop-btn').classList.add('grayscale');
                     currentDropSection.classList.add('hidden');
-                    widgetDropPreviewSection.classList.remove('hidden');
+                    ambassadorsSection.classList.remove('hidden');
+                    widgetDropPreviewSection.classList.add('hidden');
                 } else {
                     // Campaign available, show "Current Drop"
                     document.getElementById('drop-name').textContent = dropName;
                     document.getElementById('drop-gif').src = dropGif;
 
+
+                    // Set the item name dynamically
+                    document.getElementById('drop-name').textContent = dropName;
+
+                    // Drop details in minutes
+                    const dropDetails = [
+                        { time: 30, reward: "Profile Flair" },
+                        { time: 90, reward: "Portrait" },
+                        { time: 180, reward: dropName } // Use the dynamically set item name
+                    ];
+
+                    // Filter out the first 20 minutes and keep time in minutes
+                    const formattedDetails = dropDetails
+                        .filter(detail => detail.time > 20)
+                        .map(detail => {
+                            return `<p>${detail.time} minutes: <br><b>${detail.reward}</b></p>`;
+                        });
+
+                    // Inject into the #drop-info div
+                    const dropInfoDiv = document.getElementById("drop-info");
+                    dropInfoDiv.innerHTML = formattedDetails.join("");
+
+                    // Optional: Remove the 'hidden' class to display the section
+                    const currentDropDiv = document.getElementById("current-drop");
+                    currentDropDiv.classList.remove("hidden");
+
+
                     // Ensure the "Current Drop" section is shown and the "Widget Drop Preview" is hidden
                     document.getElementById('current-drop-btn').classList.remove('grayscale');
                     currentDropSection.classList.remove('hidden');
                     widgetDropPreviewSection.classList.add('hidden');
+                    /*                     ambassadorsSection.classList.add('hidden');
+                     */
                 }
 
 
@@ -407,11 +683,23 @@
         document.getElementById('current-drop-btn').onclick = function () {
             currentDropSection.classList.remove('hidden');
             widgetDropPreviewSection.classList.add('hidden');
+            ambassadorsSection.classList.add('hidden');
         };
 
         document.getElementById('widget-drop-btn').onclick = function () {
             widgetDropPreviewSection.classList.remove('hidden');
             currentDropSection.classList.add('hidden');
+            ambassadorsSection.classList.add('hidden');
+        };
+
+        // Get reference to the Ambassadors section
+        let ambassadorsSection = document.getElementById('ambassadors-section');
+
+        // Handle Ambassadors button click
+        document.getElementById('ambassadors-btn').onclick = function () {
+            ambassadorsSection.classList.remove('hidden');
+            currentDropSection.classList.add('hidden');
+            widgetDropPreviewSection.classList.add('hidden');
         };
 
 
@@ -425,203 +713,8 @@
 
 
 
-    <style>
-        /* Smooth fade-in for the background */
-        body {
-            animation: fadeInBackground 3s ease;
-        }
-
-        @keyframes fadeInBackground {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* More dramatic flicker like after a blackout */
-        @keyframes blackoutFlicker {
-            0% {
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 0.3;
-            }
-
-            20% {
-                opacity: 0.1;
-            }
-
-            30% {
-                opacity: 0.5;
-            }
-
-            40% {
-                opacity: 0.2;
-            }
-
-            50% {
-                opacity: 0.6;
-            }
-
-            60% {
-                opacity: 0.4;
-            }
-
-            70% {
-                opacity: 0.8;
-            }
-
-            80% {
-                opacity: 0.9;
-            }
-
-            90% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
-        /* Apply the fade-in and blackout flicker with a 1.5s delay */
-        .flicker-in-element {
-            animation: fadeIn 0.25s ease, blackoutFlicker 0.25s ease-in-out;
-            animation-iteration-count: 3;
-        }
-
-        /* Fade-in animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-    </style>
 
 
-
-    
-
-
-
-    <style>
-        /* Full blackout overlay */
-        #blackout-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: black;
-            opacity: 1;
-            z-index: 10;
-            visibility: hidden;
-            /* Initially hidden */
-        }
-
-        /* Hide all elements during blackout */
-        .blackout-active * {
-            visibility: hidden;
-        }
-    </style>
-
-    <!-- Blackout overlay -->
-    <div id="blackout-overlay"></div>
-
-    <!-- Blackout sound (optional) -->
-    <audio id="blackout-sound" src="https://clifffordw.github.io/ClifffWidgets/Webpage/BLACKOUT.wav"
-        preload="auto"></audio>
-
-
-
-        <script>
-            // Function to start the blackout effect
-            function triggerBlackoutOff() {
-                // Play the sound
-                const soundEffect = document.getElementById('electricity-sound');
-                soundEffect.volume = 0.25;
-                soundEffect.play();
-
-
-        
-                // Mark the page as visited to avoid autoplay sound on future visits
-                localStorage.setItem('visited', 'true');
-        
-                // Add the flicker animation to the elements with different random delays
-                const bodyElements = document.querySelectorAll('.container, h1, .drop-info, .drop-btns, footer');
-        
-                bodyElements.forEach(el => {
-                    // Random delay between 1.5s and 3s for each element
-                    const randomDelay = Math.random() * 0 + 0.25; // Random delay between 1.5s and 3s
-                    el.style.animationDelay = `${randomDelay}s`;
-        
-                    // Apply flicker-in-element class to trigger flicker
-                    el.classList.add('flicker-in-element');
-                });
-            }
-        
-            // Function to remove flicker after animation ends
-            window.onload = function () {
-                setTimeout(() => {
-                    const bodyElements = document.querySelectorAll('.flicker-in-element');
-                    bodyElements.forEach(el => {
-                        el.classList.remove('flicker-in-element');
-                    });
-                }, 1500); // Adjust to the total duration of the flicker animation (2s + random delay)
-            };
-        
-            function BlackoutSFX() {
-                const blackoutSound = document.getElementById('blackout-sound');
-                blackoutSound.volume = 0.25;
-                blackoutSound.play();
-            }
-        
-            function triggerBlackout() {
-                // Play blackout sound
-                BlackoutSFX();
-        
-                // Show blackout overlay
-                const blackoutOverlay = document.getElementById('blackout-overlay');
-                blackoutOverlay.style.visibility = 'visible';
-        
-                // Add blackout class to body to hide content
-                document.body.classList.add('blackout-active');
-        
-                // Wait for 4 seconds, then bring everything back
-                setTimeout(() => {
-                    // Hide the blackout overlay
-                    blackoutOverlay.style.visibility = 'hidden';
-        
-                    // Remove blackout effect
-                    document.body.classList.remove('blackout-active');
-                    triggerBlackoutOff();
-                }, 12000); // Blackout lasts for 12 seconds
-            }
-        
-            // Function to determine whether the blackout happens (5% chance)
-            function shouldTriggerBlackout() {
-                // Generate a random number between 0 and 1
-                const randomChance = Math.random();
-                return randomChance <= 0.05; // 5% chance
-            }
-        
-            // Trigger the blackout after a certain time or event (e.g., on page load or button click)
-            window.onload = function () {
-                if (shouldTriggerBlackout()) {
-                    setTimeout(BlackoutSFX, 2400);  // Wait 2 seconds before triggering blackout sound
-                    setTimeout(triggerBlackout, 4600);  // Wait 4.6 seconds before triggering blackout
-                }
-            };
-        </script>
-        
 
 
 

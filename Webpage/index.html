@@ -153,12 +153,12 @@
             /* Space between buttons */
             margin-bottom: 30px;
             justify-content: center;
-            
+
         }
 
         .header-nav button {
             padding: 18px 30px;
-            
+
             background: linear-gradient(135deg, #ff45001a, #ff480079);
 
             color: white;
@@ -168,15 +168,15 @@
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease;
             font-size: 1.5rem;
-           
-            
+
+
         }
 
         .header-nav button:hover {
-            
+
             background: linear-gradient(135deg, #ff440052, #ff4800a4);
             transform: translateY(-3px);
-            
+
         }
 
 
@@ -221,7 +221,7 @@
             background-color: #cc5200;
             transform: translateY(-3px);
         }
-        
+
 
         /* Footer Styles */
         footer {
@@ -373,13 +373,41 @@
 
 
                 <div class="spoolspoints">
-                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2308653652" target="_blank">Check Available Spools'n'Points</a>
+                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2308653652" target="_blank">Check
+                        Available Spools'n'Points</a>
                 </div>
 
 
-                
+
             </div>
         </div>
+
+        <style>
+
+
+            .spoolspoints a {
+            padding: 18px 30px;
+            background: linear-gradient(6deg, #ffbb00d2 2%, #c70505c4 150%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1.5rem;
+            text-align: center;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .spoolspoints a:hover {
+            background-color: #ff0000;
+            transform: translateY(-3px);
+        }
+
+
+
+        </style>
 
 
         <div id="ambassadors-section" class="hidden">
@@ -526,8 +554,6 @@
             .ambasadorname_text {
                 font-size: 2.1rem;
             }
-
- 
         </style>
 
 
@@ -549,20 +575,21 @@
 
     <footer>
         <span>
-            I am not affiliated with <img src="https://support.klei.com/hc/theming_assets/01HZPD6TCSEKT66X1B1ASZBB0B" alt="Klei Entertainment Logo" class="footer-logo">. 
-            Skin data is provided by Klei's API. 
+            I am not affiliated with <img src="https://support.klei.com/hc/theming_assets/01HZPD6TCSEKT66X1B1ASZBB0B"
+                alt="Klei Entertainment Logo" class="footer-logo">.
+            Skin data is provided by Klei's API.
             <a href="https://www.klei.com/" target="_blank">Visit Klei Entertainment</a>
         </span>
     </footer>
-    
+
     <style>
-
-
-
         footer {
-            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
-            backdrop-filter: blur(10px); /* Apply blur effect to the background */
-            color: white; /* White text color for better contrast */
+            background-color: rgba(0, 0, 0, 0.7);
+            /* Semi-transparent black background */
+            backdrop-filter: blur(10px);
+            /* Apply blur effect to the background */
+            color: white;
+            /* White text color for better contrast */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -571,36 +598,42 @@
             bottom: 0;
             left: 0;
             right: 0;
-            z-index: 10; /* Ensure it's on top of other elements */
+            z-index: 10;
+            /* Ensure it's on top of other elements */
         }
-    
+
         footer span {
             font-size: 14px;
             line-height: 1.5;
             display: flex;
-            align-items: center; /* Align text and logo vertically */
+            align-items: center;
+            /* Align text and logo vertically */
             justify-content: center;
         }
-    
+
         .footer-logo {
-            width: 20px; /* Adjust the logo size */
+            width: 20px;
+            /* Adjust the logo size */
             height: auto;
-            margin: 0 5px; /* Space between the logo and text */
+            margin: 0 5px;
+            /* Space between the logo and text */
         }
-    
+
         footer a {
-            color: #ffcc66; /* Light orange for the link */
+            color: #ffcc66;
+            /* Light orange for the link */
             text-decoration: none;
         }
-    
+
         footer a:hover {
             text-decoration: underline;
-            color: #ffe680; /* Brighten the link color on hover */
+            color: #ffe680;
+            /* Brighten the link color on hover */
         }
     </style>
-    
 
-    
+
+
 
 
     <audio id="electricity-sound" src="https://clifffordw.github.io/ClifffWidgets/Webpage/BLACKOUT_OFF.wav"
@@ -674,8 +707,8 @@
                     document.getElementById('current-drop-btn').classList.remove('grayscale');
                     currentDropSection.classList.remove('hidden');
                     widgetDropPreviewSection.classList.add('hidden');
-                                      ambassadorsSection.classList.add('hidden');
-                    
+                    ambassadorsSection.classList.add('hidden');
+
                 }
 
 

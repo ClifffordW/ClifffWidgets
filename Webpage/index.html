@@ -607,6 +607,7 @@
                 const dropName = data['Don\'t Starve Together']['englishName'];
                 const dropGif = data['Don\'t Starve Together']['gif'];
                 const campaignEnd = data['Don\'t Starve Together']['campaignEnd'];
+                const campaignStart = data['Don\'t Starve Together']['campaignStart'];
 
                 const campaignEndDate = new Date(campaignEnd);
                 const currentDate = new Date();
@@ -614,7 +615,7 @@
                 // Check if the campaign has ended
 
 
-                if (campaignEndDate < currentDate) {
+                if (campaignEndDate < campaignStart) {
                     // Campaign unavailable, show "Widget Drop Preview"
                     document.getElementById('drop-name').textContent = "Current drop unavailable";
                     document.getElementById('drop-gif').style.display = 'none';
@@ -665,8 +666,8 @@
                     document.getElementById('current-drop-btn').classList.remove('grayscale');
                     currentDropSection.classList.remove('hidden');
                     widgetDropPreviewSection.classList.add('hidden');
-                    /*                     ambassadorsSection.classList.add('hidden');
-                     */
+                                      ambassadorsSection.classList.add('hidden');
+                    
                 }
 
 

@@ -383,30 +383,25 @@
         </div>
 
         <style>
-
-
             .spoolspoints a {
-            padding: 18px 30px;
-            background: linear-gradient(6deg, #ffbb00d2 2%, #c70505c4 150%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 1.5rem;
-            text-align: center;
-            display: inline-block;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
+                padding: 18px 30px;
+                background: linear-gradient(6deg, #ffbb00d2 2%, #c70505c4 150%);
+                color: white;
+                border: none;
+                border-radius: 8px;
+                font-weight: bold;
+                cursor: pointer;
+                text-decoration: none;
+                font-size: 1.5rem;
+                text-align: center;
+                display: inline-block;
+                transition: background-color 0.3s ease, transform 0.3s ease;
+            }
 
-        .spoolspoints a:hover {
-            background-color: #ff0000;
-            transform: translateY(-3px);
-        }
-
-
-
+            .spoolspoints a:hover {
+                background-color: #ff0000;
+                transform: translateY(-3px);
+            }
         </style>
 
 
@@ -430,22 +425,37 @@
 
                     // Generate HTML for each stream
                     const streamHTML = data
-                        .map(stream => `
-                            <div class="stream">
-                                <img class="profile-icon" src="${stream.ProfileIcon}" alt="${stream.Name}'s profile icon">
-                                <div class="stream-details">
-                                    <h2>${stream.Name}</h2>
-                                    <p><b>Title:</b> ${stream.Title}</p>
-                                    <p><b>Game:</b> ${stream.Game}</p>
-                                    <a href="${stream.StreamURL}" target="_blank">Watch Stream</a>
+                        .map(stream => {
+                            // Modify the ThumbnailURL to use 1920x1080 instead of 440x248
+                            let thumbnailURL = stream.ThumbnailURL;
+
+                            // Check if the URL contains '440x248' and replace it with '1920x1080'
+                            if (thumbnailURL.includes('440x248')) {
+                                thumbnailURL = thumbnailURL.replace('440x248', '1920x1080');
+                            }
+
+                            return `
+                                <div class="stream">
+                                    <img class="profile-icon" src="${stream.ProfileIcon}" alt="${stream.Name}'s profile icon">
+                                    <div class="stream-details">
+                                        <h2>${stream.Name}</h2>
+                                        <p><b>Title:</b> ${stream.Title}</p>
+                                        <p><b>Game:</b> ${stream.Game}</p>
+                                        <div class="stream-watch">
+                                            <a href="${stream.StreamURL}" target="_blank">Watch Stream</a>
+                                        </div>
+                                    </div>
+                                    <!-- Use the modified thumbnail URL here -->
+                                    <img class="thumbnail" src="${thumbnailURL}" alt="${stream.Name}'s thumbnail">
                                 </div>
-                                <img class="thumbnail" src="${stream.ThumbnailURL}" alt="${stream.Name}'s thumbnail">
-                            </div>
-                        `)
+                            `;
+                        })
                         .join("");
 
                     // Inject the generated HTML into the div
                     streamListDiv.innerHTML = streamHTML;
+
+
                 } catch (error) {
                     console.error("Error fetching or parsing JSON:", error);
                 }
@@ -464,33 +474,69 @@
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
                 background: linear-gradient(135deg, #ff45001a, #6e00ffab);
                 backdrop-filter: blur(15px);
+                transition: 0.5s;
+                
+
+
+
 
             }
 
+            .stream:hover {
+
+
+                scale: 102%;
+                filter: drop-shadow(0 0 5rem purple);
+
+
+
+            }
+
+            .stream:hover .thumbnail {
+
+
+                filter: drop-shadow(0 0 5rem purple);
+                margin-top: px;
+
+
+
+            }
+
+            .thumbnail_bg {
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
+            .stream-watch {
+                font-size: 1.2em;
+            }
 
             .profile-icon {
-                width: 60px;
-                height: 60px;
-                border-radius: 50%;
+                width: 128px;
+                height: auto;
+                border-radius: 0%;
                 margin-right: 15px;
             }
 
             .thumbnail {
-                width: 120px;
-                height: 68px;
+                width: 25%;
+                height: auto;
                 margin-left: 15px;
                 border-radius: 4px;
+                transition: 0.5s;
+                z-index: 5;
             }
 
             .stream-details {
                 flex-grow: 1;
                 color: #e77137;
+                font-size: 1.2em;
 
             }
 
             .stream-details h2 {
                 margin: 0;
-                font-size: 1.2em;
+
 
             }
 
@@ -503,7 +549,7 @@
                 display: inline-block;
                 margin-top: 10px;
                 text-decoration: none;
-                color: #007bff;
+                color: #e100ff;
                 font-weight: bold;
             }
 

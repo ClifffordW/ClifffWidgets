@@ -106,6 +106,10 @@
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
         }
 
+        p {
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+        }
+
         /* Updated Current Drop Section */
         .drop-info {
             font-size: 2rem;
@@ -396,6 +400,7 @@
                 text-align: center;
                 display: inline-block;
                 transition: background-color 0.3s ease, transform 0.3s ease;
+                margin: 15px;
             }
 
             .spoolspoints a:hover {
@@ -564,7 +569,7 @@
             .horizontal-timers {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 16px;
+                gap: 45px;
                 /* Space between items */
                 justify-content: center;
                 /* Center-align items horizontally */
@@ -574,7 +579,7 @@
             /* Individual timer block styling */
             .horizontal-timers p {
                 backdrop-filter: blur(30px);
-                background: linear-gradient(135deg, #5900ff2a, #ff3c0038);
+                background: linear-gradient(135deg, #835315, rgba(180, 100, 19, 0.22));
                 border: 1px solid #252525;
                 border-radius: 8px;
                 text-align: center;
@@ -582,13 +587,15 @@
                 font-size: 1rem;
                 min-width: 120px;
                 /* Ensure consistent width */
+                scale: 125%;
 
 
             }
 
             .horizontal-timers {
                 position: relative;
-                bottom: 90px;
+                top: 5px;
+
 
             }
 

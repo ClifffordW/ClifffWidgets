@@ -59,7 +59,7 @@
 
         body {
             font-family: Hammerhead, sans-serif;
-            background: url('https://pbs.twimg.com/media/ELEI-yRU4AA3fJe?format=jpg&name=4096x4096') no-repeat center center fixed;
+            background: url('https://accounts.klei.com/assets/images/background_dark.jpg') no-repeat center center fixed;
             /*             background: url('https://steamuserimages-a.akamaihd.net/ugc/1773874858626954718/C5E06E4D9614B79735DF657A98F5E55ECC241D44/') no-repeat center center fixed;
  */
 
@@ -74,8 +74,9 @@
             width: 100%;
             margin: 0;
             overflow: hidden;
-            backdrop-filter: blur(8px);
+            /* backdrop-filter: blur(8px); */
             position: relative;
+
         }
 
         /* Fullscreen Container */
@@ -84,11 +85,11 @@
             height: 100%;
             padding: 40px;
             box-sizing: border-box;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.2);
             border-radius: 12px;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            /*       backdrop-filter: blur(10px); */
             overflow-y: auto;
             position: absolute;
             top: 0;
@@ -204,6 +205,15 @@
 
         .linkacc {
             margin: 15px;
+            display: flex;
+            align-items: center;
+            
+        }
+        .linkacc img {
+            width: 64px;
+            height: 32px;
+            vertical-align: middle;
+            margin-right: 5px;
         }
 
         .drop-btns a {
@@ -348,6 +358,9 @@
             <button id="ambassadors-btn">Klei Ambassadors</button>
             <button id="widget-drop-btn">Ambassador's Widget</button>
 
+            <button id="redeemables-btn">Redeemables</button>
+
+
         </div>
 
         <!-- Current Drop Section -->
@@ -360,6 +373,18 @@
             <!-- Move the drop details below the GIF -->
             <div>
                 <img id="drop-gif" class="drop-gif" src="" alt="Current Drop GIF">
+
+
+                <div class="drop-btns">
+                    <div class="linkacc">
+                        <a href="https://accounts.klei.com/account/twitch/link"  target="_blank">Link Your                         <img src="https://blog.logomyway.com/wp-content/uploads/2021/03/Twitch-logo-PNG.png"
+                            alt="Twitch Logo" width="128" height="64" >Account 
+    
+    
+                        </a>
+                    </div>
+    
+                </div>
             </div>
 
             <div>
@@ -370,39 +395,55 @@
                 <!-- Drop details will be inserted here -->
             </div>
 
-            <div class="drop-btns">
-                <div class="linkacc">
-                    <a href="https://accounts.klei.com/account/twitch/link" target="_blank">Link Your Account</a>
-                </div>
 
 
 
+        </div>
 
 
-            </div>
+        <div id="redeemables" class="redeemables hidden">
+            <h1>Spools'n'Points</h1>
+            <h2>Get your links for points and spools! </h2>
+
+
+
+            
+
 
             <div class="point-btns">
 
 
 
                 <div class="spoolspoints">
-                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2308653652" target="_blank">Check
-                        Available Spools'n'Points</a>
+                    <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2308653652" target="_blank">
+                        <img src="https://cdn.freebiesupply.com/logos/large/2x/steam-1-logo-black-and-white.png"
+                            alt="Steam Logo" width="128" height="128">
+                    </a>
                 </div>
 
                 <div class="spoolspoints_forums">
-                    <a href="https://forums.kleientertainment.com/forums/topic/119013-free-spools-and-points/" target="_blank">Check
-                        Available Spools'n'Points (Forums)</a>
+                    <a href="https://forums.kleientertainment.com/forums/topic/119013-free-spools-and-points/"
+                        target="_blank">
+                        <img src="https://support.klei.com/hc/theming_assets/01HZPD6TCSEKT66X1B1ASZBB0B" alt="Klei Logo"
+                            width="128" height="128">
+                    </a>
                 </div>
+
 
 
             </div>
         </div>
 
         <style>
+            .spoolspoints {
+                position: flex;
+                align-items: center;
+            }
+
             .spoolspoints a {
                 padding: 18px 30px;
-                background: linear-gradient(6deg, #ffbb00d2 2%, #c70505c4 150%);
+                /*                 background: linear-gradient(6deg, #ffbb00d2 2%, #c70505c4 150%);
+ */
                 color: white;
                 border: none;
                 border-radius: 8px;
@@ -412,28 +453,43 @@
                 font-size: 1.5rem;
                 text-align: center;
                 display: inline-block;
-                transition: background-color 0.3s ease, transform 0.3s ease;
+                /*                 transition: background-color 0.3s ease, transform 0.3s ease;
+
+ */
+                transition: 0.3s ease;
                 margin: 15px;
+                filter: invert(1);
+
             }
+
+
 
             .spoolspoints a:hover {
-                background-color: #ff0000;
-                transform: translateY(-3px);
+                /*                 background-color: #ff0000;
+ */
+                transform: translateY(-6px) scale(1.06);
+
+
+
             }
 
 
 
-            .point-btns
-            {
-                
+
+
+            .point-btns {
                 display: flex;
-                justify-content:center;
+                justify-content: center;
             }
+
+
+
 
             .spoolspoints_forums a {
-                
+
                 padding: 18px 30px;
-                background: linear-gradient(6deg, #ffbb00d2 2%, #c70505c4 150%);
+                /*                 background: linear-gradient(6deg, #ffbb00d2 2%, #c70505c4 150%);
+ */
                 color: white;
                 border: none;
                 border-radius: 8px;
@@ -448,8 +504,9 @@
             }
 
             .spoolspoints_forums a:hover {
-                background-color: #ff0000;
-                transform: translateY(-3px);
+                /*                 background-color: #ff0000;
+ */
+                transform: translateY(-6px) scale(1.06);
             }
         </style>
 
@@ -522,20 +579,21 @@
                 border-radius: 8px;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
                 background: linear-gradient(135deg, #ff45001a, #6e00ffab);
-                backdrop-filter: blur(15px);
+                /* backdrop-filter: blur(15px); */
                 transition: 0.5s;
+
+
                 
-
-
 
 
             }
 
             .stream:hover {
 
+                background: linear-gradient(135deg, #ff45001a, #ff6a00ab);
 
                 scale: 102%;
-                filter: drop-shadow(0 0 5rem purple);
+                
 
 
 
@@ -545,7 +603,7 @@
 
 
                 filter: drop-shadow(0 0 5rem purple);
-                margin-top: px;
+                margin-top: 6px;
 
 
 
@@ -558,7 +616,19 @@
 
             .stream-watch {
                 font-size: 1.2em;
+                transition: 0.25s;
+
             }
+
+            .stream:hover .stream-watch {
+
+
+                scale: 150%;
+                filter: drop-shadow(0 0 0.5rem rgb(212, 67, 0));
+
+
+
+                }
 
             .profile-icon {
                 width: 128px;
@@ -598,7 +668,7 @@
                 display: inline-block;
                 margin-top: 10px;
                 text-decoration: none;
-                color: #e100ff;
+                color: #ff6200;
                 font-weight: bold;
             }
 
@@ -622,8 +692,8 @@
 
             /* Individual timer block styling */
             .horizontal-timers p {
-                backdrop-filter: blur(30px);
-                background: linear-gradient(135deg, #835315, rgba(180, 100, 19, 0.22));
+                /* backdrop-filter: blur(30px); */
+                background: linear-gradient(135deg, #c058177e, rgba(180, 100, 19, 0.22));
                 border: 1px solid #252525;
                 border-radius: 8px;
                 text-align: center;
@@ -673,7 +743,7 @@
     <footer>
         <span>
             I am not affiliated with <img src="https://support.klei.com/hc/theming_assets/01HZPD6TCSEKT66X1B1ASZBB0B"
-                alt="Klei Entertainment Logo" class="footer-logo">.
+                alt="Klei Entertainment Logo" class="footer-logo">
             Skin data is provided by Klei's API.
             <a href="https://www.klei.com/" target="_blank">Visit Klei Entertainment</a>
         </span>
@@ -683,7 +753,7 @@
         footer {
             background-color: rgba(0, 0, 0, 0.7);
             /* Semi-transparent black background */
-            backdrop-filter: blur(10px);
+            /* backdrop-filter: blur(10px); */
             /* Apply blur effect to the background */
             color: white;
             /* White text color for better contrast */
@@ -818,17 +888,31 @@
         // Handle button clicks to toggle visibility between sections
         let currentDropSection = document.getElementById('current-drop');
         let widgetDropPreviewSection = document.getElementById('widget-drop-preview');
+        let redeemableSection = document.getElementById('redeemables');
+
 
         document.getElementById('current-drop-btn').onclick = function () {
             currentDropSection.classList.remove('hidden');
             widgetDropPreviewSection.classList.add('hidden');
             ambassadorsSection.classList.add('hidden');
+            redeemableSection.classList.add('hidden');
+
         };
 
         document.getElementById('widget-drop-btn').onclick = function () {
             widgetDropPreviewSection.classList.remove('hidden');
             currentDropSection.classList.add('hidden');
             ambassadorsSection.classList.add('hidden');
+            redeemableSection.classList.add('hidden');
+
+        };
+
+        document.getElementById('redeemables-btn').onclick = function () {
+            widgetDropPreviewSection.classList.add('hidden');
+            currentDropSection.classList.add('hidden');
+            ambassadorsSection.classList.add('hidden');
+            redeemableSection.classList.remove('hidden');
+
         };
 
         // Get reference to the Ambassadors section
@@ -839,6 +923,8 @@
             ambassadorsSection.classList.remove('hidden');
             currentDropSection.classList.add('hidden');
             widgetDropPreviewSection.classList.add('hidden');
+            redeemableSection.classList.add('hidden');
+
         };
 
 

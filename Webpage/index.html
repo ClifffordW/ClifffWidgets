@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<body class="loading">
+    <!-- Your content here -->
+</body>
 <head>
+
+    <link rel="preload" href="https://accounts.klei.com/assets/images/background_dark.jpg" as="image">
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -57,11 +64,28 @@
             font-family: Hammerhead, sans-serif;
         }
 
+
+        body.loading {
+            background: #000000;
+            /* Temporary background color */
+        }
+
+        body {
+            background: url('https://accounts.klei.com/assets/images/background_dark.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-color: #2c2c2c;
+            /* Fallback color similar to the image background */
+            transition: background 0.3s ease 1s;
+        }
+
+
         body {
             font-family: Hammerhead, sans-serif;
             background: url('https://accounts.klei.com/assets/images/background_dark.jpg') no-repeat center center fixed;
             /*             background: url('https://steamuserimages-a.akamaihd.net/ugc/1773874858626954718/C5E06E4D9614B79735DF657A98F5E55ECC241D44/') no-repeat center center fixed;
  */
+
+
 
 
 
@@ -207,8 +231,9 @@
             margin: 15px;
             display: flex;
             align-items: center;
-            
+
         }
+
         .linkacc img {
             width: 64px;
             height: 32px;
@@ -377,13 +402,14 @@
 
                 <div class="drop-btns">
                     <div class="linkacc">
-                        <a href="https://accounts.klei.com/account/twitch/link"  target="_blank">Link Your                         <img src="https://blog.logomyway.com/wp-content/uploads/2021/03/Twitch-logo-PNG.png"
-                            alt="Twitch Logo" width="128" height="64" >Account 
-    
-    
+                        <a href="https://accounts.klei.com/account/twitch/link" target="_blank">Link Your <img
+                                src="https://blog.logomyway.com/wp-content/uploads/2021/03/Twitch-logo-PNG.png"
+                                alt="Twitch Logo" width="128" height="64">Account
+
+
                         </a>
                     </div>
-    
+
                 </div>
             </div>
 
@@ -407,7 +433,7 @@
 
 
 
-            
+
 
 
             <div class="point-btns">
@@ -516,6 +542,19 @@
         </div>
 
         <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                const img = new Image();
+                img.src = 'https://accounts.klei.com/assets/images/background_dark.jpg';
+                img.onload = () => {
+                    setTimeout(() => {
+                        document.body.classList.remove('loading');
+                    }, 1000); // 1-second delay
+                };
+            });
+
+
+
+
             document.addEventListener("DOMContentLoaded", async function () {
                 try {
                     // Fetch the JSON data
@@ -583,7 +622,7 @@
                 transition: 0.5s;
 
 
-                
+
 
 
             }
@@ -593,7 +632,7 @@
                 background: linear-gradient(135deg, #ff45001a, #ff6a00ab);
 
                 scale: 102%;
-                
+
 
 
 
@@ -628,7 +667,7 @@
 
 
 
-                }
+            }
 
             .profile-icon {
                 width: 128px;

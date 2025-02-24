@@ -777,116 +777,182 @@
 
 
 
-        <div id="widget-drop-preview" class="hidden">
-            <div class="ambasadorname">
-                <h2>Ambassador's Widget Preview</h2>
-            </div>
-            <div class="ambasadorname_text">
-                <p>If you are interested in using the widget, you can contact me on Discord: <b>zero2su</b>.</p>
-            </div>
+        <!-- Widget Drop Preview Section -->
+<div id="widget-drop-preview" class="hidden">
+    <div class="ambasadorname">
+        <h2>Ambassador's Widget Preview</h2>
+    </div>
+    <div class="ambasadorname_text">
+        <p>If you are interested in using the widget, you can contact me on Discord: <b>zero2su</b>.</p>
+    </div>
 
-            <!-- Input for Twitch Username -->
-            <div class="widget-input-container">
-                <input type="text" id="twitch-username-input" placeholder="Enter your Twitch username (lowercase)" />
-                <button onclick="loadWidget()">Load Widget</button>
-            </div>
+    <!-- Input for Twitch Username -->
+    <div class="widget-input-container">
+        <input
+            type="text"
+            id="twitch-username-input"
+            placeholder="Enter your Twitch username (lowercase)"
+        />
+        <button onclick="loadWidget()">Load Widget</button>
+    </div>
 
-            <!-- Status Message -->
-            <div id="widget-status" class="widget-status"></div>
+    <!-- Status Message -->
+    <div id="widget-status" class="widget-status"></div>
 
-            <!-- Iframe for Widget Preview -->
-            <iframe id="widget-iframe" src="" frameborder="0"></iframe>
-        </div>
+    <!-- Button to Copy Singular Drop CSS -->
+    <div id="singular-drop-container" class="hidden">
+        <button onclick="copySingularDropCSS()">Copy Singular Drop CSS</button>
+    </div>
 
+    <!-- Iframe for Widget Preview -->
+    <iframe id="widget-iframe" src="" frameborder="0"></iframe>
+</div>
 
-        <!-- Styles for the Input and Button -->
-        <!-- Styles for the Input, Button, and Status Message -->
-        <style>
-            .widget-input-container {
-                margin: 20px 0;
-                display: flex;
-                justify-content: center;
-                gap: 10px;
+<!-- Styles for the Input, Button, and Status Message -->
+<style>
+    .widget-input-container {
+        margin: 20px 0;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    #twitch-username-input {
+        padding: 10px;
+        font-size: 1rem;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        width: 300px;
+        max-width: 80%;
+    }
+
+    #twitch-username-input::placeholder {
+        color: #999;
+    }
+
+    .widget-input-container button {
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #4c00ffdc, #6e00ffab);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .widget-input-container button:hover {
+        background: linear-gradient(135deg, #4c00ffab, #6e00ffdc);
+        transform: translateY(-2px);
+    }
+
+    .widget-status {
+        margin-top: 10px;
+        text-align: center;
+        font-size: 1.5rem;
+        color: #ff5722;
+    }
+
+    #singular-drop-container {
+        margin-top: 20px;
+        text-align: center;
+        
+        
+        
+    }
+
+    #singular-drop-container button {
+        font-size: 1.5rem;
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #ff4500dc, #ff6a00ab);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        width: 300px;
+    }
+
+    #singular-drop-container button:hover {
+        background: linear-gradient(135deg, #ff4400ab, #ff6a00dc);
+        transform: translateY(-2px);
+    }
+</style>
+
+<!-- Script to Handle Input, Check URL, Copy to Clipboard, and Singular Drop CSS -->
+<script>
+    async function loadWidget() {
+        const input = document.getElementById('twitch-username-input');
+        const iframe = document.getElementById('widget-iframe');
+        const status = document.getElementById('widget-status');
+        const singularDropContainer = document.getElementById('singular-drop-container');
+
+        // Ensure the input value is lowercase
+        const username = input.value.toLowerCase();
+
+        if (!username) {
+            status.textContent = "Please enter a valid Twitch username.";
+            singularDropContainer.classList.add('hidden'); // Hide the singular drop button
+            return;
+        }
+
+        // Construct the widget URL
+        const widgetUrl = `https://clifffordw.github.io/ClifffWidgets/Drops/Streamers/${username}.html`;
+
+        // Check if the widget exists
+        try {
+            const response = await fetch(widgetUrl, { method: 'HEAD' });
+            if (response.ok) {
+                // Widget exists: Load it in the iframe and copy the URL to the clipboard
+                iframe.src = widgetUrl;
+                await navigator.clipboard.writeText(widgetUrl);
+                status.textContent = "Widget loaded! URL copied to clipboard.";
+                singularDropContainer.classList.remove('hidden'); // Show the singular drop button
+            } else {
+                // Widget does not exist
+                iframe.src = ""; // Clear the iframe
+                status.textContent = "Widget not found.";
+                singularDropContainer.classList.add('hidden'); // Hide the singular drop button
+            }
+        } catch (error) {
+            console.error("Error checking widget URL:", error);
+            status.textContent = "An error occurred. Please try again.";
+            singularDropContainer.classList.add('hidden'); // Hide the singular drop button
+        }
+    }
+
+    function copySingularDropCSS() {
+        const css = `
+            /* Singular Drop Shown */
+
+            .bg-flair,
+            .bg-portrait {
+            display: none !important;
             }
 
-            #twitch-username-input {
-                padding: 10px;
-                font-size: 1rem;
-                border: 2px solid #ccc;
-                border-radius: 8px;
-                width: 300px;
-                max-width: 80%;
+            .bg-item {
+            width: 60% !important;
+            height: auto !important;
+            margin-top: 100px !important;
+            margin-left: 80px !important;
             }
 
-            #twitch-username-input::placeholder {
-                color: #999;
+            .item-frame {
+            width: 90% !important;
             }
+        `;
 
-            .widget-input-container button {
-                padding: 10px 20px;
-                background: linear-gradient(135deg, #4c00ffdc, #6e00ffab);
-                color: white;
-                border: none;
-                border-radius: 8px;
-                font-weight: bold;
-                cursor: pointer;
-                transition: background-color 0.3s ease, transform 0.3s ease;
-            }
-
-            .widget-input-container button:hover {
-                background: linear-gradient(135deg, #4c00ffab, #6e00ffdc);
-                transform: translateY(-2px);
-            }
-
-            .widget-status {
-                margin-top: 10px;
-                text-align: center;
-                font-size: 1.2rem;
-                color: #ff5722;
-            }
-        </style>
-
-
-
-        </style>
-
-        <!-- Script to Handle Input, Check URL, and Copy to Clipboard -->
-        <script>
-            async function loadWidget() {
-                const input = document.getElementById('twitch-username-input');
-                const iframe = document.getElementById('widget-iframe');
-                const status = document.getElementById('widget-status');
-
-                // Ensure the input value is lowercase
-                const username = input.value.toLowerCase();
-
-                if (!username) {
-                    status.textContent = "Please enter a valid Twitch username.";
-                    return;
-                }
-
-                // Construct the widget URL
-                const widgetUrl = `https://clifffordw.github.io/ClifffWidgets/Drops/Streamers/${username}.html`;
-
-                // Check if the widget exists
-                try {
-                    const response = await fetch(widgetUrl, { method: 'HEAD' });
-                    if (response.ok) {
-                        // Widget exists: Load it in the iframe and copy the URL to the clipboard
-                        iframe.src = widgetUrl;
-                        await navigator.clipboard.writeText(widgetUrl);
-                        status.textContent = "Widget loaded! URL copied to clipboard.";
-                    } else {
-                        // Widget does not exist
-                        iframe.src = ""; // Clear the iframe
-                        status.textContent = "Widget not found.";
-                    }
-                } catch (error) {
-                    console.error("Error checking widget URL:", error);
-                    status.textContent = "An error occurred. Please try again.";
-                }
-            }
-        </script>
+        // Copy the CSS to the clipboard
+        navigator.clipboard.writeText(css.trim())
+            .then(() => {
+                alert("Singular Drop CSS copied to clipboard! \nPaste this into your Custom CSS box inside OBS");
+            })
+            .catch(() => {
+                alert("Failed to copy CSS. Please try again.");
+            });
+    }
+</script>
 
 
 

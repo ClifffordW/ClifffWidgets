@@ -4,6 +4,7 @@
 <body class="loading">
     <!-- Your content here -->
 </body>
+
 <head>
 
     <link rel="preload" href="https://accounts.klei.com/assets/images/background_dark.jpg" as="image">
@@ -365,6 +366,14 @@
             }
         }
 
+        #timer {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #ff5722;
+            margin-top: 10px;
+        }
+
+
         /* Initially hide both sections */
         .hidden {
             display: none;
@@ -391,6 +400,7 @@
         <!-- Current Drop Section -->
         <!-- Current Drop Section -->
         <div id="current-drop" class="drop-info hidden">
+            <div id="timer">Time remaining: 5d 3h 45m 12s</div>
             <h1>Don't Starve Together</h1>
             <p>Get your exclusive drops for Don't Starve Together! <br>Check out the current drop below and claim your
                 reward!</p>
@@ -420,6 +430,7 @@
             <div id="drop-info" class="drop-info-text horizontal-timers">
                 <!-- Drop details will be inserted here -->
             </div>
+
 
 
 
@@ -849,80 +860,101 @@
         // Fetch the current campaign drop details
         // Fetch the current campaign drop details
         fetch('https://cdn.forums.klei.com/drops/current_campaign.json')
-            .then(response => response.json())
-            .then(data => {
-                const dropName = data['Don\'t Starve Together']['englishName'];
-                const dropGif = data['Don\'t Starve Together']['gif'];
-                const campaignEnd = data['Don\'t Starve Together']['campaignEnd'];
-                const campaignStart = data['Don\'t Starve Together']['campaignStart'];
+    .then(response => response.json())
+    .then(data => {
+        const dropName = data['Don\'t Starve Together']['englishName'];
+        const dropGif = data['Don\'t Starve Together']['gif'];
+        const campaignEnd = data['Don\'t Starve Together']['campaignEnd'];
+        const campaignStart = data['Don\'t Starve Together']['campaignStart'];
 
-                const campaignEndDate = new Date(campaignEnd);
-                const currentDate = new Date();
+        const campaignEndDate = new Date(campaignEnd * 1000); // Convert Unix timestamp to Date
+        const currentDate = new Date();
 
-                // Check if the campaign has ended
+        // Check if the campaign has ended
+        if (currentDate > campaignEndDate) {
+            // Campaign has ended, show "Widget Drop Preview"
+            document.getElementById('drop-name').textContent = "Current drop unavailable";
+            document.getElementById('drop-gif').style.display = 'none';
+            document.querySelector('.drop-btns').style.display = 'none';
+            document.getElementById('current-drop-btn').textContent = "Drop Unavailable";
+            document.getElementById('current-drop-btn').classList.add('grayscale');
+            currentDropSection.classList.add('hidden');
+            ambassadorsSection.classList.remove('hidden');
+            widgetDropPreviewSection.classList.add('hidden');
+        } else {
+            // Campaign is still active, show "Current Drop"
+            document.getElementById('drop-name').textContent = dropName;
+            document.getElementById('drop-gif').src = dropGif;
+            document.getElementById('drop-gif').style.display = 'block';
+            document.querySelector('.drop-btns').style.display = 'block';
+            document.getElementById('current-drop-btn').textContent = "Join Drop";
+            document.getElementById('current-drop-btn').classList.remove('grayscale');
+            currentDropSection.classList.remove('hidden');
+            widgetDropPreviewSection.classList.add('hidden');
+            ambassadorsSection.classList.add('hidden');
 
+            // Drop details in minutes
+            const dropDetails = [
+                { time: 30, reward: "Profile Flair" },
+                { time: 90, reward: "Portrait" },
+                { time: 180, reward: dropName } // Use the dynamically set item name
+            ];
 
-                if (campaignEndDate < campaignStart) {
-                    // Campaign unavailable, show "Widget Drop Preview"
+            // Filter out the first 20 minutes and keep time in minutes
+            const formattedDetails = dropDetails
+                .filter(detail => detail.time > 20)
+                .map(detail => {
+                    return `<p>${detail.time} minutes: <br><b>${detail.reward}</b></p>`;
+                });
+
+            // Inject into the #drop-info div
+            const dropInfoDiv = document.getElementById("drop-info");
+            dropInfoDiv.innerHTML = formattedDetails.join("");
+
+            // Timer logic
+            const timerElement = document.getElementById('timer');
+
+            function updateTimer() {
+                const currentDate = new Date(); // Get the updated current date and time
+                const timeRemaining = campaignEndDate - currentDate; // Calculate time remaining in milliseconds
+
+                if (timeRemaining > 0) {
+                    // Calculate days, hours, minutes, and seconds
+                    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+                    // Update the timer display
+                    timerElement.innerHTML = `
+                        Time remaining: ${days}d ${hours}h ${minutes}m ${seconds}s
+                    `;
+                } else {
+                    // Timer has ended
+                    timerElement.innerHTML = "Time's up!"; // Optional: Display a message
+                    timerElement.style.display = 'none'; // Hide the timer
+
+                    // Mark the campaign as unavailable
                     document.getElementById('drop-name').textContent = "Current drop unavailable";
                     document.getElementById('drop-gif').style.display = 'none';
                     document.querySelector('.drop-btns').style.display = 'none';
-
-
-
                     document.getElementById('current-drop-btn').textContent = "Drop Unavailable";
-
-                    // Hide the current drop section and show the widget drop preview section
                     document.getElementById('current-drop-btn').classList.add('grayscale');
                     currentDropSection.classList.add('hidden');
                     ambassadorsSection.classList.remove('hidden');
                     widgetDropPreviewSection.classList.add('hidden');
-                } else {
-                    // Campaign available, show "Current Drop"
-                    document.getElementById('drop-name').textContent = dropName;
-                    document.getElementById('drop-gif').src = dropGif;
-
-
-                    // Set the item name dynamically
-                    document.getElementById('drop-name').textContent = dropName;
-
-                    // Drop details in minutes
-                    const dropDetails = [
-                        { time: 30, reward: "Profile Flair" },
-                        { time: 90, reward: "Portrait" },
-                        { time: 180, reward: dropName } // Use the dynamically set item name
-                    ];
-
-                    // Filter out the first 20 minutes and keep time in minutes
-                    const formattedDetails = dropDetails
-                        .filter(detail => detail.time > 20)
-                        .map(detail => {
-                            return `<p>${detail.time} minutes: <br><b>${detail.reward}</b></p>`;
-                        });
-
-                    // Inject into the #drop-info div
-                    const dropInfoDiv = document.getElementById("drop-info");
-                    dropInfoDiv.innerHTML = formattedDetails.join("");
-
-                    // Optional: Remove the 'hidden' class to display the section
-                    const currentDropDiv = document.getElementById("current-drop");
-                    currentDropDiv.classList.remove("hidden");
-
-
-                    // Ensure the "Current Drop" section is shown and the "Widget Drop Preview" is hidden
-                    document.getElementById('current-drop-btn').classList.remove('grayscale');
-                    currentDropSection.classList.remove('hidden');
-                    widgetDropPreviewSection.classList.add('hidden');
-                    ambassadorsSection.classList.add('hidden');
-
                 }
+            }
 
-
-            })
-            .catch(error => {
-                console.error('Error fetching drop data:', error);
-                document.getElementById('drop-name').textContent = "Error loading drop information";
-            });
+            // Start the timer
+            updateTimer(); // Initial call to avoid delay
+            setInterval(updateTimer, 1000); // Update every second
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching drop data:', error);
+        document.getElementById('drop-name').textContent = "Error loading drop information";
+    });
 
         // Handle button clicks to toggle visibility between sections
         let currentDropSection = document.getElementById('current-drop');

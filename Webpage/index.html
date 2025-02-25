@@ -186,28 +186,62 @@
 
         }
 
+
+        .header-nav:hover {
+            display: flex;
+            /* Flexbox for horizontal button arrangement */
+            gap: 20px;
+            /* Space between buttons */
+            margin-bottom: 30px;
+            justify-content: center;
+            filter: saturate(140%) drop-shadow(1px 1px 25px, rgb(255, 0, 0)) ;
+
+
+        }
+
         .header-nav button {
             padding: 18px 30px;
+            transition: 0.3s ease ;
 
-            background: linear-gradient(135deg, #ff45001a, #ff480079);
+            background: linear-gradient(135deg, rgba(255, 69, 0, 0.102), rgba(255, 72, 0, 0.475));
 
             color: white;
             border: none;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
             font-size: 1.5rem;
+            filter: saturate(100%) drop-shadow(1px 1px 5px  rgb(255, 72, 0));
+
 
 
         }
 
         .header-nav button:hover {
 
-            background: linear-gradient(135deg, #ff440052, #ff4800a4);
+            background: linear-gradient(135deg, rgba(255, 68, 0, 0.322), rgba(255, 72, 0, 0.643));
             transform: translateY(-3px);
+            filter: saturate(100%) drop-shadow(1px 1px 15px  rgb(255, 72, 0));
+
 
         }
+
+  
+
+    #current-drop-btn {
+        background: linear-gradient(135deg, rgba(76, 0, 255, 0.102), rgba(144, 0, 255, 0.558)) ;
+        filter: saturate(100%) drop-shadow(1px 1px 5px rgb(106, 0, 255)) ;
+
+
+    }
+
+    #current-drop-btn:hover {
+        background: linear-gradient(135deg, rgba(76, 0, 255, 0.322), rgba(110, 0, 255, 0.643)) ;
+        filter: saturate(120%) drop-shadow(1px 1px 15px rgb(106, 0, 255)) ;
+
+
+    }
+
 
 
 
@@ -386,7 +420,7 @@
     <div class="container">
         <!-- Header Navigation -->
         <div class="header-nav">
-            <button id="current-drop-btn">Current Drop</button>
+            <button id="current-drop-btn" class="dropbtn">Current Drop</button>
 
 
             <button id="ambassadors-btn">Klei Ambassadors</button>
@@ -1074,9 +1108,12 @@
                         document.querySelector('.drop-btns').style.display = 'none';
                         document.getElementById('current-drop-btn').textContent = "Drop Unavailable";
                         document.getElementById('current-drop-btn').classList.add('grayscale');
+                        
                         currentDropSection.classList.add('hidden');
                         ambassadorsSection.classList.remove('hidden');
                         widgetDropPreviewSection.classList.add('hidden');
+                        document.getElementById('current-drop-btn').style.filter = 'grayscale(100%)';
+
                     } else {
                         // Campaign is still active, show "Current Drop"
                         document.getElementById('drop-name').textContent = dropName;
@@ -1088,6 +1125,7 @@
                         currentDropSection.classList.remove('hidden');
                         widgetDropPreviewSection.classList.add('hidden');
                         ambassadorsSection.classList.add('hidden');
+
 
                         // Drop details in minutes
                         const dropDetails = [
@@ -1114,7 +1152,7 @@
                             const currentDate = new Date(); // Get the updated current date and time
                             const timeRemaining = campaignEndDate - currentDate; // Calculate time remaining in milliseconds
 
-                            if (timeRemaining > 0) {
+                            if (timeRemaining < 0) {
                                 // Calculate days, hours, minutes, and seconds
                                 const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
                                 const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -1134,6 +1172,9 @@
                                 document.getElementById('drop-name').textContent = "Current drop unavailable";
                                 document.getElementById('drop-gif').style.display = 'none';
                                 document.querySelector('.drop-btns').style.display = 'none';
+
+                                document.getElementById('current-drop-btn').style.filter = 'grayscale(100%)';
+
                                 document.getElementById('current-drop-btn').textContent = "Drop Unavailable";
                                 document.getElementById('current-drop-btn').classList.add('grayscale');
                                 currentDropSection.classList.add('hidden');

@@ -1097,8 +1097,82 @@
                     const campaignEnd = data['Don\'t Starve Together']['campaignEnd'];
                     const campaignStart = data['Don\'t Starve Together']['campaignStart'];
 
+
+                    const campaignStartDate = new Date(campaignStart * 1000);
+
                     const campaignEndDate = new Date(campaignEnd * 1000); // Convert Unix timestamp to Date
                     const currentDate = new Date();
+
+
+
+
+
+
+                function requestNotificationPermission() {
+                    if (Notification.permission === 'granted') {
+                        console.log('Notification permission already granted.');
+                    } else if (Notification.permission !== 'denied') {
+                        Notification.requestPermission().then(permission => {
+                            if (permission === 'granted') {
+                                console.log('Notification permission granted.');
+                            } else {
+                                console.log('Notification permission denied.');
+                            }
+                        });
+                    }
+                }
+
+                function notifyUser(title, message, url) {
+                    if (Notification.permission === 'granted') {
+                        const notification = new Notification(title, {
+                            body: message,
+                            icon: 'path/to/icon.png', // Add an icon for better visibility
+                            requireInteraction: true, // Keep the notification open until the user interacts
+                        });
+
+                        notification.onclick = () => {
+                            window.open(url, '_blank'); // Open the drops page in a new tab
+                        };
+                    } else {
+                        console.log('Notification permission not granted.');
+                    }
+                }
+
+                function checkForLiveDrops() {
+  
+     
+
+                        if (currentDate >= campaignStartDate) {
+                            // Drop has started
+                            notifyUser('Drop Started!', `The drop "${dropName}" is now live.`);
+                        } else {
+                            // Drop has not started yet
+                            const timeUntilStart = campaignStartDate - currentDate;
+                            setTimeout(() => {
+                                notifyUser('Drop Started!', `The drop "${dropName}" is now live.`);
+                            }, timeUntilStart);
+                        }
+                        
+                }
+
+                // Request notification permission when the user interacts with the page
+                document.addEventListener('DOMContentLoaded', () => {
+                    requestNotificationPermission();
+                    checkForLiveDrops(); // Initial check
+                    setInterval(checkForLiveDrops, 60000); // Poll every 60 seconds
+                });
+
+
+
+
+
+
+
+
+
+
+
+
 
                     // Check if the campaign has ended
                     if (currentDate > campaignEndDate) {
@@ -1263,6 +1337,11 @@
 
 
 
+
+
+
+
+    
 
 
 

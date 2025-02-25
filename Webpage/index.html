@@ -67,6 +67,23 @@
       rel="stylesheet"
     />
     <script src="https://kleiforums.s3.amazonaws.com/ambassadors/streamerslist.js?1"></script>
+   
+    <audio id="background-music" autoplay  loop>
+        <source src="mus_rr_gameover_loop.wav" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+
+
+    <script>
+        const audio = document.getElementById('background-music');
+        audio.volume = 0.007; // Set volume to 50%
+    </script>
+
+
+
+
+
+
 
     <style>
       /* Font import */
@@ -235,6 +252,11 @@
         transform: translateY(-3px);
         filter: saturate(100%) drop-shadow(1px 1px 15px rgb(255, 72, 0));
       }
+
+
+      
+
+      
 
       #current-drop-btn {
         background: linear-gradient(

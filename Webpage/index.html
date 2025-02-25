@@ -1108,59 +1108,73 @@
 
 
 
-                function requestNotificationPermission() {
-                    if (Notification.permission === 'granted') {
-                        console.log('Notification permission already granted.');
-                    } else if (Notification.permission !== 'denied') {
-                        Notification.requestPermission().then(permission => {
-                            if (permission === 'granted') {
-                                console.log('Notification permission granted.');
-                            } else {
-                                console.log('Notification permission denied.');
-                            }
-                        });
-                    }
-                }
+                    function requestNotificationPermission() {
+    if (Notification.permission === 'granted') {
+        console.log('Notification permission already granted.');
+    } else if (Notification.permission !== 'denied') {
+        Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+                console.log('Notification permission granted.');
+            } else {
+                console.log('Notification permission denied.');
+            }
+        });
+    }
+}
 
-                function notifyUser(title, message, url) {
-                    if (Notification.permission === 'granted') {
-                        const notification = new Notification(title, {
-                            body: message,
-                            icon: 'path/to/icon.png', // Add an icon for better visibility
-                            requireInteraction: true, // Keep the notification open until the user interacts
-                        });
+function hasUserBeenNotified(dropName) {
+    const notifiedDrops = JSON.parse(localStorage.getItem('notifiedDrops') || '{}');
+    return notifiedDrops[dropName] === true;
+}
 
-                        notification.onclick = () => {
-                            window.open(url, '_blank'); // Open the drops page in a new tab
-                        };
-                    } else {
-                        console.log('Notification permission not granted.');
-                    }
-                }
+function markUserAsNotified(dropName) {
+    const notifiedDrops = JSON.parse(localStorage.getItem('notifiedDrops') || '{}');
+    notifiedDrops[dropName] = true;
+    localStorage.setItem('notifiedDrops', JSON.stringify(notifiedDrops));
+}
 
-                function checkForLiveDrops() {
-  
-     
+function notifyUser(title, message, dropName) {
+    if (hasUserBeenNotified(dropName)) {
+        console.log('User has already been notified about this drop.');
+        return;
+    }
 
-                        if (currentDate >= campaignStartDate) {
-                            // Drop has started
-                            notifyUser('Drop Started!', `The drop "${dropName}" is now live.`);
-                        } else {
-                            // Drop has not started yet
-                            const timeUntilStart = campaignStartDate - currentDate;
-                            setTimeout(() => {
-                                notifyUser('Drop Started!', `The drop "${dropName}" is now live.`);
-                            }, timeUntilStart);
-                        }
-                        
-                }
+    if (Notification.permission === 'granted') {
+        const notification = new Notification(title, {
+            body: message,
+            icon: 'path/to/icon.png',
+            requireInteraction: true,
+        });
 
-                // Request notification permission when the user interacts with the page
-                document.addEventListener('DOMContentLoaded', () => {
-                    requestNotificationPermission();
-                    checkForLiveDrops(); // Initial check
-                    setInterval(checkForLiveDrops, 60000); // Poll every 60 seconds
-                });
+
+
+        markUserAsNotified(dropName); // Mark as notified when the notification is shown
+    } else {
+        console.log('Notification permission not granted.');
+    }
+}
+
+function checkForLiveDrops() {
+
+            if (currentDate >= campaignStartDate) {
+                // Drop has started
+                notifyUser('Drop Started!', `The drop "${dropName}" is now live.`);
+            } else {
+                // Drop has not started yet
+                const timeUntilStart = campaignStartDate - currentDate;
+                setTimeout(() => {
+                    notifyUser('Drop Started!', `The drop "${dropName}" is now live.`);
+                }, timeUntilStart);
+            }
+
+}
+
+// Request notification permission when the user interacts with the page
+document.addEventListener('DOMContentLoaded', () => {
+    requestNotificationPermission();
+    checkForLiveDrops(); // Initial check
+    setInterval(checkForLiveDrops, 60000); // Poll every 60 seconds
+});
 
 
 

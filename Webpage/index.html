@@ -67,23 +67,19 @@
       rel="stylesheet"
     />
     <script src="https://kleiforums.s3.amazonaws.com/ambassadors/streamerslist.js?1"></script>
-   
-    <audio id="background-music" autoplay  loop>
-        <source src="https://clifffordw.github.io/ClifffWidgets/Webpage/mus_rr_gameover_loop.wav" type="audio/wav">
-        Your browser does not support the audio element.
+
+    <audio id="background-music" autoplay loop>
+      <source
+        src="https://clifffordw.github.io/ClifffWidgets/Webpage/mus_rr_gameover_loop.wav"
+        type="audio/wav"
+      />
+      Your browser does not support the audio element.
     </audio>
 
-
     <script>
-        const audio = document.getElementById('background-music');
-        audio.volume = 0.007; 
+      const audio = document.getElementById("background-music");
+      audio.volume = 0.007;
     </script>
-
-
-
-
-
-
 
     <style>
       /* Font import */
@@ -252,11 +248,6 @@
         transform: translateY(-3px);
         filter: saturate(100%) drop-shadow(1px 1px 15px rgb(255, 72, 0));
       }
-
-
-      
-
-      
 
       #current-drop-btn {
         background: linear-gradient(
@@ -453,6 +444,7 @@
         <button id="widget-drop-btn">Ambassador's Widget</button>
 
         <button id="redeemables-btn">Redeemables</button>
+        <button id="resurrected-btn">Resurrected Items</button>
       </div>
 
       <!-- Current Drop Section -->
@@ -530,7 +522,37 @@
         </div>
       </div>
 
+      <div id="resurrecteditems" class="resurrecteditems hidden">
+        <h1>Resurrected Items</h1>
+
+          <div class="resurrecteditem">
+            <a
+
+            >
+              <img
+                src="https://cdn.forums.klei.com/monthly_2025_02/ShipwreckedCrabpack_1920x1080.jpg.ee2aa1857f3ed0fccc6126d29ee1a25f.jpg"
+                height="512px"
+
+              />
+            </a>
+
+            <div class="resurrecteditems-text">
+              <p>Check out items that are unavailable to get due to them being proof of purchase. </p>
+              <p> You can get them by participating in giveaways made by Klei Ambassadors!</p>
+              </div>
+          </div>
+      </div>
+
       <style>
+        .resurrecteditems-text
+
+
+        {
+          color: rgb(255, 255, 255);
+          font-size: 1.9rem;
+        }
+
+
         .spoolspoints {
           position: flex;
           align-items: center;
@@ -1294,11 +1316,14 @@
         );
         let redeemableSection = document.getElementById("redeemables");
 
+        let resurrectSection = document.getElementById("resurrecteditems");
+
         document.getElementById("current-drop-btn").onclick = function () {
           currentDropSection.classList.remove("hidden");
           widgetDropPreviewSection.classList.add("hidden");
           ambassadorsSection.classList.add("hidden");
           redeemableSection.classList.add("hidden");
+          resurrectSection.classList.add("hidden");
         };
 
         document.getElementById("widget-drop-btn").onclick = function () {
@@ -1306,6 +1331,7 @@
           currentDropSection.classList.add("hidden");
           ambassadorsSection.classList.add("hidden");
           redeemableSection.classList.add("hidden");
+          resurrectSection.classList.add("hidden");
         };
 
         document.getElementById("redeemables-btn").onclick = function () {
@@ -1313,6 +1339,15 @@
           currentDropSection.classList.add("hidden");
           ambassadorsSection.classList.add("hidden");
           redeemableSection.classList.remove("hidden");
+          resurrectSection.classList.add("hidden");
+        };
+
+        document.getElementById("resurrected-btn").onclick = function () {
+          widgetDropPreviewSection.classList.add("hidden");
+          currentDropSection.classList.add("hidden");
+          ambassadorsSection.classList.add("hidden");
+          redeemableSection.classList.add("hidden");
+          resurrectSection.classList.remove("hidden");
         };
 
         // Get reference to the Ambassadors section
@@ -1324,6 +1359,7 @@
           currentDropSection.classList.add("hidden");
           widgetDropPreviewSection.classList.add("hidden");
           redeemableSection.classList.add("hidden");
+          resurrectSection.classList.add("hidden");
         };
       </script>
     </div>

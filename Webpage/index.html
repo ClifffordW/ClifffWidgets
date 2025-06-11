@@ -525,33 +525,32 @@
       <div id="resurrecteditems" class="resurrecteditems hidden">
         <h1>Resurrected Items</h1>
 
-          <div class="resurrecteditem">
-            <a
+        <div class="resurrecteditem">
+          <a>
+            <img
+              src="https://cdn.forums.klei.com/monthly_2025_02/ShipwreckedCrabpack_1920x1080.jpg.ee2aa1857f3ed0fccc6126d29ee1a25f.jpg"
+              height="512px"
+            />
+          </a>
 
-            >
-              <img
-                src="https://cdn.forums.klei.com/monthly_2025_02/ShipwreckedCrabpack_1920x1080.jpg.ee2aa1857f3ed0fccc6126d29ee1a25f.jpg"
-                height="512px"
-
-              />
-            </a>
-
-            <div class="resurrecteditems-text">
-              <p>Check out items that are unavailable to get due to them being proof of purchase and no longer available. </p>
-              <p> You can get them by participating in giveaways made by Klei Ambassadors!</p>
-              </div>
+          <div class="resurrecteditems-text">
+            <p>
+              Check out items that are unavailable to get due to them being
+              proof of purchase and no longer available.
+            </p>
+            <p>
+              You can get them by participating in giveaways made by Klei
+              Ambassadors!
+            </p>
           </div>
+        </div>
       </div>
 
       <style>
-        .resurrecteditems-text
-
-
-        {
+        .resurrecteditems-text {
           color: rgb(255, 255, 255);
           font-size: 1.9rem;
         }
-
 
         .spoolspoints {
           position: flex;
@@ -843,10 +842,39 @@
 
         <!-- Buttons for Copying CSS and HTML -->
         <div id="copy-buttons-container" class="hidden">
-          <button onclick="copySingularDropCSS()">
+          <button onclick="copySingularDropCSS()"
+          
+                      style="
+           
+              padding: 10px 16px;
+              font-weight: 600;
+              border-radius: 6px;
+              border: 2px solid #f5560c;
+              
+              user-select: none;
+              transition: background-color 0.2s, color 0.2s, 0.2s;
+            "
+          >
             Copy Singular Drop CSS
           </button>
-          <button onclick="copyDropHTML()">Copy Drop HTML</button>
+          <button
+            id="copy-drop-html-button"
+            onclick="copyDropHTML()"
+            draggable="true"
+            style="
+              cursor: grab;
+              padding: 10px 16px;
+              font-weight: 600;
+              border-radius: 6px;
+              border: 2px solid #f5560c;
+              
+              user-select: none;
+              transition: background-color 0.2s, color 0.2s, 0.2s;
+            "
+            title="Click to copy widget URL or drag into OBS"
+          >
+            Click to copy • Drag to OBS
+          </button>
         </div>
 
         <!-- Iframe for Widget Preview -->
@@ -956,7 +984,7 @@
           }
 
           // Construct the widget URL
-          const widgetUrl = `https://clifffordw.github.io/ClifffWidgets/Drops/Streamers/${username}.html`;
+          const widgetUrl = `https://clifffordw.github.io/ClifffWidgets/Drops/Streamers/${username}.html?layer-name=${username}get&layer-width=1024&layer-height=512`;
 
           // Check if the widget exists
           try {
@@ -967,6 +995,26 @@
               iframe.classList.remove("hidden"); // Show the iframe
               status.textContent = "Widget loaded!";
               copyButtonsContainer.classList.remove("hidden"); // Show the copy buttons
+
+              const dropButton = document.getElementById(
+                "copy-drop-html-button"
+              );
+
+              dropButton.addEventListener("dragstart", (event) => {
+                const iframe = document.getElementById("widget-iframe");
+                const widgetUrl = iframe?.src;
+
+                if (!widgetUrl) {
+                  document.getElementById("widget-status").textContent =
+                    "No widget loaded to drag.";
+                  event.preventDefault(); // cancel drag
+                  return;
+                }
+
+                event.dataTransfer.setData("text/plain", widgetUrl);
+                event.dataTransfer.setData("text/uri-list", widgetUrl);
+                event.dataTransfer.effectAllowed = "copy";
+              });
             } else {
               // Widget does not exist
               iframe.src = ""; // Clear the iframe

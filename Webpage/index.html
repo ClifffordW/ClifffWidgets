@@ -1150,8 +1150,7 @@
         preload="auto"
       ></audio>
 
-      <script>
-        // Fetch the current campaign drop details
+<script>
         // Fetch the current campaign drop details
         fetch("https://cdn.forums.klei.com/drops/current_campaign.json")
           .then((response) => response.json())
@@ -1159,13 +1158,18 @@
             const dropName = data["Don't Starve Together"]["englishName"];
             const dropGif = data["Don't Starve Together"]["gif"];
             const campaignEnd = data["Don't Starve Together"]["campaignEnd"];
-            const campaignStart =
-              data["Don't Starve Together"]["campaignStart"];
+            const campaignStart = data["Don't Starve Together"]["campaignStart"];
 
             const campaignStartDate = new Date(campaignStart * 1000);
-
-            const campaignEndDate = new Date(campaignEnd * 1000); // Convert Unix timestamp to Date
+            const campaignEndDate = new Date(campaignEnd * 1000);
             const currentDate = new Date();
+
+            // Get DOM elements
+            const currentDropSection = document.getElementById("current-drop");
+            const widgetDropPreviewSection = document.getElementById("widget-drop-preview");
+            const redeemableSection = document.getElementById("redeemables");
+            const resurrectSection = document.getElementById("resurrecteditems");
+            const ambassadorsSection = document.getElementById("ambassadors-section");
 
             function requestNotificationPermission() {
               if (Notification.permission === "granted") {
@@ -1212,7 +1216,7 @@
                   requireInteraction: true,
                 });
 
-                markUserAsNotified(dropName); // Mark as notified when the notification is shown
+                markUserAsNotified(dropName);
               } else {
                 console.log("Notification permission not granted.");
               }
@@ -1220,18 +1224,18 @@
 
             function checkForLiveDrops() {
               if (currentDate >= campaignStartDate) {
-                // Drop has started
                 notifyUser(
                   "Drop Started!",
-                  `The drop "${dropName}" is now live.`
+                  `The drop "${dropName}" is now live.`,
+                  dropName
                 );
               } else {
-                // Drop has not started yet
                 const timeUntilStart = campaignStartDate - currentDate;
                 setTimeout(() => {
                   notifyUser(
                     "Drop Started!",
-                    `The drop "${dropName}" is now live.`
+                    `The drop "${dropName}" is now live.`,
+                    dropName
                   );
                 }, timeUntilStart);
               }
@@ -1240,73 +1244,60 @@
             // Request notification permission when the user interacts with the page
             document.addEventListener("DOMContentLoaded", () => {
               requestNotificationPermission();
-              checkForLiveDrops(); // Initial check
-              setInterval(checkForLiveDrops, 60000); // Poll every 60 seconds
+              checkForLiveDrops();
+              setInterval(checkForLiveDrops, 60000);
             });
 
             // Check if the campaign has ended
             if (currentDate > campaignEndDate) {
-              // Campaign has ended, show "Widget Drop Preview"
-              document.getElementById("drop-name").textContent =
-                "Current drop unavailable";
+              // Campaign has ended
+              document.getElementById("drop-name").textContent = "Current drop unavailable";
               document.getElementById("drop-gif").style.display = "none";
               document.querySelector(".drop-btns").style.display = "none";
-              document.getElementById("current-drop-btn").textContent =
-                "Drop Unavailable";
-              document
-                .getElementById("current-drop-btn")
-                .classList.add("grayscale");
-
+              document.getElementById("current-drop-btn").textContent = "Drop Unavailable";
+              document.getElementById("current-drop-btn").classList.add("grayscale");
+              document.getElementById("current-drop-btn").style.filter = "grayscale(100%)";
+              
               currentDropSection.classList.add("hidden");
               ambassadorsSection.classList.remove("hidden");
               widgetDropPreviewSection.classList.add("hidden");
-              document.getElementById("current-drop-btn").style.filter =
-                "grayscale(100%)";
             } else {
-              // Campaign is still active, show "Current Drop"
+              // Campaign is still active
               document.getElementById("drop-name").textContent = dropName;
               document.getElementById("drop-gif").src = dropGif;
               document.getElementById("drop-gif").style.display = "block";
               document.querySelector(".drop-btns").style.display = "block";
-              document.getElementById("current-drop-btn").textContent =
-                dropName;
-              document
-                .getElementById("current-drop-btn")
-                .classList.remove("grayscale");
+              document.getElementById("current-drop-btn").textContent = dropName;
+              document.getElementById("current-drop-btn").classList.remove("grayscale");
+              
               currentDropSection.classList.remove("hidden");
               widgetDropPreviewSection.classList.add("hidden");
               ambassadorsSection.classList.add("hidden");
 
-              // Drop details in minutes
+              // Drop details
               const dropDetails = [
                 { time: 30, reward: "Profile Flair" },
                 { time: 90, reward: "Portrait" },
-                { time: 180, reward: dropName }, // Use the dynamically set item name
+                { time: 180, reward: dropName },
               ];
 
-              // Filter out the first 20 minutes and keep time in minutes
               const formattedDetails = dropDetails
                 .filter((detail) => detail.time > 20)
                 .map((detail) => {
                   return `<p>${detail.time} minutes: <br><b>${detail.reward}</b></p>`;
                 });
 
-              // Inject into the #drop-info div
-              const dropInfoDiv = document.getElementById("drop-info");
-              dropInfoDiv.innerHTML = formattedDetails.join("");
+              document.getElementById("drop-info").innerHTML = formattedDetails.join("");
 
               // Timer logic
               const timerElement = document.getElementById("timer");
 
               function updateTimer() {
-                const currentDate = new Date(); // Get the updated current date and time
-                const timeRemaining = campaignEndDate - currentDate; // Calculate time remaining in milliseconds
+                const currentDate = new Date();
+                const timeRemaining = campaignEndDate - currentDate;
 
-                if (timeRemaining < 0) {
-                  // Calculate days, hours, minutes, and seconds
-                  const days = Math.floor(
-                    timeRemaining / (1000 * 60 * 60 * 24)
-                  );
+                if (timeRemaining > 0) {
+                  const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
                   const hours = Math.floor(
                     (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
                   );
@@ -1317,97 +1308,74 @@
                     (timeRemaining % (1000 * 60)) / 1000
                   );
 
-                  // Update the timer display
                   timerElement.innerHTML = `
                     Time remaining: ${days}d ${hours}h ${minutes}m ${seconds}s
-                `;
+                  `;
                 } else {
-                  // Timer has ended
-                  timerElement.innerHTML = "Time's up!"; // Optional: Display a message
-                  timerElement.style.display = "none"; // Hide the timer
+                  timerElement.innerHTML = "Time's up!";
+                  timerElement.style.display = "none";
 
-                  // Mark the campaign as unavailable
-                  document.getElementById("drop-name").textContent =
-                    "Current drop unavailable";
+                  document.getElementById("drop-name").textContent = "Current drop unavailable";
                   document.getElementById("drop-gif").style.display = "none";
                   document.querySelector(".drop-btns").style.display = "none";
-
-                  document.getElementById("current-drop-btn").style.filter =
-                    "grayscale(100%)";
-
-                  document.getElementById("current-drop-btn").textContent =
-                    "Drop Unavailable";
-                  document
-                    .getElementById("current-drop-btn")
-                    .classList.add("grayscale");
+                  document.getElementById("current-drop-btn").style.filter = "grayscale(100%)";
+                  document.getElementById("current-drop-btn").textContent = "Drop Unavailable";
+                  document.getElementById("current-drop-btn").classList.add("grayscale");
+                  
                   currentDropSection.classList.add("hidden");
                   ambassadorsSection.classList.remove("hidden");
                   widgetDropPreviewSection.classList.add("hidden");
                 }
               }
 
-              // Start the timer
-              updateTimer(); // Initial call to avoid delay
-              setInterval(updateTimer, 1000); // Update every second
+              updateTimer();
+              setInterval(updateTimer, 1000);
             }
           })
           .catch((error) => {
             console.error("Error fetching drop data:", error);
-            document.getElementById("drop-name").textContent =
-              "Error loading drop information";
+            document.getElementById("drop-name").textContent = "Error loading drop information";
           });
 
-        // Handle button clicks to toggle visibility between sections
-        let currentDropSection = document.getElementById("current-drop");
-        let widgetDropPreviewSection = document.getElementById(
-          "widget-drop-preview"
-        );
-        let redeemableSection = document.getElementById("redeemables");
-
-        let resurrectSection = document.getElementById("resurrecteditems");
-
+        // Button click handlers
         document.getElementById("current-drop-btn").onclick = function () {
-          currentDropSection.classList.remove("hidden");
-          widgetDropPreviewSection.classList.add("hidden");
-          ambassadorsSection.classList.add("hidden");
-          redeemableSection.classList.add("hidden");
-          resurrectSection.classList.add("hidden");
+          document.getElementById("current-drop").classList.remove("hidden");
+          document.getElementById("widget-drop-preview").classList.add("hidden");
+          document.getElementById("ambassadors-section").classList.add("hidden");
+          document.getElementById("redeemables").classList.add("hidden");
+          document.getElementById("resurrecteditems").classList.add("hidden");
         };
 
         document.getElementById("widget-drop-btn").onclick = function () {
-          widgetDropPreviewSection.classList.remove("hidden");
-          currentDropSection.classList.add("hidden");
-          ambassadorsSection.classList.add("hidden");
-          redeemableSection.classList.add("hidden");
-          resurrectSection.classList.add("hidden");
+          document.getElementById("widget-drop-preview").classList.remove("hidden");
+          document.getElementById("current-drop").classList.add("hidden");
+          document.getElementById("ambassadors-section").classList.add("hidden");
+          document.getElementById("redeemables").classList.add("hidden");
+          document.getElementById("resurrecteditems").classList.add("hidden");
         };
 
         document.getElementById("redeemables-btn").onclick = function () {
-          widgetDropPreviewSection.classList.add("hidden");
-          currentDropSection.classList.add("hidden");
-          ambassadorsSection.classList.add("hidden");
-          redeemableSection.classList.remove("hidden");
-          resurrectSection.classList.add("hidden");
+          document.getElementById("redeemables").classList.remove("hidden");
+          document.getElementById("widget-drop-preview").classList.add("hidden");
+          document.getElementById("current-drop").classList.add("hidden");
+          document.getElementById("ambassadors-section").classList.add("hidden");
+          document.getElementById("resurrecteditems").classList.add("hidden");
         };
 
         document.getElementById("resurrected-btn").onclick = function () {
-          widgetDropPreviewSection.classList.add("hidden");
-          currentDropSection.classList.add("hidden");
-          ambassadorsSection.classList.add("hidden");
-          redeemableSection.classList.add("hidden");
-          resurrectSection.classList.remove("hidden");
+          document.getElementById("resurrecteditems").classList.remove("hidden");
+          document.getElementById("widget-drop-preview").classList.add("hidden");
+          document.getElementById("current-drop").classList.add("hidden");
+          document.getElementById("ambassadors-section").classList.add("hidden");
+          document.getElementById("redeemables").classList.add("hidden");
         };
 
-        // Get reference to the Ambassadors section
-        let ambassadorsSection = document.getElementById("ambassadors-section");
-
-        // Handle Ambassadors button click
         document.getElementById("ambassadors-btn").onclick = function () {
-          ambassadorsSection.classList.remove("hidden");
-          currentDropSection.classList.add("hidden");
-          widgetDropPreviewSection.classList.add("hidden");
-          redeemableSection.classList.add("hidden");
-          resurrectSection.classList.add("hidden");
+          document.getElementById("ambassadors-section").classList.remove("hidden");
+          document.getElementById("current-drop").classList.add("hidden");
+          document.getElementById("widget-drop-preview").classList.add("hidden");
+          document.getElementById("redeemables").classList.add("hidden");
+          document.getElementById("resurrecteditems").classList.add("hidden");
         };
       </script>
     </div>

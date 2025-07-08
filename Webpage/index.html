@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-  <body class="loading">
-    <!-- Your content here -->
-     <div class="bg-filtered"></div>
-  </body>
+
 
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Don't Starve Together Drop</title>
-
-    <link rel="icon" href="ClifffWidgets/Webpage/webicon.ico" type="image/x-icon">
+    <title>Starving For Drops</title>
 
 
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://clifffordw.github.io/ClifffWidgets/Webpage/webicon.ico">
 
     <!-- Open Graph Meta Tags (for Discord, Facebook, etc.) -->
     <meta property="og:title" content="Don't Starve Together Drop" />
@@ -280,11 +277,43 @@
         /* Center horizontally */
       }
 
-      .linkacc {
+      .linkacc, .linkacc_bilibili, .linkacc_douyu {
         margin: 15px;
         display: flex;
         align-items: center;
       }
+
+
+      .linkacc_douyu a
+      {
+        
+         background: linear-gradient(90deg, #eb5c09dc, #d87a0fe1) !important;
+
+      }
+
+
+      .linkacc_douyu a:hover
+      {
+        
+        background: linear-gradient(90deg, #ff5e00dc, #ff7300e1) !important;
+
+      }
+
+
+      .linkacc_bilibili a
+      {
+        
+
+         background: linear-gradient(135deg, #479AD6, #19379c) !important;
+      }
+
+      .linkacc_bilibili a:hover
+      {
+         background: linear-gradient(135deg, #31a9ff, #0034df) !important;
+      }
+
+
+
 
       .linkacc img {
         width: 64px;
@@ -313,31 +342,7 @@
         transform: translateY(-3px);
       }
 
-      /* Footer Styles */
-      footer {
-        position: absolute;
-        bottom: 20px;
-        width: 100%;
-        text-align: center;
-        color: #d1d1d1;
-        font-size: 1rem;
-        z-index: 5;
-      }
 
-      footer img {
-        width: 50px;
-        vertical-align: middle;
-        margin-right: 10px;
-      }
-
-      footer a {
-        color: #ff6633;
-        text-decoration: none;
-      }
-
-      footer a:hover {
-        text-decoration: underline;
-      }
 
       #widget-drop-preview iframe {
         width: 60%;
@@ -431,6 +436,11 @@
   </head>
 
   <body>
+
+    <body class="loading">
+      <!-- Your content here -->
+      <div class="bg-filtered"></div>
+    </body>
     <div class="container">
       <!-- Header Navigation -->
       <div class="header-nav">
@@ -447,10 +457,9 @@
       <!-- Current Drop Section -->
       <div id="current-drop" class="drop-info hidden">
         <div id="timer">Time remaining: 5d 3h 45m 12s</div>
-        <h1>Don't Starve Together</h1>
+        <!-- <h1>Don't Starve Together</h1> -->
         <p>
-          Get your exclusive drops for Don't Starve Together! <br />Check out
-          the current drop below and claim your reward!
+          Link your prefered account and with Klei Account.  <br />Watch some streams and gain access to the pretty skin!
         </p>
 
         <!-- Move the drop details below the GIF -->
@@ -471,6 +480,30 @@
                 />Account
               </a>
             </div>
+
+            <div class="linkacc_bilibili">
+              <a
+                href="https://accounts.klei.com/account/bilibili/link"
+                target="_blank"
+                >Link Your
+                <img
+    
+                />Bilibili Account
+              </a>
+            </div>
+
+
+              <div class="linkacc_douyu">
+              <a
+                href="https://accounts.klei.com/account/douyu/link"
+                target="_blank"
+                >Link Your
+
+                Douyu Account
+              </a>
+            </div>
+
+
           </div>
         </div>
 
@@ -1097,10 +1130,10 @@
           /* Apply blur effect to the background */
           color: white;
           /* White text color for better contrast */
-          display: flex;
           align-items: center;
           justify-content: center;
           padding: 10px 20px;
+          display: flex;
           position: fixed;
           bottom: 0;
           left: 0;
@@ -1110,7 +1143,7 @@
         }
 
         footer span {
-          font-size: 14px;
+          font-size: 18px;
           line-height: 1.5;
           display: flex;
           align-items: center;
@@ -1393,9 +1426,8 @@
           alt="Klei Entertainment Logo"
           class="footer-logo"
         />
-        Skin data is provided by Klei's API.
-        <a href="https://www.klei.com/" target="_blank"
-          >Visit Klei Entertainment</a
+        Skin data is provided by Klei's API. 
+        <a href="https://www.klei.com/" target="_blank"> Visit Klei Entertainment</a
         >
       </span>
     </footer>

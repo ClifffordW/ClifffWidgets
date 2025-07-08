@@ -11,11 +11,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Don't Starve Together Drop</title>
 
-    <link
-      rel="icon"
-      href="https://clifffordw.github.io/ClifffWidgets/Webpage/webicon.ico"
-      type="image/x-icon"
-    />
+    <link rel="icon" href="https://clifffordw.github.io/ClifffWidgets/Webpage/webicon.ico" type="image/x-icon">
+
 
 
     <!-- Open Graph Meta Tags (for Discord, Facebook, etc.) -->
@@ -1207,43 +1204,8 @@
               );
             }
 
-            function notifyUser(title, message, dropName) {
-              if (hasUserBeenNotified(dropName)) {
-                console.log("User has already been notified about this drop.");
-                return;
-              }
 
-              if (Notification.permission === "granted") {
-                const notification = new Notification(title, {
-                  body: message,
-                  icon: "path/to/icon.png",
-                  requireInteraction: true,
-                });
 
-                markUserAsNotified(dropName);
-              } else {
-                console.log("Notification permission not granted.");
-              }
-            }
-
-            function checkForLiveDrops() {
-              if (currentDate >= campaignStartDate) {
-                notifyUser(
-                  "Drop Started!",
-                  `The drop "${dropName}" is now live.`,
-                  dropName
-                );
-              } else {
-                const timeUntilStart = campaignStartDate - currentDate;
-                setTimeout(() => {
-                  notifyUser(
-                    "Drop Started!",
-                    `The drop "${dropName}" is now live.`,
-                    dropName
-                  );
-                }, timeUntilStart);
-              }
-            }
 
             // Request notification permission when the user interacts with the page
             document.addEventListener("DOMContentLoaded", () => {

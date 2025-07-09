@@ -151,6 +151,14 @@
         text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
       }
 
+      .dropname_title {
+        font-size: 4rem;
+        margin-bottom: 0px;
+        color: #fff;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+      }
+
+
       p {
         text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
       }
@@ -161,6 +169,7 @@
         /* Make text a bit bigger */
         margin-bottom: 30px;
         color: #ccc;
+        scale: 500px;
       }
 
       .drop-gif {
@@ -266,9 +275,9 @@
       }
 
       .drop-btns {
-        display: flex;
+        display: flex !important;
         /* Flexbox for horizontal alignment */
-        gap: 40px;
+        gap: 0px;
         /* Space between buttons */
         align-items: center;
         /* Center vertically */
@@ -278,7 +287,7 @@
       }
 
       .linkacc, .linkacc_bilibili, .linkacc_douyu {
-        margin: 15px;
+        margin: 45px;
         display: flex;
         align-items: center;
       }
@@ -330,6 +339,7 @@
         border-radius: 8px;
         font-weight: bold;
         cursor: pointer;
+
         text-decoration: none;
         font-size: 1.5rem;
         text-align: center;
@@ -457,7 +467,9 @@
       <!-- Current Drop Section -->
       <div id="current-drop" class="drop-info hidden">
         <div id="timer">Time remaining: 5d 3h 45m 12s</div>
-        <!-- <h1>Don't Starve Together</h1> -->
+        <div class="dropname_title" id="dropname_title">
+          <h1>Don't Starve Together</h1>
+          </div>
         <p>
           Link your prefered account and with Klei Account.  <br />Watch some streams and gain access to the pretty skin!
         </p>
@@ -466,6 +478,16 @@
         <div>
           <img id="drop-gif" class="drop-gif" src="" alt="Current Drop GIF" />
 
+        <div>
+          <!-- <p><b>Current Drop:</b> <span id="drop-name">Loading...</span></p> -->
+
+          <p><b></b> <span id="drop-name"></span></p>
+        </div>
+
+        <div id="drop-info" class="drop-info-text horizontal-timers">
+          <!-- Drop details will be inserted here -->
+        </div>
+      </div>
           <div class="drop-btns">
             <div class="linkacc">
               <a
@@ -507,14 +529,7 @@
           </div>
         </div>
 
-        <div>
-          <p><b>Current Drop:</b> <span id="drop-name">Loading...</span></p>
-        </div>
 
-        <div id="drop-info" class="drop-info-text horizontal-timers">
-          <!-- Drop details will be inserted here -->
-        </div>
-      </div>
 
       <div id="redeemables" class="redeemables hidden">
         <h1>Spools'n'Points</h1>
@@ -803,7 +818,7 @@
         .horizontal-timers {
           display: flex;
           flex-wrap: wrap;
-          gap: 45px;
+          gap: 80px;
           /* Space between items */
           justify-content: center;
           /* Center-align items horizontally */
@@ -825,7 +840,7 @@
           font-size: 1rem;
           min-width: 120px;
           /* Ensure consistent width */
-          scale: 125%;
+          scale: 150%;
         }
 
         .horizontal-timers {
@@ -1250,8 +1265,8 @@
             // Check if the campaign has ended
             if (currentDate > campaignEndDate) {
               // Campaign has ended
-              document.getElementById("drop-name").textContent =
-                "Current drop unavailable";
+/*               document.getElementById("drop-name").textContent =
+                "Current drop unavailable"; */
               document.getElementById("drop-gif").style.display = "none";
               document.querySelector(".drop-btns").style.display = "none";
               document.getElementById("current-drop-btn").textContent =
@@ -1267,7 +1282,11 @@
               widgetDropPreviewSection.classList.add("hidden");
             } else {
               // Campaign is still active
-              document.getElementById("drop-name").textContent = dropName;
+
+              document.getElementById("dropname_title").textContent = dropName;
+
+              /* document.getElementById("drop-name").textContent = dropName; */
+              
               document.getElementById("drop-gif").src = dropGif;
               document.getElementById("drop-gif").style.display = "block";
               document.querySelector(".drop-btns").style.display = "block";

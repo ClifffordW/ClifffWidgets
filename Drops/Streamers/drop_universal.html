@@ -340,8 +340,19 @@ if (isSolo) {
 fetch('https://cdn.forums.klei.com/drops/current_campaign.json')
   .then(r => r.json())
   .then(data => {
+    console.log('Drops data:', JSON.stringify(data));
     const dst = data["Don't Starve Together"];
-    if (!dst) return;
+    const now = Date.now() / 1000;
+    console.log('Now:', now, 'Start:', dst?.campaignStart, 'End:', dst?.campaignEnd);
+
+    if (!dst || now > dst.campaignEnd || now < dst.campaignStart) {
+      console.log('Campaign inactive, hiding widget');
+      document.getElementById('drops').style.display    = 'none';
+      document.getElementById('ornament').style.display = 'none';
+      document.getElementById('embers').style.display   = 'none';
+      return;
+    }
+
     const { icon, item, portrait, collectionName, englishName } = dst;
     if (icon)     document.querySelector('.bg-flair').src    = icon;
     if (portrait) document.querySelector('.bg-portrait').src = portrait;
@@ -349,7 +360,10 @@ fetch('https://cdn.forums.klei.com/drops/current_campaign.json')
     document.getElementById('drop-label').textContent =
       collectionName || englishName || 'Watch & Earn';
   })
-  .catch(err => console.error('Drops fetch error:', err));
+  .catch(err => {
+    // DON'T hide — just log so we can see what's wrong
+    console.error('Drops fetch error:', err);
+  });
 </script>
 </body>
 </html>

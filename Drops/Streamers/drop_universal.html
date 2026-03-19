@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DST Drops Widget</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap');
+
+/* ─── VARS ───────────────────────────────────────────────────── */
+:root {
+  --glow1: #e8a040;
+  --glow2: #c45c10;
+  --glow3: #f0c060;
+  --amber: #d4882a;
+  --ember: #e03600;
+  --paper: #c8a96e;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── FIXED CANVAS SIZES ─────────────────────────────────────────
+   OBS will stretch/crop to match the browser source dimensions.
+   We hard-code both sizes so layout is pixel-perfect.          */
+html, body {
+  width:  1024px;
+  height: 512px;
+  background: transparent;
+  overflow: hidden;
+}
+
+/* solo mode overrides height only */
+body.solo {
+  height: 1024px;
+}
+
+/* grain */
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.10'/%3E%3C/svg%3E");
+  opacity: 0.32;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FULL MODE  — 1024 × 512
+   Three items spread across the full width with breathing room
+   ══════════════════════════════════════════════════════════════ */
+.drops {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 1024px;
+  height: 512px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 24px;
+  padding-bottom: 20px;
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.slot { position: relative; display: flex; align-items: flex-end; }
+.slot--flair    { z-index: 1; }
+.slot--portrait { z-index: 2; }
+.slot--item     { z-index: 3; }
+
+.slot--flair    .bg-flair    { width: 290px; opacity: 0.88; }
+.slot--portrait .bg-portrait { width: 330px; }
+.slot--item     .bg-item     { width: 360px; }
+
+.bg-flair, .bg-portrait, .bg-item { display: block; height: auto; }
+
+/* item frame sits on top of bg-item */
+.item-frame {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: auto; z-index: 3; pointer-events: none;
+}
+
+/* ─── STREAMER AVATAR ────────────────────────────────────────── */
+.streamer-wrap {
+  position: absolute;
+  /* floats above the slot cluster; JS repositions for solo */
+  bottom: 20px;
+  left: 20%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: none;
+}
+.streamer-head {
+  width: 80px; height: 80px;
+  border-radius: 50%; object-fit: cover;
+  filter: drop-shadow(0 0 .6rem var(--glow1)) ;
+  animation:
+    appear-streamer 2.2s cubic-bezier(.34,1.20,.64,1) 2s   both,
+    float-streamer  5s  ease-in-out                   4.2s infinite,
+    glow-pulse      7s  ease-in-out                   4.2s infinite;
+}
+
+.streamer-wrap.solo 
+{
+
+    bottom: 90px;
+}
+
+/* ─── SEASONAL HAT ───────────────────────────────────────────── */
+.partyhat {
+  position: absolute; bottom: 110%; left: 58%;
+  width: 52px; height: auto;
+  z-index: 11; transform: rotate(35deg);
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,.85));
+  display: none; pointer-events: none;
+}
+
+/* ─── ORNAMENT (full mode only) ──────────────────────────────── */
+.ornament {
+  position: absolute;
+  bottom: 28px;
+  right: 40px;
+  display: flex; align-items: center; gap: 10px;
+  opacity: 0;
+  animation: fade-up 1.2s cubic-bezier(.22,1,.36,1) 4.4s forwards;
+}
+.ornament-line { height: 1px; width: 56px; background: linear-gradient(90deg, transparent, var(--amber), transparent); }
+.ornament-text {
+  font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: .22em;
+  color: var(--paper); text-shadow: 0 0 8px var(--glow1);
+  text-transform: uppercase; white-space: nowrap;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   SOLO MODE  — 1024 × 1024
+   Only .bg-item, centred, larger
+   ══════════════════════════════════════════════════════════════ */
+body.solo .drops {
+  width: 1024px; height: 1024px;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+}
+body.solo .slot--flair,
+body.solo .slot--portrait { display: none; }
+body.solo .slot--item {
+  margin-left: 0;
+  z-index: 1;
+}
+body.solo .slot--item .bg-item { width: 680px; }
+
+body.solo .streamer-wrap {
+  bottom: auto;
+  top: 325px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+body.solo .streamer-head { width: 110px; height: 110px; }
+body.solo .partyhat      { width: 68px; bottom: auto; top: 30px; left: calc(50% + 30px); }
+
+body.solo .ornament { right: auto; left: 50%; transform: translateX(-50%); bottom: 60px; }
+
+
+/* ─── KEYFRAMES ──────────────────────────────────────────────── */
+@keyframes fade-up   { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+@keyframes glow-pulse {
+  0%  {filter:drop-shadow(0 0 .55rem var(--glow1)) }
+  33% {filter:drop-shadow(0 0 .85rem var(--glow2)) }
+  66% {filter:drop-shadow(0 0 .65rem var(--glow3)) }
+  100%{filter:drop-shadow(0 0 .55rem var(--glow1)) }
+}
+
+@keyframes float-flair {
+  0%,100%{transform:perspective(1100px) rotateY(26deg)  rotateX(3deg) translateY(0)}
+  50%    {transform:perspective(1100px) rotateY(20deg)  rotateX(8deg) translateY(-10px)}
+}
+@keyframes float-portrait {
+  0%,100%{transform:perspective(1100px) rotateY(-2deg)  rotateX(4deg)  translateY(0)}
+  50%    {transform:perspective(1100px) rotateY(7deg)   rotateX(10deg) translateY(-12px)}
+}
+@keyframes float-item {
+  0%,100%{transform:perspective(1100px) rotateY(-20deg) rotateX(4deg) translateY(0)}
+  50%    {transform:perspective(1100px) rotateY(-11deg) rotateX(9deg) translateY(-14px)}
+}
+@keyframes float-solo {
+  0%,100%{transform:perspective(1400px) rotateY(-8deg) rotateX(4deg) translateY(0)}
+  50%    {transform:perspective(1400px) rotateY(4deg)  rotateX(9deg) translateY(-18px)}
+}
+@keyframes float-streamer {
+  0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-9px) rotate(2deg)}
+}
+
+@keyframes appear-flair {
+  0%  {opacity:0;transform:perspective(1100px) rotateY(26deg)  rotateX(3deg) scale(0) translateY(50px);filter:drop-shadow(0 0 4rem var(--glow1))}
+  55% {opacity:1;filter:drop-shadow(0 0 1.4rem var(--glow2))}
+  100%{opacity:.82;transform:perspective(1100px) rotateY(26deg) rotateX(3deg) scale(1) translateY(0);filter:drop-shadow(0 0 .55rem var(--glow1))}
+}
+@keyframes appear-portrait {
+  0%  {opacity:0;transform:perspective(1100px) rotateY(-2deg) rotateX(4deg) scale(0) translateY(50px);filter:drop-shadow(0 0 4rem var(--glow1))}
+  55% {opacity:1;filter:drop-shadow(0 0 1.4rem var(--glow2))}
+  100%{opacity:1;transform:perspective(1100px) rotateY(-2deg) rotateX(4deg) scale(1) translateY(0);filter:drop-shadow(0 0 .55rem var(--glow1))}
+}
+@keyframes appear-item {
+  0%  {opacity:0;transform:perspective(1100px) rotateY(-20deg) rotateX(4deg) scale(0) translateY(50px);filter:drop-shadow(0 0 4rem var(--glow1))}
+  55% {opacity:1;filter:drop-shadow(0 0 1.8rem var(--glow3))}
+  100%{opacity:1;transform:perspective(1100px) rotateY(-20deg) rotateX(4deg) scale(1) translateY(0);filter:drop-shadow(0 0 .55rem var(--glow1))}
+}
+@keyframes appear-solo {
+  0%  {opacity:0;transform:perspective(1400px) rotateY(-8deg) rotateX(4deg) scale(0);filter:drop-shadow(0 0 6rem var(--glow1))}
+  55% {opacity:1;filter:drop-shadow(0 0 2.5rem var(--glow3))}
+  100%{opacity:1;transform:perspective(1400px) rotateY(-8deg) rotateX(4deg) scale(1);filter:drop-shadow(0 0 .55rem var(--glow1))}
+}
+@keyframes appear-streamer {
+  0%  {opacity:0;transform:scale(0) rotate(-15deg);filter:drop-shadow(0 0 2rem var(--glow1))}
+  70% {opacity:1}
+  100%{opacity:1;transform:scale(1) rotate(-4deg)}
+}
+@keyframes rise {
+  0%  {opacity:0;  transform:translateY(0) translateX(0) scale(1)}
+  15% {opacity:.9}
+  70% {opacity:.4; transform:translateY(var(--rise,-280px)) translateX(var(--drift,20px))  scale(.6)}
+  100%{opacity:0;  transform:translateY(var(--high,-420px)) translateX(var(--drift2,40px)) scale(.2)}
+}
+
+/* ─── ANIMATION BINDINGS (set in JS for solo vs full) ────────── */
+.bg-flair {
+  animation:
+    appear-flair    2.6s cubic-bezier(.34,1.20,.64,1) .3s both,
+    float-flair     6.8s ease-in-out                  3s  infinite,
+    glow-pulse      7s   ease-in-out                  3s  infinite;
+}
+.bg-portrait {
+  animation:
+    appear-portrait 2.8s cubic-bezier(.34,1.20,.64,1) .9s both,
+    float-portrait  5.8s ease-in-out                  3.7s infinite,
+    glow-pulse      8s   ease-in-out                  3.7s infinite;
+}
+.bg-item {
+  animation:
+    appear-item     3.0s cubic-bezier(.34,1.20,.64,1) 1.6s both,
+    float-item      4.8s ease-in-out                  4.6s infinite,
+    glow-pulse      6s   ease-in-out                  4.6s infinite;
+}
+/* solo override applied by JS adding data-solo attr */
+[data-solo] .bg-item {
+  animation:
+    appear-solo     3.2s cubic-bezier(.34,1.20,.64,1) .4s both,
+    float-solo      5.5s ease-in-out                  3.6s infinite,
+    glow-pulse      6s   ease-in-out                  3.6s infinite;
+}
+</style>
+</head>
+<body>
+
+
+<div class="drops" id="drops">
+  <div class="streamer-wrap" id="streamer-wrap">
+    <img class="streamer-head" id="streamer-head" src="" alt="">
+  </div>
+  <img class="partyhat" id="partyhat" src="" alt="">
+
+  <div class="slot slot--flair">
+    <img class="bg-flair" src="" alt="icon">
+  </div>
+  <div class="slot slot--portrait">
+    <img class="bg-portrait" src="" alt="portrait">
+  </div>
+  <div class="slot slot--item">
+
+    <img class="bg-item" src="" alt="item">
+  </div>
+</div>
+
+
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   URL QUERY PARAMETERS
+   ──────────────────────────────────────────────────────────────
+   COLOURS  (hex, no #)
+     glow    primary glow      e.g. glow=6C2192
+     glow2   mid glow          e.g. glow2=9B59B6
+     glow3   highlight glow    e.g. glow3=D7BDE2
+     ember   hard accent       e.g. ember=FE5200
+
+   IMAGES  (full URL, must be URL-encoded)
+     avatar  streamer emote or face pic
+     hat     seasonal hat overlay
+     frame   custom item frame image
+
+   LAYOUT
+     solo    any value → show only the drop item, 1024×1024 canvas
+             e.g. ?solo=1  or  ?solo
+
+   EXAMPLE – full mode, Twitch purple:
+     widget.html?glow=6C2192&glow2=9B59B6&glow3=D7BDE2&ember=FE5200
+                &avatar=https://static-cdn.jtvnw.net/emoticons/v2/.../3.0
+
+   EXAMPLE – solo item only:
+     widget.html?glow=6C2192&solo=1
+   ══════════════════════════════════════════════════════════════ */
+
+const p    = new URLSearchParams(location.search);
+const root = document.documentElement;
+const hex  = k => { const v = p.get(k); return v ? '#' + v.replace(/^#/,'') : null; };
+
+/* colours */
+if (hex('glow'))  { root.style.setProperty('--glow1', hex('glow')); root.style.setProperty('--amber', hex('glow')); }
+if (hex('glow2')) root.style.setProperty('--glow2', hex('glow2'));
+if (hex('glow3')) root.style.setProperty('--glow3', hex('glow3'));
+if (hex('ember')) root.style.setProperty('--ember',  hex('ember'));
+
+/* avatar */
+const avatar = p.get('avatar');
+if (avatar) {
+  document.getElementById('streamer-head').src = avatar;
+  document.getElementById('streamer-wrap').style.display = 'block';
+}
+
+/* hat */
+const hat = p.get('hat');
+if (hat) {
+  const ph = document.getElementById('partyhat');
+  ph.src = hat; ph.style.display = 'block';
+}
+
+/* frame */
+const frame = p.get('frame');
+if (frame) document.getElementById('item-frame').src = frame;
+
+/* ── SOLO MODE ────────────────────────────────────────────────── */
+const isSolo = p.has('solo');
+if (isSolo) {
+  document.body.classList.add('solo');
+  document.getElementById('drops').setAttribute('data-solo', '');
+  /* hide ornament in solo — too cramped */
+}
+
+
+
+/* ─── FETCH DROPS DATA ─────────────────────────────────────────── */
+fetch('https://cdn.forums.klei.com/drops/current_campaign.json')
+  .then(r => r.json())
+  .then(data => {
+    const dst = data["Don't Starve Together"];
+    if (!dst) return;
+    const { icon, item, portrait, collectionName, englishName } = dst;
+    if (icon)     document.querySelector('.bg-flair').src    = icon;
+    if (portrait) document.querySelector('.bg-portrait').src = portrait;
+    if (item)     document.querySelector('.bg-item').src     = item;
+    document.getElementById('drop-label').textContent =
+      collectionName || englishName || 'Watch & Earn';
+  })
+  .catch(err => console.error('Drops fetch error:', err));
+</script>
+</body>
+</html>

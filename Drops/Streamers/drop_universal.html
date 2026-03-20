@@ -64,7 +64,7 @@ body::before {
 .slot--portrait { z-index: 2; }
 .slot--item     { z-index: 3; }
 
-.slot--flair    .bg-flair    { width: 290px; opacity: 0.88; }
+.slot--flair    .bg-flair    { width: 290px; opacity: 1; }
 .slot--portrait .bg-portrait { width: 330px; }
 .slot--item     .bg-item     { width: 360px; }
 
@@ -191,7 +191,7 @@ body.solo .ornament { right: auto; left: 50%; transform: translateX(-50%); botto
 @keyframes appear-flair {
   0%  {opacity:0;transform:perspective(1100px) rotateY(26deg)  rotateX(3deg) scale(0) translateY(50px);filter:drop-shadow(0 0 4rem var(--glow1))}
   55% {opacity:1;filter:drop-shadow(0 0 1.4rem var(--glow2))}
-  100%{opacity:.82;transform:perspective(1100px) rotateY(26deg) rotateX(3deg) scale(1) translateY(0);filter:drop-shadow(0 0 .55rem var(--glow1))}
+  100%{opacity:1;transform:perspective(1100px) rotateY(26deg) rotateX(3deg) scale(1) translateY(0);filter:drop-shadow(0 0 .55rem var(--glow1))}
 }
 @keyframes appear-portrait {
   0%  {opacity:0;transform:perspective(1100px) rotateY(-2deg) rotateX(4deg) scale(0) translateY(50px);filter:drop-shadow(0 0 4rem var(--glow1))}

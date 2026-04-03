@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Starving For Drops</title>
@@ -13,6 +14,30 @@
       src: url('https://clifffordw.github.io/ClifffWidgets/Fonts/HammerheadBold.ttf');
     }
 
+
+
+
+/* Update CSS */
+body { font-family: 'Varela Round', sans-serif; }
+
+
+
+    :root {
+        --klei-orange: #EF6030;
+        --text-main: #ffffff; /* Brighter white for better contrast */
+        --font-primary: 'Varela Round', sans-serif;
+    }
+
+    body {
+        background-color: #000;
+        color: var(--text-main);
+        font-family: var(--font-primary);
+        line-height: 1.6; /* Adds breathing room between lines */
+        -webkit-font-smoothing: antialiased;
+    }
+
+
+
     :root {
       --klei-orange: #EF6030;
       --steam-bg: #1b2838;
@@ -21,6 +46,40 @@
       --text-main: #c6d4df;
       --sidebar-width: 260px;
     }
+
+    :root {
+        --klei-orange: #EF6030;
+        --klei-orange-glow: rgba(239, 96, 48, 0.35);
+        --steam-card: rgba(20, 24, 28, 0.9); /* Darker for better text contrast */
+        --winui-border: rgba(255, 255, 255, 0.12);
+        --text-main: #ffffff; /* Brighter main text */
+        --text-muted: #a0adbb; /* Clearer muted text */
+    }
+
+    body {
+        -webkit-font-smoothing: antialiased;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.8); /* Global subtle lift for all text */
+    }
+
+    h1 { 
+        font-family: 'Hammerhead'; 
+        font-size: 2.8rem; 
+        color: #fff; 
+        letter-spacing: 1px;
+        filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+    }
+
+    /* Make headers pop */
+    h3 { color: #fff; font-weight: 700; margin-bottom: 2px; }
+
+    /* Make the brand text glow */
+    .brand {
+        font-family: 'Hammerhead', sans-serif;
+        color: #fff;
+        text-shadow: 0 0 12px var(--klei-orange-glow);
+    }
+
+
 
     * {
       margin: 0;
@@ -44,11 +103,14 @@
     body {
       background-color: #000;
       color: var(--text-main);
-      font-family: "Segoe UI", system-ui, sans-serif;
+      font-family: "Varela Round", system-ui, sans-serif;
       height: 100vh;
+      
       display: flex;
       overflow: hidden;
     }
+
+
 
     /* Sidebar */
     aside {
@@ -211,15 +273,17 @@
       font-weight: 600;
       text-decoration: none;
       text-align: center;
-      font-size: 0.85rem;
+      font-size: 0.98rem;
       transition: 0.2s;
       color: #fff;
       background: #2a3f5a;
       border: 1px solid rgba(255, 255, 255, 0.05);
+      text-shadow: 0 1px 8px rgb(0, 0, 0);
     }
 
     .btn:hover {
       background: var(--klei-orange);
+      filter:brightness(115%);
       transform: translateY(-2px);
     }
 
@@ -325,12 +389,16 @@ footer {
 }
 /* Sidebar Footer Styling */
 .sidebar-footer {
-    margin-top: auto; /* Pushes the footer to the bottom of the sidebar */
-    padding: 15px 12px;
-    border-top: 1px solid var(--winui-border);
-    font-size: 0.7rem;
-    color: #556a7a;
-    line-height: 1.4;
+    background: rgba(0, 0, 0, 0.2);
+    margin: auto 8px 8px 8px;
+    padding: 24px;
+    border-radius: 8px;
+    border: 1px solid var(--winui-border);
+}
+
+.sidebar-footer strong {
+    color: var(--klei-orange) !important; /* Highlights Klei Entertainment */
+    opacity: 1;
 }
 
 /* Add this to your <style> */
@@ -450,6 +518,7 @@ footer {
       <div class="timer-strip" id="timer-container">
 
         <span id="timer">CONNECTING TO KLEI...</span>
+        <span id="timer-date" style="margin-left: 10px; opacity: 1; font-size: 0.95rem; border-left: 1px solid rgba(239, 96, 48, 0.3); padding-left: 10px;"></span>
       </div>
 
       <h1 id="c-name" style="margin-bottom: 5px;">Don't Starve Together</h1>
@@ -469,7 +538,7 @@ footer {
             </div>
             <div class="info-box" style="margin: 0; font-size: 0.85rem;">
               <strong>Note:</strong> Items are delivered to your in-game collection immediately after claiming on Twitch
-              or Bilibili.
+              or Bilibili or Douyu.
             </div>
           </div>
 
@@ -554,7 +623,7 @@ footer {
         </a>
         <a href="https://forums.kleientertainment.com/forums/topic/119013-free-spools-and-points/" target="_blank"
           class="win-card amb-card" style="text-align:center; text-decoration:none; color:inherit;">
-          <h3 style="color:#fff">Klei Spools List</h3>
+          <h3 style="color:#fff">Forums Spools List</h3>
         </a>
       </div>
     </section>
@@ -625,22 +694,36 @@ footer {
                     </div>
                 `).join('');
 
-        setInterval(() => {
-          const diff = (dst.campaignEnd * 1000) - Date.now();
-          const statusBadge = document.getElementById('side-status');
-          const timerEl = document.getElementById('timer');
+          setInterval(() => {
+              const endTimestamp = dst.campaignEnd * 1000;
+              const diff = endTimestamp - Date.now();
+              const statusBadge = document.getElementById('side-status');
+              const timerEl = document.getElementById('timer');
+              const dateEl = document.getElementById('timer-date');
+              
+              if (diff <= 0) {
+                  statusBadge.innerText = "Ended";
+                  statusBadge.className = "sidebar-status";
+                  timerEl.innerText = "CAMPAIGN CONCLUDED";
+                  dateEl.innerText = "";
+              } else {
+                  statusBadge.innerText = "Live";
+                  statusBadge.className = "sidebar-status status-active";
+                  
+                  // Countdown Calculation
+                  const d = Math.floor(diff / 86400000);
+                  const h = Math.floor((diff % 86400000) / 3600000);
+                  const m = Math.floor((diff % 3600000) / 60000);
+                  const s = Math.floor((diff % 60000) / 1000);
 
-          if (diff <= 0) {
-            statusBadge.innerText = "Ended";
-            statusBadge.className = "sidebar-status";
-            timerEl.innerText = "CAMPAIGN CONCLUDED";
-          } else {
-            statusBadge.innerText = "Live";
-            statusBadge.className = "sidebar-status status-active";
-            const d = Math.floor(diff / 86400000), h = Math.floor((diff % 86400000) / 3600000), m = Math.floor((diff % 3600000) / 60000), s = Math.floor((diff % 60000) / 1000);
-            timerEl.innerText = `ENDS IN: ${d}D ${h}H ${m}M ${s}S`;
-          }
-        }, 1000);
+                  timerEl.innerText = `ENDS IN: ${d}D ${h}H ${m}M ${s}S`;
+
+                  // Format Specific Date and Time
+                  const endDate = new Date(endTimestamp);
+                  const dateOptions = { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+                  dateEl.innerText = `${endDate.toLocaleDateString(undefined, dateOptions)}`;
+              }
+          }, 1000);
 
         const aRes = await fetch("https://kleiforums.s3.amazonaws.com/gameimages/amblist.json");
         const aData = await aRes.json();

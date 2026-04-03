@@ -1,556 +1,831 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <!-- SOCIAL PREVIEW (Open Graph & Twitter Cards) -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Starving For Drops | DST Rewards</title>
-    
-    <meta property="og:title" content="Starving For Drops" />
-    <meta property="og:description" content="Track active Don't Starve Together drops and find live Klei Ambassadors to claim your rewards!" />
-    <meta property="og:image" content="https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2.png" />
-    <meta property="og:url" content="https://clifffordw.github.io/ClifffWidgets/Webpage/index.html" />
-    <meta property="og:type" content="website" />
+  <!-- SOCIAL PREVIEW (Open Graph & Twitter Cards) -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Starving For Drops | DST Rewards</title>
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Starving For Drops" />
-    <meta name="twitter:description" content="Check current DST drops and find live ambassadors!" />
-    <meta name="twitter:image" content="https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2.png" />
+  <meta property="og:title" content="Starving For Drops" />
+  <meta property="og:description"
+    content="Track active Don't Starve Together drops and find live Klei Ambassadors to claim your rewards!" />
+  <meta property="og:image" content="https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2.png" />
+  <meta property="og:url" content="https://clifffordw.github.io/ClifffWidgets/Webpage/index.html" />
+  <meta property="og:type" content="website" />
 
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Lucide Icons CDN -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="shortcut icon" type="image/x-icon" href="https://clifffordw.github.io/ClifffWidgets/Webpage/webicon.ico">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Starving For Drops" />
+  <meta name="twitter:description" content="Check current DST drops and find live ambassadors!" />
+  <meta name="twitter:image" content="https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2.png" />
 
-    <style>
-        @font-face {
-            font-family: 'Hammerhead';
-            src: url('https://clifffordw.github.io/ClifffWidgets/Fonts/HammerheadBold.ttf');
-        }
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="https://clifffordw.github.io/ClifffWidgets/Webpage/webicon.ico">
 
-        :root {
-            --accent-color: #EF6030;
-            --accent-hover: #ff7a4d;
-            --bg-mica: #1c1c1c;
-            --bg-sidebar: rgba(32, 32, 32, 0.7);
-            --acrylic-bg: rgba(45, 45, 45, 0.6);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
-            --text-muted: #808080;
-            --radius-lg: 12px;
-            --radius-md: 8px;
-            --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
-        }
+  <style>
+    @font-face {
+      font-family: 'Hammerhead';
+      src: url('https://clifffordw.github.io/ClifffWidgets/Fonts/HammerheadBold.ttf');
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+    :root {
+      --accent-color: #EF6030;
+      --accent-hover: #ff7a4d;
+      --bg-mica: #1c1c1c;
+      --bg-sidebar: rgba(32, 32, 32, 0.7);
+      --acrylic-bg: rgba(45, 45, 45, 0.6);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0b0;
+      --text-muted: #808080;
+      --radius-lg: 12px;
+      --radius-md: 8px;
+      --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
+    }
 
-        body {
-            background-color: var(--bg-mica);
-            color: var(--text-primary);
-            font-family: var(--font-ui);
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        .bg-filtered {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url("https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/322330/page_bg_raw.jpg") no-repeat center center fixed;
-            background-size: cover;
-            filter: brightness(0.2) blur(8px) saturate(0%);
-            z-index: -2;
-        }
+    body {
+      background-color: var(--bg-mica);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        .bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(28, 28, 28, 0.7);
-            z-index: -1;
-        }
+    /* --- OVERHAULED DROPS PAGE --- */
 
-        /* SIDEBAR */
-        aside {
-            width: 280px;
-            background: var(--bg-sidebar);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            padding: 24px 12px;
-            z-index: 100;
-        }
+    /* Hero Container */
+    .campaign-hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      align-items: start;
+    }
 
-        .brand {
-            font-family: 'Hammerhead', sans-serif;
-            color: #fff;
-            font-size: 1.2rem;
-            margin-bottom: 32px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 0 12px;
-            letter-spacing: 0.5px;
-        }
+    /* The big Item Showcase */
+    .item-showcase {
+      position: relative;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.2));
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
 
-        .brand-logo {
-            width: 28px;
-            height: 28px;
-        }
+    .item-showcase img {
+      width: 100%;
+      max-width: 500px;
+      transition: transform 0.3s ease;
+    }
 
-        .nav-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 12px;
-            margin-bottom: 4px;
-            cursor: pointer;
-            transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            border-radius: var(--radius-md);
-            position: relative;
-        }
+    .item-showcase:hover img {
+      transform: scale(1.02);
+    }
 
-        /* Icon wrapper to keep text aligned */
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 400;
-        }
+    /* --- STEP LIST STYLING --- */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 12px;
+    }
 
-        .nav-item i {
-            width: 18px;
-            height: 18px;
-            stroke-width: 2px;
-        }
+    .step-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      transition: 0.2s;
+    }
 
-        .nav-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-primary);
-        }
+    .step-row:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
 
-        .nav-item.active {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--text-primary);
-            font-weight: 600;
-        }
+    .step-number {
+      font-family: 'Hammerhead';
+      color: var(--accent-color);
+      font-size: 1rem;
+      font-weight: bold;
+      min-width: 20px;
+    }
 
-        .nav-item.active i {
-            stroke: var(--accent-color);
-        }
 
-        .nav-item.active::before {
-            content: "";
-            position: absolute;
-            left: -12px;
-            top: 20%;
-            height: 60%;
-            width: 4px;
-            background: var(--accent-color);
-            border-radius: 0 4px 4px 0;
-        }
+    /* Adjust Hero Layout for the banner */
+    .campaign-hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      align-items: start;
+    }
 
-        .sidebar-status {
-            font-size: 0.65rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            text-transform: uppercase;
-            background: rgba(255,255,255,0.1);
-            color: var(--text-muted);
-            font-weight: 700;
-        }
+    /* Remove the old floating pill styles if you have them */
+    .hero-timer {
+      display: none;
+    }
 
-        .status-active {
-            background: var(--accent-color);
-            color: white;
-            animation: pulse 2s infinite;
-        }
+    /* Milestones redesigned as "Progress Cards" */
+    .milestone-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+    .reward-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: 0.2s;
+    }
 
-        /* MAIN CONTENT */
-        main {
-            flex: 1;
-            padding: 40px;
-            overflow-y: auto;
-            scroll-behavior: smooth;
-        }
+    .reward-card:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: var(--accent-color);
+      transform: translateX(5px);
+    }
 
-        section {
-            display: none;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+    .reward-info h4 {
+      color: #fff;
+      font-size: 0.95rem;
+      margin-bottom: 2px;
+    }
 
-        section.active {
-            display: block;
-            animation: winSlide 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
-        }
+    .reward-info p {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+    }
 
-        @keyframes winSlide {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    .reward-time {
+      font-family: 'Hammerhead';
+      color: var(--accent-color);
+      font-size: 1.1rem;
+    }
 
-        h1 {
-            font-family: 'Hammerhead';
-            font-size: 2.6rem;
-            color: #fff;
-            margin-bottom: 24px;
-        }
+    /* Account Linking Area */
+    .link-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
 
-        .win-card {
-            background: var(--acrylic-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
 
-        .timer-strip {
-            display: inline-flex;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 8px 16px;
-            margin-bottom: 24px;
-            font-family: 'Hammerhead';
-            color: var(--accent-color);
-            font-size: 0.9rem;
-        }
+    /* Responsive Fixes */
+    @media (max-width: 900px) {
+      .campaign-hero {
+        grid-template-columns: 1fr;
+      }
 
-        .info-box {
-            border-left: 4px solid var(--accent-color);
-            background: rgba(255, 255, 255, 0.04);
-            padding: 16px;
-            margin: 20px 0;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            border-radius: 0 var(--radius-md) var(--radius-md) 0;
-        }
+      .item-showcase {
+        margin-top: 30px;
+      }
+    }
 
-        .btn {
-            padding: 12px 20px;
-            border-radius: var(--radius-md);
-            font-weight: 600;
-            text-decoration: none;
-            text-align: center;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-            color: #fff;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid var(--border-color);
-            display: inline-block;
-            cursor: pointer;
-        }
 
-        .btn:hover {
-            background: rgba(255,255,255,0.15);
-            transform: translateY(-2px);
-            border-color: rgba(255,255,255,0.2);
-        }
 
-        .amb-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-            gap: 20px; 
-        }
-        .amb-card {
-            background: var(--acrylic-bg); 
-            border-radius: var(--radius-lg); 
-            overflow: hidden; 
-            text-decoration: none; 
-            color: inherit; 
-            border: 1px solid var(--border-color); 
-            transition: 0.3s;
-            backdrop-filter: blur(10px);
-        }
-        .amb-card:hover { 
-            border-color: var(--accent-color); 
-            transform: translateY(-5px); 
-            background: rgba(60, 60, 60, 0.8);
-        }
-        .thumb-container { 
-            position: relative; 
-            width: 100%; 
-            aspect-ratio: 16/9; 
-            background: #000; 
-        }
-        .thumb-img { width: 100%; height: 100%; object-fit: cover; }
-        .live-tag { 
-            position: absolute; top: 10px; left: 10px; 
-            background: #e91916; color: #fff; 
-            padding: 2px 8px; border-radius: 4px; 
-            font-size: 0.65rem; font-weight: 700; 
-        }
-        .card-body { padding: 16px; display: flex; gap: 12px; }
-        .profile-pic { 
-            width: 42px; height: 42px; 
-            border-radius: 50%; 
-            border: 2px solid var(--accent-color); 
-            object-fit: cover;
-        }
-        .card-info { flex: 1; overflow: hidden; }
-        .stream-title { 
-            color: #fff; font-size: 0.85rem; font-weight: 600; 
-            display: -webkit-box; -webkit-line-clamp: 2; 
-            -webkit-box-orient: vertical; overflow: hidden; 
-            margin-bottom: 4px; 
-        }
-        .streamer-name { color: var(--accent-color); font-size: 0.8rem; font-weight: 600; }
+    .bg-filtered {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/322330/page_bg_raw.jpg") no-repeat center center fixed;
+      background-size: cover;
+      filter: brightness(0.2) blur(8px) saturate(0%);
+      z-index: -2;
+    }
 
-        .sidebar-footer {
-            margin-top: auto;
-            padding: 20px 12px;
-            border-top: 1px solid var(--border-color);
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
+    .bg-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(28, 28, 28, 0.7);
+      z-index: -1;
+    }
 
-        .sidebar-footer a {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-weight: 600;
-        }
+    /* SIDEBAR */
+    aside {
+      width: 280px;
+      background: var(--bg-sidebar);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      padding: 24px 12px;
+      z-index: 100;
+    }
 
-        /* MOBILE NAVIGATION */
-        .mobile-nav {
-            display: none;
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background: var(--bg-sidebar);
-            backdrop-filter: blur(30px);
-            border-top: 1px solid var(--border-color);
-            justify-content: space-around;
-            padding: 10px 0;
-            z-index: 1000;
-        }
+    .brand {
+      font-family: 'Hammerhead', sans-serif;
+      color: #fff;
+      font-size: 1.2rem;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 12px;
+      letter-spacing: 0.5px;
+    }
 
-        .m-btn {
-            background: none; border: none; color: var(--text-secondary);
-            font-weight: 600; font-size: 0.65rem; cursor: pointer;
-            display: flex; flex-direction: column; align-items: center; gap: 6px;
-            transition: 0.2s;
-        }
-        
-        .m-btn i {
-            width: 20px;
-            height: 20px;
-            stroke-width: 2px;
-        }
+    .brand-logo {
+      width: 28px;
+      height: 28px;
+    }
 
-        .m-btn.active { color: var(--accent-color); }
-        .m-btn.active i { stroke: var(--accent-color); }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      margin-bottom: 4px;
+      cursor: pointer;
+      transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      border-radius: var(--radius-md);
+      position: relative;
+    }
 
-        @media (max-width: 850px) {
-            aside { display: none; }
-            .mobile-nav { display: flex; }
-            main { padding: 20px 20px 100px 20px; }
-            h1 { font-size: 2rem; }
-        }
-    </style>
+    /* Icon wrapper to keep text aligned */
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 400;
+    }
+
+    .nav-item i {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2px;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+    }
+
+    .nav-item.active {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .nav-item.active i {
+      stroke: var(--accent-color);
+    }
+
+    .nav-item.active::before {
+      content: "";
+      position: absolute;
+      left: -12px;
+      top: 20%;
+      height: 60%;
+      width: 4px;
+      background: var(--accent-color);
+      border-radius: 0 4px 4px 0;
+    }
+
+    .sidebar-status {
+      font-size: 0.65rem;
+      padding: 2px 8px;
+      border-radius: 10px;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .status-active {
+      background: var(--accent-color);
+      color: white;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.7;
+      }
+    }
+
+    /* MAIN CONTENT */
+    main {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    section {
+      display: none;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    section.active {
+      display: block;
+      animation: winSlide 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
+    }
+
+    @keyframes winSlide {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-family: 'Hammerhead';
+      font-size: 2.6rem;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+
+    .win-card {
+      background: var(--acrylic-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .timer-strip {
+      display: flex;
+      /* Changed from inline-flex to full width */
+      justify-content: center;
+      /* Centers the text */
+      align-items: center;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(239, 96, 48, 0.1), rgba(0, 0, 0, 0));
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      padding: 20px 0;
+      margin-bottom: 30px;
+      font-family: 'Hammerhead';
+      color: var(--accent-color);
+      font-size: 2rem;
+      /* Large scale */
+      text-align: center;
+      gap: 20px;
+    }
+
+    #timer-date {
+      font-size: 1.2rem !important;
+      border-left: 2px solid var(--accent-color) !important;
+      padding-left: 20px !important;
+      opacity: 0.7;
+    }
+
+    .info-box {
+      border-left: 4px solid var(--accent-color);
+      background: rgba(255, 255, 255, 0.04);
+      padding: 16px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border-color);
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .amb-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .amb-card {
+      background: var(--acrylic-bg);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid var(--border-color);
+      transition: 0.3s;
+      backdrop-filter: blur(10px);
+    }
+
+    .amb-card:hover {
+      border-color: var(--accent-color);
+      transform: translateY(-5px);
+      background: rgba(60, 60, 60, 0.8);
+    }
+
+    .thumb-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+    }
+
+    .thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .live-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #e91916;
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 700;
+    }
+
+    .card-body {
+      padding: 16px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .profile-pic {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-color);
+      object-fit: cover;
+    }
+
+    .card-info {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .stream-title {
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+
+    .streamer-name {
+      color: var(--accent-color);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 20px 12px;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .sidebar-footer a {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* MOBILE NAVIGATION */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg-sidebar);
+      backdrop-filter: blur(30px);
+      border-top: 1px solid var(--border-color);
+      justify-content: space-around;
+      padding: 10px 0;
+      z-index: 1000;
+    }
+
+    .m-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.65rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: 0.2s;
+    }
+
+    .m-btn i {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2px;
+    }
+
+    .m-btn.active {
+      color: var(--accent-color);
+    }
+
+    .m-btn.active i {
+      stroke: var(--accent-color);
+    }
+
+    @media (max-width: 850px) {
+      aside {
+        display: none;
+      }
+
+      .mobile-nav {
+        display: flex;
+      }
+
+      main {
+        padding: 20px 20px 100px 20px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="bg-filtered"></div>
-    <div class="bg-overlay"></div>
+  <div class="bg-filtered"></div>
+  <div class="bg-overlay"></div>
 
-    <aside>
-        <div class="brand">
-            <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/webicon.ico" alt="Logo" class="brand-logo">
-            <span>STARVING FOR DROPS</span>
+  <aside>
+    <div class="brand">
+      <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/webicon.ico" alt="Logo" class="brand-logo">
+      <span>STARVING FOR DROPS</span>
+    </div>
+
+    <div class="nav-item active" onclick="nav('drops', this)">
+      <div class="nav-link">
+        <i data-lucide="gift"></i>
+        <span>Active Campaign</span>
+      </div>
+      <span id="side-status" class="sidebar-status">...</span>
+    </div>
+    <div class="nav-item" onclick="nav('live', this)">
+      <div class="nav-link">
+        <i data-lucide="tv"></i>
+        <span>Live Ambassadors</span>
+      </div>
+    </div>
+    <div class="nav-item" onclick="nav('more', this)">
+      <div class="nav-link">
+        <i data-lucide="coins"></i>
+        <span>Reward Links</span>
+      </div>
+    </div>
+    <div class="nav-item" onclick="nav('info', this)">
+      <div class="nav-link">
+        <i data-lucide="info"></i>
+        <span>Ambassador Info</span>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <p>Not affiliated with <strong>Klei Entertainment</strong>.</p>
+      <p style="margin-top: 8px;">Data provided via official APIs.</p>
+      <a href="https://www.klei.com/" target="_blank">Visit Official Site</a>
+    </div>
+  </aside>
+
+  <main>
+    <section id="drops" class="active">
+      <!-- Page Title -->
+      <h1 id="c-name" style="text-align: center; margin-bottom: 30px;">Don't Starve Together</h1>
+
+      <!-- HERO STATUS BANNER -->
+      <div class="hero-status-banner">
+        <span id="timer">SYNCING...</span>
+        <span id="timer-date">Loading date...</span>
+      </div>
+
+      <div class="campaign-hero">
+        <!-- LEFT: Item Showcase -->
+        <div class="item-showcase">
+          <!-- Image is now the focus without the floating badge -->
+          <img id="c-gif" src="" alt="Item Preview">
+
+          <div class="info-box"
+            style="text-align: center; border-left: none; border-bottom: 3px solid var(--accent-color); margin-top: 20px;">
+            <strong>Delivery:</strong> Items are credited instantly to your account upon claiming.
+          </div>
         </div>
-        
-        <div class="nav-item active" onclick="nav('drops', this)">
-            <div class="nav-link">
-                <i data-lucide="gift"></i>
-                <span>Active Campaign</span>
+
+        <!-- RIGHT: Details Panel -->
+        <div class="details-panel">
+          <div class="win-card">
+            <h3 style="font-size: 1.1rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+              <i data-lucide="trophy" style="width: 18px; color: var(--accent-color);"></i>
+              Campaign Milestones
+            </h3>
+
+            <div id="reward-rows" class="milestone-container">
+              <!-- Dynamic cards injected here -->
             </div>
-            <span id="side-status" class="sidebar-status">...</span>
-        </div>
-        <div class="nav-item" onclick="nav('live', this)">
-            <div class="nav-link">
-                <i data-lucide="tv"></i>
-                <span>Live Ambassadors</span>
-            </div>
-        </div>
-        <div class="nav-item" onclick="nav('more', this)">
-            <div class="nav-link">
-                <i data-lucide="coins"></i>
-                <span>Reward Links</span>
-            </div>
-        </div>
-        <div class="nav-item" onclick="nav('info', this)">
-            <div class="nav-link">
-                <i data-lucide="info"></i>
-                <span>Ambassador Info</span>
-            </div>
-        </div>
 
-        <div class="sidebar-footer">
-            <p>Not affiliated with <strong>Klei Entertainment</strong>.</p>
-            <p style="margin-top: 8px;">Data provided via official APIs.</p>
-            <a href="https://www.klei.com/" target="_blank">Visit Official Site</a>
-        </div>
-    </aside>
-
-    <main>
-        <section id="drops" class="active">
-            <div class="timer-strip" id="timer-container">
-                <span id="timer">SYNCING WITH KLEI...</span>
-                <span id="timer-date" style="margin-left: 15px; border-left: 1px solid rgba(255,255,255,0.2); padding-left: 15px; font-family: 'Inter'; font-size: 0.8rem; opacity: 0.8;"></span>
+            <div class="link-section">
+              <h3 style="font-size: 1.1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                <i data-lucide="link" style="width: 18px; color: var(--accent-color);"></i>
+                Link Your Accounts
+              </h3>
+              <div class="link-grid">
+                <a href="https://accounts.klei.com/account/twitch/link" target="_blank" class="btn"
+                  style="background: #6441a5;">Twitch</a>
+                <a href="https://accounts.klei.com/account/bilibili/link" target="_blank" class="btn"
+                  style="background: #00aeec;">Bilibili</a>
+                <a href="https://accounts.klei.com/account/douyu/link" target="_blank" class="btn"
+                  style="background: #ff5d23;">Douyu</a>
+              </div>
             </div>
 
-            <h1 id="c-name">Don't Starve Together</h1>
+            <div
+              style="margin-top: 25px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              <strong style="color: #fff; font-size: 0.85rem;">How to earn:</strong>
 
-            <div class="win-card">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-                    <div style="display: flex; flex-direction: column; gap: 15px;">
-                        <div style="position: relative; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-color); background: #000;">
-                            <img id="c-gif" src="" style="width:100%; display: block;">
-                            <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); padding: 4px 8px; border-radius: 4px; font-size: 0.65rem; color: #fff; border: 1px solid var(--border-color);">
-                                ITEM PREVIEW
-                            </div>
-                        </div>
-                        <div class="info-box">
-                            <strong>Quick Tip:</strong> Items are credited to your account instantly after claiming on your linked platform.
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 style="color:#fff; margin-bottom:15px; font-size:1.1rem; font-weight: 600;">Campaign Milestones</h3>
-                        <div id="reward-rows" style="margin-bottom: 25px;"></div>
-
-                        <h3 style="color:#fff; margin-bottom:15px; font-size:1.1rem; font-weight: 600;">Link Your Accounts</h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px;">
-                            <a href="https://accounts.klei.com/account/twitch/link" target="_blank" class="btn" style="background: #6441a5; border-color: rgba(0,0,0,0.2);">Twitch</a>
-                            <a href="https://accounts.klei.com/account/bilibili/link" target="_blank" class="btn" style="background: #00aeec; border-color: rgba(0,0,0,0.2);">Bilibili</a>
-                            <a href="https://accounts.klei.com/account/douyu/link" target="_blank" class="btn" style="background: #ff5d23; border-color: rgba(0,0,0,0.2);">Douyu</a>
-                        </div>
-
-                        <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.03); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-                            <p style="font-size: 0.8rem; line-height: 1.5; color: var(--text-secondary);">
-                                <strong>How to Earn:</strong><br>
-                                1. Link your Klei Account to your platform.<br>
-                                2. Watch any streamer with "Drops Enabled".<br>
-                                3. Claim rewards in your platform's Inventory.
-                            </p>
-                        </div>
-                    </div>
+              <div class="step-list">
+                <div class="step-row">
+                  <span class="step-number">1</span>
+                  <span>Link your Klei Account</span>
                 </div>
-            </div>
-        </section>
-
-        <section id="live">
-            <h1>Live Klei Ambassadors</h1>
-            <div id="amb-list" class="amb-grid"></div>
-        </section>
-
-        <section id="more">
-            <h1>Reward Resources</h1>
-            <div class="amb-grid">
-                <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2308653652" target="_blank" class="win-card amb-card" style="text-align:center; padding: 40px; display: block;">
-                    <h3 style="color:#fff; font-weight: 600;">Steam Points Guide</h3>
-                </a>
-                <a href="https://forums.kleientertainment.com/forums/topic/119013-free-spools-and-points/" target="_blank" class="win-card amb-card" style="text-align:center; padding: 40px; display: block;">
-                    <h3 style="color:#fff; font-weight: 600;">Forums Spools List</h3>
-                </a>
-            </div>
-        </section>
-
-        <section id="info">
-            <h1>Why watch Ambassadors?</h1>
-            <div class="win-card">
-                <img src="https://cdn.forums.klei.com/monthly_2025_02/ShipwreckedCrabpack_1920x1080.jpg.ee2aa1857f3ed0fccc6126d29ee1a25f.jpg" style="width:100%; border-radius: var(--radius-lg); margin-bottom:20px; border: 1px solid var(--border-color);">
-
-                <div class="info-box">
-                    <span style="color:#fff; font-weight:600;">Special Perks:</span> Ambassadors have access to unique codes and reward links provided by Klei for the community.
+                <div class="step-row">
+                  <span class="step-number">2</span>
+                  <span>Watch "Drops Enabled" streams</span>
                 </div>
-
-                <ul style="list-style: none; padding-left: 5px;">
-                    <li style="margin-bottom: 15px;">
-                        <strong style="color:var(--accent-color)">✦ Klei Points & Spools</strong><br>
-                        <span style="color: var(--text-secondary); font-size: 0.9rem;">Special giveaways for links that grant high-value points directly.</span>
-                    </li>
-                    <li style="margin-bottom: 15px;">
-                        <strong style="color:var(--accent-color)">✦ Resurrected Bundles</strong><br>
-                        <span style="color: var(--text-secondary); font-size: 0.9rem;">Limited-time access to legacy skins from past events.</span>
-                    </li>
-                    <li style="margin-bottom: 15px;">
-                        <strong style="color:var(--accent-color)">✦ Community Hubs</strong><br>
-                        <span style="color: var(--text-secondary); font-size: 0.9rem;">The best place to find active campaigns and pro gameplay tips.</span>
-                    </li>
-                </ul>
+                <div class="step-row">
+                  <span class="step-number">3</span>
+                  <span>Claim in platform inventory</span>
+                </div>
+              </div>
             </div>
-        </section>
-    </main>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <nav class="mobile-nav">
-        <button class="m-btn active" onclick="nav('drops', this)">
-            <i data-lucide="gift"></i>
-            DROPS
-        </button>
-        <button class="m-btn" onclick="nav('live', this)">
-            <i data-lucide="tv"></i>
-            LIVE
-        </button>
-        <button class="m-btn" onclick="nav('more', this)">
-            <i data-lucide="coins"></i>
-            LINKS
-        </button>
-        <button class="m-btn" onclick="nav('info', this)">
-            <i data-lucide="info"></i>
-            INFO
-        </button>
-    </nav>
+    <section id="live">
+      <h1>Live Klei Ambassadors</h1>
+      <div id="amb-list" class="amb-grid"></div>
+    </section>
 
-    <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
+    <section id="more">
+      <h1>Reward Resources</h1>
+      <div class="amb-grid">
+        <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2308653652" target="_blank"
+          class="win-card amb-card" style="text-align:center; padding: 40px; display: block;">
+          <h3 style="color:#fff; font-weight: 600;">Steam Points Guide</h3>
+        </a>
+        <a href="https://forums.kleientertainment.com/forums/topic/119013-free-spools-and-points/" target="_blank"
+          class="win-card amb-card" style="text-align:center; padding: 40px; display: block;">
+          <h3 style="color:#fff; font-weight: 600;">Forums Spools List</h3>
+        </a>
+      </div>
+    </section>
 
-        function nav(id, el) {
-            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            document.querySelectorAll('.nav-item, .m-btn').forEach(i => i.classList.remove('active'));
-            el.classList.add('active');
-        }
+    <section id="info">
+      <h1>Why watch Ambassadors?</h1>
+      <div class="win-card">
+        <img
+          src="https://cdn.forums.klei.com/monthly_2025_02/ShipwreckedCrabpack_1920x1080.jpg.ee2aa1857f3ed0fccc6126d29ee1a25f.jpg"
+          style="width:100%; border-radius: var(--radius-lg); margin-bottom:20px; border: 1px solid var(--border-color);">
 
-        async function init() {
-            try {
-                const cRes = await fetch("https://cdn.forums.klei.com/drops/current_campaign.json");
-                const cData = await cRes.json();
-                const dst = cData["Don't Starve Together"];
+        <div class="info-box">
+          <span style="color:#fff; font-weight:600;">Special Perks:</span> Ambassadors have access to unique codes and
+          reward links provided by Klei for the community.
+        </div>
 
-                document.getElementById('c-name').innerText = dst.englishName;
-                document.getElementById('c-gif').src = dst.gif;
+        <ul style="list-style: none; padding-left: 5px;">
+          <li style="margin-bottom: 15px;">
+            <strong style="color:var(--accent-color)">✦ Klei Points & Spools</strong><br>
+            <span style="color: var(--text-secondary); font-size: 0.9rem;">Special giveaways for links that grant
+              high-value points directly.</span>
+          </li>
+          <li style="margin-bottom: 15px;">
+            <strong style="color:var(--accent-color)">✦ Resurrected Bundles</strong><br>
+            <span style="color: var(--text-secondary); font-size: 0.9rem;">Limited-time access to legacy skins from past
+              events.</span>
+          </li>
+          <li style="margin-bottom: 15px;">
+            <strong style="color:var(--accent-color)">✦ Community Hubs</strong><br>
+            <span style="color: var(--text-secondary); font-size: 0.9rem;">The best place to find active campaigns and
+              pro gameplay tips.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
 
-                const rewards = [
-                    { t: 30, n: "Profile Flair", d: "Exclusive Icon" }, 
-                    { t: 90, n: "Portrait Frame", d: "Character Border" }, 
-                    { t: 180, n: dst.englishName, d: "Main Item Skin" }
-                ];
-                
-                document.getElementById('reward-rows').innerHTML = rewards.map(r => `
+  <nav class="mobile-nav">
+    <button class="m-btn active" onclick="nav('drops', this)">
+      <i data-lucide="gift"></i>
+      DROPS
+    </button>
+    <button class="m-btn" onclick="nav('live', this)">
+      <i data-lucide="tv"></i>
+      LIVE
+    </button>
+    <button class="m-btn" onclick="nav('more', this)">
+      <i data-lucide="coins"></i>
+      LINKS
+    </button>
+    <button class="m-btn" onclick="nav('info', this)">
+      <i data-lucide="info"></i>
+      INFO
+    </button>
+  </nav>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    function nav(id, el) {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('.nav-item, .m-btn').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    async function init() {
+      try {
+        const cRes = await fetch("https://cdn.forums.klei.com/drops/current_campaign.json");
+        const cData = await cRes.json();
+        const dst = cData["Don't Starve Together"];
+
+        document.getElementById('c-name').innerText = dst.englishName;
+        document.getElementById('c-gif').src = dst.gif;
+
+        const rewards = [
+          { t: 30, n: "Profile Flair", d: "Exclusive Icon" },
+          { t: 90, n: "Portrait Frame", d: "Character Border" },
+          { t: 180, n: dst.englishName, d: "Main Item Skin" }
+        ];
+
+        document.getElementById('reward-rows').innerHTML = rewards.map(r => `
                     <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size: 0.9rem;">
                         <div>
                             <div style="color:var(--text-primary); font-weight:500;">${r.n}</div>
@@ -560,38 +835,41 @@
                     </div>
                 `).join('');
 
-                setInterval(() => {
-                    const endTimestamp = dst.campaignEnd * 1000;
-                    const diff = endTimestamp - Date.now();
-                    const statusBadge = document.getElementById('side-status');
-                    const timerEl = document.getElementById('timer');
-                    const dateEl = document.getElementById('timer-date');
-                    
-                    if (diff <= 0) {
-                        statusBadge.innerText = "Ended";
-                        statusBadge.className = "sidebar-status";
-                        timerEl.innerText = "CAMPAIGN CONCLUDED";
-                        dateEl.innerText = "";
-                    } else {
-                        statusBadge.innerText = "Live";
-                        statusBadge.className = "sidebar-status status-active";
-                        
-                        const d = Math.floor(diff / 86400000);
-                        const h = Math.floor((diff % 86400000) / 3600000);
-                        const m = Math.floor((diff % 3600000) / 60000);
-                        const s = Math.floor((diff % 60000) / 1000);
+        setInterval(() => {
+          const endTimestamp = dst.campaignEnd * 1000;
+          const diff = endTimestamp - Date.now();
+          const statusBadge = document.getElementById('side-status');
+          const timerEl = document.getElementById('timer');
+          const dateEl = document.getElementById('timer-date');
 
-                        timerEl.innerText = `ENDS IN: ${d}D ${h}H ${m}M ${s}S`;
-                        const endDate = new Date(endTimestamp);
-                        const dateOptions = { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-                        dateEl.innerText = endDate.toLocaleDateString(undefined, dateOptions);
-                    }
-                }, 1000);
+          if (diff <= 0) {
+            statusBadge.innerText = "Ended";
+            statusBadge.className = "sidebar-status";
+            timerEl.innerText = "CAMPAIGN CONCLUDED";
+            dateEl.innerText = "";
+          } else {
+            statusBadge.innerText = "Live";
+            statusBadge.className = "sidebar-status status-active";
 
-                const aRes = await fetch("https://kleiforums.s3.amazonaws.com/gameimages/amblist.json");
-                const aData = await aRes.json();
+            // Calculate Timer
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
 
-                document.getElementById('amb-list').innerHTML = aData.map(a => `
+            timerEl.innerText = `ENDS IN: ${d}D ${h}H ${m}M ${s}S`;
+
+            // Calculate Date
+            const endDate = new Date(endTimestamp);
+            const dateOptions = { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            dateEl.innerText = `Ends on ${endDate.toLocaleDateString(undefined, dateOptions)}`;
+          }
+        }, 1000);
+
+        const aRes = await fetch("https://kleiforums.s3.amazonaws.com/gameimages/amblist.json");
+        const aData = await aRes.json();
+
+        document.getElementById('amb-list').innerHTML = aData.map(a => `
                     <a href="${a.StreamURL}" target="_blank" class="amb-card">
                         <div class="thumb-container">
                             <div class="live-tag">LIVE</div>
@@ -606,9 +884,10 @@
                         </div>
                     </a>
                 `).join('');
-            } catch (e) { console.error("Error loading API data", e); }
-        }
-        init();
-    </script>
+      } catch (e) { console.error("Error loading API data", e); }
+    }
+    init();
+  </script>
 </body>
+
 </html>

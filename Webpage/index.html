@@ -2,28 +2,22 @@
 <html lang="en">
 
 <head>
-  <!-- SOCIAL PREVIEW (Open Graph & Twitter Cards) -->
+  <!-- SOCIAL PREVIEW -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Starving For Drops | DST Rewards</title>
+  <title>Starving For Drops | Klei Rewards</title>
 
   <meta property="og:title" content="Starving For Drops" />
-  <meta property="og:description"
-    content="Track active Don't Starve Together drops and find live Klei Ambassadors to claim your rewards!" />
+  <meta property="og:description" content="Track active Don't Starve Together drops and find live Klei Ambassadors!" />
   <meta property="og:image" content="https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2.png" />
   <meta property="og:url" content="https://clifffordw.github.io/ClifffWidgets/Webpage/index.html" />
-  <meta property="og:type" content="website" />
-
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Starving For Drops" />
-  <meta name="twitter:description" content="Check current DST drops and find live ambassadors!" />
-  <meta name="twitter:image" content="https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2.png" />
 
   <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Lucide Icons CDN -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="shortcut icon" type="image/x-icon" href="https://clifffordw.github.io/ClifffWidgets/Webpage/webicon.ico">
+
+
 
   <style>
     @font-face {
@@ -32,18 +26,21 @@
     }
 
     :root {
-      --accent-color: #EF6030;
-      --accent-hover: #ff7a4d;
-      --bg-mica: #1c1c1c;
-      --bg-sidebar: rgba(32, 32, 32, 0.7);
-      --acrylic-bg: rgba(45, 45, 45, 0.6);
-      --border-color: rgba(255, 255, 255, 0.08);
+      /* Klei Official Site Palette */
+      --klei-orange: #EF6030;
+      --klei-orange-glow: rgba(239, 96, 48, 0.4);
+      --bg-dark: #0f0f0f;
+      /* Deep charcoal, almost black */
+      --bg-card: #1a1a1a;
+      /* Slightly lighter charcoal for cards */
+      --bg-sidebar: #141414d5;
       --text-primary: #ffffff;
-      --text-secondary: #b0b0b0;
-      --text-muted: #808080;
-      --radius-lg: 12px;
-      --radius-md: 8px;
-      --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
+      --text-secondary: #a0a0a0;
+      --border-dark: #252525;
+      --radius-lg: 20px;
+      /* Chunkier corners like the official site */
+      --radius-md: 12px;
+      --font-main: 'Inter', sans-serif;
     }
 
     * {
@@ -54,215 +51,16 @@
     }
 
     body {
-      background-color: var(--bg-mica);
+      background-color: var(--bg-dark);
       color: var(--text-primary);
-      font-family: var(--font-ui);
+      font-family: var(--font-main);
       display: flex;
       height: 100vh;
       overflow: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* --- OVERHAULED DROPS PAGE --- */
-
-    /* Hero Container */
-    .campaign-hero {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 30px;
-      align-items: start;
-    }
-
-    /* The big Item Showcase */
-    .item-showcase {
-      position: relative;
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.2));
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-      text-align: center;
-    }
-
-    .item-showcase img {
-      width: 100%;
-      max-width: 500px;
-      transition: transform 0.3s ease;
-    }
-
-    .item-showcase:hover img {
-      transform: scale(1.02);
-    }
-
-    /* --- STEP LIST STYLING --- */
-    .step-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .step-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 12px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      transition: 0.2s;
-    }
-
-    .step-row:hover {
-      background: rgba(255, 255, 255, 0.07);
-      border-color: rgba(255, 255, 255, 0.15);
-    }
-
-    .step-number {
-      font-family: 'Hammerhead';
-      color: var(--accent-color);
-      font-size: 1rem;
-      font-weight: bold;
-      min-width: 20px;
-    }
-
-
-    /* Adjust Hero Layout for the banner */
-    .campaign-hero {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 30px;
-      align-items: start;
-    }
-
-/* --- IMPROVED HERO STATUS BANNER --- */
-.hero-status-banner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--border-color);
-    border-bottom: 2px solid var(--accent-color);
-    border-radius: var(--radius-md);
-    padding: 15px 30px;
-    margin-bottom: 40px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    transition: all 0.3s ease;
-}
-
-#timer {
-    font-family: 'Hammerhead';
-    color: var(--accent-color);
-    font-size: 2rem; 
-    text-shadow: 0 0 15px rgba(239, 96, 48, 0.4);
-    white-space: nowrap; /* Kept for desktop */
-}
-
-#timer-date {
-    font-family: 'Inter';
-    font-size: 1rem;
-    color: var(--text-secondary);
-    border-left: 1px solid rgba(255, 255, 255, 0.2);
-    padding-left: 20px;
-    opacity: 0.8;
-    font-weight: 500;
-}
-
-/* --- MOBILE FIXES --- */
-@media (max-width: 600px) {
-    .hero-status-banner {
-        flex-direction: column; /* Stack timer and date vertically */
-        gap: 10px;
-        padding: 15px 10px;
-    }
-
-    #timer {
-        font-size: 1.3rem; /* Scale down text so it doesn't overflow */
-        white-space: normal; /* Allow wrapping if the text is still too long */
-    }
-
-    #timer-date {
-        border-left: none; /* Remove side border */
-        padding-left: 0;
-        font-size: 0.85rem;
-        opacity: 0.6;
-    }
-}
-
-    /* Milestones redesigned as "Progress Cards" */
-    .milestone-container {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .reward-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: 0.2s;
-    }
-
-    .reward-card:hover {
-      background: rgba(255, 255, 255, 0.07);
-      border-color: var(--accent-color);
-      transform: translateX(5px);
-    }
-
-    .reward-info h4 {
-      color: #fff;
-      font-size: 0.95rem;
-      margin-bottom: 2px;
-    }
-
-    .reward-info p {
-      color: var(--text-muted);
-      font-size: 0.75rem;
-    }
-
-    .reward-time {
-      font-family: 'Hammerhead';
-      color: var(--accent-color);
-      font-size: 1.1rem;
-    }
-
-    /* Account Linking Area */
-    .link-section {
-      margin-top: 30px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border-color);
-    }
-
-    .link-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 15px;
-    }
-
-    /* Responsive Fixes */
-    @media (max-width: 900px) {
-      .campaign-hero {
-        grid-template-columns: 1fr;
-      }
-
-      .item-showcase {
-        margin-top: 30px;
-      }
-    }
-
-
-
+    /* BACKGROUND IMAGE with Klei-style dimming */
     .bg-filtered {
       position: fixed;
       top: 0;
@@ -271,154 +69,110 @@
       height: 100%;
       background: url("https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/322330/page_bg_raw.jpg") no-repeat center center fixed;
       background-size: cover;
-      filter: brightness(0.2) blur(8px) saturate(0%);
+      filter: brightness(0.15) contrast(1.1) blur(8px) saturate(0%);
       z-index: -2;
     }
 
-    .bg-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(28, 28, 28, 0.7);
-      z-index: -1;
-    }
-
-    /* SIDEBAR */
+    /* SIDEBAR - Deep, stealthy look */
     aside {
       width: 280px;
       background: var(--bg-sidebar);
-      backdrop-filter: blur(20px);
-      border-right: 1px solid var(--border-color);
+      border-right: 1px solid var(--border-dark);
       display: flex;
       flex-direction: column;
-      padding: 24px 12px;
+      padding: 30px 15px;
       z-index: 100;
     }
 
     .brand {
       font-family: 'Hammerhead', sans-serif;
       color: #fff;
-      font-size: 1.2rem;
-      margin-bottom: 32px;
+      font-size: 1.4rem;
+      margin-bottom: 40px;
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 0 12px;
-      letter-spacing: 0.5px;
+      padding-left: 10px;
     }
 
     .brand-logo {
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
     }
 
     .nav-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 12px;
-      margin-bottom: 4px;
+      padding: 12px 15px;
+      margin-bottom: 6px;
       cursor: pointer;
-      transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: 0.2s;
       color: var(--text-secondary);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       border-radius: var(--radius-md);
       position: relative;
     }
 
-    /* Icon wrapper to keep text aligned */
     .nav-link {
       display: flex;
       align-items: center;
       gap: 12px;
-      font-weight: 400;
     }
 
     .nav-item i {
-      width: 18px;
-      height: 18px;
-      stroke-width: 2px;
+      width: 20px;
+      height: 20px;
     }
 
     .nav-item:hover {
       background: rgba(255, 255, 255, 0.05);
-      color: var(--text-primary);
+      color: #fff;
     }
 
     .nav-item.active {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--text-primary);
-      font-weight: 600;
-    }
-
-    .nav-item.active i {
-      stroke: var(--accent-color);
-    }
-
-    .nav-item.active::before {
-      content: "";
-      position: absolute;
-      left: -12px;
-      top: 20%;
-      height: 60%;
-      width: 4px;
-      background: var(--accent-color);
-      border-radius: 0 4px 4px 0;
-    }
-
-    .sidebar-status {
-      font-size: 0.65rem;
-      padding: 2px 8px;
-      border-radius: 10px;
-      text-transform: uppercase;
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text-muted);
+      background: var(--klei-orange);
+      color: #fff;
       font-weight: 700;
     }
 
-    .status-active {
-      background: var(--accent-color);
-      color: white;
-      animation: pulse 2s infinite;
+    .nav-item.active i {
+      stroke: #fff;
     }
 
-    @keyframes pulse {
-
-      0%,
-      100% {
-        opacity: 1;
-      }
-
-      50% {
-        opacity: 0.7;
-      }
+    .sidebar-status {
+      font-size: 0.6rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: rgb(224, 0, 0);
+      color: #fff;
+      font-weight: 800;
+      text-transform: uppercase;
     }
 
     /* MAIN CONTENT */
     main {
       flex: 1;
-      padding: 40px;
+      padding: 50px;
       overflow-y: auto;
       scroll-behavior: smooth;
     }
 
     section {
       display: none;
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 0 auto;
     }
 
     section.active {
       display: block;
-      animation: winSlide 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
+      animation: fadeUp 0.5s ease-out;
     }
 
-    @keyframes winSlide {
+    @keyframes fadeUp {
       from {
         opacity: 0;
-        transform: translateY(15px);
+        transform: translateY(20px);
       }
 
       to {
@@ -429,99 +183,308 @@
 
     h1 {
       font-family: 'Hammerhead';
-      font-size: 2.6rem;
+      font-size: 3.5rem;
       color: #fff;
-      margin-bottom: 24px;
-    }
-
-    .win-card {
-      background: var(--acrylic-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      margin-bottom: 24px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
-
-    .timer-strip {
-      display: flex;
-      /* Changed from inline-flex to full width */
-      justify-content: center;
-      /* Centers the text */
-      align-items: center;
-      background: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(239, 96, 48, 0.1), rgba(0, 0, 0, 0));
-      border-top: 1px solid var(--border-color);
-      border-bottom: 1px solid var(--border-color);
-      padding: 20px 0;
-      margin-bottom: 30px;
-      font-family: 'Hammerhead';
-      color: var(--accent-color);
-      font-size: 2rem;
-      /* Large scale */
       text-align: center;
+      margin-bottom: 40px;
+      letter-spacing: -1px;
+    }
+
+    /* THE KLEI CARD - Heavy, dark, and bold */
+    .klei-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Orange accent line at top of card */
+    .klei-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--klei-orange);
+    }
+
+    /* HERO TIMER - High impact */
+    .hero-status-banner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       gap: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-bottom: 3px solid var(--klei-orange);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 40px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    #timer {
+      font-family: 'Hammerhead';
+      color: var(--klei-orange);
+      font-size: 2.2rem;
+      text-shadow: 0 0 10px var(--klei-orange-glow);
     }
 
     #timer-date {
-      font-size: 1.2rem !important;
-      border-left: 2px solid var(--accent-color) !important;
-      padding-left: 20px !important;
-      opacity: 0.7;
-    }
-
-    .info-box {
-      border-left: 4px solid var(--accent-color);
-      background: rgba(255, 255, 255, 0.04);
-      padding: 16px;
-      margin: 20px 0;
-      font-size: 0.9rem;
+      font-size: 1rem;
       color: var(--text-secondary);
-      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      border-left: 1px solid var(--border-dark);
+      padding-left: 20px;
     }
 
-    .btn {
-      padding: 12px 20px;
+    /* ITEM SHOWCASE */
+    .campaign-hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+    }
+
+    .item-showcase {
+      background: radial-gradient(circle, #252525 0%, #1a1a1a 100%);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      border: 1px solid var(--border-dark);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .item-showcase img {
+      width: 100%;
+      max-width: 450px;
+      filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.8));
+      transition: transform 0.3s ease;
+    }
+
+    .item-showcase img:hover {
+      transform: scale(1.05);
+    }
+
+    /* REWARD ROWS - Redesigned as blocks */
+    .milestone-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .reward-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-dark);
       border-radius: var(--radius-md);
-      font-weight: 600;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: 0.2s;
+    }
+
+    .reward-card:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: var(--klei-orange);
+      transform: scale(1.02);
+    }
+
+    .reward-info h4 {
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .reward-info p {
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+    }
+
+    .reward-time {
+      font-family: 'Hammerhead';
+      color: var(--klei-orange);
+      font-size: 1.2rem;
+    }
+
+    /* CHUNKY BUTTONS */
+    .btn {
+      padding: 14px 20px;
+      border-radius: var(--radius-md);
+      font-weight: 800;
+      text-transform: uppercase;
       text-decoration: none;
       text-align: center;
-      font-size: 0.9rem;
-      transition: all 0.2s;
+      font-size: 0.85rem;
+      transition: 0.2s;
       color: #fff;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid var(--border-color);
+      background: #333;
+      border: 1px solid var(--border-dark);
       display: inline-block;
-      cursor: pointer;
     }
 
     .btn:hover {
-      background: rgba(255, 255, 255, 0.15);
-      transform: translateY(-2px);
-      border-color: rgba(255, 255, 255, 0.2);
+      background: var(--klei-orange);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px var(--klei-orange-glow);
+      border-color: var(--klei-orange);
+    }
+
+    /* AMBASSADOR GRID */
+    /* --- OVERHAULED AMBASSADOR SECTION --- */
+    .amb-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .amb-header p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     .amb-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 30px;
     }
 
     .amb-card {
-      background: var(--acrylic-bg);
+      background: var(--bg-card);
       border-radius: var(--radius-lg);
       overflow: hidden;
       text-decoration: none;
       color: inherit;
-      border: 1px solid var(--border-color);
-      transition: 0.3s;
-      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-dark);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
     }
 
     .amb-card:hover {
-      border-color: var(--accent-color);
-      transform: translateY(-5px);
-      background: rgba(60, 60, 60, 0.8);
+      border-color: var(--klei-orange);
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .thumb-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .amb-card:hover .thumb-img {
+      transform: scale(1.1);
+    }
+
+    /* The "Watch Now" overlay that appears on hover */
+    .watch-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(239, 96, 48, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: 0.3s;
+      backdrop-filter: blur(4px);
+    }
+
+    .amb-card:hover .watch-overlay {
+      opacity: 1;
+    }
+
+    .watch-btn {
+      background: #fff;
+      color: #000;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .live-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: #e91916;
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      z-index: 2;
+      box-shadow: 0 0 10px rgba(233, 25, 22, 0.5);
+    }
+
+    .card-body {
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .creator-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .profile-pic {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid var(--klei-orange);
+      object-fit: cover;
+    }
+
+    .creator-info {
+      flex: 1;
+    }
+
+    .streamer-name {
+      display: block;
+      color: var(--klei-orange);
+      font-size: 1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stream-title {
+      display: block;
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 400;
+      margin-top: 4px;
+      opacity: 0.8;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .thumb-container {
@@ -539,68 +502,60 @@
 
     .live-tag {
       position: absolute;
-      top: 10px;
-      left: 10px;
+      top: 12px;
+      left: 12px;
       background: #e91916;
       color: #fff;
-      padding: 2px 8px;
+      padding: 4px 10px;
       border-radius: 4px;
-      font-size: 0.65rem;
-      font-weight: 700;
+      font-size: 0.7rem;
+      font-weight: 800;
     }
 
     .card-body {
-      padding: 16px;
+      padding: 20px;
       display: flex;
-      gap: 12px;
+      gap: 15px;
     }
 
     .profile-pic {
-      width: 42px;
-      height: 42px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
-      border: 2px solid var(--accent-color);
+      border: 2px solid var(--klei-orange);
       object-fit: cover;
-    }
-
-    .card-info {
-      flex: 1;
-      overflow: hidden;
     }
 
     .stream-title {
       color: #fff;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-weight: 600;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
     }
 
     .streamer-name {
-      color: var(--accent-color);
+      color: var(--klei-orange);
       font-size: 0.8rem;
-      font-weight: 600;
+      font-weight: 700;
+      text-transform: uppercase;
     }
 
     .sidebar-footer {
       margin-top: auto;
-      padding: 20px 12px;
-      border-top: 1px solid var(--border-color);
+      padding: 20px;
+      border-top: 1px solid var(--border-dark);
       font-size: 0.75rem;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       line-height: 1.6;
     }
 
     .sidebar-footer a {
-      color: var(--accent-color);
+      color: var(--klei-orange);
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    /* MOBILE NAVIGATION */
+    /* MOBILE NAV */
     .mobile-nav {
       display: none;
       position: fixed;
@@ -608,10 +563,9 @@
       left: 0;
       right: 0;
       background: var(--bg-sidebar);
-      backdrop-filter: blur(30px);
-      border-top: 1px solid var(--border-color);
+      border-top: 1px solid var(--border-dark);
       justify-content: space-around;
-      padding: 10px 0;
+      padding: 12px 0;
       z-index: 1000;
     }
 
@@ -626,24 +580,18 @@
       flex-direction: column;
       align-items: center;
       gap: 6px;
-      transition: 0.2s;
-    }
-
-    .m-btn i {
-      width: 20px;
-      height: 20px;
-      stroke-width: 2px;
     }
 
     .m-btn.active {
-      color: var(--accent-color);
+      color: var(--klei-orange);
     }
 
-    .m-btn.active i {
-      stroke: var(--accent-color);
+    .m-btn i {
+      width: 22px;
+      height: 22px;
     }
 
-    @media (max-width: 850px) {
+    @media (max-width: 900px) {
       aside {
         display: none;
       }
@@ -653,11 +601,25 @@
       }
 
       main {
-        padding: 20px 20px 100px 20px;
+        padding: 30px 20px 100px 20px;
+      }
+
+      .campaign-hero {
+        grid-template-columns: 1fr;
       }
 
       h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
+      }
+
+      .hero-status-banner {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      #timer-date {
+        border-left: none;
+        padding-left: 0;
       }
     }
   </style>
@@ -665,7 +627,6 @@
 
 <body>
   <div class="bg-filtered"></div>
-  <div class="bg-overlay"></div>
 
   <aside>
     <div class="brand">
@@ -708,32 +669,30 @@
 
   <main>
     <section id="drops" class="active">
-      <!-- Page Title -->
-      <h1 id="c-name" style="text-align: center; margin-bottom: 30px;">Don't Starve Together</h1>
+      <h1 id="c-name">Don't Starve Together</h1>
 
-      <!-- HERO STATUS BANNER -->
+      <!-- HERO TIMER -->
       <div class="hero-status-banner">
         <span id="timer">SYNCING...</span>
         <span id="timer-date">Loading date...</span>
       </div>
 
       <div class="campaign-hero">
-        <!-- LEFT: Item Showcase -->
+        <!-- LEFT: ITEM SHOWCASE -->
         <div class="item-showcase">
-          <!-- Image is now the focus without the floating badge -->
           <img id="c-gif" src="" alt="Item Preview">
-
-          <div class="info-box"
-            style="text-align: center; border-left: none; border-bottom: 3px solid var(--accent-color); margin-top: 20px;">
-            <strong>Delivery:</strong> Items are credited instantly to your account upon claiming.
+          <div
+            style="margin-top: 30px; background: var(--bg-card); border: 1px solid var(--klei-orange); border-radius: var(--radius-md); padding: 16px 20px; font-size: 0.9rem; color: var(--text-primary); text-align: center;">
+            <strong style="color: var(--klei-orange);">Delivery:</strong> Items are credited instantly upon claiming.
           </div>
         </div>
 
-        <!-- RIGHT: Details Panel -->
+        <!-- RIGHT: DETAILS PANEL -->
         <div class="details-panel">
-          <div class="win-card">
-            <h3 style="font-size: 1.1rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-              <i data-lucide="trophy" style="width: 18px; color: var(--accent-color);"></i>
+          <div class="klei-card">
+            <h3
+              style="color:#fff; margin-bottom:20px; font-size:1.2rem; display: flex; align-items: center; gap: 10px;">
+              <i data-lucide="trophy" style="color: var(--klei-orange);"></i>
               Campaign Rewards
             </h3>
 
@@ -741,12 +700,13 @@
               <!-- Dynamic cards injected here -->
             </div>
 
-            <div class="link-section">
-              <h3 style="font-size: 1.1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                <i data-lucide="link" style="width: 18px; color: var(--accent-color);"></i>
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border-dark);">
+              <h3
+                style="color:#fff; margin-bottom:15px; font-size:1.1rem; display: flex; align-items: center; gap: 10px;">
+                <i data-lucide="link" style="color: var(--klei-orange);"></i>
                 Link Your Accounts
               </h3>
-              <div class="link-grid">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px;">
                 <a href="https://accounts.klei.com/account/twitch/link" target="_blank" class="btn"
                   style="background: #6441a5;">Twitch</a>
                 <a href="https://accounts.klei.com/account/bilibili/link" target="_blank" class="btn"
@@ -757,22 +717,12 @@
             </div>
 
             <div
-              style="margin-top: 25px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-              <strong style="color: #fff; font-size: 0.85rem;">How to earn:</strong>
-
-              <div class="step-list">
-                <div class="step-row">
-                  <span class="step-number">1</span>
-                  <span>Link your Klei Account</span>
-                </div>
-                <div class="step-row">
-                  <span class="step-number">2</span>
-                  <span>Watch "Drops Enabled" streams</span>
-                </div>
-                <div class="step-row">
-                  <span class="step-number">3</span>
-                  <span>Claim in platform inventory</span>
-                </div>
+              style="margin-top: 25px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: var(--radius-md); font-size: 0.8rem; color: var(--text-secondary);">
+              <strong>How to earn:</strong>
+              <div style="display: flex; flex-direction: column; gap: 5px; margin-top: 10px;">
+                <span>1. Link your Klei Account</span>
+                <span>2. Watch "Drops Enabled" streams</span>
+                <span>3. Claim in platform inventory</span>
               </div>
             </div>
           </div>
@@ -781,19 +731,24 @@
     </section>
 
     <section id="live">
-      <h1>Live Klei Ambassadors</h1>
-      <div id="amb-list" class="amb-grid"></div>
+      <div class="amb-header">
+        <h1>Live Klei Ambassadors</h1>
+        <p>Connect with the official community leaders, earn rewards, and master the art of survival.</p>
+      </div>
+      <div id="amb-list" class="amb-grid">
+        <!-- Cards will be injected here -->
+      </div>
     </section>
 
     <section id="more">
       <h1>Reward Resources</h1>
       <div class="amb-grid">
         <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2308653652" target="_blank"
-          class="win-card amb-card" style="text-align:center; padding: 40px; display: block;">
+          class="klei-card amb-card" style="text-align:center; padding: 40px; display: block;">
           <h3 style="color:#fff; font-weight: 600;">Steam Points Guide</h3>
         </a>
         <a href="https://forums.kleientertainment.com/forums/topic/119013-free-spools-and-points/" target="_blank"
-          class="win-card amb-card" style="text-align:center; padding: 40px; display: block;">
+          class="klei-card amb-card" style="text-align:center; padding: 40px; display: block;">
           <h3 style="color:#fff; font-weight: 600;">Forums Spools List</h3>
         </a>
       </div>
@@ -801,29 +756,30 @@
 
     <section id="info">
       <h1>Why watch Ambassadors?</h1>
-      <div class="win-card">
+      <div class="klei-card">
         <img
           src="https://cdn.forums.klei.com/monthly_2025_02/ShipwreckedCrabpack_1920x1080.jpg.ee2aa1857f3ed0fccc6126d29ee1a25f.jpg"
-          style="width:100%; border-radius: var(--radius-lg); margin-bottom:20px; border: 1px solid var(--border-color);">
+          style="width:100%; border-radius: var(--radius-lg); margin-bottom:20px; border: 1px solid var(--border-dark);">
 
-        <div class="info-box">
+        <div
+          style="border-left: 4px solid var(--klei-orange); background: rgba(255, 255, 255, 0.05); padding: 15px; margin-bottom: 20px; font-size: 0.9rem;">
           <span style="color:#fff; font-weight:600;">Special Perks:</span> Ambassadors have access to unique codes and
           reward links provided by Klei for the community.
         </div>
 
         <ul style="list-style: none; padding-left: 5px;">
           <li style="margin-bottom: 15px;">
-            <strong style="color:var(--accent-color)">✦ Klei Points & Spools</strong><br>
+            <strong style="color:var(--klei-orange)">✦ Klei Points & Spools</strong><br>
             <span style="color: var(--text-secondary); font-size: 0.9rem;">Special giveaways for links that grant
               high-value points directly.</span>
           </li>
           <li style="margin-bottom: 15px;">
-            <strong style="color:var(--accent-color)">✦ Resurrected Bundles</strong><br>
+            <strong style="color:var(--klei-orange)">✦ Resurrected Bundles</strong><br>
             <span style="color: var(--text-secondary); font-size: 0.9rem;">Limited-time access to legacy skins from past
               events.</span>
           </li>
           <li style="margin-bottom: 15px;">
-            <strong style="color:var(--accent-color)">✦ Community Hubs</strong><br>
+            <strong style="color:var(--klei-orange)">✦ Community Hubs</strong><br>
             <span style="color: var(--text-secondary); font-size: 0.9rem;">The best place to find active campaigns and
               pro gameplay tips.</span>
           </li>
@@ -852,7 +808,6 @@
   </nav>
 
   <script>
-    // Initialize Lucide Icons
     lucide.createIcons();
 
     function nav(id, el) {
@@ -878,12 +833,12 @@
         ];
 
         document.getElementById('reward-rows').innerHTML = rewards.map(r => `
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size: 0.9rem;">
-                        <div>
-                            <div style="color:var(--text-primary); font-weight:500;">${r.n}</div>
-                            <div style="color:var(--text-muted); font-size: 0.75rem;">${r.d}</div>
+                    <div class="reward-card">
+                        <div class="reward-info">
+                            <h4>${r.n}</h4>
+                            <p>${r.d}</p>
                         </div>
-                        <div style="font-family:'Hammerhead'; color:var(--accent-color)">${r.t} MIN</div>
+                        <div class="reward-time">${r.t} MIN</div>
                     </div>
                 `).join('');
 
@@ -903,15 +858,12 @@
             statusBadge.innerText = "Live";
             statusBadge.className = "sidebar-status status-active";
 
-            // Calculate Timer
             const d = Math.floor(diff / 86400000);
             const h = Math.floor((diff % 86400000) / 3600000);
             const m = Math.floor((diff % 3600000) / 60000);
             const s = Math.floor((diff % 60000) / 1000);
 
             timerEl.innerText = `ENDS IN: ${d}D ${h}H ${m}M ${s}S`;
-
-            // Calculate Date
             const endDate = new Date(endTimestamp);
             const dateOptions = { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
             dateEl.innerText = `Ends on ${endDate.toLocaleDateString(undefined, dateOptions)}`;
@@ -922,21 +874,26 @@
         const aData = await aRes.json();
 
         document.getElementById('amb-list').innerHTML = aData.map(a => `
-                    <a href="${a.StreamURL}" target="_blank" class="amb-card">
-                        <div class="thumb-container">
-                            <div class="live-tag">LIVE</div>
-                            <img class="thumb-img" src="${a.ThumbnailURL.replace('440x248', '640x360')}">
+                <a href="${a.StreamURL}" target="_blank" class="amb-card">
+                    <div class="thumb-container">
+                        <div class="live-tag">LIVE</div>
+                        <div class="watch-overlay">
+                            <div class="watch-btn">Watch Now</div>
                         </div>
-                        <div class="card-body">
+                        <img class="thumb-img" src="${a.ThumbnailURL.replace('440x248', '640x360')}">
+                    </div>
+                    <div class="card-body">
+                        <div class="creator-meta">
                             <img class="profile-pic" src="${a.ProfileIcon}">
-                            <div class="card-info">
-                                <div class="stream-title">${a.Title}</div>
-                                <div class="streamer-name">${a.Name}</div>
+                            <div class="creator-info">
+                                <span class="streamer-name">${a.Name}</span>
+                                <span class="stream-title">${a.Title}</span>
                             </div>
                         </div>
-                    </a>
-                `).join('');
-      } catch (e) { console.error("Error loading API data", e); }
+                    </div>
+                </a>
+            `).join('');
+      } catch (e) { console.error("API Error", e); }
     }
     init();
   </script>

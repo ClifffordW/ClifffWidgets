@@ -1,792 +1,614 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<head>
+    <!-- SOCIAL PREVIEW (Open Graph & Twitter Cards) -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starving For Drops | DST Rewards</title>
+    
     <meta property="og:title" content="Starving For Drops" />
-    <meta
-      property="og:description"
-      content="Check out the current drops for Don't Starve Together!"
-    />
-    <meta
-      property="og:image"
-      content="https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2.png"
-    />
-    <meta
-      property="og:url"
-      content="https://clifffordw.github.io/ClifffWidgets/Webpage/index.html"
-    />
+    <meta property="og:description" content="Track active Don't Starve Together drops and find live Klei Ambassadors to claim your rewards!" />
+    <meta property="og:image" content="https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2.png" />
+    <meta property="og:url" content="https://clifffordw.github.io/ClifffWidgets/Webpage/index.html" />
     <meta property="og:type" content="website" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Starving For Drops" />
-    <meta
-      name="twitter:description"
-      content="Check out the current drops for Don't Starve Together and claim your rewards!"
-    />
-    <meta
-      name="twitter:image"
-      content="https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2.png"
-    />
-    <meta
-      name="twitter:url"
-      content="https://clifffordw.github.io/ClifffWidgets/Webpage/index.html"
-    />
-
-    <meta property="og:site_name" content="Starving For Drops" />
-    <meta property="og:locale" content="en_US" />
-
-<head>
-  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Starving For Drops</title>
-
-  <link rel="shortcut icon" type="image/x-icon" href="https://clifffordw.github.io/ClifffWidgets/Webpage/webicon.ico">
-  <style>
-    @font-face {
-      font-family: 'Hammerhead';
-      src: url('https://clifffordw.github.io/ClifffWidgets/Fonts/HammerheadBold.ttf');
-    }
-
-
-
-    
-
-
-
-/* Update CSS */
-body { font-family: 'Varela Round', sans-serif; }
-
-
-
-    :root {
-        --klei-orange: #EF6030;
-        --text-main: #ffffff; /* Brighter white for better contrast */
-        --font-primary: 'Varela Round', sans-serif;
-    }
-
-    body {
-        background-color: #000;
-        color: var(--text-main);
-        font-family: var(--font-primary);
-        line-height: 1.6; /* Adds breathing room between lines */
-        -webkit-font-smoothing: antialiased;
-    }
-
-
-
-    :root {
-      --klei-orange: #EF6030;
-      --steam-bg: #1b2838;
-      --steam-card: rgba(23, 26, 33, 0.85);
-      --winui-border: rgba(255, 255, 255, 0.08);
-      --text-main: #c6d4df;
-      --sidebar-width: 260px;
-    }
-
-    :root {
-        --klei-orange: #EF6030;
-        --klei-orange-glow: rgba(239, 96, 48, 0.35);
-        --steam-card: rgba(20, 24, 28, 0.9); /* Darker for better text contrast */
-        --winui-border: rgba(255, 255, 255, 0.12);
-        --text-main: #ffffff; /* Brighter main text */
-        --text-muted: #a0adbb; /* Clearer muted text */
-    }
-
-    body {
-        -webkit-font-smoothing: antialiased;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.8); /* Global subtle lift for all text */
-    }
-
-    h1 { 
-        font-family: 'Hammerhead'; 
-        font-size: 2.8rem; 
-        color: #fff; 
-        letter-spacing: 1px;
-        filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
-    }
-
-    /* Make headers pop */
-    h3 { color: #fff; font-weight: 700; margin-bottom: 2px; }
-
-    /* Make the brand text glow */
-    .brand {
-        font-family: 'Hammerhead', sans-serif;
-        color: #fff;
-        text-shadow: 0 0 12px var(--klei-orange-glow);
-    }
-
-
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .bg-filtered {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url("https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/322330/page_bg_raw.jpg") no-repeat center center fixed;
-      background-size: cover;
-      filter: brightness(0.12) blur(3px) saturate(0%);
-      z-index: -2;
-    }
-
-    body {
-      background-color: #000;
-      color: var(--text-main);
-      font-family: "Varela Round", system-ui, sans-serif;
-      height: 100vh;
-      
-      display: flex;
-      overflow: hidden;
-    }
-
-
-
-    /* Sidebar */
-    aside {
-      width: var(--sidebar-width);
-      background: rgba(15, 15, 20, 0.75);
-      backdrop-filter: blur(30px);
-      border-right: 1px solid var(--winui-border);
-      display: flex;
-      flex-direction: column;
-      padding: 30px 12px;
-      z-index: 100;
-    }
-
-    .brand {
-      font-family: 'Hammerhead', sans-serif;
-      color: #fff;
-      font-size: 1.3rem;
-      margin-bottom: 35px;
-      padding-left: 12px;
-      letter-spacing: 1px;
-    }
-
-    .nav-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 16px;
-      margin-bottom: 4px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      color: #8fa1b0;
-      font-size: 0.9rem;
-      position: relative;
-    }
-
-    .nav-item:hover {
-      background: rgba(255, 255, 255, 0.05);
-      color: #fff;
-    }
-
-    .nav-item.active {
-      background: rgba(239, 96, 48, 0.12);
-      color: var(--klei-orange);
-      font-weight: 600;
-    }
-
-    .nav-item.active::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 25%;
-      height: 50%;
-      width: 3px;
-      background: var(--klei-orange);
-      border-radius: 4px;
-      box-shadow: 0 0 10px var(--klei-orange);
-    }
-
-    .sidebar-status {
-      font-size: 0.65rem;
-      font-weight: 900;
-      padding: 2px 6px;
-      border-radius: 4px;
-      text-transform: uppercase;
-      background: rgba(255, 255, 255, 0.05);
-      color: #555;
-    }
-
-    .status-active {
-      background: rgba(239, 96, 48, 0.2);
-      color: var(--klei-orange);
-      animation: badgePulse 2s infinite;
-    }
-
-    @keyframes badgePulse {
-
-      0%,
-      100% {
-        opacity: 1;
-      }
-
-      50% {
-        opacity: 0.5;
-      }
-    }
-
-    /* Main Content */
-    main {
-      flex: 1;
-      padding: 40px;
-      overflow-y: auto;
-      scroll-behavior: smooth;
-    }
-
-    section {
-      display: none;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    section.active {
-      display: block;
-      animation: winSlide 0.4s ease-out;
-    }
-
-    @keyframes winSlide {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    h1 {
-      font-family: 'Hammerhead';
-      font-size: 2.6rem;
-      color: #fff;
-      margin-bottom: 20px;
-    }
-
-    .timer-strip {
-      display: inline-flex;
-      background: rgba(239, 96, 48, 0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(239, 96, 48, 0.2);
-      border-radius: 4px;
-      padding: 8px 16px;
-      margin-bottom: 20px;
-      font-family: 'Hammerhead';
-      color: var(--klei-orange);
-      font-size: 0.95rem;
-    }
-
-    .win-card {
-      background: var(--steam-card);
-      border: 1px solid var(--winui-border);
-      border-radius: 8px;
-      padding: 25px;
-      margin-bottom: 20px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-    }
-
-    .info-box {
-      border-left: 4px solid var(--klei-orange);
-      background: rgba(239, 96, 48, 0.05);
-      padding: 15px;
-      margin: 15px 0;
-      font-size: 0.95rem;
-      line-height: 1.5;
-    }
-
-
-
-    
-
-    .btn {
-      padding: 12px;
-      border-radius: 4px;
-      font-weight: 600;
-      text-decoration: none;
-      text-align: center;
-      font-size: 0.98rem;
-      transition: 0.2s;
-      color: #fff;
-      background: #2a3f5a;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      text-shadow: 0 1px 8px rgb(0, 0, 0);
-    }
-
-    .btn:hover {
-      background: var(--klei-orange);
-      filter:brightness(115%);
-      transform: translateY(-2px);
-    }
-
-
-
-    .amb-grid { 
-        display: grid; 
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
-        gap: 20px; 
-    }
-    .amb-card {
-        background: var(--steam-card); 
-        border-radius: 8px; 
-        overflow: hidden; 
-        text-decoration: none; 
-        color: inherit; 
-        border: 1px solid var(--winui-border); 
-        transition: 0.3s;
-    }
-    .amb-card:hover { 
-        border-color: var(--klei-orange); 
-        transform: translateY(-5px); 
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-    }
-    .thumb-container { 
-        position: relative; 
-        width: 100%; 
-        aspect-ratio: 16/9; 
-        background: #000; 
-    }
-    .thumb-img { width: 100%; height: 100%; object-fit: cover; }
-    .live-tag { 
-        position: absolute; top: 10px; left: 10px; 
-        background: #e91916; color: #fff; 
-        padding: 2px 8px; border-radius: 4px; 
-        font-size: 0.7rem; font-weight: 900; 
-    }
-    .card-body { padding: 15px; display: flex; gap: 12px; }
-    .profile-pic { 
-        width: 40px; height: 40px; 
-        border-radius: 50%; 
-        border: 2px solid var(--klei-orange); 
-        object-fit: cover;
-    }
-    .card-info { flex: 1; overflow: hidden; }
-    .stream-title { 
-        color: #fff; font-size: 0.85rem; font-weight: 600; 
-        display: -webkit-box; -webkit-line-clamp: 2; 
-        -webkit-box-orient: vertical; overflow: hidden; 
-        margin-bottom: 4px; 
-    }
-    .streamer-name { color: var(--klei-orange); font-size: 0.8rem; font-weight: 700; }
-
-
-
-  .brand {
-      font-family: 'Hammerhead', sans-serif;
-      color: #fff;
-      font-size: 1.3rem;
-      margin-bottom: 35px;
-      padding-left: 12px;
-      letter-spacing: 1px;
-      /* New styles for logo alignment */
-      display: flex;
-      align-items: bottom;
-      gap: 12px; 
-  }
-
-  .brand-logo {
-      width: 32px;
-      height: 32px;
-      object-fit: contain;
-  }
-
-  
-footer {
-    padding: 20px;
-    margin-top: 40px;
-    border-top: 1px solid var(--winui-border);
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    text-align: center;
-    font-size: 0.8rem;
-    color: #8fa1b0;
-    line-height: 1.6;
-}
-
-.footer-logo {
-    height: 14px;
-    vertical-align: middle;
-    margin: 0 4px;
-    opacity: 0.8;
-}
-
-.footer-link {
-    color: var(--klei-orange);
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.footer-link:hover {
-    text-decoration: underline;
-}
-/* Sidebar Footer Styling */
-.sidebar-footer {
-    background: rgba(0, 0, 0, 0.2);
-    margin: auto 8px 8px 8px;
-    padding: 24px;
-    border-radius: 8px;
-    border: 1px solid var(--winui-border);
-}
-
-.sidebar-footer strong {
-    color: var(--klei-orange) !important; /* Highlights Klei Entertainment */
-    opacity: 1;
-}
-
-/* Add this to your <style> */
-#reward-rows > div {
-    flex-wrap: wrap; /* Allows text to drop to a new line */
-    gap: 10px;
-}
-
-@media (max-width: 500px) {
-    #reward-rows > div {
-        flex-direction: column; /* Stacks time and reward name vertically */
-        align-items: flex-start !important;
-    }
-}
-
-
-.sidebar-footer strong {
-    color: #8fa1b0;
-}
-
-.footer-logo-small {
-    height: 10px;
-    vertical-align: middle;
-    margin: 0 2px;
-    opacity: 0.5;
-}
-
-.sidebar-footer a {
-    color: var(--klei-orange);
-    text-decoration: none;
-    display: block;
-    margin-top: 5px;
-    font-weight: 600;
-}
-
-.sidebar-footer a:hover {
-    text-decoration: underline;
-}
-
-
-    /* Mobile */
-    .mobile-nav {
-      display: none;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(15, 20, 30, 0.98);
-      backdrop-filter: blur(20px);
-      border-top: 1px solid var(--winui-border);
-      justify-content: space-around;
-      padding: 15px 0;
-      z-index: 1000;
-    }
-
-    .m-btn {
-      background: none;
-      border: none;
-      color: #556a7a;
-      font-weight: 700;
-      font-size: 0.7rem;
-    }
-
-    .m-btn.active {
-      color: var(--klei-orange);
-    }
-
-    @media (max-width: 850px) {
-      aside {
-        display: none;
-      }
-
-      .mobile-nav {
-        display: flex;
-      }
-
-      main {
-        padding: 20px 20px 100px 20px;
-      }
-    }
-  </style>
+    <meta name="twitter:description" content="Check current DST drops and find live ambassadors!" />
+    <meta name="twitter:image" content="https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2.png" />
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="https://clifffordw.github.io/ClifffWidgets/Webpage/webicon.ico">
+
+    <style>
+        @font-face {
+            font-family: 'Hammerhead';
+            src: url('https://clifffordw.github.io/ClifffWidgets/Fonts/HammerheadBold.ttf');
+        }
+
+        :root {
+            --accent-color: #EF6030;
+            --accent-hover: #ff7a4d;
+            --bg-mica: #1c1c1c;
+            --bg-sidebar: rgba(32, 32, 32, 0.7);
+            --acrylic-bg: rgba(45, 45, 45, 0.6);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-muted: #808080;
+            --radius-lg: 12px;
+            --radius-md: 8px;
+            --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-mica);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .bg-filtered {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/322330/page_bg_raw.jpg") no-repeat center center fixed;
+            background-size: cover;
+            filter: brightness(0.2) blur(8px) saturate(0%);
+            z-index: -2;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(28, 28, 28, 0.7);
+            z-index: -1;
+        }
+
+        /* SIDEBAR */
+        aside {
+            width: 280px;
+            background: var(--bg-sidebar);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 24px 12px;
+            z-index: 100;
+        }
+
+        .brand {
+            font-family: 'Hammerhead', sans-serif;
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-logo {
+            width: 28px;
+            height: 28px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            margin-bottom: 4px;
+            cursor: pointer;
+            transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-radius: var(--radius-md);
+            position: relative;
+        }
+
+        /* Icon wrapper to keep text aligned */
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 400;
+        }
+
+        .nav-item i {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2px;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .nav-item.active i {
+            stroke: var(--accent-color);
+        }
+
+        .nav-item.active::before {
+            content: "";
+            position: absolute;
+            left: -12px;
+            top: 20%;
+            height: 60%;
+            width: 4px;
+            background: var(--accent-color);
+            border-radius: 0 4px 4px 0;
+        }
+
+        .sidebar-status {
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            background: rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .status-active {
+            background: var(--accent-color);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+
+        /* MAIN CONTENT */
+        main {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        section {
+            display: none;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        section.active {
+            display: block;
+            animation: winSlide 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
+        }
+
+        @keyframes winSlide {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Hammerhead';
+            font-size: 2.6rem;
+            color: #fff;
+            margin-bottom: 24px;
+        }
+
+        .win-card {
+            background: var(--acrylic-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .timer-strip {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 8px 16px;
+            margin-bottom: 24px;
+            font-family: 'Hammerhead';
+            color: var(--accent-color);
+            font-size: 0.9rem;
+        }
+
+        .info-box {
+            border-left: 4px solid var(--accent-color);
+            background: rgba(255, 255, 255, 0.04);
+            padding: 16px;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--border-color);
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .amb-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 20px; 
+        }
+        .amb-card {
+            background: var(--acrylic-bg); 
+            border-radius: var(--radius-lg); 
+            overflow: hidden; 
+            text-decoration: none; 
+            color: inherit; 
+            border: 1px solid var(--border-color); 
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        .amb-card:hover { 
+            border-color: var(--accent-color); 
+            transform: translateY(-5px); 
+            background: rgba(60, 60, 60, 0.8);
+        }
+        .thumb-container { 
+            position: relative; 
+            width: 100%; 
+            aspect-ratio: 16/9; 
+            background: #000; 
+        }
+        .thumb-img { width: 100%; height: 100%; object-fit: cover; }
+        .live-tag { 
+            position: absolute; top: 10px; left: 10px; 
+            background: #e91916; color: #fff; 
+            padding: 2px 8px; border-radius: 4px; 
+            font-size: 0.65rem; font-weight: 700; 
+        }
+        .card-body { padding: 16px; display: flex; gap: 12px; }
+        .profile-pic { 
+            width: 42px; height: 42px; 
+            border-radius: 50%; 
+            border: 2px solid var(--accent-color); 
+            object-fit: cover;
+        }
+        .card-info { flex: 1; overflow: hidden; }
+        .stream-title { 
+            color: #fff; font-size: 0.85rem; font-weight: 600; 
+            display: -webkit-box; -webkit-line-clamp: 2; 
+            -webkit-box-orient: vertical; overflow: hidden; 
+            margin-bottom: 4px; 
+        }
+        .streamer-name { color: var(--accent-color); font-size: 0.8rem; font-weight: 600; }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding: 20px 12px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .sidebar-footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* MOBILE NAVIGATION */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: var(--bg-sidebar);
+            backdrop-filter: blur(30px);
+            border-top: 1px solid var(--border-color);
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .m-btn {
+            background: none; border: none; color: var(--text-secondary);
+            font-weight: 600; font-size: 0.65rem; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+            transition: 0.2s;
+        }
+        
+        .m-btn i {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2px;
+        }
+
+        .m-btn.active { color: var(--accent-color); }
+        .m-btn.active i { stroke: var(--accent-color); }
+
+        @media (max-width: 850px) {
+            aside { display: none; }
+            .mobile-nav { display: flex; }
+            main { padding: 20px 20px 100px 20px; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
 </head>
 
 <body>
-  <div class="bg-filtered"></div>
+    <div class="bg-filtered"></div>
+    <div class="bg-overlay"></div>
 
-  <aside>
+    <aside>
         <div class="brand">
-        <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/webicon.ico" alt="Logo" class="brand-logo">
-        <span>STARVING FOR DROPS</span>
-    </div>
-    <div class="nav-item active" onclick="nav('drops', this)">
-      <span>Active Campaign</span>
-      <span id="side-status" class="sidebar-status">...</span>
-    </div>
-    <div class="nav-item" onclick="nav('live', this)"><span>Live Klei Ambassadors</span></div>
-    <div class="nav-item" onclick="nav('more', this)"><span>Redeem Points</span></div>
-    <div class="nav-item" onclick="nav('info', this)"><span>Ambassador Info</span></div>
-
-    <div class="sidebar-footer">
-        <p>
-            Not affiliated with 
-            <img src="https://support.klei.com/hc/theming_assets/01HZPD6TCSEKT66X1B1ASZBB0B" class="footer-logo-small">
-            <strong>Klei Entertainment</strong>.
-        </p>
-        <p style="margin-top: 8px;">
-            Drop & Ambassador data provided by official Klei APIs.
-        </p>
-        <a href="https://www.klei.com/" target="_blank">Visit Klei Official</a>
-    </div>
-
-
-  </aside>
-
-  <main>
-    <section id="drops" class="active">
-      <div class="timer-strip" id="timer-container">
-
-        <span id="timer">CONNECTING TO KLEI...</span>
-        <span id="timer-date" style="margin-left: 10px; opacity: 1; font-size: 0.95rem; border-left: 1px solid rgba(239, 96, 48, 0.3); padding-left: 10px;"></span>
-      </div>
-
-      <h1 id="c-name" style="margin-bottom: 5px;">Don't Starve Together</h1>
-
-
-      <div class="win-card">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;">
-          <div style="display: flex; flex-direction: column; gap: 15px;">
-            <div
-              style="position: relative; border-radius: 6px; overflow: hidden; border: 1px solid var(--winui-border); background: #000;">
-              <img id="c-gif" src=""
-                style="width:100%; display: block; filter: drop-shadow(0 0 10px rgba(239, 96, 48, 0.2));">
-              <div
-                style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; color: #fff; border: 1px solid var(--winui-border);">
-                ITEM PREVIEW
-              </div>
-            </div>
-            <div class="info-box" style="margin: 0; font-size: 0.85rem;">
-              <strong>Note:</strong> Items are delivered to your in-game collection immediately after claiming on Twitch
-              or Bilibili or Douyu.
-            </div>
-          </div>
-
-          <div>
-            <h3
-              style="color:#fff; margin-bottom:15px; font-size:1.1rem; display: flex; align-items: center; gap: 10px;">
-              Campaign Milestones
-            </h3>
-            <div id="reward-rows" style="margin-bottom: 25px;"></div>
-
-            <h3 style="color:#fff; margin-bottom:15px; font-size:1.1rem;">Link Your Accounts</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-              <a href="https://accounts.klei.com/account/twitch/link" target="_blank" class="btn"
-                style="background: #6441a5;">Twitch</a>
-              <a href="https://accounts.klei.com/account/bilibili/link" target="_blank" class="btn"
-                style="background: #00aeec;">Bilibili</a>
-              <a href="https://accounts.klei.com/account/douyu/link" target="_blank" class="btn"
-                style="background: #ff5d23;">Douyu</a>
-            </div>
-
-            <div
-              style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 6px; border: 1px solid var(--winui-border);">
-              <p style="font-size: 0.8rem; line-height: 1.4; opacity: 0.8;">
-                <strong>How to earn:</strong><br>
-                1. Link your Klei Account to your platform.<br>
-                2. Watch any streamer with "Drops Enabled".<br>
-                3. Claim earned items in your respective platform's Inventory.
-              </p>
-            </div>
-          </div>
+            <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/webicon.ico" alt="Logo" class="brand-logo">
+            <span>STARVING FOR DROPS</span>
         </div>
-      </div>
-    </section>
+        
+        <div class="nav-item active" onclick="nav('drops', this)">
+            <div class="nav-link">
+                <i data-lucide="gift"></i>
+                <span>Active Campaign</span>
+            </div>
+            <span id="side-status" class="sidebar-status">...</span>
+        </div>
+        <div class="nav-item" onclick="nav('live', this)">
+            <div class="nav-link">
+                <i data-lucide="tv"></i>
+                <span>Live Ambassadors</span>
+            </div>
+        </div>
+        <div class="nav-item" onclick="nav('more', this)">
+            <div class="nav-link">
+                <i data-lucide="coins"></i>
+                <span>Reward Links</span>
+            </div>
+        </div>
+        <div class="nav-item" onclick="nav('info', this)">
+            <div class="nav-link">
+                <i data-lucide="info"></i>
+                <span>Ambassador Info</span>
+            </div>
+        </div>
+
+        <div class="sidebar-footer">
+            <p>Not affiliated with <strong>Klei Entertainment</strong>.</p>
+            <p style="margin-top: 8px;">Data provided via official APIs.</p>
+            <a href="https://www.klei.com/" target="_blank">Visit Official Site</a>
+        </div>
+    </aside>
+
+    <main>
+        <section id="drops" class="active">
+            <div class="timer-strip" id="timer-container">
+                <span id="timer">SYNCING WITH KLEI...</span>
+                <span id="timer-date" style="margin-left: 15px; border-left: 1px solid rgba(255,255,255,0.2); padding-left: 15px; font-family: 'Inter'; font-size: 0.8rem; opacity: 0.8;"></span>
+            </div>
+
+            <h1 id="c-name">Don't Starve Together</h1>
+
+            <div class="win-card">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        <div style="position: relative; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-color); background: #000;">
+                            <img id="c-gif" src="" style="width:100%; display: block;">
+                            <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); padding: 4px 8px; border-radius: 4px; font-size: 0.65rem; color: #fff; border: 1px solid var(--border-color);">
+                                ITEM PREVIEW
+                            </div>
+                        </div>
+                        <div class="info-box">
+                            <strong>Quick Tip:</strong> Items are credited to your account instantly after claiming on your linked platform.
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="color:#fff; margin-bottom:15px; font-size:1.1rem; font-weight: 600;">Campaign Milestones</h3>
+                        <div id="reward-rows" style="margin-bottom: 25px;"></div>
+
+                        <h3 style="color:#fff; margin-bottom:15px; font-size:1.1rem; font-weight: 600;">Link Your Accounts</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px;">
+                            <a href="https://accounts.klei.com/account/twitch/link" target="_blank" class="btn" style="background: #6441a5; border-color: rgba(0,0,0,0.2);">Twitch</a>
+                            <a href="https://accounts.klei.com/account/bilibili/link" target="_blank" class="btn" style="background: #00aeec; border-color: rgba(0,0,0,0.2);">Bilibili</a>
+                            <a href="https://accounts.klei.com/account/douyu/link" target="_blank" class="btn" style="background: #ff5d23; border-color: rgba(0,0,0,0.2);">Douyu</a>
+                        </div>
+
+                        <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.03); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                            <p style="font-size: 0.8rem; line-height: 1.5; color: var(--text-secondary);">
+                                <strong>How to Earn:</strong><br>
+                                1. Link your Klei Account to your platform.<br>
+                                2. Watch any streamer with "Drops Enabled".<br>
+                                3. Claim rewards in your platform's Inventory.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="live">
+            <h1>Live Klei Ambassadors</h1>
+            <div id="amb-list" class="amb-grid"></div>
+        </section>
+
+        <section id="more">
+            <h1>Reward Resources</h1>
+            <div class="amb-grid">
+                <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2308653652" target="_blank" class="win-card amb-card" style="text-align:center; padding: 40px; display: block;">
+                    <h3 style="color:#fff; font-weight: 600;">Steam Points Guide</h3>
+                </a>
+                <a href="https://forums.kleientertainment.com/forums/topic/119013-free-spools-and-points/" target="_blank" class="win-card amb-card" style="text-align:center; padding: 40px; display: block;">
+                    <h3 style="color:#fff; font-weight: 600;">Forums Spools List</h3>
+                </a>
+            </div>
+        </section>
+
+        <section id="info">
+            <h1>Why watch Ambassadors?</h1>
+            <div class="win-card">
+                <img src="https://cdn.forums.klei.com/monthly_2025_02/ShipwreckedCrabpack_1920x1080.jpg.ee2aa1857f3ed0fccc6126d29ee1a25f.jpg" style="width:100%; border-radius: var(--radius-lg); margin-bottom:20px; border: 1px solid var(--border-color);">
+
+                <div class="info-box">
+                    <span style="color:#fff; font-weight:600;">Special Perks:</span> Ambassadors have access to unique codes and reward links provided by Klei for the community.
+                </div>
+
+                <ul style="list-style: none; padding-left: 5px;">
+                    <li style="margin-bottom: 15px;">
+                        <strong style="color:var(--accent-color)">✦ Klei Points & Spools</strong><br>
+                        <span style="color: var(--text-secondary); font-size: 0.9rem;">Special giveaways for links that grant high-value points directly.</span>
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <strong style="color:var(--accent-color)">✦ Resurrected Bundles</strong><br>
+                        <span style="color: var(--text-secondary); font-size: 0.9rem;">Limited-time access to legacy skins from past events.</span>
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <strong style="color:var(--accent-color)">✦ Community Hubs</strong><br>
+                        <span style="color: var(--text-secondary); font-size: 0.9rem;">The best place to find active campaigns and pro gameplay tips.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <nav class="mobile-nav">
+        <button class="m-btn active" onclick="nav('drops', this)">
+            <i data-lucide="gift"></i>
+            DROPS
+        </button>
+        <button class="m-btn" onclick="nav('live', this)">
+            <i data-lucide="tv"></i>
+            LIVE
+        </button>
+        <button class="m-btn" onclick="nav('more', this)">
+            <i data-lucide="coins"></i>
+            LINKS
+        </button>
+        <button class="m-btn" onclick="nav('info', this)">
+            <i data-lucide="info"></i>
+            INFO
+        </button>
+    </nav>
 
     <script>
-      // Logic update for the comprehensive section
-      async function updateCampaignUI() {
-        try {
-          const res = await fetch("https://cdn.forums.klei.com/drops/current_campaign.json");
-          const data = await res.json();
-          const dst = data["Don't Starve Together"];
+        // Initialize Lucide Icons
+        lucide.createIcons();
 
-          document.getElementById('c-name').innerText = "Active Campaign";
-          document.getElementById('c-item-subtitle').innerText = dst.englishName.toUpperCase();
-          document.getElementById('c-gif').src = dst.gif;
-
-          // Updated milestones with better descriptions
-          const rewards = [
-            { t: 30, n: "Profile Flair", d: "Exclusive Community Icon" },
-            { t: 90, n: "Portrait Frame", d: "Thematic Character Border" },
-            { t: 180, n: dst.englishName, d: "Main In-Game Item Skin" }
-          ];
-
-          document.getElementById('reward-rows').innerHTML = rewards.map(r => `
-                <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.05)">
-                    <div>
-                        <div style="color:var(--klei-orange); font-weight:600; font-size:0.95rem;">${r.n}</div>
-                        <div style="font-size:0.75rem; opacity:0.5;">${r.d}</div>
-                    </div>
-                    <div style="font-family:'Hammerhead'; font-size:0.9rem; opacity:0.8;">${r.t} MIN</div>
-                </div>
-            `).join('');
-
-        } catch (e) {
-          console.error("Failed to load comprehensive campaign data", e);
+        function nav(id, el) {
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.nav-item, .m-btn').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
         }
-      }
-      // Call within your existing init() function
-    </script>
 
-    <section id="live">
-      <h1>Live Klei Ambassadors</h1>
-      <div id="amb-list" class="amb-grid"></div>
-    </section>
+        async function init() {
+            try {
+                const cRes = await fetch("https://cdn.forums.klei.com/drops/current_campaign.json");
+                const cData = await cRes.json();
+                const dst = cData["Don't Starve Together"];
 
-    <section id="more">
-      <h1>Reward Links</h1>
-      <div class="amb-grid">
-        <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2308653652" target="_blank"
-          class="win-card amb-card" style="text-align:center; text-decoration:none; color:inherit;">
-          <h3 style="color:#fff">Steam Points Guide</h3>
-        </a>
-        <a href="https://forums.kleientertainment.com/forums/topic/119013-free-spools-and-points/" target="_blank"
-          class="win-card amb-card" style="text-align:center; text-decoration:none; color:inherit;">
-          <h3 style="color:#fff">Forums Spools List</h3>
-        </a>
-      </div>
-    </section>
+                document.getElementById('c-name').innerText = dst.englishName;
+                document.getElementById('c-gif').src = dst.gif;
 
-    <section id="info">
-      <h1>Why watch Ambassadors?</h1>
-      <div class="win-card">
-        <img
-          src="https://cdn.forums.klei.com/monthly_2025_02/ShipwreckedCrabpack_1920x1080.jpg.ee2aa1857f3ed0fccc6126d29ee1a25f.jpg"
-          style="width:100%; border-radius:4px; margin-bottom:20px;">
-
-        <div class="info-box">
-          <span style="color:#fff; font-weight:600;">Ambassador Giveaways:</span> Unlike standard Twitch Drops,
-          Ambassadors have special codes and item links to give away during their streams.
-        </div>
-
-        <ul style="list-style: none; padding-left: 5px;">
-          <li style="margin-bottom: 15px;">
-            <strong style="color:var(--klei-orange)">✦ Klei Points & Spools</strong><br>
-            Many ambassadors host giveaways for links that grant 1000+ Klei Points or Spools directly to your account.
-          </li>
-          <li style="margin-bottom: 15px;">
-            <strong style="color:var(--klei-orange)">✦ Resurrected Bundles</strong><br>
-            Special item skins from past events are often "resurrected" and given to ambassadors to distribute to active
-            viewers.
-          </li>
-          <li style="margin-bottom: 15px;">
-            <strong style="color:var(--klei-orange)">✦ Exclusive Twitch Drops</strong><br>
-            Standard drops are earned by watching any Klei-enabled stream, but Ambassadors are the best place to find
-            active drop campaigns and community interaction.
-          </li>
-        </ul>
-      </div>
-    </section>
-  </main>
-
-  <nav class="mobile-nav">
-    <button class="m-btn active" onclick="nav('drops', this)">DROPS</button>
-    <button class="m-btn" onclick="nav('live', this)">LIVE</button>
-    <button class="m-btn" onclick="nav('more', this)">LINKS</button>
-    <button class="m-btn" onclick="nav('info', this)">INFO</button>
-  </nav>
-
-
-
-
-  <script>
-    function nav(id, el) {
-      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      document.querySelectorAll('.nav-item, .m-btn').forEach(i => i.classList.remove('active'));
-      el.classList.add('active');
-    }
-
-    async function init() {
-      try {
-        const cRes = await fetch("https://cdn.forums.klei.com/drops/current_campaign.json");
-        const cData = await cRes.json();
-        const dst = cData["Don't Starve Together"];
-
-        document.getElementById('c-name').innerText = dst.englishName;
-        document.getElementById('c-gif').src = dst.gif;
-
-        const rewards = [{ t: 30, n: "Flair" }, { t: 90, n: "Portrait" }, { t: 180, n: dst.englishName }];
-        document.getElementById('reward-rows').innerHTML = rewards.map(r => `
-                    <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.05)">
-                        <span style="opacity:0.6">${r.t} min</span><strong style="color:var(--klei-orange)">${r.n}</strong>
+                const rewards = [
+                    { t: 30, n: "Profile Flair", d: "Exclusive Icon" }, 
+                    { t: 90, n: "Portrait Frame", d: "Character Border" }, 
+                    { t: 180, n: dst.englishName, d: "Main Item Skin" }
+                ];
+                
+                document.getElementById('reward-rows').innerHTML = rewards.map(r => `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size: 0.9rem;">
+                        <div>
+                            <div style="color:var(--text-primary); font-weight:500;">${r.n}</div>
+                            <div style="color:var(--text-muted); font-size: 0.75rem;">${r.d}</div>
+                        </div>
+                        <div style="font-family:'Hammerhead'; color:var(--accent-color)">${r.t} MIN</div>
                     </div>
                 `).join('');
 
-          setInterval(() => {
-              const endTimestamp = dst.campaignEnd * 1000;
-              const diff = endTimestamp - Date.now();
-              const statusBadge = document.getElementById('side-status');
-              const timerEl = document.getElementById('timer');
-              const dateEl = document.getElementById('timer-date');
-              
-              if (diff <= 0) {
-                  statusBadge.innerText = "Ended";
-                  statusBadge.className = "sidebar-status";
-                  timerEl.innerText = "CAMPAIGN CONCLUDED";
-                  dateEl.innerText = "";
-              } else {
-                  statusBadge.innerText = "Live";
-                  statusBadge.className = "sidebar-status status-active";
-                  
-                  // Countdown Calculation
-                  const d = Math.floor(diff / 86400000);
-                  const h = Math.floor((diff % 86400000) / 3600000);
-                  const m = Math.floor((diff % 3600000) / 60000);
-                  const s = Math.floor((diff % 60000) / 1000);
+                setInterval(() => {
+                    const endTimestamp = dst.campaignEnd * 1000;
+                    const diff = endTimestamp - Date.now();
+                    const statusBadge = document.getElementById('side-status');
+                    const timerEl = document.getElementById('timer');
+                    const dateEl = document.getElementById('timer-date');
+                    
+                    if (diff <= 0) {
+                        statusBadge.innerText = "Ended";
+                        statusBadge.className = "sidebar-status";
+                        timerEl.innerText = "CAMPAIGN CONCLUDED";
+                        dateEl.innerText = "";
+                    } else {
+                        statusBadge.innerText = "Live";
+                        statusBadge.className = "sidebar-status status-active";
+                        
+                        const d = Math.floor(diff / 86400000);
+                        const h = Math.floor((diff % 86400000) / 3600000);
+                        const m = Math.floor((diff % 3600000) / 60000);
+                        const s = Math.floor((diff % 60000) / 1000);
 
-                  timerEl.innerText = `ENDS IN: ${d}D ${h}H ${m}M ${s}S`;
+                        timerEl.innerText = `ENDS IN: ${d}D ${h}H ${m}M ${s}S`;
+                        const endDate = new Date(endTimestamp);
+                        const dateOptions = { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+                        dateEl.innerText = endDate.toLocaleDateString(undefined, dateOptions);
+                    }
+                }, 1000);
 
-                  // Format Specific Date and Time
-                  const endDate = new Date(endTimestamp);
-                  const dateOptions = { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-                  dateEl.innerText = `${endDate.toLocaleDateString(undefined, dateOptions)}`;
-              }
-          }, 1000);
+                const aRes = await fetch("https://kleiforums.s3.amazonaws.com/gameimages/amblist.json");
+                const aData = await aRes.json();
 
-        const aRes = await fetch("https://kleiforums.s3.amazonaws.com/gameimages/amblist.json");
-        const aData = await aRes.json();
-
-        document.getElementById('amb-list').innerHTML = aData.map(a => `
-            <a href="${a.StreamURL}" target="_blank" class="amb-card">
-                <div class="thumb-container">
-                    <div class="live-tag">LIVE</div>
-                    <img class="thumb-img" src="${a.ThumbnailURL.replace('440x248', '640x360')}">
-                </div>
-                <div class="card-body">
-                    <img class="profile-pic" src="${a.ProfileIcon}">
-                    <div class="card-info">
-                        <div class="stream-title">${a.Title}</div>
-                        <div class="streamer-name">${a.Name}</div>
-                    </div>
-                </div>
-            </a>
-        `).join('');
-      } catch (e) { }
-    }
-    init();
-  </script>
+                document.getElementById('amb-list').innerHTML = aData.map(a => `
+                    <a href="${a.StreamURL}" target="_blank" class="amb-card">
+                        <div class="thumb-container">
+                            <div class="live-tag">LIVE</div>
+                            <img class="thumb-img" src="${a.ThumbnailURL.replace('440x248', '640x360')}">
+                        </div>
+                        <div class="card-body">
+                            <img class="profile-pic" src="${a.ProfileIcon}">
+                            <div class="card-info">
+                                <div class="stream-title">${a.Title}</div>
+                                <div class="streamer-name">${a.Name}</div>
+                            </div>
+                        </div>
+                    </a>
+                `).join('');
+            } catch (e) { console.error("Error loading API data", e); }
+        }
+        init();
+    </script>
 </body>
-
 </html>

@@ -40,7 +40,7 @@
       --radius-lg: 20px;
       /* Chunkier corners like the official site */
       --radius-md: 12px;
-      --font-main: 'Inter', sans-serif;
+      --font-main: 'Hammerhead', sans-serif;
     }
 
     * {
@@ -101,6 +101,10 @@
     }
 
     .nav-item {
+
+
+      border: 20px solid transparent;
+      border-image: url('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_frame.svg') 15 fill stretch;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -114,10 +118,12 @@
       position: relative;
     }
 
+
     .nav-link {
       display: flex;
       align-items: center;
       gap: 12px;
+      height:15px;
     }
 
     .nav-item i {
@@ -126,12 +132,16 @@
     }
 
     .nav-item:hover {
-      background: rgba(255, 255, 255, 0.05);
+      /* background: rgba(255, 255, 255, 0.05); */
       color: #fff;
+      border-image: url('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_frame_hov.svg') 12 fill stretch;
+
     }
 
     .nav-item.active {
-      background: var(--klei-orange);
+      /* background: #a83d19; */
+      border: 20px solid transparent;
+      border-image: url('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_frame_active.svg') 13 fill stretch;
       color: #fff;
       font-weight: 700;
     }
@@ -139,6 +149,16 @@
     .nav-item.active i {
       stroke: #fff;
     }
+
+    .nav-item img {
+      transition: 0.35s;
+    }
+
+    .nav-item.active img {
+      scale: 1.25;
+      transition: 0.35s;
+    }
+
 
     .sidebar-status {
       font-size: 0.6rem;
@@ -190,27 +210,28 @@
       letter-spacing: -1px;
     }
 
-    /* THE KLEI CARD - Heavy, dark, and bold */
     .klei-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-dark);
-      border-radius: var(--radius-lg);
-      padding: 30px;
-      margin-bottom: 30px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
       position: relative;
-      overflow: hidden;
     }
 
-    /* Orange accent line at top of card */
+    .details-panel {
+      border: 20px solid transparent;
+      border-image: url('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_frame.svg') 30 fill stretch;
+    }
+
     .klei-card::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: var(--klei-orange);
+      inset: 0;
+
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* keep content above the frame */
+    .klei-card > * {
+      position: relative;
+      z-index: 1;
     }
 
     /* HERO TIMER - High impact */
@@ -219,14 +240,13 @@
       justify-content: center;
       align-items: center;
       gap: 20px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-dark);
-      border-bottom: 3px solid var(--klei-orange);
-      border-radius: var(--radius-md);
+
+      border: 30px solid transparent;
+      border-image: url('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_frame.svg') 30 fill stretch;
+      filter: drop-shadow(0 0 15px black);
       padding: 20px;
       margin-bottom: 40px;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     }
 
     #timer {
@@ -251,10 +271,14 @@
     }
 
     .item-showcase {
-      background: radial-gradient(circle, #252525 0%, #1a1a1a 100%);
-      border-radius: var(--radius-lg);
+      border: 20px solid transparent;
+      border-image: url('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_frame.svg') 30 fill stretch;
+
+
+      /* background: radial-gradient(circle, #252525 0%, #1a1a1a 100%); */
+      /* border-radius: var(--radius-lg); */
       padding: 40px;
-      border: 1px solid var(--border-dark);
+      /* border: 1px solid var(--border-dark); */
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -265,7 +289,7 @@
     .item-showcase img {
       width: 100%;
       max-width: 450px;
-      filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.8));
+      /* filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.8)); */
       transition: transform 0.3s ease;
     }
 
@@ -290,6 +314,19 @@
       align-items: center;
       transition: 0.2s;
     }
+
+    .reward-bg {
+      position: absolute;
+      display:flex;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+
+
 
     .reward-card:hover {
       background: rgba(255, 255, 255, 0.07);
@@ -355,33 +392,109 @@
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 30px;
     }
+    .amb-grid-rewards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+      gap: 30px;
+    }
 
-    .amb-card {
-      background: var(--bg-card);
-      border-radius: var(--radius-lg);
+
+
+    .amb-card
+    {
+
+      border: 30px solid transparent;
+      border-image: url('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_frame.svg') 30 fill stretch;
+      
+    }
+
+    .amb-card-links
+    {
+
+      border: 20px solid transparent;
+      border-image: url('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_frame.svg') 20 fill stretch;
+
       overflow: hidden;
       text-decoration: none;
       color: inherit;
-      border: 1px solid var(--border-dark);
+      /* border: 1px solid var(--border-dark); */
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       position: relative;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+
+
+    }
+    .amb-card-links:hover
+    {
+      transform: translateY(-10px);
+      border-image: url('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_frame_hov.svg') 15 fill stretch;
+      filter: drop-shadow(0 0 9px var(--klei-orange-glow));
+
+    }
+
+
+    .ambassador-info
+    {
+
+      border: 15px solid transparent;
+      border-image: url('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_frame.svg') 30 fill stretch;
+
+      
+    }
+
+
+    .amb-card {
+
+
+
+      
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      /* border: 1px solid var(--border-dark); */
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      
+      
+      
+      /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); */
     }
 
     .amb-card:hover {
-      border-color: var(--klei-orange);
+      /* border-color: var(--klei-orange); */
       transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      border-image: url('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_frame_hov.svg') 20 fill stretch;
+      filter: drop-shadow(0 0 15px var(--klei-orange-glow));
     }
 
+  .card-wrapper {
+    position: relative;
+    margin: 12px; /* gives space for frame to peek out */
+    scale: 120%;
+  }
+
+    .thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+
+
+
+
     .thumb-container {
+      
       position: relative;
       width: 100%;
       aspect-ratio: 16/9;
       background: #000;
       overflow: hidden;
+      top: 15px;
     }
 
     .thumb-img {
@@ -389,6 +502,7 @@
       height: 100%;
       object-fit: cover;
       transition: transform 0.5s ease;
+      
     }
 
     .amb-card:hover .thumb-img {
@@ -487,6 +601,8 @@
       overflow: hidden;
     }
 
+
+
     .thumb-container {
       position: relative;
       width: 100%;
@@ -494,11 +610,7 @@
       background: #000;
     }
 
-    .thumb-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+
 
     .live-tag {
       position: absolute;
@@ -567,6 +679,7 @@
       justify-content: space-around;
       padding: 12px 0;
       z-index: 1000;
+      backdrop-filter:blur(15px);
     }
 
     .m-btn {
@@ -634,28 +747,28 @@
       <span>STARVING FOR DROPS</span>
     </div>
 
-    <div class="nav-item active" onclick="nav('drops', this)">
-      <div class="nav-link">
-        <i data-lucide="gift"></i>
-        <span>Active Campaign</span>
-      </div>
-      <span id="side-status" class="sidebar-status">...</span>
+  <div class="nav-item active" onclick="nav('drops', this)">
+    <div class="nav-link">
+        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/drops.png" width="32" height="32" style="object-fit: contain;">
+      <span>Active Campaign</span>
     </div>
+    <span id="side-status" class="sidebar-status">...</span>
+  </div>
     <div class="nav-item" onclick="nav('live', this)">
       <div class="nav-link">
-        <i data-lucide="tv"></i>
+        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador.png" width="32" height="32" style="object-fit: contain;">
         <span>Live Ambassadors</span>
       </div>
     </div>
     <div class="nav-item" onclick="nav('more', this)">
       <div class="nav-link">
-        <i data-lucide="coins"></i>
+        <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/rewards.png" class="rewardicon" width="32" height="32" style="object-fit: contain;">
         <span>Reward Links</span>
       </div>
     </div>
     <div class="nav-item" onclick="nav('info', this)">
       <div class="nav-link">
-        <i data-lucide="info"></i>
+        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_info.png" width="32" height="32" style="object-fit: contain;">
         <span>Ambassador Info</span>
       </div>
     </div>
@@ -742,15 +855,18 @@
 
     <section id="more">
       <h1>Reward Resources</h1>
-      <div class="amb-grid">
+      <div class="amb-grid-rewards">
+        
+
         <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2308653652" target="_blank"
-          class="klei-card amb-card" style="text-align:center; padding: 40px; display: block;">
-          <h3 style="color:#fff; font-weight: 600;">Steam Points Guide</h3>
+          class="klei-card amb-card-links" style="text-align:center; padding: 40px; display: block;">
+          <h3 style="color:#fff; font-weight: 600; font-size:1.8rem">Steam Points Guide</h3>
         </a>
         <a href="https://forums.kleientertainment.com/forums/topic/119013-free-spools-and-points/" target="_blank"
-          class="klei-card amb-card" style="text-align:center; padding: 40px; display: block;">
-          <h3 style="color:#fff; font-weight: 600;">Forums Spools List</h3>
+          class="klei-card amb-card-links" style="text-align:center; padding: 40px; display: block;">
+          <h3 style="color:#fff; font-weight: 600; font-size:1.8rem">Forums Spools List</h3>
         </a>
+        
       </div>
     </section>
 
@@ -767,7 +883,7 @@
           reward links provided by Klei for the community.
         </div>
 
-        <ul style="list-style: none; padding-left: 5px;">
+        <ul class="ambassador-info" style="list-style: none; padding-left: 5px;">
           <li style="margin-bottom: 15px;">
             <strong style="color:var(--klei-orange)">✦ Klei Points & Spools</strong><br>
             <span style="color: var(--text-secondary); font-size: 0.9rem;">Special giveaways for links that grant
@@ -788,21 +904,54 @@
     </section>
   </main>
 
+<!--   <aside>
+    <div class="brand">
+      <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/webicon.ico" alt="Logo" class="brand-logo">
+      <span>STARVING FOR DROPS</span>
+    </div>
+
+  <div class="nav-item active" onclick="nav('drops', this)">
+    <div class="nav-link">
+        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/drops.png" width="32" height="32" style="object-fit: contain;">
+      <span>Active Campaign</span>
+    </div>
+    <span id="side-status" class="sidebar-status">...</span>
+  </div>
+    <div class="nav-item" onclick="nav('live', this)">
+      <div class="nav-link">
+        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador.png" width="32" height="32" style="object-fit: contain;">
+        <span>Live Ambassadors</span>
+      </div>
+    </div>
+    <div class="nav-item" onclick="nav('more', this)">
+      <div class="nav-link">
+        <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/rewards.png" class="rewardicon" width="32" height="32" style="object-fit: contain;">
+        <span>Reward Links</span>
+      </div>
+    </div>
+    <div class="nav-item" onclick="nav('info', this)">
+      <div class="nav-link">
+        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_info.png" width="32" height="32" style="object-fit: contain;">
+        <span>Ambassador Info</span>
+      </div>
+    </div>
+ -->
+
   <nav class="mobile-nav">
     <button class="m-btn active" onclick="nav('drops', this)">
-      <i data-lucide="gift"></i>
+        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/drops.png" width="32" height="32" style="object-fit: contain;">
       DROPS
     </button>
     <button class="m-btn" onclick="nav('live', this)">
-      <i data-lucide="tv"></i>
+        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador.png" width="32" height="32" style="object-fit: contain;">
       LIVE
     </button>
     <button class="m-btn" onclick="nav('more', this)">
-      <i data-lucide="coins"></i>
+        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/rewards.png" width="32" height="32" style="object-fit: contain;">
       LINKS
     </button>
     <button class="m-btn" onclick="nav('info', this)">
-      <i data-lucide="info"></i>
+        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_info.png" width="32" height="32" style="object-fit: contain;">
       INFO
     </button>
   </nav>
@@ -834,6 +983,8 @@
 
         document.getElementById('reward-rows').innerHTML = rewards.map(r => `
                     <div class="reward-card">
+                        
+
                         <div class="reward-info">
                             <h4>${r.n}</h4>
                             <p>${r.d}</p>
@@ -874,24 +1025,29 @@
         const aData = await aRes.json();
 
         document.getElementById('amb-list').innerHTML = aData.map(a => `
-                <a href="${a.StreamURL}" target="_blank" class="amb-card">
-                    <div class="thumb-container">
-                        <div class="live-tag">LIVE</div>
-                        <div class="watch-overlay">
-                            <div class="watch-btn">Watch Now</div>
-                        </div>
-                        <img class="thumb-img" src="${a.ThumbnailURL.replace('440x248', '640x360')}">
+                
+            <a href="${a.StreamURL}" target="_blank" class="amb-card">
+              <div class="card-wrapper">
+                
+                <div class="thumb-container">
+                  <div class="live-tag">LIVE</div>
+                  <div class="watch-overlay">
+                    <div class="watch-btn">Watch Now</div>
+                  </div>
+                  <img class="thumb-img" src="${a.ThumbnailURL.replace('440x248', '640x360')}">
+                </div>
+                <div class="card-body">
+                  <div class="creator-meta">
+                    <img class="profile-pic" src="${a.ProfileIcon}">
+                    <div class="creator-info">
+                      <span class="streamer-name">${a.Name}</span>
+                      <span class="stream-title">${a.Title}</span>
                     </div>
-                    <div class="card-body">
-                        <div class="creator-meta">
-                            <img class="profile-pic" src="${a.ProfileIcon}">
-                            <div class="creator-info">
-                                <span class="streamer-name">${a.Name}</span>
-                                <span class="stream-title">${a.Title}</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
+                  </div>
+                </div>
+              </div>
+            </a>
+                
             `).join('');
       } catch (e) { console.error("API Error", e); }
     }

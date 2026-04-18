@@ -11,7 +11,7 @@
   <meta property="og:description" content="Track active Don't Starve Together drops and find live Klei Ambassadors!" />
   <meta property="og:image" content="https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2.png" />
   <meta property="og:url" content="https://clifffordw.github.io/ClifffWidgets/Webpage/index.html" />
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -95,6 +95,47 @@
       padding-left: 10px;
     }
 
+
+
+
+    /* --- FORCED DARK SCROLLBAR --- */
+
+    /* Target EVERYTHING including the main scrollable area */
+    ::-webkit-scrollbar,
+    main::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track,
+    main::-webkit-scrollbar-track {
+      background: var(--bg-dark) !important;
+    }
+
+    ::-webkit-scrollbar-thumb,
+    main::-webkit-scrollbar-thumb {
+      /* Use a slightly lighter gray for the default state */
+      background: #333 !important;
+      border-radius: 10px;
+      border: 2px solid var(--bg-dark) !important;
+    }
+
+    /* This is the part that was likely being ignored */
+    ::-webkit-scrollbar-thumb:hover,
+    main::-webkit-scrollbar-thumb:hover {
+      background: var(--klei-orange) !important;
+      cursor: pointer;
+    }
+
+    /* Firefox Specific - Firefox doesn't support hover on thumbs yet, 
+   but this sets the general theme */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #333 var(--bg-dark);
+    }
+
+
+
     .brand-logo {
       width: 32px;
       height: 32px;
@@ -123,7 +164,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      height:15px;
+      height: 15px;
     }
 
     .nav-item i {
@@ -219,6 +260,10 @@
       border-image: url('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_frame.svg') 30 fill stretch;
     }
 
+    .details-panel .howtoearn {
+      font-size: 1.2rem !important;
+    }
+
     .klei-card::before {
       content: '';
       position: absolute;
@@ -229,7 +274,7 @@
     }
 
     /* keep content above the frame */
-    .klei-card > * {
+    .klei-card>* {
       position: relative;
       z-index: 1;
     }
@@ -261,6 +306,7 @@
       color: var(--text-secondary);
       border-left: 1px solid var(--border-dark);
       padding-left: 20px;
+      font-size: 2rem;
     }
 
     /* ITEM SHOWCASE */
@@ -285,6 +331,11 @@
       justify-content: center;
       align-items: center;
     }
+
+    .item-showcase .helpertext {
+      font-size: 1.35rem !important;
+    }
+
 
     .item-showcase img {
       width: 100%;
@@ -315,9 +366,19 @@
       transition: 0.2s;
     }
 
+    .reward-card h4 {
+
+      font-size: 1.45rem !important;
+    }
+
+    .reward-card p {
+
+      font-size: 1.25rem !important;
+    }
+
     .reward-bg {
       position: absolute;
-      display:flex;
+      display: flex;
       top: 0;
       left: 0;
       width: 100%;
@@ -364,6 +425,10 @@
       background: #333;
       border: 1px solid var(--border-dark);
       display: inline-block;
+
+      font-family: 'Hammerhead', sans-serif;
+
+
     }
 
     .btn:hover {
@@ -392,6 +457,7 @@
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 30px;
     }
+
     .amb-grid-rewards {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
@@ -400,16 +466,14 @@
 
 
 
-    .amb-card
-    {
+    .amb-card {
 
       border: 30px solid transparent;
       border-image: url('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_frame.svg') 30 fill stretch;
-      
+
     }
 
-    .amb-card-links
-    {
+    .amb-card-links {
 
       border: 20px solid transparent;
       border-image: url('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_frame.svg') 20 fill stretch;
@@ -425,8 +489,8 @@
 
 
     }
-    .amb-card-links:hover
-    {
+
+    .amb-card-links:hover {
       transform: translateY(-10px);
       border-image: url('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_frame_hov.svg') 15 fill stretch;
       filter: drop-shadow(0 0 9px var(--klei-orange-glow));
@@ -434,21 +498,62 @@
     }
 
 
-    .ambassador-info
-    {
+    .ambassador-info {
+
+      margin-top: 50px;
 
       border: 15px solid transparent;
       border-image: url('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_frame.svg') 30 fill stretch;
 
-      
+
     }
+
+    /* IMPROVED AMBASSADOR INFO */
+    .info-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .ambassador-info {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .info-item {
+      background: rgba(0, 0, 0, 0.2);
+      border-left: 4px solid var(--klei-orange);
+      padding: 25px;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      transition: background 0.2s;
+    }
+
+    .info-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .info-item strong {
+      font-size: 1.4rem;
+      /* Scaled up title */
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .info-item span {
+      font-size: 1.05rem !important;
+      /* Scaled up description */
+      line-height: 1.5;
+    }
+
+
 
 
     .amb-card {
 
 
 
-      
+
       border-radius: var(--radius-lg);
       overflow: hidden;
       text-decoration: none;
@@ -458,9 +563,9 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      
-      
-      
+
+
+
       /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); */
     }
 
@@ -471,11 +576,12 @@
       filter: drop-shadow(0 0 15px var(--klei-orange-glow));
     }
 
-  .card-wrapper {
-    position: relative;
-    margin: 12px; /* gives space for frame to peek out */
-    scale: 120%;
-  }
+    .card-wrapper {
+      position: relative;
+      margin: 12px;
+      /* gives space for frame to peek out */
+      scale: 120%;
+    }
 
     .thumb-img {
       width: 100%;
@@ -487,8 +593,181 @@
 
 
 
+
+
+
+
+
+/* --- OVERHAULED DOWNLOAD SECTION --- */
+#download h1 {
+  font-size: 4rem;
+  margin-bottom: 10px;
+}
+
+.asset-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1.3rem;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+#download-grid {
+  display: grid;
+  /* Larger cards for better visibility */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 20px;
+}
+
+.download-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius-lg);
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.download-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--klei-orange);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.download-card img {
+  height: 160px; /* Scaled up preview */
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 15px rgba(0,0,0,0.5));
+  transition: transform 0.3s ease;
+}
+
+.download-card:hover img {
+  transform: scale(1.1);
+}
+
+
+@media (max-width: 600px) {
+  .download-card {
+    display: flex !important;
+    flex-direction: row !important; /* Keep side-by-side */
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 15px !important;
+    gap: 10px !important;
+  }
+
+  /* Prevent the image from squishing */
+  .download-card img {
+    width: 60px !important;
+    height: 60px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* The container for the Title and Format text */
+  .asset-info {
+    flex: 1 !important; /* Take up middle space */
+    text-align: left !important;
+    padding: 0 5px !important;
+    overflow: hidden; /* Prevent text from pushing the button out */
+  }
+
+  .asset-info h4 {
+    font-size: 0.9rem !important;
+    white-space: nowrap;
+  }
+
+  .asset-info p {
+    font-size: 0.7rem !important;
+  }
+
+  /* Fix the button alignment and size */
+  .download-card .btn {
+    width: auto !important; /* Don't force full width on rows */
+    min-width: 100px !important; /* Ensure it's tappable */
+    padding: 8px 10px !important;
+    font-size: 0.7rem !important;
+    flex-shrink: 0 !important; /* Stop the button from shrinking */
+    line-height: 1.2 !important;
+  }
+}
+
+
+
+
+.asset-info {
+  text-align: center;
+}
+
+.asset-info h4 {
+  color: var(--klei-orange);
+  font-size: 1.6rem; /* Much larger title */
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.asset-info p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.zip-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+#zip-btn {
+  padding: 20px 60px;
+  font-size: 1.2rem;
+  background: var(--klei-orange);
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* --- IMPROVED AMBASSADOR INFO SCALING --- */
+#info h1 {
+  font-size: 4rem; /* Larger main header */
+}
+
+.ambassador-info li {
+  margin-bottom: 30px !important; /* More space between points */
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--klei-orange);
+}
+
+.ambassador-info strong {
+  font-size: 1.6rem !important; /* Much larger titles for info points */
+  display: block;
+  margin-bottom: 10px;
+}
+
+.ambassador-info span {
+  font-size: 1.2rem !important; /* Larger description text */
+  line-height: 1.6;
+  display: block;
+}
+
+
+
+
+
+
+
+
     .thumb-container {
-      
+
       position: relative;
       width: 100%;
       aspect-ratio: 16/9;
@@ -502,7 +781,7 @@
       height: 100%;
       object-fit: cover;
       transition: transform 0.5s ease;
-      
+
     }
 
     .amb-card:hover .thumb-img {
@@ -561,6 +840,8 @@
       gap: 15px;
     }
 
+
+
     .creator-meta {
       display: flex;
       align-items: center;
@@ -578,6 +859,9 @@
     .creator-info {
       flex: 1;
     }
+
+
+
 
     .streamer-name {
       display: block;
@@ -665,7 +949,14 @@
       color: var(--klei-orange);
       text-decoration: none;
       font-weight: 700;
+      font-size: 1.5rem;
     }
+
+    .sidebar-footer p {
+
+      font-size: 0.95rem;
+    }
+
 
     /* MOBILE NAV */
     .mobile-nav {
@@ -679,7 +970,7 @@
       justify-content: space-around;
       padding: 12px 0;
       z-index: 1000;
-      backdrop-filter:blur(15px);
+      backdrop-filter: blur(15px);
     }
 
     .m-btn {
@@ -747,31 +1038,43 @@
       <span>STARVING FOR DROPS</span>
     </div>
 
-  <div class="nav-item active" onclick="nav('drops', this)">
-    <div class="nav-link">
-        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/drops.png" width="32" height="32" style="object-fit: contain;">
-      <span>Active Campaign</span>
+    <div class="nav-item active" onclick="nav('drops', this)">
+      <div class="nav-link">
+        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/drops.png" width="32"
+          height="32" style="object-fit: contain;">
+        <span>Active Campaign</span>
+      </div>
+      <span id="side-status" class="sidebar-status">...</span>
     </div>
-    <span id="side-status" class="sidebar-status">...</span>
-  </div>
     <div class="nav-item" onclick="nav('live', this)">
       <div class="nav-link">
-        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador.png" width="32" height="32" style="object-fit: contain;">
+        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador.png"
+          width="32" height="32" style="object-fit: contain;">
         <span>Live Ambassadors</span>
       </div>
     </div>
     <div class="nav-item" onclick="nav('more', this)">
       <div class="nav-link">
-        <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/rewards.png" class="rewardicon" width="32" height="32" style="object-fit: contain;">
+        <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/rewards.png" class="rewardicon" width="32"
+          height="32" style="object-fit: contain;">
         <span>Reward Links</span>
       </div>
     </div>
     <div class="nav-item" onclick="nav('info', this)">
       <div class="nav-link">
-        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_info.png" width="32" height="32" style="object-fit: contain;">
+        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_info.png"
+          width="32" height="32" style="object-fit: contain;">
         <span>Ambassador Info</span>
       </div>
     </div>
+
+    <div class="nav-item" onclick="nav('download', this)">
+      <div class="nav-link">
+        <i data-lucide="download" style="width:24px; height:24px;"></i>
+        <span>Asset Downloads</span>
+      </div>
+    </div>
+
 
     <div class="sidebar-footer">
       <p>Not affiliated with <strong>Klei Entertainment</strong>.</p>
@@ -794,7 +1097,7 @@
         <!-- LEFT: ITEM SHOWCASE -->
         <div class="item-showcase">
           <img id="c-gif" src="" alt="Item Preview">
-          <div
+          <div class="helpertext"
             style="margin-top: 30px; background: var(--bg-card); border: 1px solid var(--klei-orange); border-radius: var(--radius-md); padding: 16px 20px; font-size: 0.9rem; color: var(--text-primary); text-align: center;">
             <strong style="color: var(--klei-orange);">Delivery:</strong> Items are credited instantly upon claiming.
           </div>
@@ -829,7 +1132,7 @@
               </div>
             </div>
 
-            <div
+            <div class="howtoearn"
               style="margin-top: 25px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: var(--radius-md); font-size: 0.8rem; color: var(--text-secondary);">
               <strong>How to earn:</strong>
               <div style="display: flex; flex-direction: column; gap: 5px; margin-top: 10px;">
@@ -842,6 +1145,22 @@
         </div>
       </div>
     </section>
+
+
+<section id="download">
+  <h1>Campaign Assets</h1>
+  <p class="asset-subtitle">
+    Official graphics for the current drop. <br>
+    <span style="font-size: 1rem; opacity: 0.8;">Drag and drop to your desktop or use the buttons below.</span>
+  </p>
+
+
+
+  <div class="klei-card-down" style="padding: 20px; border: 30px solid transparent; border-image: url('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_frame.svg') 30 fill stretch;">
+    <div id="download-grid">
+      </div>
+  </div>
+</section>
 
     <section id="live">
       <div class="amb-header">
@@ -856,7 +1175,7 @@
     <section id="more">
       <h1>Reward Resources</h1>
       <div class="amb-grid-rewards">
-        
+
 
         <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2308653652" target="_blank"
           class="klei-card amb-card-links" style="text-align:center; padding: 40px; display: block;">
@@ -866,45 +1185,32 @@
           class="klei-card amb-card-links" style="text-align:center; padding: 40px; display: block;">
           <h3 style="color:#fff; font-weight: 600; font-size:1.8rem">Forums Spools List</h3>
         </a>
-        
+
       </div>
     </section>
 
     <section id="info">
-      <h1>Why watch Ambassadors?</h1>
-      <div class="klei-card">
-        <img
-          src="https://cdn.forums.klei.com/monthly_2025_02/ShipwreckedCrabpack_1920x1080.jpg.ee2aa1857f3ed0fccc6126d29ee1a25f.jpg"
-          style="width:100%; border-radius: var(--radius-lg); margin-bottom:20px; border: 1px solid var(--border-dark);">
-
-        <div
-          style="border-left: 4px solid var(--klei-orange); background: rgba(255, 255, 255, 0.05); padding: 15px; margin-bottom: 20px; font-size: 0.9rem;">
-          <span style="color:#fff; font-weight:600;">Special Perks:</span> Ambassadors have access to unique codes and
-          reward links provided by Klei for the community.
-        </div>
-
-        <ul class="ambassador-info" style="list-style: none; padding-left: 5px;">
-          <li style="margin-bottom: 15px;">
-            <strong style="color:var(--klei-orange)">✦ Klei Points & Spools</strong><br>
-            <span style="color: var(--text-secondary); font-size: 0.9rem;">Special giveaways for links that grant
-              high-value points directly.</span>
-          </li>
-          <li style="margin-bottom: 15px;">
-            <strong style="color:var(--klei-orange)">✦ Resurrected Bundles</strong><br>
-            <span style="color: var(--text-secondary); font-size: 0.9rem;">Limited-time access to legacy skins from past
-              events.</span>
-          </li>
-          <li style="margin-bottom: 15px;">
-            <strong style="color:var(--klei-orange)">✦ Community Hubs</strong><br>
-            <span style="color: var(--text-secondary); font-size: 0.9rem;">The best place to find active campaigns and
-              pro gameplay tips.</span>
-          </li>
-        </ul>
-      </div>
-    </section>
+  <h1>Why watch Ambassadors?</h1>
+  <div class="klei-card">
+    <ul class="ambassador-info" style="list-style: none; padding: 20px;">
+      <li>
+        <strong style="color:var(--klei-orange)">✦ Klei Points & Spools</strong>
+        <span>Special giveaways for links that grant high-value points and spools directly to your account.</span>
+      </li>
+      <li>
+        <strong style="color:var(--klei-orange)">✦ Resurrected Bundles</strong>
+        <span>Limited-time access to legacy skins from past events that are no longer obtainable elsewhere.</span>
+      </li>
+      <li>
+        <strong style="color:var(--klei-orange)">✦ Community Hubs</strong>
+        <span>The best place to find active campaigns and learn pro gameplay tips from community experts.</span>
+      </li>
+    </ul>
+  </div>
+</section>
   </main>
 
-<!--   <aside>
+  <!--   <aside>
     <div class="brand">
       <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/webicon.ico" alt="Logo" class="brand-logo">
       <span>STARVING FOR DROPS</span>
@@ -939,21 +1245,27 @@
 
   <nav class="mobile-nav">
     <button class="m-btn active" onclick="nav('drops', this)">
-        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/drops.png" width="32" height="32" style="object-fit: contain;">
+      <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/drops.png" width="32"
+        height="32" style="object-fit: contain;">
       DROPS
     </button>
     <button class="m-btn" onclick="nav('live', this)">
-        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador.png" width="32" height="32" style="object-fit: contain;">
+      <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador.png"
+        width="32" height="32" style="object-fit: contain;">
       LIVE
     </button>
     <button class="m-btn" onclick="nav('more', this)">
-        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/rewards.png" width="32" height="32" style="object-fit: contain;">
+      <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/rewards.png" width="32"
+        height="32" style="object-fit: contain;">
       LINKS
     </button>
     <button class="m-btn" onclick="nav('info', this)">
-        <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_info.png" width="32" height="32" style="object-fit: contain;">
+      <img class="campaignicon" src="https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/ambassador_info.png"
+        width="32" height="32" style="object-fit: contain;">
       INFO
     </button>
+
+
   </nav>
 
   <script>
@@ -975,6 +1287,7 @@
         document.getElementById('c-name').innerText = dst.englishName;
         document.getElementById('c-gif').src = dst.gif;
 
+
         const rewards = [
           { t: 30, n: "Profile Flair", d: "Exclusive Icon" },
           { t: 90, n: "Portrait Frame", d: "Character Border" },
@@ -992,6 +1305,14 @@
                         <div class="reward-time">${r.t} MIN</div>
                     </div>
                 `).join('');
+
+
+
+
+
+
+
+
 
         setInterval(() => {
           const endTimestamp = dst.campaignEnd * 1000;
@@ -1024,6 +1345,57 @@
         const aRes = await fetch("https://kleiforums.s3.amazonaws.com/gameimages/amblist.json");
         const aData = await aRes.json();
 
+
+      // Replace the existing rewards_download and assets mapping in init() with this:
+      const campaignAssets = [
+        { name: "Animation", type: "GIF", url: dst.gif },
+        { name: "Item Skin", type: "PNG", url: dst.item },
+        { name: "Portrait", type: "PNG", url: dst.portrait },
+        { name: "Icon", type: "PNG", url: dst.icon }
+      ];
+
+
+
+const assetsToRender = [
+  { name: "ANIMATION", url: dst.gif },
+  { name: "ITEM SKIN", url: dst.item },
+  { name: "PORTRAIT", url: dst.portrait },
+  { name: "ICON", url: dst.icon }
+];
+
+document.getElementById('download-grid').innerHTML = assetsToRender.map(asset => {
+  const ext = asset.url.split('.').pop().toUpperCase();
+  return `
+    <div class="download-card">
+      <img src="${asset.url}" alt="${asset.name}">
+      
+      <div class="asset-info">
+        <h4 style="color: var(--klei-orange);">${asset.name}</h4>
+        <p style="color: var(--text-secondary); font-size: 0.75rem;">Format: ${ext}</p>
+      </div>
+
+      <button onclick="forceDownload('${asset.url}', '${asset.name}')" class="btn">
+        DOWNLOAD ${ext}
+      </button>
+    </div>
+  `;
+}).join('');
+
+
+
+
+
+
+
+      // Re-run lucide to catch the new archive icon in the ZIP button
+      lucide.createIcons();
+
+
+
+
+
+
+
         document.getElementById('amb-list').innerHTML = aData.map(a => `
                 
             <a href="${a.StreamURL}" target="_blank" class="amb-card">
@@ -1052,7 +1424,43 @@
       } catch (e) { console.error("API Error", e); }
     }
     init();
+    async function forceDownload(url, fileName) {
+      try {
+        // 1. Fetch the data from the external URL
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Network response was not ok');
+
+        // 2. Convert it to a Blob (a local file object in memory)
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+
+        // 3. Create a temporary hidden link and click it
+        const link = document.createElement('a');
+        link.href = blobUrl;
+
+        // Get the extension from the URL (e.g., .png or .gif)
+        const extension = url.split('.').pop().split(/\#|\?/)[0];
+        link.download = `${fileName}.${extension}`;
+
+        document.body.appendChild(link);
+        link.click();
+
+        // 4. Cleanup
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(blobUrl);
+      } catch (error) {
+        // FALLBACK: If security blocks the fetch, just open in a new tab
+        console.warn("CORS blocked fetch, opening in new tab instead.");
+        window.open(url, '_blank');
+      }
+    }
+
+
+
+
+
   </script>
+
 </body>
 
 </html>

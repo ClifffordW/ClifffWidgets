@@ -813,23 +813,23 @@
 
     <section id="download">
       <h1>Campaign Assets</h1>
-      <p style="text-align: center; color: var(--text-secondary); margin-bottom: 20px;">Download modern asset variants configurations directly.</p>
-      
-      <div style="text-align: center; margin-bottom: 40px;">
-        <button id="download-all-btn" onclick="downloadAllAsZip()" class="btn" style="background: rgba(255, 107, 53, 0.1); color: var(--klei-orange); border-color: rgba(255, 107, 53, 0.3); display: inline-flex; align-items: center; gap: 8px;">
-          <i data-lucide="download-cloud" style="width: 16px; height: 16px;"></i>
-          <span>Download All Assets (.ZIP)</span>
-        </button>
+      <div class="hero-status-banner">
+        <p style="text-align: center; font-size: 1.2rem; color: var(--text-secondary)">Download Drop assets for your Ambassador needs.</p>
       </div>
-
       <div id="download-grid"></div>
     </section>
 
     <section id="live">
+
+
       <div class="amb-header">
         <h1>Live Klei Ambassadors</h1>
-        <p>Watch active community partners to complete drop tracking timelines.</p>
+
       </div>
+      <div class="hero-status-banner">
+        <p style="font-size: 1.2rem; color: var(--text-secondary);">Watch active Klei ambassadors to have fun and perhaps collect rewards!.</p>
+      </div>
+
       <div id="amb-list" class="amb-grid"></div>
     </section>
 
@@ -1062,6 +1062,8 @@
               sideStatusEl.innerText = "Ended";
               sideStatusEl.style.background = '#bd1818';
               sideStatusEl.style.display = 'block';
+              dateEl.innerText = `No campaign in sight :(`;
+
             }
           } else if (!hasStarted) {
             if(sideStatusEl) {

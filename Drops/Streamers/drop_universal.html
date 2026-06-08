@@ -348,8 +348,8 @@ fetch('https://cdn.forums.klei.com/drops/current_campaign.json')
     if (!dst || now > dst.campaignEnd || now < dst.campaignStart) {
       console.log('Campaign inactive, hiding widget');
       document.getElementById('drops').style.display    = 'none';
-      document.getElementById('ornament').style.display = 'none';
-      document.getElementById('embers').style.display   = 'none';
+      /* document.getElementById('ornament').style.display = 'none'; */
+      /* document.getElementById('embers').style.display   = 'none'; */
       return;
     }
 

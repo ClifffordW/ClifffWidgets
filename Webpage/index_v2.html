@@ -56,12 +56,13 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    /* Update your body CSS in index_v2.html */
     body {
       background-color: var(--bg-dark);
       color: var(--text-primary);
       font-family: var(--font-main);
       display: flex;
-      height: 100vh;
+      height: 100dvh; /* Changed from 100vh */
       overflow: hidden;
       -webkit-font-smoothing: antialiased;
     }
@@ -610,9 +611,10 @@
     .mobile-nav {
       display: none;
       position: fixed;
-      bottom: 24px;
+      bottom: 12px;
       left: 24px;
       right: 24px;
+      padding-bottom: env(safe-area-inset-bottom);
       background: rgba(22, 22, 25, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-pill);

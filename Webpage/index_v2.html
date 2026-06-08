@@ -8,7 +8,7 @@
 
   <meta property="og:title" content="Starving For Drops" />
   <meta property="og:description" content="Track active Don't Starve Together drops and find live Klei Ambassadors!" />
-  <meta property="og:image" content="https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2.png" />
+  <meta property="og:image" content="https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2_v2.png" />
   <meta property="og:url" content="https://clifffordw.github.io/ClifffWidgets/Webpage/index.html" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -753,13 +753,13 @@
       <p>Data provided via official game API structures.</p>
       <a href="https://www.klei.com/" target="_blank">Visit Official Site</a>
       
-      <div class="mica-switch-wrapper">
+<!--       <div class="mica-switch-wrapper">
         <span class="switch-label">Live Alerts</span>
         <label class="toggle-container">
           <input type="checkbox" id="notify-toggle">
           <span class="toggle-slider"></span>
         </label>
-      </div>
+      </div> -->
 
       <div class="mica-switch-wrapper" style="border-top: none; margin-top: 0; padding-top: 5px;">
         <span class="switch-label">Mica Material</span>
@@ -948,7 +948,7 @@
     }
 
     // INITIALIZE AND BIND NOTIFICATIONS PROGRAMMATICALLY
-    function initNotificationEngine() {
+    /* function initNotificationEngine() {
       const toggleEl = document.getElementById('notify-toggle');
       if (!toggleEl) return;
 
@@ -983,9 +983,9 @@
           localStorage.setItem('klei-notify-enabled', 'false');
         }
       });
-    }
+    } */
 
-    function triggerDropNotification(itemName) {
+    /* function triggerDropNotification(itemName) {
       const isEnabled = localStorage.getItem('klei-notify-enabled') === 'true';
       const alreadyNotified = sessionStorage.getItem('klei-alerted-' + itemName);
 
@@ -998,7 +998,7 @@
         });
         sessionStorage.setItem('klei-alerted-' + itemName, 'true');
       }
-    }
+    } */
 
     function nav(id, el) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));

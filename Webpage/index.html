@@ -15,6 +15,8 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="shortcut icon" type="image/x-icon" href="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg">
 
+
+
   <style>
 
 
@@ -137,9 +139,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: url("https://preview.redd.it/for-anyone-looking-for-a-desktop-wallpaper-from-the-new-v0-uhjgy9g1xcx61.jpg?width=1080&crop=smart&auto=webp&s=334943eb6fb56512f2f3b2d65d125f38e6ee9328") no-repeat center center fixed;
+      background: url("https://cdn.forums.klei.com/monthly_2026_04/dsRoadmap26.png.0b07e2ee7b68c964f65b4eed4b4a8609.png") no-repeat center center fixed;
       background-size: cover;
-      filter: brightness(0.18) blur(20px);
+      filter: brightness(0.19) blur(12px) saturate(105%);
       z-index: -2;
     }
 
@@ -148,7 +150,6 @@
       width: 280px;
       background: var(--mica-bg-sidebar);
       backdrop-filter: blur(var(--mica-blur));
-      -webkit-backdrop-filter: blur(var(--mica-blur));
       border-right: 1px solid var(--border-dark);
       display: flex;
       flex-direction: column;
@@ -286,7 +287,6 @@
     .klei-card {
       background: var(--mica-bg-card);
       backdrop-filter: blur(var(--mica-blur));
-      -webkit-backdrop-filter: blur(var(--mica-blur));
       border: 1px solid var(--border-dark);
       border-radius: var(--radius-lg);
       padding: 30px;
@@ -300,7 +300,6 @@
       gap: 16px;
       background: var(--mica-bg-card);
       backdrop-filter: blur(var(--mica-blur));
-      -webkit-backdrop-filter: blur(var(--mica-blur));
       border: 1px solid var(--border-dark);
       padding: 12px 24px;
       border-radius: var(--radius-pill);
@@ -349,7 +348,7 @@
 
     .item-showcase img {
       width: 100%;
-      max-width: 320px;
+      max-width: 640px;
       object-fit: contain;
       filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -615,7 +614,7 @@
       left: 24px;
       right: 24px;
       padding-bottom: env(safe-area-inset-bottom);
-      background: rgba(22, 22, 25, 0.85);
+      background: rgba(22, 22, 25, 0.699);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-pill);
       box-shadow: 0 12px 40px rgba(0,0,0,0.6);
@@ -625,6 +624,24 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
     }
+
+
+    .m-mica-switch-wrapper {
+      display: none;
+      align-items: center;
+      gap: 5px;
+
+      padding: 5px 15px;
+      margin: 0 auto 0px auto;
+      position: sticky;
+      transition: background 0.3s ease, backdrop-filter 0.3s ease;
+      width: fit-content;
+
+    }
+
+    
+
+    
 
     .m-btn {
       background: none;
@@ -645,15 +662,24 @@
     }
 
     .m-btn i { width: 20px; height: 20px; }
+
+
     .m-btn.active {
-      color: #fff;
-      background: var(--border-dark);
+      background: rgba(255, 107, 53, 0.1);
+      border-color: rgba(255, 107, 53, 0.2);
+      color: var(--klei-orange);
     }
+
+    .nav-item.active i {
+      color: var(--klei-orange);
+    }
+
 
     /* --- RESPONSIVE LAYOUT RESPONSES --- */
     @media (max-width: 960px) {
       aside { display: none; }
       .mobile-nav { display: flex; }
+      .m-mica-switch-wrapper { display:flex; }
       main { padding: 40px 24px 120px 24px; }
       .campaign-hero { grid-template-columns: 1fr; gap: 24px; }
       h1 { font-size: 2rem; }
@@ -779,7 +805,7 @@
       </div> -->
 
       <div class="mica-switch-wrapper" style="border-top: none; margin-top: 0; padding-top: 5px;">
-        <span class="switch-label">Mica Material</span>
+        <span class="switch-label">UI Blur</span>
         <label class="toggle-container">
           <input type="checkbox" id="mica-toggle">
           <span class="toggle-slider"></span>
@@ -789,16 +815,32 @@
   </aside>
 
   <main>
+
+
     <section id="drops" class="active">
       <h1 id="c-name">Don't Starve Together</h1>
+
+
 
       <div class="hero-status-banner">
         <span id="timer">SYNCING COMPENDIUM...</span>
         <span id="timer-date">Loading active timestamps...</span>
+
+              <div class="m-mica-switch-wrapper" style="border-top: none; margin-top: 0;">
+        <span class="switch-label">UI Blur</span>
+        <label class="toggle-container">
+          <input type="checkbox" id="mica-toggle-mobile">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
       </div>
 
       <div class="campaign-hero">
+
+
         <div class="item-showcase">
+
+          
           <img id="c-gif" src="" alt="Item Preview">
           <div class="helpertext">
             <span style="color: #fff; font-weight: 600;">Instant Delivery:</span> Items are credited instantly to your Klei ID upon claiming.
@@ -857,10 +899,20 @@
           <li>
             <strong style="color:var(--klei-orange)">✦ Klei Points & Spools</strong>
             <span>Special giveaways for links that grant high-value points and spools directly to your account.</span>
+            
+            <div style="display: flex; justify-content: left; margin-top: 10px; gap: 15px;">
+              <img src="https://accounts.klei.com/assets/images/ic-pts.png" alt="Klei Points" style="gap: 40px; width: 100%; max-width: 64px;">
+              <img src="https://accounts.klei.com/assets/images/ic-spool.png" alt="Klei Spools" style="width: 100%; max-width: 64px;">
+            </div>
           </li>
           <li>
             <strong style="color:var(--klei-orange)">✦ Resurrected Bundles</strong>
             <span>Limited-time access to legacy skins from past events that are no longer obtainable elsewhere.</span>
+
+                        <div style="display: flex; justify-content: left; margin-top: 10px;">
+              <img src="https://cdn-items.klei.com/dst/330x192/backpack_crab_ce439cbdb6fc8f0a.png" alt="Klei Points" style="gap: 15px; width: 100%; max-width: 128px;">
+              <img src="https://cdn-items.klei.com/dst/330x192/backpack_mandrake_f220a5efb7bfffb5.png" alt="Klei Points" style="gap: 15px; width: 100%; max-width: 128px;">
+            </div>
           </li>
           <li>
             <strong style="color:var(--klei-orange)">✦ Community Hubs</strong>
@@ -871,7 +923,12 @@
     </section>
   </main>
 
+
+
   <nav class="mobile-nav">
+
+
+
     <button class="m-btn active" onclick="nav('drops', this)">
       <i data-lucide="award"></i>
       <span>Drops</span>
@@ -881,18 +938,23 @@
       <span>Live</span>
     </button>
 
+    <button class="m-btn" onclick="nav('info', this)">
+      <i data-lucide="help-circle"></i>
+      <span>Info</span>
+    </button>
+
 
     <a href="https://forums.kleientertainment.com/game-updates/dst/" target="_blank" class="m-btn">
       <i data-lucide="file-text"></i>
-      <span>Updates </span>
-      <i data-lucide="external-link" style="width:14px; height:14px; opacity:0.5;"></i>
-      
+      <span>Updates* </span>
+<!--       <i data-lucide="external-link" style="width:14px; height:14px; opacity:0.5;"></i>
+ -->      
     </a>
     <a href="https://dstserverlist.appspot.com/" target="_blank" class="m-btn">
       <i data-lucide="server"></i>
-      <span>Servers</span>
-      <i data-lucide="external-link" style="width:14px; height:14px; opacity:0.5;"></i>
-    </a>
+      <span>Servers*</span>
+<!--       <i data-lucide="external-link" style="width:14px; height:14px; opacity:0.5;"></i>
+ -->    </a>
 <a href="https://exspectamus.dontstarvetogether.com/" target="_blank" class="m-btn">
   
   
@@ -911,9 +973,9 @@
     
   </svg>
   
-  <span>Exspectamus</span>
-  <i data-lucide="external-link" style="width:14px; height:14px; opacity:0.5;"></i>
-</a>
+  <span>Exspectamus*</span>
+<!--   <i data-lucide="external-link" style="width:14px; height:14px; opacity:0.5;"></i>
+ --></a>
   </nav>
 
   <script>
@@ -940,15 +1002,9 @@
     // PERSISTENT MICA THEME LOGIC INITIALIZER SYSTEM
     function initMicaTheme() {
       const toggleEl = document.getElementById('mica-toggle');
-      
-      if (isMobileDevice()) {
-        document.body.classList.add('is-mobile');
-        setMicaEffect(false);
-        if (toggleEl) {
-          toggleEl.disabled = true; // Hard lock interface on mobile views
-          toggleEl.checked = false;
-        }
-      } else {
+      const toggleElMobile = document.getElementById('mica-toggle-mobile');
+
+
         const savedPreference = localStorage.getItem('klei-mica-enabled');
         const isMicaEnabled = savedPreference !== null ? (savedPreference === 'true') : true;
         setMicaEffect(isMicaEnabled);
@@ -960,11 +1016,18 @@
             localStorage.setItem('klei-mica-enabled', e.target.checked);
           });
         }
+        if (toggleElMobile) {
+          toggleElMobile.checked = isMicaEnabled;
+          toggleElMobile.addEventListener('change', (e) => {
+            setMicaEffect(e.target.checked);
+            localStorage.setItem('klei-mica-enabled', e.target.checked);
+          });
+        }
       }
-    }
+    
 
     function setMicaEffect(enabled) {
-      const finalState = isMobileDevice() ? false : enabled;
+      const finalState =  enabled;
       if (finalState) {
         document.body.classList.add('mica-enabled');
       } else {

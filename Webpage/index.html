@@ -1599,7 +1599,7 @@
 
     async function toggleDropNotifications() {
       if (!("Notification" in window)) {
-        alert("Your survivor device/browser does not support web notifications.");
+        alert("Your device/browser does not support web notifications.");
         return;
       }
 
@@ -1610,8 +1610,8 @@
         if (permission === 'granted') {
           localStorage.setItem('dst-drops-notif-enabled', 'true');
           playDstChime();
-          new Notification("🔥 DST Compendium Alerts Ignited!", {
-            body: "You will receive campfire notices when new drops ignite or conclude.",
+          new Notification("DST Drop Alerts Enabled!", {
+            body: "You will receive notification when new drops arrive or conclude.",
             icon: "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
           });
         } else {
@@ -1643,7 +1643,7 @@
       if (isLive && !alertedLive) {
         playDstChime();
         new Notification("🔥 New Klei Drop is LIVE!", {
-          body: `Don't Starve Together drop for "${dst.englishName}" has ignited! Watch Klei Ambassadors to claim it.`,
+          body: `Don't Starve Together drop for "${dst.englishName}" has arrived! Watch Klei Ambassadors to claim it.`,
           icon: dst.icon || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg",
           tag: "dst-drop-live"
         });
@@ -1653,7 +1653,7 @@
       // Trigger Alert when Drop concludes
       if (isEnded && !alertedEnded) {
         new Notification("🌑 Klei Drop Concluded", {
-          body: `The campaign for "${dst.englishName}" has extinguished into darkness. Stay tuned for the next drop!`,
+          body: `The campaign for "${dst.englishName}" has disappeared into darkness. Stay tuned for the next drop!`,
           icon: "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg",
           tag: "dst-drop-ended"
         });

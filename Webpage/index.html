@@ -1357,7 +1357,7 @@
     </div>
   </nav>
 
-  <script>
+  <!-- <script>
 
 
     // --- CUSTOM SOUND CONFIGURATION ---
@@ -1432,12 +1432,12 @@
     // Initialize on page load
     initCustomSoundEngine();
 
-  </script>
+  </script> -->
 
   <script>
     lucide.createIcons();
 
-    // Thematic survival quotes
+    // --- THEMATIC SURVIVAL QUOTES ---
     const survivalTips = [
       "\"Say, Pal. You don't look so good. Find something to eat before night falls!\"",
       "\"A log suit and football helmet will save your hide from the terrors of the dark.\"",
@@ -1452,19 +1452,84 @@
       }
     }, 3500);
 
-    // Global App State
+    // --- GLOBAL APP STATE ---
     let rawAmbassadors = [];
-    let currentLangFilter = 'ALL';
     let currentDstCampaign = null;
+    let sessionAlertedLive = false;
+    let sessionAlertedEnded = false;
 
-    // DST Notification Chime (Web Audio Synthesizer - No External Assets Needed)
-    function playDstChime() {
-      if (dstSounds && dstSounds.alert) {
-        playCustomSound(dstSounds.alert);
-      }
+    // --- CUSTOM SOUND ENGINE ---
+    const dstSounds = {
+      hover: new Audio('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/SFX/click_mouseover.wav'),
+      clickDown: new Audio('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/SFX/click_move.wav'),
+      clickUp: new Audio('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/SFX/click_move_release.wav'),
+      alert: new Audio('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/SFX/drop.ogg')
+    };
+
+    // Volume configurations
+    dstSounds.hover.volume = 0.35;
+    dstSounds.clickDown.volume = 0.6;
+    dstSounds.clickUp.volume = 0.6;
+    dstSounds.alert.volume = 0.7;
+
+    // Preload audio and ensure loop is strictly false
+    Object.values(dstSounds).forEach(audio => {
+      audio.loop = false;
+      audio.preload = 'auto';
+    });
+
+    function playCustomSound(audio) {
+      if (!audio) return;
+      try {
+        audio.pause();
+        audio.currentTime = 0;
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {});
+        }
+      } catch (e) {}
     }
 
-    // Tab Navigation
+    function playDstChime() {
+      playCustomSound(dstSounds.alert);
+    }
+
+    // Attach click/hover sounds with mobile touch safeguards
+    function initCustomSoundEngine() {
+      const interactiveSelector = 'button, a, .dst-tab, .nav-item, .reward-card, .amb-card, .inv-slot, .download-card, .dst-btn, .lang-pill';
+      const isTouchDevice = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      let isPressed = false;
+
+      // 1. HOVER SOUND (Ignored on touch screens so scrolling won't trigger sounds)
+      document.addEventListener('mouseover', (e) => {
+        if (isTouchDevice()) return;
+
+        const target = e.target.closest(interactiveSelector);
+        const related = e.relatedTarget ? e.relatedTarget.closest(interactiveSelector) : null;
+
+        if (target && target !== related) {
+          playCustomSound(dstSounds.hover);
+        }
+      }, { passive: true });
+
+      // 2. PRESS DOWN (CLICK)
+      document.addEventListener('pointerdown', (e) => {
+        if (e.target.closest(interactiveSelector)) {
+          isPressed = true;
+          playCustomSound(dstSounds.clickDown);
+        }
+      });
+
+      // 3. RELEASE CLICK (UP)
+      document.addEventListener('pointerup', () => {
+        if (isPressed) {
+          isPressed = false;
+          playCustomSound(dstSounds.clickUp);
+        }
+      });
+    }
+
+    // --- TAB NAVIGATION ---
     function nav(id, el) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       const targetSection = document.getElementById(id);
@@ -1472,7 +1537,6 @@
 
       document.querySelectorAll('.dst-tab, .inv-slot').forEach(i => i.classList.remove('active'));
 
-      // Highlight matching desktop and mobile tabs
       document.querySelectorAll('.dst-tab, .inv-slot').forEach(item => {
         if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(`'${id}'`)) {
           item.classList.add('active');
@@ -1480,37 +1544,7 @@
       });
     }
 
-    // Language Categorization Helper
-    function detectLanguage(item) {
-      const text = ((item.Language || '') + ' ' + (item.Title || '') + ' ' + (item.Name || '')).toLowerCase();
-
-      // Explicit language property
-      if (item.Language) {
-        const l = item.Language.toLowerCase();
-        if (l.startsWith('en')) return 'EN';
-        if (l.startsWith('es')) return 'ES';
-        if (l.startsWith('pt')) return 'PT';
-        if (l.startsWith('ru')) return 'RU';
-        if (l.startsWith('zh') || l.startsWith('cn')) return 'ZH';
-      }
-
-      // Check Cyrillic (Russian / Ukrainian / etc)
-      if (/[\u0400-\u04FF]/.test(text) || text.includes('[ru]') || text.includes('ру ')) return 'RU';
-
-      // Check Chinese Characters
-      if (/[\u4e00-\u9fa5]/.test(text) || text.includes('[cn]') || text.includes('[zh]')) return 'ZH';
-
-      // Check Spanish / Portuguese
-      if (text.includes('[es]') || text.includes('[esp]') || text.includes('español') || text.includes('drops activados')) return 'ES';
-      if (text.includes('[pt]') || text.includes('[br]') || text.includes('portugues') || text.includes('português')) return 'PT';
-
-      // English defaults
-      if (text.includes('[en]') || text.includes('drops on') || text.includes('chill') || text.includes('surviving')) return 'EN';
-
-      return 'OTHER';
-    }
-
-    // Render Ambassador Cards with Filters
+    // --- AMBASSADOR SEARCH FILTER (LANGUAGE BUTTONS REMOVED) ---
     function applyAmbassadorFilters() {
       const query = (document.getElementById('amb-search')?.value || '').toLowerCase().trim();
       const listEl = document.getElementById('amb-list');
@@ -1518,13 +1552,9 @@
       if (!listEl) return;
 
       const filtered = rawAmbassadors.filter(amb => {
-        const lang = detectLanguage(amb);
-        const matchesLang = (currentLangFilter === 'ALL') || (lang === currentLangFilter);
-        const matchesQuery = !query ||
+        return !query ||
           (amb.Name && amb.Name.toLowerCase().includes(query)) ||
           (amb.Title && amb.Title.toLowerCase().includes(query));
-
-        return matchesLang && matchesQuery;
       });
 
       if (countEl) {
@@ -1536,7 +1566,7 @@
           <div style="grid-column: 1/-1; text-align: center; padding: 40px 20px; font-family: var(--font-hand); color: var(--dst-paper-muted);">
             <i data-lucide="ghost" style="width: 44px; height: 44px; stroke: var(--dst-flame); margin: 0 auto 10px;"></i>
             <p style="font-size: 1.3rem; color: #fff;">No survivors found in this realm!</p>
-            <p style="font-size: 1rem;">Try choosing another language tab or clearing your search keywords.</p>
+            <p style="font-size: 1rem;">Try clearing or changing your search terms.</p>
           </div>
         `;
         lucide.createIcons();
@@ -1544,7 +1574,6 @@
       }
 
       listEl.innerHTML = filtered.map(a => {
-        const lang = detectLanguage(a);
         const thumbUrl = (a.ThumbnailURL || '').replace('440x248', '640x360');
         const profileUrl = a.ProfileIcon || 'https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg';
 
@@ -1552,7 +1581,6 @@
           <a href="${a.StreamURL}" target="_blank" rel="noopener noreferrer" class="amb-card">
             <div class="thumb-wrapper">
               <span class="live-stamp">LIVE</span>
-              <span class="lang-badge-corner">${lang}</span>
               <img class="thumb-img" src="${thumbUrl}" alt="${a.Name}" loading="lazy" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2_v2.png'">
             </div>
             <div class="amb-card-body">
@@ -1569,14 +1597,53 @@
       lucide.createIcons();
     }
 
-    function setLanguageFilter(lang, btn) {
-      currentLangFilter = lang;
-      document.querySelectorAll('.lang-pill').forEach(b => b.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-      applyAmbassadorFilters();
+    // --- NOTIFICATION ENGINE (SAFE FOR MOBILE & DESKTOP) ---
+    function showInAppToast(title, body, iconUrl) {
+      const toast = document.getElementById('dst-toast');
+      const tTitle = document.getElementById('toast-title');
+      const tBody = document.getElementById('toast-body');
+      const tImg = document.getElementById('toast-img');
+
+      if (toast) {
+        if (tTitle) tTitle.innerText = title;
+        if (tBody) tBody.innerText = body;
+        if (tImg && iconUrl) tImg.src = iconUrl;
+
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 6000);
+      }
     }
 
-    // Notification System (Live & Concluded Drop alerts)
+    async function triggerSafeNotification(title, body, iconUrl) {
+      playDstChime();
+      showInAppToast(title, body, iconUrl);
+
+      if ("Notification" in window && Notification.permission === "granted") {
+        try {
+          if ("serviceWorker" in navigator) {
+            const reg = await navigator.serviceWorker.getRegistration();
+            if (reg && reg.showNotification) {
+              reg.showNotification(title, {
+                body: body,
+                icon: iconUrl || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg",
+                badge: "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
+              });
+              return;
+            }
+          }
+
+          new Notification(title, {
+            body: body,
+            icon: iconUrl || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
+          });
+        } catch (e) {
+          // Suppresses mobile "Illegal constructor" error
+        }
+      }
+    }
+
     function updateNotifButtonUI() {
       const isEnabled = localStorage.getItem('dst-drops-notif-enabled') === 'true';
       const btn = document.getElementById('notif-toggle-btn');
@@ -1609,11 +1676,11 @@
         const permission = await Notification.requestPermission();
         if (permission === 'granted') {
           localStorage.setItem('dst-drops-notif-enabled', 'true');
-          playDstChime();
-          new Notification("DST Drop Alerts Enabled!", {
-            body: "You will receive notification when new drops arrive or conclude.",
-            icon: "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
-          });
+          triggerSafeNotification(
+            "DST Drop Alerts Enabled!",
+            "You will receive alerts when new drops arrive or conclude.",
+            "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
+          );
         } else {
           alert("Notification permission denied. Please allow notifications in your browser settings.");
           localStorage.setItem('dst-drops-notif-enabled', 'false');
@@ -1627,7 +1694,6 @@
 
     function checkDropStatusAlerts(dst) {
       if (!dst || localStorage.getItem('dst-drops-notif-enabled') !== 'true') return;
-      if (Notification.permission !== 'granted') return;
 
       const now = Date.now();
       const endTimestamp = dst.campaignEnd * 1000;
@@ -1636,32 +1702,39 @@
       const isEnded = now >= endTimestamp;
 
       const dropId = (dst.englishName || 'DST-Drop') + '-' + dst.campaignEnd;
-      const alertedLive = localStorage.getItem('dst-alerted-live-' + dropId);
-      const alertedEnded = localStorage.getItem('dst-alerted-ended-' + dropId);
 
-      // Trigger Alert when Drop goes live
-      if (isLive && !alertedLive) {
-        playDstChime();
-        new Notification("🔥 New Klei Drop is LIVE!", {
-          body: `Don't Starve Together drop for "${dst.englishName}" has arrived! Watch Klei Ambassadors to claim it.`,
-          icon: dst.icon || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg",
-          tag: "dst-drop-live"
-        });
-        localStorage.setItem('dst-alerted-live-' + dropId, 'true');
+      // 1. DROP GOES LIVE
+      if (isLive) {
+        const alreadySaved = localStorage.getItem('dst-alerted-live-' + dropId);
+        if (!alreadySaved && !sessionAlertedLive) {
+          sessionAlertedLive = true;
+          try { localStorage.setItem('dst-alerted-live-' + dropId, 'true'); } catch (e) {}
+
+          triggerSafeNotification(
+            "🔥 New Klei Drop is LIVE!",
+            `Don't Starve Together drop for "${dst.englishName}" has arrived! Watch Klei Ambassadors to claim it.`,
+            dst.icon || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
+          );
+        }
       }
 
-      // Trigger Alert when Drop concludes
-      if (isEnded && !alertedEnded) {
-        new Notification("🌑 Klei Drop Concluded", {
-          body: `The campaign for "${dst.englishName}" has disappeared into darkness. Stay tuned for the next drop!`,
-          icon: "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg",
-          tag: "dst-drop-ended"
-        });
-        localStorage.setItem('dst-alerted-ended-' + dropId, 'true');
+      // 2. DROP CONCLUDES
+      if (isEnded) {
+        const alreadySaved = localStorage.getItem('dst-alerted-ended-' + dropId);
+        if (!alreadySaved && !sessionAlertedEnded) {
+          sessionAlertedEnded = true;
+          try { localStorage.setItem('dst-alerted-ended-' + dropId, 'true'); } catch (e) {}
+
+          triggerSafeNotification(
+            "🌑 Klei Drop Concluded",
+            `The campaign for "${dst.englishName}" has disappeared into darkness. Stay tuned for the next drop!`,
+            dst.icon || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
+          );
+        }
       }
     }
 
-    // Discord Share Modal Builders
+    // --- DISCORD MODAL ---
     function openDiscordModal() {
       if (!currentDstCampaign) return;
       const modal = document.getElementById('discord-modal');
@@ -1694,7 +1767,7 @@
       }
     }
 
-    // Force Asset Download
+    // --- FORCE DOWNLOAD ---
     async function forceDownload(url, fileName) {
       try {
         const response = await fetch(url);
@@ -1708,8 +1781,9 @@
       }
     }
 
-    // Initialization
+    // --- INITIALIZATION ---
     async function init() {
+      initCustomSoundEngine();
       updateNotifButtonUI();
 
       try {
@@ -1722,11 +1796,10 @@
         const dst = cData["Don't Starve Together"];
         currentDstCampaign = dst;
 
-        // Render DST Campaign Data
         document.getElementById('c-name').innerText = dst.englishName;
         document.getElementById('c-gif').src = dst.gif;
 
-        // Build reward milestones using the live assets from Klei's API
+        // Rewards Milestones with item thumbnails
         const rewards = [
           {
             t: 30,
@@ -1749,19 +1822,19 @@
         ];
 
         document.getElementById('reward-rows').innerHTML = rewards.map(r => `
-  <div class="milestone-node">
-    <div class="milestone-icon-slot">
-      <img src="${r.img}" alt="${r.n}" loading="lazy" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg'">
-    </div>
-    <div class="milestone-info">
-      <h4>${r.n}</h4>
-      <p>${r.d}</p>
-    </div>
-    <div class="milestone-watchtime">${r.t} MINS</div>
-  </div>
-`).join('');
+          <div class="milestone-node">
+            <div class="milestone-icon-slot">
+              <img src="${r.img}" alt="${r.n}" loading="lazy" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg'">
+            </div>
+            <div class="milestone-info">
+              <h4>${r.n}</h4>
+              <p>${r.d}</p>
+            </div>
+            <div class="milestone-watchtime">${r.t} MINS</div>
+          </div>
+        `).join('');
 
-        // Timer Loop
+        // Countdown Timer Loop
         const updateTimer = () => {
           const endTimestamp = dst.campaignEnd * 1000;
           const startTimestamp = dst.campaignStart ? dst.campaignStart * 1000 : (Date.now() - 10000);

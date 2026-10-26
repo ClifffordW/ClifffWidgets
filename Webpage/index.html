@@ -37,10 +37,6 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-
-
-
-
     #dst-toast {
       position: fixed;
       top: 20px;
@@ -118,10 +114,7 @@
       }
     }
 
-
-
     :root {
-      /* DST Scrapbook / Charcoal / Fire Palette */
       --dst-black: #120e0c;
       --dst-charcoal: #1c1613;
       --dst-card-bg: rgba(28, 22, 19, 0.88);
@@ -136,12 +129,10 @@
       --dst-green: #4f802f;
       --dst-shadow: rgba(0, 0, 0, 0.7);
 
-      /* Typography */
       --font-title: 'Hammerhead', cursive, serif, bold;
       --font-hand: 'Patrick Hand', cursive, sans-serif, bold;
       --font-mono: 'Special Elite', monospace, bold;
 
-      /* Hand-drawn organic border shape */
       --sketch-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
       --sketch-radius-soft: 80px 8px 90px 10px / 10px 90px 8px 80px;
     }
@@ -158,7 +149,6 @@
       color: var(--dst-paper);
       font-family: var(--font-hand);
       font-size: 1.15rem;
-      font-style: normal;
       display: flex;
       height: 100dvh;
       overflow: hidden;
@@ -170,7 +160,6 @@
         linear-gradient(rgba(18, 14, 12, 0.94), rgba(18, 14, 12, 0.96));
     }
 
-    /* Ambient Ink & Charcoal Background Texture */
     .bg-vignette {
       position: fixed;
       top: 0;
@@ -192,7 +181,6 @@
       z-index: 100;
     }
 
-    /* --- THEMATIC DST SPINNER LOADING SCREEN --- */
     #loading-screen {
       position: fixed;
       inset: 0;
@@ -275,7 +263,6 @@
       line-height: 1.5;
     }
 
-    /* --- DST CRAFTING SIDEBAR --- */
     aside {
       width: 290px;
       background: linear-gradient(180deg, #1d1714 0%, #15100e 100%);
@@ -288,7 +275,6 @@
       position: relative;
     }
 
-    /* Hand-drawn side wood grain edge */
     aside::after {
       content: "";
       position: absolute;
@@ -343,7 +329,6 @@
       gap: 6px;
     }
 
-    /* DST Crafting Menu Tab Buttons */
     .dst-tab {
       display: flex;
       align-items: center;
@@ -432,7 +417,6 @@
       }
     }
 
-    /* Sidebar Footer / Notification Bell */
     .sidebar-footer {
       margin-top: auto;
       padding-top: 15px;
@@ -470,7 +454,6 @@
       color: #a4e67a;
     }
 
-    /* --- MAIN WORKSPACE VIEWPORT --- */
     main {
       flex: 1;
       padding: 40px 50px 60px;
@@ -502,7 +485,6 @@
       }
     }
 
-    /* DST Headings */
     .dst-heading {
       font-family: var(--font-title);
       font-size: 2.2rem;
@@ -526,7 +508,6 @@
       text-shadow: none;
     }
 
-    /* DST Parchment & Compendium Scrapbook Cards */
     .dst-parchment-card {
       background: var(--dst-card-bg);
       border: 3px solid var(--dst-border);
@@ -536,7 +517,6 @@
       position: relative;
     }
 
-    /* Hand-sketched Corner Accents */
     .dst-parchment-card::before,
     .dst-parchment-card::after {
       content: "";
@@ -561,7 +541,6 @@
       border-top: none;
     }
 
-    /* Campfire Sundial Timer Banner */
     .campfire-banner {
       background: linear-gradient(90deg, rgba(34, 25, 20, 0.95), rgba(46, 32, 25, 0.95));
       border: 2px solid var(--dst-border-highlight);
@@ -603,9 +582,9 @@
       font-family: var(--font-hand);
       font-size: 1.15rem;
       color: var(--dst-paper-muted);
+      cursor: pointer;
     }
 
-    /* --- CAMPAIGN SHOWCASE HERO --- */
     .campaign-grid {
       display: grid;
       grid-template-columns: 1fr 1.15fr;
@@ -648,14 +627,12 @@
       width: 100%;
     }
 
-    /* Scrapbook Milestone Tree */
     .milestone-tree {
       display: flex;
       flex-direction: column;
       gap: 14px;
     }
 
-    /* Milestone rows with item preview slots */
     .milestone-node {
       background: rgba(22, 17, 14, 0.7);
       border: 2px solid #3c2c22;
@@ -672,6 +649,24 @@
       border-color: var(--dst-flame);
       background: rgba(45, 30, 22, 0.85);
       transform: translateX(4px);
+    }
+
+    .milestone-checkbox {
+      width: 22px;
+      height: 22px;
+      accent-color: var(--dst-flame);
+      cursor: pointer;
+    }
+
+    .milestone-node.claimed {
+      opacity: 0.6;
+      border-color: var(--dst-green);
+      background: rgba(79, 128, 47, 0.1);
+    }
+
+    .milestone-node.claimed h4 {
+      text-decoration: line-through;
+      color: #a4e67a;
     }
 
     .milestone-icon-slot {
@@ -725,7 +720,6 @@
       white-space: nowrap;
     }
 
-    /* DST Button Styles */
     .dst-btn {
       font-family: var(--font-hand);
       font-size: 1.15rem;
@@ -769,12 +763,43 @@
       color: #fff;
     }
 
-    /* --- LIVE AMBASSADORS SECTION & LANGUAGE FILTER --- */
     .live-controls {
       display: flex;
       flex-direction: column;
       gap: 16px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+    }
+
+    .platform-filter-bar {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .platform-pill {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      padding: 5px 12px;
+      background: #1a120e;
+      border: 1px solid #3c281e;
+      border-radius: var(--sketch-radius);
+      color: var(--dst-paper-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .platform-pill:hover {
+      color: #fff;
+      border-color: var(--dst-flame);
+    }
+
+    .platform-pill.active {
+      background: var(--dst-flame);
+      color: #fff;
+      border-color: #ff9d5c;
+      font-weight: bold;
     }
 
     .search-input-box {
@@ -795,80 +820,53 @@
       border-color: var(--dst-flame);
     }
 
-    .search-input-box::placeholder {
-      color: #7d6b5e;
-    }
 
-    .language-filter-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-      justify-content: center;
-    }
 
-    .lang-pill {
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      padding: 6px 14px;
-      background: #1e1613;
-      border: 1px solid #443226;
-      border-radius: var(--sketch-radius);
-      color: var(--dst-paper-muted);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 2px 2px 0 #000;
-    }
 
-    .lang-pill:hover {
-      color: #fff;
-      border-color: var(--dst-border-highlight);
-    }
 
-    .lang-pill.active {
-      background: var(--dst-flame);
-      color: #fff;
-      font-weight: bold;
-      border-color: #ff9d5c;
-      box-shadow: 0 0 10px rgba(231, 108, 30, 0.4), 2px 2px 0 #000;
-    }
 
-    /* Ambassador Polaroid Card Grid */
-.amb-grid {
+    .amb-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
       gap: 24px;
-      align-items: start; /* Prevents unhovered cards in the same row from stretching */
+      align-items: start;
     }
 
-    .amb-card {
+    .amb-card-container {
+      position: relative;
       background: #1b1411;
       border: 2px solid #3c2a20;
       border-radius: var(--sketch-radius-soft);
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
       box-shadow: 4px 4px 0 #000, 0 8px 18px rgba(0, 0, 0, 0.5);
       transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-      display: flex;
-      flex-direction: column;
-      position: relative;
+      overflow: hidden;
     }
 
-    .amb-card:hover {
+    .amb-card-container.pinned {
+      border-color: #f39c12;
+      box-shadow: 4px 4px 0 #000, 0 0 15px rgba(243, 156, 18, 0.3);
+    }
+
+    .amb-card-container:hover {
       transform: translateY(-4px);
       border-color: var(--dst-flame);
       box-shadow: 6px 12px 25px rgba(0, 0, 0, 0.8);
     }
 
-.thumb-wrapper {
+    .amb-card {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    /* Permanent visible thumbnail container */
+    .thumb-wrapper {
       position: relative;
       width: 100%;
-      max-height: 0;        /* Collapsed by default on mobile */
-      opacity: 0;           /* Hidden by default on mobile */
-      overflow: hidden;     
       background: #0d0908;
-      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+      border-bottom: 2px solid #3c2a20;
     }
 
     .thumb-img {
@@ -878,17 +876,63 @@
       display: block;
     }
 
-    /* ONLY apply thumbnail expansion on desktop screens that support mouse hover */
-    @media (hover: hover) and (pointer: fine) {
-      .amb-card:hover .thumb-wrapper {
-        max-height: 220px;
-        opacity: 1;
-      }
+    .live-stamp {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: var(--dst-crimson);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: bold;
+      padding: 3px 8px;
+      border-radius: 3px;
+      border: 1px solid #ff594a;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     }
 
-    .amb-card:hover .thumb-img {
-      transform: scale(1.05); /* Optional subtle zoom inside the expanded view */
+    .fav-star-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(14, 10, 8, 0.85);
+      border: 1px solid #483528;
+      color: #7d6b5e;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 10;
     }
+
+    .fav-star-btn:hover {
+      color: #f39c12;
+      background: rgba(83, 53, 5, 0.5);
+      border-color: #f39c12;
+    }
+
+    .fav-star-btn.favorited {
+      color: #f39c12;
+      background: rgba(123, 79, 8, 0.815);
+      border-color: #f39c12;
+    }
+
+    .amb-card.pinned {
+      border-color: #f39c12;
+      box-shadow: 4px 4px 0 #000, 0 0 15px rgba(243, 156, 18, 0.3);
+    }
+
+    .amb-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--dst-flame);
+      box-shadow: 6px 12px 25px rgba(0, 0, 0, 0.8);
+    }
+
+
 
 
 
@@ -907,18 +951,30 @@
       box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     }
 
-    .lang-badge-corner {
+    .fav-star-btn {
       position: absolute;
       top: 10px;
       right: 10px;
       background: rgba(14, 10, 8, 0.85);
       border: 1px solid #483528;
-      color: #fff;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      padding: 2px 7px;
-      border-radius: 3px;
+      color: #7d6b5e;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 5;
     }
+
+    .fav-star-btn:hover {
+      color: #f39c12;
+      border-color: #f39c12;
+    }
+
+
 
     .amb-card-body {
       padding: 16px;
@@ -940,6 +996,7 @@
 
     .amb-card-text {
       overflow: hidden;
+      flex: 1;
     }
 
     .streamer-name {
@@ -963,7 +1020,6 @@
       margin-top: 2px;
     }
 
-    /* --- ASSETS DOWNLOAD TILES --- */
     #download-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -1002,7 +1058,6 @@
       color: var(--dst-paper-muted);
     }
 
-    /* --- DST MODAL DIALOG --- */
     .dst-modal {
       display: none;
       position: fixed;
@@ -1045,7 +1100,6 @@
       color: #fff;
     }
 
-    /* --- MOBILE DST SURVIVOR INVENTORY DOCK (Bottom Nav) --- */
     .mobile-inventory-dock {
       display: none;
       position: fixed;
@@ -1111,7 +1165,6 @@
       border: 1px solid #fff;
     }
 
-    /* Responsive Queries */
     @media (max-width: 900px) {
       aside {
         display: none;
@@ -1145,7 +1198,6 @@
 
 <body>
 
-  <!-- Put this right after <body> in your index.html -->
   <div id="dst-toast" onclick="this.classList.remove('show')">
     <img id="toast-img" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt="Drop">
     <div class="toast-content">
@@ -1168,7 +1220,7 @@
     <div id="loading-tip" class="loading-tip">"Keep your fire lit and watch the darkness..."</div>
   </div>
 
-  <!-- DISCORD SHARE / PREVIEW MODAL -->
+  <!-- DISCORD SHARE MODAL -->
   <div id="discord-modal" class="dst-modal">
     <div class="modal-box">
       <button class="modal-close" onclick="closeDiscordModal()">&times;</button>
@@ -1248,21 +1300,6 @@
       <i data-lucide="external-link" style="width: 14px; opacity: 0.5;"></i>
     </a>
 
-    <a href="https://exspectamus.dontstarvetogether.com/" target="_blank" class="dst-tab">
-      <div class="tab-content">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="20" height="20" fill="white"
-          stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M 12,25 C 10,12 85,10 88,25 C 92,45 88,75 75,88 C 60,98 35,98 22,88 C 10,75 14,45 12,25 Z" />
-          <path d="M 12,25 C 25,35 65,32 88,25" />
-          <path d="M 15,20 C 30,15 65,18 85,20" />
-          <circle cx="52" cy="31" r="2" fill="currentColor" />
-          <circle cx="55" cy="42" r="2.5" fill="currentColor" />
-        </svg>
-        <span>Exspectamus</span>
-      </div>
-      <i data-lucide="external-link" style="width: 14px; opacity: 0.5;"></i>
-    </a>
-
     <div class="sidebar-footer">
       <button id="notif-toggle-btn" class="notif-button" onclick="toggleDropNotifications()">
         <i data-lucide="bell"></i>
@@ -1287,7 +1324,8 @@
           <span id="timer-status-text">EMBERS GLOWING</span>
         </div>
         <div id="timer" class="campfire-countdown">CALCULATING...</div>
-        <div id="timer-date" class="campfire-date">Consulting Klei Records...</div>
+        <div id="timer-date" class="campfire-date" onclick="toggleTimerTimezone()"
+          title="Click to toggle Local / UTC time">Consulting Klei Records...</div>
       </div>
 
       <div class="campaign-grid">
@@ -1310,7 +1348,9 @@
           <h3
             style="font-family: var(--font-title); color: #fff; margin-bottom: 18px; font-size: 1.25rem; display: flex; align-items: center; gap: 10px;">
             <i data-lucide="hourglass" style="color: var(--dst-flame-bright);"></i>
-            Drop Milestones
+            Drop Milestones <span
+              style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--dst-paper-muted); margin-left: auto;">(Check
+              off as claimed)</span>
           </h3>
 
           <div id="reward-rows" class="milestone-tree"></div>
@@ -1338,6 +1378,24 @@
       <h1 class="dst-heading">Live Ambassadors</h1>
 
       <div class="live-controls">
+        <div class="platform-filter-bar" id="platform-filters">
+          <button class="platform-pill active" onclick="setPlatformFilter('all', this)">All Platforms</button>
+          <button class="platform-pill" onclick="setPlatformFilter('twitch', this)">Twitch</button>
+          <button class="platform-pill" onclick="setPlatformFilter('bilibili', this)">Bilibili</button>
+          <button class="platform-pill" onclick="setPlatformFilter('douyu', this)">Douyu</button>
+          <button class="platform-pill" onclick="setPlatformFilter('favorites', this)"> <svg
+              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="16"
+              height="16" viewBox="0 0 256 256" xml:space="preserve">
+              <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
+                transform="translate(0 15
+                ) scale(2.81 2.81)">
+                <path
+                  d="M 47.755 3.765 l 11.525 23.353 c 0.448 0.907 1.313 1.535 2.314 1.681 l 25.772 3.745 c 2.52 0.366 3.527 3.463 1.703 5.241 L 70.42 55.962 c -0.724 0.706 -1.055 1.723 -0.884 2.72 l 4.402 25.667 c 0.431 2.51 -2.204 4.424 -4.458 3.239 L 46.43 75.47 c -0.895 -0.471 -1.965 -0.471 -2.86 0 L 20.519 87.588 c -2.254 1.185 -4.889 -0.729 -4.458 -3.239 l 4.402 -25.667 c 0.171 -0.997 -0.16 -2.014 -0.884 -2.72 L 0.931 37.784 c -1.824 -1.778 -0.817 -4.875 1.703 -5.241 l 25.772 -3.745 c 1.001 -0.145 1.866 -0.774 2.314 -1.681 L 42.245 3.765 C 43.372 1.481 46.628 1.481 47.755 3.765 z"
+                  style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: currentColor; fill-rule: nonzero; opacity: 1;"
+                  transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+              </g>
+            </svg> Favorites (<span id="fav-count">0</span>)</button>
+        </div>
         <input type="text" id="amb-search" class="search-input-box"
           placeholder="Search streamer by name or stream title..." oninput="applyAmbassadorFilters()">
       </div>
@@ -1357,6 +1415,7 @@
     </section>
 
     <!-- INFO / COMPENDIUM TAB -->
+    <!-- INFO / COMPENDIUM TAB -->
     <section id="info">
       <h1 class="dst-heading">Info About Ambassadors</h1>
       <div class="dst-parchment-card">
@@ -1370,12 +1429,6 @@
               Watch ambassador streams for promotional links granting Curio Spools and Klei Points directly into your
               game account.
             </span>
-            <div style="display: flex; gap: 15px; margin-top: 10px;">
-              <img src="https://accounts.klei.com/assets/images/ic-pts.png" alt="Klei Points"
-                style="width: 50px; height: 50px; object-fit: contain;">
-              <img src="https://accounts.klei.com/assets/images/ic-spool.png" alt="Klei Spools"
-                style="width: 50px; height: 50px; object-fit: contain;">
-            </div>
           </li>
           <li style="border-bottom: 1px dashed #3a2b22; padding-bottom: 15px;">
             <strong
@@ -1384,14 +1437,8 @@
             </strong>
             <span style="color: var(--dst-paper-muted);">
               Ambassadors regularly distribute codes for past legacy skins and event items that are otherwise locked
-              away in the shadows.
+              away.
             </span>
-            <div style="display: flex; gap: 15px; margin-top: 10px;">
-              <img src="https://cdn-items.klei.com/dst/330x192/backpack_crab_ce439cbdb6fc8f0a.png" alt="Crab Backpack"
-                style="height: 60px; object-fit: contain;">
-              <img src="https://cdn-items.klei.com/dst/330x192/backpack_mandrake_f220a5efb7bfffb5.png"
-                alt="Mandrake Backpack" style="height: 60px; object-fit: contain;">
-            </div>
           </li>
           <li>
             <strong
@@ -1399,8 +1446,7 @@
               ✦ Surviving Together
             </strong>
             <span style="color: var(--dst-paper-muted);">
-              Twitch drops accumulate across all participating channels broadcasting Don't Starve Together. Claim each
-              milestone sequentially from your Twitch Drops Inventory.
+              Twitch drops accumulate across all participating channels broadcasting Don't Starve Together.
             </span>
           </li>
         </ul>
@@ -1437,89 +1483,9 @@
     </div>
   </nav>
 
-  <!-- <script>
-
-
-    // --- CUSTOM SOUND CONFIGURATION ---
-    // Replace the paths below with your local file paths or URLs
-    const dstSounds = {
-      hover: new Audio('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/SFX/click_mouseover.wav'),
-      clickDown: new Audio('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/SFX/click_move.wav'),
-      clickUp: new Audio('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/SFX/click_move_release.wav'),
-      alert: new Audio('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/SFX/drop.ogg')
-    };
-
-    // Set volume level (0.0 to 1.0)
-    dstSounds.alert.volume = 0.2;
-
-
-    // Set individual volume levels (0.0 to 1.0)
-    dstSounds.hover.volume = 0.05;
-    dstSounds.clickDown.volume = 0.4;
-    dstSounds.clickUp.volume = 0.4;
-
-    // Preload audio into memory
-    Object.values(dstSounds).forEach(audio => {
-      audio.preload = 'auto';
-      audio.load();
-    });
-
-    // Helper: Plays sound without clipping if triggered rapidly
-    function playCustomSound(audio) {
-      try {
-        const clone = audio.cloneNode();
-        clone.volume = audio.volume;
-        const playPromise = clone.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => { }); // Suppress harmless browser autoplay policy warnings
-        }
-      } catch (e) { }
-    }
-
-    // --- ATTACH EVENT LISTENERS ---
-    function initCustomSoundEngine() {
-      const interactiveSelector = 'button, a, .dst-tab, .nav-item, .reward-card, .amb-card, .inv-slot, .lang-pill, .download-card, .btn';
-      let isPressed = false;
-
-      // 1. HOVER SOUND
-      document.addEventListener('mouseover', (e) => {
-        const target = e.target.closest(interactiveSelector);
-        const related = e.relatedTarget ? e.relatedTarget.closest(interactiveSelector) : null;
-
-        // Only trigger if entering a new button/card (not when moving between text/icons inside the same button)
-        if (target && target !== related) {
-          playCustomSound(dstSounds.hover);
-        }
-      }, { passive: true });
-
-      // 2. PRESS DOWN (CLICK)
-      document.addEventListener('pointerdown', (e) => {
-        if (e.target.closest(interactiveSelector)) {
-          isPressed = true;
-          playCustomSound(dstSounds.clickDown);
-        }
-      });
-
-      // 3. RELEASE CLICK (UP)
-      document.addEventListener('pointerup', (e) => {
-        if (isPressed) {
-          isPressed = false;
-          playCustomSound(dstSounds.clickUp);
-        }
-      });
-    }
-
-    // Initialize on page load
-    initCustomSoundEngine();
-
-  </script> -->
-
   <script>
-
-
     lucide.createIcons();
 
-    // --- THEMATIC SURVIVAL QUOTES ---
     const survivalTips = [
       "\"Say, Pal. You don't look so good. Find something to eat before night falls!\"",
       "\"A log suit and football helmet will save your hide from the terrors of the dark.\"",
@@ -1527,7 +1493,6 @@
       "\"Never let your campfire extinguish in the depths of winter.\""
     ];
 
-    // Register a minimal service worker so Android Chrome can show native notifications
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register(
         URL.createObjectURL(new Blob([
@@ -1536,19 +1501,12 @@
       ).catch(() => { });
     }
 
-
     setInterval(() => {
       const tipElement = document.getElementById('loading-tip');
       if (tipElement) {
         tipElement.innerText = survivalTips[Math.floor(Math.random() * survivalTips.length)];
       }
     }, 3500);
-
-    // --- GLOBAL APP STATE ---
-    let rawAmbassadors = [];
-    let currentDstCampaign = null;
-    let sessionAlertedLive = false;
-    let sessionAlertedEnded = false;
 
     // --- CUSTOM SOUND ENGINE ---
     const dstSounds = {
@@ -1564,7 +1522,6 @@
     dstSounds.clickUp.volume = 0.35;
     dstSounds.alert.volume = 0.25;
 
-    // Preload audio and ensure loop is strictly false
     Object.values(dstSounds).forEach(audio => {
       audio.loop = false;
       audio.preload = 'auto';
@@ -1573,9 +1530,9 @@
     function playCustomSound(audio) {
       if (!audio) return;
       try {
-        audio.pause();
-        audio.currentTime = 0;
-        const playPromise = audio.play();
+        const clone = audio.cloneNode();
+        clone.volume = audio.volume;
+        const playPromise = clone.play();
         if (playPromise !== undefined) {
           playPromise.catch(() => { });
         }
@@ -1586,13 +1543,12 @@
       playCustomSound(dstSounds.alert);
     }
 
-    // Attach click/hover sounds with mobile touch safeguards
     function initCustomSoundEngine() {
-      const interactiveSelector = 'button, a, .dst-tab, .nav-item, .reward-card, .amb-card, .inv-slot, .download-card, .dst-btn, .lang-pill';
+      const interactiveSelector = 'button, a, .dst-tab, .nav-item, .reward-card, .amb-card, .inv-slot, .download-card, .dst-btn, .platform-pill, .fav-star-btn, input[type="checkbox"]';
       const isTouchDevice = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
       let isPressed = false;
 
-      // 1. HOVER SOUND (Ignored on touch screens so scrolling won't trigger sounds)
+      // 1. Hover Sound
       document.addEventListener('mouseover', (e) => {
         if (isTouchDevice()) return;
 
@@ -1604,7 +1560,7 @@
         }
       }, { passive: true });
 
-      // 2. PRESS DOWN (CLICK)
+      // 2. Press Down Sound
       document.addEventListener('pointerdown', (e) => {
         if (e.target.closest(interactiveSelector)) {
           isPressed = true;
@@ -1612,7 +1568,7 @@
         }
       });
 
-      // 3. RELEASE CLICK (UP)
+      // 3. Release Click Sound
       document.addEventListener('pointerup', () => {
         if (isPressed) {
           isPressed = false;
@@ -1621,32 +1577,177 @@
       });
     }
 
+
+    let rawAmbassadors = [];
+    let currentDstCampaign = null;
+    let sessionAlertedLive = false;
+    let sessionAlertedEnded = false;
+    let currentPlatformFilter = 'all';
+    let showLocalTime = false;
+    let cachedEndTimestamp = 0;
+
+    // Local Storage state wrappers
+    function getFavorites() {
+      try {
+        return JSON.parse(localStorage.getItem('dst-favorite-ambassadors') || '[]');
+      } catch (e) { return []; }
+    }
+
+    function toggleFavorite(name, e) {
+      if (e) {
+        e.preventDefault();     // Stops the <a> tag from opening the link
+        e.stopPropagation();    // Stops the click from bubbling up to the card
+      }
+      let favs = getFavorites();
+      if (favs.includes(name)) {
+        favs = favs.filter(f => f !== name);
+      } else {
+        favs.push(name);
+      }
+      localStorage.setItem('dst-favorite-ambassadors', JSON.stringify(favs));
+      updateFavCountBadge();
+      applyAmbassadorFilters()
+    }
+
+    function updateFavCountBadge() {
+      const favs = getFavorites();
+      const badge = document.getElementById('fav-count');
+      if (badge) badge.innerText = favs.length;
+    }
+
+    function setPlatformFilter(platform, btn) {
+      currentPlatformFilter = platform;
+      document.querySelectorAll('.platform-pill').forEach(p => p.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      applyAmbassadorFilters();
+    }
+
+    function toggleTimerTimezone() {
+      showLocalTime = !showLocalTime;
+      if (cachedEndTimestamp > 0) {
+        renderTimerDate(cachedEndTimestamp);
+      }
+    }
+
+    function renderTimerDate(endTimestamp) {
+      const dateEl = document.getElementById('timer-date');
+      if (!dateEl) return;
+      const endDate = new Date(endTimestamp);
+      if (showLocalTime) {
+        dateEl.innerText = `Ends: ${endDate.toLocaleString()} (Local)`;
+      } else {
+        dateEl.innerText = `Ends ${endDate.toLocaleDateString()} (Click for Local)`;
+      }
+    }
+
+    // Milestone Checkboxes Local Storage
+    function getMilestoneState(index) {
+      try {
+        const states = JSON.parse(localStorage.getItem('dst-milestone-states') || '{}');
+        return !!states[index];
+      } catch (e) { return false; }
+    }
+
+    function toggleMilestoneState(index, checkbox) {
+      try {
+        const states = JSON.parse(localStorage.getItem('dst-milestone-states') || '{}');
+        states[index] = checkbox.checked;
+        localStorage.setItem('dst-milestone-states', JSON.stringify(states));
+        const node = checkbox.closest('.milestone-node');
+        if (checkbox.checked) {
+          node.classList.add('claimed');
+        } else {
+          node.classList.remove('claimed');
+        }
+      } catch (e) { }
+    }
+
+    // Export / Import Backup Hub
+    function exportUserData() {
+      const backupData = {
+        favorites: getFavorites(),
+        milestones: localStorage.getItem('dst-milestone-states'),
+        notifications: localStorage.getItem('dst-drops-notif-enabled'),
+        exportDate: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `DST_Compendium_Backup_${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importUserData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (data.favorites) localStorage.setItem('dst-favorite-ambassadors', JSON.stringify(data.favorites));
+          if (data.milestones) localStorage.setItem('dst-milestone-states', data.milestones);
+          if (data.notifications) localStorage.setItem('dst-drops-notif-enabled', data.notifications);
+          alert("Backup restored successfully! Reloading view...");
+          location.reload();
+        } catch (err) {
+          alert("Invalid backup JSON file.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
     // --- TAB NAVIGATION ---
+    // Nav function updated with tab memory
     function nav(id, el) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       const targetSection = document.getElementById(id);
       if (targetSection) targetSection.classList.add('active');
 
       document.querySelectorAll('.dst-tab, .inv-slot').forEach(i => i.classList.remove('active'));
-
       document.querySelectorAll('.dst-tab, .inv-slot').forEach(item => {
         if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(`'${id}'`)) {
           item.classList.add('active');
         }
       });
+
+      // Save last visited tab ID
+      localStorage.setItem('dst-last-visited-tab', id);
     }
 
-    // --- AMBASSADOR SEARCH FILTER (LANGUAGE BUTTONS REMOVED) ---
-   function applyAmbassadorFilters() {
+    // Add this line at the top of your init() function to restore the last page:
+    const lastTab = localStorage.getItem('dst-last-visited-tab') || 'drops';
+    nav(lastTab);
+
+    // --- AMBASSADOR FILTER ---
+    function applyAmbassadorFilters() {
       const query = (document.getElementById('amb-search')?.value || '').toLowerCase().trim();
       const listEl = document.getElementById('amb-list');
       const countEl = document.getElementById('amb-count-indicator');
       if (!listEl) return;
 
-      const filtered = rawAmbassadors.filter(amb => {
-        return !query ||
-          (amb.Name && amb.Name.toLowerCase().includes(query)) ||
-          (amb.Title && amb.Title.toLowerCase().includes(query));
+      const favs = getFavorites();
+
+      let filtered = rawAmbassadors.filter(amb => {
+        const name = (amb.Name || '').toLowerCase();
+        const title = (amb.Title || '').toLowerCase();
+        const url = (amb.StreamURL || '').toLowerCase();
+
+        // Platform check
+        if (currentPlatformFilter === 'twitch' && !url.includes('twitch.tv')) return false;
+        if (currentPlatformFilter === 'bilibili' && !url.includes('bilibili')) return false;
+        if (currentPlatformFilter === 'douyu' && !url.includes('douyu')) return false;
+        if (currentPlatformFilter === 'favorites' && !favs.includes(amb.Name)) return false;
+
+        return !query || name.includes(query) || title.includes(query);
+      });
+
+      // Sort favorites to top
+      filtered.sort((a, b) => {
+        const aFav = favs.includes(a.Name) ? 1 : 0;
+        const bFav = favs.includes(b.Name) ? 1 : 0;
+        return bFav - aFav;
       });
 
       if (countEl) {
@@ -1658,7 +1759,7 @@
           <div style="grid-column: 1/-1; text-align: center; padding: 40px 20px; font-family: var(--font-hand); color: var(--dst-paper-muted);">
             <i data-lucide="ghost" style="width: 44px; height: 44px; stroke: var(--dst-flame); margin: 0 auto 10px;"></i>
             <p style="font-size: 1.3rem; color: #fff;">No survivors found in this realm!</p>
-            <p style="font-size: 1rem;">Try clearing or changing your search terms.</p>
+            <p style="font-size: 1rem;">Try clearing or changing your filters.</p>
           </div>
         `;
         lucide.createIcons();
@@ -1668,28 +1769,34 @@
       listEl.innerHTML = filtered.map(a => {
         const thumbUrl = (a.ThumbnailURL || '').replace('440x248', '640x360');
         const profileUrl = a.ProfileIcon || 'https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg';
+        const isFav = favs.includes(a.Name);
 
         return `
-          <a href="${a.StreamURL}" target="_blank" rel="noopener noreferrer" class="amb-card">
-            <div class="thumb-wrapper">
-              <img class="thumb-img" src="${thumbUrl}" alt="${a.Name}" loading="lazy" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg'">
-              <div class="live-stamp">LIVE</div>
-            </div>
-            <div class="amb-card-body">
-              <img class="profile-portrait" src="${profileUrl}" alt="${a.Name}" loading="lazy">
-              <div class="amb-card-text">
-                <span class="streamer-name">${a.Name}</span>
-                <span class="stream-topic">${a.Title || 'Don\'t Starve Together'}</span>
+          <div class="amb-card-container ${isFav ? 'pinned' : ''}">
+            <button class="fav-star-btn ${isFav ? 'favorited' : ''}" onclick="toggleFavorite('${a.Name}', event)" title="Pin Streamer">
+              <i data-lucide="star" style="width: 16px; height: 16px; ${isFav ? 'fill: currentColor;' : ''}"></i>
+            </button>
+
+            <a href="${a.StreamURL}" target="_blank" rel="noopener noreferrer" class="amb-card">
+              <div class="thumb-wrapper">
+                <img class="thumb-img" src="${thumbUrl}" alt="${a.Name}" loading="lazy" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg'">
+                <div class="live-stamp">LIVE</div>
               </div>
-            </div>
-          </a>
+              <div class="amb-card-body">
+                <img class="profile-portrait" src="${profileUrl}" alt="${a.Name}" loading="lazy">
+                <div class="amb-card-text">
+                  <span class="streamer-name">${a.Name}</span>
+                  <span class="stream-topic">${a.Title || 'Don\'t Starve Together'}</span>
+                </div>
+              </div>
+            </a>
+          </div>
         `;
       }).join('');
 
       lucide.createIcons();
     }
 
-    // --- NOTIFICATION ENGINE (SAFE FOR MOBILE & DESKTOP) ---
     function showInAppToast(title, body, iconUrl) {
       const toast = document.getElementById('dst-toast');
       const tTitle = document.getElementById('toast-title');
@@ -1700,11 +1807,8 @@
         if (tTitle) tTitle.innerText = title;
         if (tBody) tBody.innerText = body;
         if (tImg && iconUrl) tImg.src = iconUrl;
-
         toast.classList.add('show');
-        setTimeout(() => {
-          toast.classList.remove('show');
-        }, 6000);
+        setTimeout(() => toast.classList.remove('show'), 6000);
       }
     }
 
@@ -1751,9 +1855,7 @@
           text.innerText = 'Enable Drop Alerts';
         }
       }
-      if (mIcon) {
-        mIcon.style.stroke = isEnabled ? 'var(--dst-flame-bright)' : 'currentColor';
-      }
+      if (mIcon) mIcon.style.stroke = isEnabled ? 'var(--dst-flame-bright)' : 'currentColor';
     }
 
     async function toggleDropNotifications() {
@@ -1783,7 +1885,6 @@
 
       updateNotifButtonUI();
     }
-
     function checkDropStatusAlerts(dst) {
       if (!dst || localStorage.getItem('dst-drops-notif-enabled') !== 'true') return;
 
@@ -1803,7 +1904,7 @@
           try { localStorage.setItem('dst-alerted-live-' + dropId, 'true'); } catch (e) { }
 
           triggerSafeNotification(
-            "🔥 New Klei Drop is LIVE!",
+            `New "${dst.englishName}" Drop is LIVE!`,
             `Don't Starve Together drop for "${dst.englishName}" has arrived! Watch Klei Ambassadors to claim it.`,
             dst.icon || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
           );
@@ -1825,21 +1926,12 @@
         }
       }
     }
-
-    // --- DISCORD MODAL ---
     function openDiscordModal() {
       if (!currentDstCampaign) return;
       const modal = document.getElementById('discord-modal');
       const box = document.getElementById('discord-copy-box');
-
       const endStr = new Date(currentDstCampaign.campaignEnd * 1000).toUTCString();
-      const payload =
-        `>>> 🎁 **Don't Starve Together — Twitch Drop Active!**
-**Item:** ${currentDstCampaign.englishName}
-**Status:** Live until ${endStr}
-**Milestones:** 30 min (Icon) | 90 min (Portrait) | 180 min (${currentDstCampaign.englishName})
-**Watch Live Ambassadors:** https://clifffordw.github.io/ClifffWidgets/Webpage/index.html`;
-
+      const payload = `>>> 🎁 **Don't Starve Together — Twitch Drop Active!**\n**Item:** ${currentDstCampaign.englishName}\n**Status:** Live until ${endStr}\n**Watch Live Ambassadors:** https://clifffordw.github.io/ClifffWidgets/Webpage/index.html`;
       if (box) box.value = payload;
       if (modal) modal.classList.add('active');
     }
@@ -1859,7 +1951,6 @@
       }
     }
 
-    // --- FORCE DOWNLOAD ---
     async function forceDownload(url, fileName) {
       try {
         const response = await fetch(url);
@@ -1873,10 +1964,12 @@
       }
     }
 
-    // --- INITIALIZATION ---
     async function init() {
-      initCustomSoundEngine();
       updateNotifButtonUI();
+      updateFavCountBadge();
+      initCustomSoundEngine(); // Re-initializes sound listeners on page load
+
+
 
       try {
         const [cRes, aRes] = await Promise.all([
@@ -1887,46 +1980,30 @@
         const cData = await cRes.json();
         const dst = cData["Don't Starve Together"];
         currentDstCampaign = dst;
+        cachedEndTimestamp = dst.campaignEnd * 1000;
 
         document.getElementById('c-name').innerText = dst.englishName;
         document.getElementById('c-gif').src = dst.gif;
 
-        // Rewards Milestones with item thumbnails
         const rewards = [
-          {
-            t: 30,
-            n: "Profile Flair",
-            d: "Exclusive Icon Reward",
-            img: dst.icon || dst.gif
-          },
-          {
-            t: 90,
-            n: "Portrait Frame",
-            d: "Character Portrait Border",
-            img: dst.portrait || dst.gif
-          },
-          {
-            t: 180,
-            n: dst.englishName,
-            d: "Main Event Skin Variant",
-            img: dst.item || dst.gif
-          }
+          { t: 30, n: "Profile Flair", d: "Exclusive Icon Reward", img: dst.icon || dst.gif },
+          { t: 90, n: "Portrait Frame", d: "Character Portrait Border", img: dst.portrait || dst.gif },
+          { t: 180, n: dst.englishName, d: "Main Event Skin Variant", img: dst.item || dst.gif }
         ];
 
         document.getElementById('reward-rows').innerHTML = rewards.map(r => `
-          <div class="milestone-node">
-            <div class="milestone-icon-slot">
-              <img src="${r.img}" alt="${r.n}" loading="lazy" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg'">
-            </div>
-            <div class="milestone-info">
-              <h4>${r.n}</h4>
-              <p>${r.d}</p>
-            </div>
-            <div class="milestone-watchtime">${r.t} MINS</div>
-          </div>
-        `).join('');
+  <div class="milestone-node">
+    <div class="milestone-icon-slot">
+      <img src="${r.img}" alt="${r.n}" loading="lazy" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg'">
+    </div>
+    <div class="milestone-info">
+      <h4>${r.n}</h4>
+      <p>${r.d}</p>
+    </div>
+    <div class="milestone-watchtime">${r.t} MINS</div>
+  </div>
+`).join('');
 
-        // Countdown Timer Loop
         const updateTimer = () => {
           const endTimestamp = dst.campaignEnd * 1000;
           const startTimestamp = dst.campaignStart ? dst.campaignStart * 1000 : (Date.now() - 10000);
@@ -1934,26 +2011,19 @@
           const hasStarted = Date.now() >= startTimestamp;
 
           const timerEl = document.getElementById('timer');
-          const dateEl = document.getElementById('timer-date');
           const statusTextEl = document.getElementById('timer-status-text');
           const sideStatusEl = document.getElementById('side-drop-status');
 
           if (diff <= 0) {
             timerEl.innerText = "EXTINGUISHED";
             statusTextEl.innerText = "NIGHTFALL HAS FALLEN";
-            dateEl.innerText = "Campaign has concluded. Awaiting next drop.";
-            if (sideStatusEl) {
-              sideStatusEl.innerText = "ENDED";
-              sideStatusEl.className = "dst-badge";
-            }
+            renderTimerDate(endTimestamp);
+            if (sideStatusEl) { sideStatusEl.innerText = "ENDED"; sideStatusEl.className = "dst-badge"; }
           } else if (!hasStarted) {
             timerEl.innerText = "STARTING SOON";
             statusTextEl.innerText = "EMBER KINDLING";
-            dateEl.innerText = `Starts ${new Date(startTimestamp).toLocaleDateString()}`;
-            if (sideStatusEl) {
-              sideStatusEl.innerText = "UPCOMING";
-              sideStatusEl.className = "dst-badge";
-            }
+            renderTimerDate(startTimestamp);
+            if (sideStatusEl) { sideStatusEl.innerText = "UPCOMING"; sideStatusEl.className = "dst-badge"; }
           } else {
             const d = Math.floor(diff / 86400000);
             const h = Math.floor((diff % 86400000) / 3600000);
@@ -1962,21 +2032,16 @@
 
             timerEl.innerText = `${d}d ${h}h ${m}m ${s}s`;
             statusTextEl.innerText = "DROP BURNING";
-            dateEl.innerText = `Ends ${new Date(endTimestamp).toLocaleDateString()}`;
+            renderTimerDate(endTimestamp);
+            if (sideStatusEl) { sideStatusEl.innerText = "LIVE"; sideStatusEl.className = "dst-badge live-glow"; }
 
-            if (sideStatusEl) {
-              sideStatusEl.innerText = "LIVE";
-              sideStatusEl.className = "dst-badge live-glow";
-            }
           }
-
           checkDropStatusAlerts(dst);
         };
 
         updateTimer();
         setInterval(updateTimer, 1000);
 
-        // Assets Tab
         const assetsToRender = [
           { name: "ANIMATION", url: dst.gif },
           { name: "ITEM SKIN", url: dst.item },
@@ -2000,7 +2065,6 @@
           `;
         }).join('');
 
-        // Ambassador Data
         rawAmbassadors = await aRes.json();
         const liveCount = rawAmbassadors.length;
 
@@ -2008,19 +2072,12 @@
         const mobileBadge = document.getElementById('mobile-live-badge');
 
         if (liveCount > 0) {
-          if (sideBadge) {
-            sideBadge.innerText = `${liveCount} LIVE`;
-            sideBadge.style.display = 'inline-block';
-          }
-          if (mobileBadge) {
-            mobileBadge.innerText = liveCount;
-            mobileBadge.style.display = 'block';
-          }
+          if (sideBadge) { sideBadge.innerText = `${liveCount} LIVE`; sideBadge.style.display = 'inline-block'; }
+          if (mobileBadge) { mobileBadge.innerText = liveCount; mobileBadge.style.display = 'block'; }
         }
 
         applyAmbassadorFilters();
 
-        // Dismiss loading screen
         document.getElementById('loading-screen').style.opacity = '0';
         setTimeout(() => {
           document.getElementById('loading-screen').style.visibility = 'hidden';

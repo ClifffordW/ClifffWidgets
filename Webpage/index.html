@@ -37,12 +37,56 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
+    #dst-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-160%);
+      background: #181210;
+      border: 2px solid var(--dst-flame, #ff8e3c);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), 0 0 15px rgba(231, 108, 30, 0.4);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 10001;
+      max-width: 90vw;
+      width: 420px;
+      transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      pointer-events: auto;
+      cursor: pointer;
+    }
 
+    #dst-toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    #dst-toast img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
+
+    .toast-content h4 {
+      color: #fff;
+      font-family: var(--font-title);
+      font-size: 1.05rem;
+      margin-bottom: 2px;
+    }
+
+    .toast-content p {
+      color: #bdae99;
+      font-family: var(--font-hand);
+      font-size: 0.95rem;
+      line-height: 1.2;
+    }
 
     @font-face {
       font-family: Hammerhead;
       src: url(https://clifffordw.github.io/ClifffWidgets/Fonts/HammerheadBold.ttf);
     }
+
     /* --- CUSTOM DST SKETCH CURSORS --- */
     @media (hover: hover) and (pointer: fine) {
 
@@ -107,7 +151,7 @@
       color: var(--dst-paper);
       font-family: var(--font-hand);
       font-size: 1.15rem;
-      font-style:normal;
+      font-style: normal;
       display: flex;
       height: 100dvh;
       overflow: hidden;
@@ -1080,6 +1124,16 @@
 </head>
 
 <body>
+
+  <!-- Put this right after <body> in your index.html -->
+  <div id="dst-toast" onclick="this.classList.remove('show')">
+    <img id="toast-img" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt="Drop">
+    <div class="toast-content">
+      <h4 id="toast-title">Klei Drop Alert</h4>
+      <p id="toast-body">A campaign update has occurred.</p>
+    </div>
+  </div>
+
   <div class="bg-vignette"></div>
   <div class="bg-charcoal-border"></div>
 
@@ -1441,6 +1495,8 @@
   </script> -->
 
   <script>
+
+
     lucide.createIcons();
 
     // --- THEMATIC SURVIVAL QUOTES ---
@@ -1450,6 +1506,16 @@
       "\"Beware of your sanity meter when harvesting mushrooms under a blood moon.\"",
       "\"Never let your campfire extinguish in the depths of winter.\""
     ];
+
+    // Register a minimal service worker so Android Chrome can show native notifications
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register(
+        URL.createObjectURL(new Blob([
+          `self.addEventListener('notificationclick', e => { e.notification.close(); clients.openWindow('/'); });`
+        ], { type: 'application/javascript' }))
+      ).catch(() => { });
+    }
+
 
     setInterval(() => {
       const tipElement = document.getElementById('loading-tip');
@@ -1491,9 +1557,9 @@
         audio.currentTime = 0;
         const playPromise = audio.play();
         if (playPromise !== undefined) {
-          playPromise.catch(() => {});
+          playPromise.catch(() => { });
         }
-      } catch (e) {}
+      } catch (e) { }
     }
 
     function playDstChime() {
@@ -1714,7 +1780,7 @@
         const alreadySaved = localStorage.getItem('dst-alerted-live-' + dropId);
         if (!alreadySaved && !sessionAlertedLive) {
           sessionAlertedLive = true;
-          try { localStorage.setItem('dst-alerted-live-' + dropId, 'true'); } catch (e) {}
+          try { localStorage.setItem('dst-alerted-live-' + dropId, 'true'); } catch (e) { }
 
           triggerSafeNotification(
             "🔥 New Klei Drop is LIVE!",
@@ -1729,7 +1795,7 @@
         const alreadySaved = localStorage.getItem('dst-alerted-ended-' + dropId);
         if (!alreadySaved && !sessionAlertedEnded) {
           sessionAlertedEnded = true;
-          try { localStorage.setItem('dst-alerted-ended-' + dropId, 'true'); } catch (e) {}
+          try { localStorage.setItem('dst-alerted-ended-' + dropId, 'true'); } catch (e) { }
 
           triggerSafeNotification(
             "🌑 Klei Drop Concluded",

@@ -4,24 +4,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Starving For Drops | Klei Rewards</title>
+  <title>Starving For Drops | Don't Starve Together Compendium</title>
 
   <!-- Discord & Open Graph Social Cards -->
-  <meta property="og:site_name" content="Starving For Drops" />
-  <meta property="og:title" content="Starving For Drops" />
-  <meta property="og:description" content="Track active Don't Starve Together drops and find live Klei Ambassadors!" />
+  <meta property="og:site_name" content="Starving For Drops - Klei Rewards" />
+  <meta property="og:title" content="Don't Starve Together | Drops & Ambassador Tracker" />
+  <meta property="og:description"
+    content="Track active Don't Starve Together drops, watch live Klei Ambassadors, filter streamers by language, and grab campaign assets!" />
   <meta property="og:image" content="https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2_v2.png" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:url" content="https://clifffordw.github.io/ClifffWidgets/Webpage/index.html" />
   <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#FF6B35" />
+  <meta name="theme-color" content="#d46019" />
 
-  <!-- Twitter / Discord Large Card -->
+  <!-- Twitter / Discord Large Card Previews -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Starving For Drops" />
-  <meta name="twitter:description" content="Track active Don't Starve Together drops and find live Klei Ambassadors!" />
+  <meta name="twitter:title" content="Don't Starve Together | Twitch Drops & Ambassadors" />
+  <meta name="twitter:description"
+    content="Check active DST Twitch drop milestones, claim timers, and find currently broadcasting Klei Ambassadors." />
   <meta name="twitter:image" content="https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2_v2.png" />
 
   <link rel="shortcut icon" type="image/x-icon" href="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg">
@@ -29,29 +31,58 @@
   <!-- Klei / DST Gothic Hand-Drawn Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Patrick+Hand&family=Special+Elite&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Patrick+Hand&family=Special+Elite&display=swap"
+    rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
+    /* --- CUSTOM DST SKETCH CURSORS --- */
+    @media (hover: hover) and (pointer: fine) {
+
+      /* Default Cursor: DST Sketched Pointing Hand */
+      body,
+      html {
+        cursor: url("data:image/png;base64,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") 0 0, auto;
+      }
+
+      /* Hover Cursor: Interactive Hand with glowing ember tip */
+      button,
+      a,
+      .dst-tab,
+      .nav-item,
+      .amb-card,
+      .reward-card,
+      .inv-slot,
+      .download-card,
+      input[type="checkbox"],
+      input[type="text"] {
+        cursor: url("data:image/png;base64,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") 0 0, pointer !important;
+      }
+    }
+
+
+
     :root {
       /* DST Scrapbook / Charcoal / Fire Palette */
-      --dst-black: #100c0a;
-      --dst-charcoal: #181210;
-      --dst-card-bg: rgba(24, 18, 16, 0.9);
+      --dst-black: #120e0c;
+      --dst-charcoal: #1c1613;
+      --dst-card-bg: rgba(28, 22, 19, 0.88);
       --dst-paper: #e6dbcb;
-      --dst-paper-muted: #8E8E93;
+      --dst-paper-muted: #bdae99;
       --dst-parchment: #f2e9dc;
-      --dst-border: #3c2d24;
-      --dst-border-highlight: #5a4335;
-      --klei-orange: #FF6B35;
-      --dst-flame-bright: #ff8542;
-      --dst-crimson: #bd1818;
-      --dst-green: #319b1c;
+      --dst-border: #443429;
+      --dst-border-highlight: #705540;
+      --dst-flame: #e76c1e;
+      --dst-flame-bright: #ff8e3c;
+      --dst-crimson: #a62b20;
+      --dst-green: #4f802f;
+      --dst-shadow: rgba(0, 0, 0, 0.7);
 
       /* Typography */
-      --font-title: 'Hammerhead', cursive, serif;
-      --font-hand: 'Patrick Hand', cursive, sans-serif;
-      --font-mono: 'Special Elite', monospace;
+      --font-title: 'Hammerhead', cursive, serif, bold;
+      --font-hand: 'Patrick Hand', cursive, sans-serif, bold;
+      --font-mono: 'Special Elite', monospace, bold;
 
       /* Hand-drawn organic border shape */
       --sketch-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
@@ -70,23 +101,28 @@
       color: var(--dst-paper);
       font-family: var(--font-hand);
       font-size: 1.15rem;
+      font-style:normal;
       display: flex;
       height: 100dvh;
       overflow: hidden;
       user-select: none;
       -webkit-user-select: none;
-      background-image: 
-        radial-gradient(circle at 15% 15%, rgba(255, 107, 53, 0.08) 0%, transparent 45%),
-        radial-gradient(circle at 85% 85%, rgba(189, 24, 24, 0.06) 0%, transparent 45%),
-        linear-gradient(rgba(16, 12, 10, 0.95), rgba(16, 12, 10, 0.97));
+      background-image:
+        radial-gradient(circle at 15% 15%, rgba(231, 108, 30, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(166, 43, 32, 0.06) 0%, transparent 45%),
+        linear-gradient(rgba(18, 14, 12, 0.94), rgba(18, 14, 12, 0.96));
     }
 
+    /* Ambient Ink & Charcoal Background Texture */
     .bg-vignette {
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       background: url("https://cdn.forums.klei.com/monthly_2026_04/dsRoadmap26.png.0b07e2ee7b68c964f65b4eed4b4a8609.png") no-repeat center center fixed;
       background-size: cover;
-      filter: grayscale(70%) sepia(30%) brightness(0.18) contrast(120%) blur(6px);
+      filter: grayscale(80%) sepia(50%) brightness(0.16) contrast(130%) blur(4px);
       z-index: -2;
       pointer-events: none;
     }
@@ -94,231 +130,296 @@
     .bg-charcoal-border {
       position: fixed;
       inset: 0;
-      box-shadow: inset 0 0 100px rgba(0,0,0,0.9), inset 0 0 40px rgba(16, 12, 10, 1);
+      box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.9), inset 0 0 40px rgba(18, 14, 12, 1);
       pointer-events: none;
       z-index: 100;
     }
 
-    /* LOADING SCREEN */
+    /* --- THEMATIC DST SPINNER LOADING SCREEN --- */
     #loading-screen {
       position: fixed;
       inset: 0;
-      background-color: #0b0b0c;
+      background-color: #0e0a09;
+      background-image: radial-gradient(circle, rgba(231, 108, 30, 0.12) 0%, rgba(14, 10, 9, 0.98) 70%);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       z-index: 9999;
-      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s;
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
     }
 
-    .dst-spinner-container {
+    .dst-campfire {
       position: relative;
-      width: 100px;
-      height: 100px;
+      width: 110px;
+      height: 110px;
       margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .dst-spinner {
+    .dst-campfire-ring {
       width: 100%;
       height: 100%;
-      border: 4px dashed rgba(255, 107, 53, 0.2);
-      border-top: 4px solid var(--klei-orange);
+      border: 3px dashed var(--dst-border-highlight);
+      border-top-color: var(--dst-flame-bright);
       border-radius: 50%;
-      animation: dst-spin 1.4s linear infinite;
+      animation: spinFire 2.2s linear infinite;
     }
 
-    .dst-spinner-center {
+    .dst-campfire-logo {
       position: absolute;
-      top: 32px;
-      left: 32px;
-      width: 36px;
-      height: 36px;
-      background: url("https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg") no-repeat center center;
-      background-size: contain;
+      width: 48px;
+      height: 48px;
+      filter: drop-shadow(0 0 12px rgba(255, 142, 60, 0.7));
+      animation: pulseFlame 1.4s ease-in-out infinite alternate;
     }
 
-    @keyframes dst-spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    @keyframes spinFire {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
-    .loading-text {
+    @keyframes pulseFlame {
+      from {
+        transform: scale(0.92) rotate(-3deg);
+        filter: drop-shadow(0 0 8px rgba(255, 110, 20, 0.5));
+      }
+
+      to {
+        transform: scale(1.08) rotate(3deg);
+        filter: drop-shadow(0 0 16px rgba(255, 160, 40, 0.9));
+      }
+    }
+
+    .loading-title {
       font-family: var(--font-title);
-      font-size: 1.5rem;
-      letter-spacing: 1px;
-      color: #fff;
-      margin-bottom: 10px;
+      font-size: 1.6rem;
+      color: var(--dst-flame-bright);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 0 #000;
+      margin-bottom: 8px;
     }
 
     .loading-tip {
       font-family: var(--font-mono);
       font-size: 0.95rem;
       color: var(--dst-paper-muted);
-      max-width: 400px;
+      max-width: 420px;
       text-align: center;
-      line-height: 1.5;
       padding: 0 20px;
+      line-height: 1.5;
     }
 
-    /* SLEEK DST SIDEBAR */
+    /* --- DST CRAFTING SIDEBAR --- */
     aside {
-      width: 285px;
-      background: linear-gradient(180deg, #181210 0%, #120d0b 100%);
-      border-right: 3px solid #281d17;
-      box-shadow: 10px 0 25px rgba(0,0,0,0.6);
+      width: 290px;
+      background: linear-gradient(180deg, #1d1714 0%, #15100e 100%);
+      border-right: 3px solid #2a201b;
+      box-shadow: 10px 0 25px rgba(0, 0, 0, 0.6);
       display: flex;
       flex-direction: column;
-      padding: 35px 18px 25px;
+      padding: 30px 18px;
       z-index: 101;
       position: relative;
+    }
+
+    /* Hand-drawn side wood grain edge */
+    aside::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: -3px;
+      bottom: 0;
+      width: 3px;
+      background: repeating-linear-gradient(180deg, #36271e, #36271e 10px, #1a120d 10px, #1a120d 20px);
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 12px;
+      padding-bottom: 20px;
+      border-bottom: 2px dashed #3a2b22;
+      margin-bottom: 20px;
     }
 
     .brand-logo {
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
+      filter: drop-shadow(0 2px 4px #000);
     }
 
-    .brand span {
+    .brand-title {
       font-family: var(--font-title);
-      color: #fff;
+      color: var(--dst-flame-bright);
       font-size: 1.15rem;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
+      line-height: 1.15;
+      text-shadow: 2px 2px 0 #000;
     }
 
-    .sidebar-category {
-      font-size: 0.8rem;
-      color: var(--dst-paper-muted);
-      margin-left: 10px;
-      margin-top: 10px;
-      text-transform: uppercase;
+    .brand-sub {
       font-family: var(--font-mono);
-      letter-spacing: 0.5px;
+      font-size: 0.7rem;
+      color: var(--dst-paper-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
-    .sidebar-divider {
-      border: 0;
-      border-top: 1px dashed #3c2d24;
-      margin: 10px 8px 12px;
-      opacity: 0.8;
+    .nav-group-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: #8c7664;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin: 14px 0 6px 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    /* Sidebar Tabs */
-    .nav-item {
+    /* DST Crafting Menu Tab Buttons */
+    .dst-tab {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 10px 14px;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       cursor: pointer;
       color: var(--dst-paper-muted);
-      background: rgba(30, 22, 19, 0.5);
-      border: 2px solid #32241c;
+      background: rgba(36, 27, 23, 0.45);
+      border: 2px solid #362820;
       border-radius: var(--sketch-radius);
       transition: all 0.2s ease;
       text-decoration: none;
+      position: relative;
     }
 
-    .nav-link {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 1.15rem;
-      font-weight: bold;
-    }
-
-    .nav-link i, .nav-link svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    .nav-item:hover {
-      color: #fff;
-      background: rgba(48, 35, 29, 0.7);
+    .dst-tab:hover {
+      color: var(--dst-parchment);
+      background: rgba(60, 43, 34, 0.65);
       border-color: var(--dst-border-highlight);
       transform: translateX(4px);
     }
 
-    .nav-item.active {
+    .dst-tab.active {
       color: #fff;
-      background: linear-gradient(90deg, #3d2315 0%, #26160e 100%);
-      border-color: var(--klei-orange);
-      box-shadow: 2px 2px 0 #000;
+      background: linear-gradient(90deg, #442618 0%, #2b1a12 100%);
+      border-color: var(--dst-flame);
+      box-shadow: inset 0 0 10px rgba(231, 108, 30, 0.3), 3px 3px 0 #0c0908;
       transform: translateX(6px);
     }
 
-    .sidebar-status {
+    .dst-tab.active::before {
+      content: "✦";
+      position: absolute;
+      left: -8px;
+      color: var(--dst-flame-bright);
+      font-size: 0.8rem;
+    }
+
+    .tab-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-hand);
+      font-size: 1.15rem;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .tab-content i,
+    .tab-content svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2.2;
+    }
+
+    .dst-badge {
       font-family: var(--font-mono);
       font-size: 0.7rem;
       padding: 3px 8px;
       border-radius: 4px;
-      background: var(--dst-crimson);
-      color: #fff;
-      font-weight: 700;
-      text-transform: uppercase;
+      background: #2b1f1a;
+      border: 1px solid #483427;
+      color: var(--dst-paper-muted);
       letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
 
+    .dst-badge.live-glow {
+      background: var(--dst-crimson);
+      border-color: #d84537;
+      color: #fff;
+      font-weight: bold;
+      animation: pulseRed 1.8s infinite;
+    }
+
+    @keyframes pulseRed {
+
+      0%,
+      100% {
+        box-shadow: 0 0 4px rgba(216, 69, 55, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 0 12px rgba(216, 69, 55, 0.9);
+      }
+    }
+
+    /* Sidebar Footer / Notification Bell */
     .sidebar-footer {
       margin-top: auto;
       padding-top: 15px;
-      border-top: 1px dashed #3c2d24;
-      font-size: 0.8rem;
-      color: var(--dst-paper-muted);
-    }
-
-    .sidebar-footer a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      display: inline-block;
-      margin-top: 6px;
+      border-top: 2px dashed #3a2b22;
     }
 
     .notif-button {
       width: 100%;
-      margin-top: 10px;
-      background: #1c1512;
-      border: 2px solid #443226;
+      background: rgba(30, 22, 18, 0.8);
+      border: 2px solid #4a362b;
       border-radius: var(--sketch-radius);
       color: var(--dst-paper);
-      padding: 8px 12px;
+      padding: 9px 12px;
       font-family: var(--font-hand);
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: bold;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      box-shadow: 2px 2px 0 #000;
       transition: all 0.2s ease;
+      box-shadow: 2px 2px 0 #000;
     }
 
     .notif-button:hover {
-      border-color: var(--klei-orange);
+      background: #3c2a20;
+      border-color: var(--dst-flame);
       color: #fff;
     }
 
     .notif-button.active {
       border-color: var(--dst-green);
-      color: #9fe27d;
-      background: rgba(49, 155, 28, 0.15);
+      background: rgba(79, 128, 47, 0.2);
+      color: #a4e67a;
     }
 
-    /* MAIN VIEWPORT */
+    /* --- MAIN WORKSPACE VIEWPORT --- */
     main {
       flex: 1;
-      padding: 40px 50px 70px;
+      padding: 40px 50px 60px;
       overflow-y: auto;
       scroll-behavior: smooth;
+      position: relative;
     }
 
     section {
@@ -329,266 +430,384 @@
 
     section.active {
       display: block;
-      animation: fadeUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: dstAppear 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes dstAppear {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.99);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
-    h1 {
+    /* DST Headings */
+    .dst-heading {
       font-family: var(--font-title);
       font-size: 2.2rem;
-      letter-spacing: 1px;
-      color: #fff;
+      color: var(--dst-paper);
       text-align: center;
-      margin-bottom: 30px;
-      text-shadow: 2px 2px 0 #000;
-    }
-
-    /* STATUS BANNER */
-    .hero-status-banner {
-      display: inline-flex;
-      align-items: center;
-      gap: 16px;
-      background: var(--dst-card-bg);
-      border: 2px solid var(--dst-border);
-      border-radius: var(--sketch-radius);
-      padding: 10px 24px;
-      margin: 0 auto 35px auto;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 25px;
+      text-shadow: 3px 3px 0 #000, 0 0 20px rgba(231, 108, 30, 0.35);
       position: relative;
-      left: 50%;
-      transform: translateX(-50%);
-      box-shadow: 3px 3px 0 #000;
     }
 
-    #timer {
-      color: var(--klei-orange);
-      font-weight: 700;
-      font-size: 1.15rem;
-      letter-spacing: 0.5px;
+    .dst-heading::after {
+      content: "— ✦ ❖ ✦ —";
+      display: block;
       font-family: var(--font-mono);
+      font-size: 0.9rem;
+      letter-spacing: 6px;
+      color: var(--dst-flame);
+      margin-top: 6px;
+      text-shadow: none;
     }
 
-    #timer-date {
-      font-size: 1rem;
+    /* DST Parchment & Compendium Scrapbook Cards */
+    .dst-parchment-card {
+      background: var(--dst-card-bg);
+      border: 3px solid var(--dst-border);
+      border-radius: var(--sketch-radius-soft);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), inset 0 0 35px rgba(10, 7, 5, 0.6);
+      padding: 28px;
+      position: relative;
+    }
+
+    /* Hand-sketched Corner Accents */
+    .dst-parchment-card::before,
+    .dst-parchment-card::after {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--dst-border-highlight);
+      pointer-events: none;
+    }
+
+    .dst-parchment-card::before {
+      top: 6px;
+      left: 6px;
+      border-right: none;
+      border-bottom: none;
+    }
+
+    .dst-parchment-card::after {
+      bottom: 6px;
+      right: 6px;
+      border-left: none;
+      border-top: none;
+    }
+
+    /* Campfire Sundial Timer Banner */
+    .campfire-banner {
+      background: linear-gradient(90deg, rgba(34, 25, 20, 0.95), rgba(46, 32, 25, 0.95));
+      border: 2px solid var(--dst-border-highlight);
+      border-radius: var(--sketch-radius);
+      box-shadow: 4px 4px 0 #000, inset 0 0 20px rgba(0, 0, 0, 0.5);
+      padding: 14px 28px;
+      margin: 0 auto 35px;
+      width: fit-content;
+      max-width: 90%;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .campfire-status {
+      font-family: var(--font-title);
+      font-size: 1.15rem;
+      color: var(--dst-flame-bright);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 1px;
+    }
+
+    .campfire-countdown {
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #fff;
+      padding: 4px 12px;
+      background: #140d0a;
+      border: 1px dashed var(--dst-flame);
+      border-radius: 4px;
+    }
+
+    .campfire-date {
+      font-family: var(--font-hand);
+      font-size: 1.15rem;
       color: var(--dst-paper-muted);
-      border-left: 1px solid var(--dst-border);
-      padding-left: 16px;
     }
 
-    /* REDONE DROPS CAMPAIGN HERO & MILESTONES */
-    .campaign-hero {
+    /* --- CAMPAIGN SHOWCASE HERO --- */
+    .campaign-grid {
       display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 30px;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 35px;
       align-items: start;
     }
 
-    .item-showcase {
-      background: var(--dst-card-bg);
-      border: 2px solid var(--dst-border);
-      border-radius: var(--sketch-radius-soft);
-      padding: 30px 24px;
+    .item-pedestal {
+      background: radial-gradient(circle at center, rgba(74, 50, 36, 0.4) 0%, rgba(20, 15, 12, 0.95) 75%);
+      border: 3px solid var(--dst-border);
+      border-radius: var(--sketch-radius);
+      padding: 30px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      box-shadow: 4px 4px 0 #000;
+      position: relative;
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 5px 5px 0 #090605;
     }
 
-    .item-showcase img {
+    .item-pedestal img {
       width: 100%;
       max-width: 320px;
       object-fit: contain;
-      filter: drop-shadow(0 15px 25px rgba(0,0,0,0.8));
-      transition: transform 0.3s ease;
+      filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.9));
+      transition: transform 0.4s ease;
     }
 
-    .item-showcase img:hover {
-      transform: scale(1.05);
+    .item-pedestal img:hover {
+      transform: scale(1.06) rotate(-1deg);
     }
 
-    .helpertext {
+    .pedestal-note {
       margin-top: 20px;
-      background: rgba(14, 10, 8, 0.7);
-      border: 1px dashed var(--dst-border);
-      border-radius: 8px;
-      padding: 12px 16px;
-      font-size: 0.95rem;
+      font-family: var(--font-hand);
       color: var(--dst-paper-muted);
-      width: 100%;
+      font-size: 1.05rem;
       text-align: center;
+      border-top: 1px dashed #3f2e24;
+      padding-top: 12px;
+      width: 100%;
     }
 
-    /* DST CARDS */
-    .klei-card {
-      background: var(--dst-card-bg);
-      border: 2px solid var(--dst-border);
-      border-radius: var(--sketch-radius-soft);
-      padding: 26px;
-      box-shadow: 4px 4px 0 #000;
-    }
-
-    /* REDESIGNED MILESTONE TILES WITH REWARD THUMBNAILS */
-    .milestone-container {
+    /* Scrapbook Milestone Tree */
+    .milestone-tree {
       display: flex;
       flex-direction: column;
       gap: 14px;
     }
 
-    .reward-card {
-      background: rgba(18, 13, 11, 0.75);
-      border: 2px solid #36261e;
+    /* Milestone rows with item preview slots */
+    .milestone-node {
+      background: rgba(22, 17, 14, 0.7);
+      border: 2px solid #3c2c22;
       border-radius: var(--sketch-radius);
-      padding: 12px 18px;
+      padding: 10px 16px;
       display: flex;
       align-items: center;
-      gap: 16px;
-      transition: all 0.2s ease;
+      gap: 14px;
+      transition: all 0.25s ease;
       box-shadow: 2px 2px 0 #000;
     }
 
-    .reward-card:hover {
-      border-color: var(--klei-orange);
-      background: rgba(38, 27, 22, 0.85);
+    .milestone-node:hover {
+      border-color: var(--dst-flame);
+      background: rgba(45, 30, 22, 0.85);
       transform: translateX(4px);
     }
 
-    .reward-icon-slot {
-      width: 62px;
-      height: 62px;
-      min-width: 62px;
-      background: #100b09;
+    .milestone-icon-slot {
+      width: 58px;
+      height: 58px;
+      min-width: 58px;
+      background: #110c0a;
       border: 2px solid #483428;
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8);
     }
 
-    .reward-icon-slot img {
+    .milestone-icon-slot img {
       width: 85%;
       height: 85%;
       object-fit: contain;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.7));
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7));
     }
 
-    .reward-info {
+    .milestone-info {
       flex: 1;
     }
 
-    .reward-info h4 {
-      color: #fff;
-      font-size: 1.15rem;
+    .milestone-info h4 {
       font-family: var(--font-title);
+      font-size: 1.05rem;
+      color: #fff;
       margin-bottom: 2px;
+      letter-spacing: 0.5px;
     }
 
-    .reward-info p {
+    .milestone-info p {
+      font-family: var(--font-hand);
       color: var(--dst-paper-muted);
-      font-size: 0.95rem;
+      font-size: 1rem;
     }
 
-    .reward-time {
-      color: var(--klei-orange);
+    .milestone-watchtime {
       font-family: var(--font-mono);
-      font-weight: 700;
       font-size: 0.95rem;
-      background: #120d0b;
-      border: 1px solid #4a3326;
+      color: var(--dst-flame-bright);
+      background: #140d0a;
+      border: 1px solid #4a3426;
+      border-radius: 4px;
       padding: 6px 12px;
-      border-radius: 6px;
+      font-weight: bold;
       white-space: nowrap;
     }
 
-    /* BUTTONS */
-    .btn {
-      padding: 10px 20px;
-      border-radius: var(--sketch-radius);
-      font-weight: 700;
-      font-size: 1rem;
+    /* DST Button Styles */
+    .dst-btn {
       font-family: var(--font-hand);
-      text-decoration: none;
-      text-align: center;
-      transition: all 0.2s ease;
-      color: #fff;
-      background: #1c1512;
-      border: 2px solid var(--dst-border);
-      display: inline-block;
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: var(--dst-paper);
+      background: #2b1f1a;
+      border: 2px solid var(--dst-border-highlight);
+      border-radius: var(--sketch-radius);
+      padding: 10px 18px;
       cursor: pointer;
-      box-shadow: 2px 2px 0 #000;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 3px 3px 0 #000;
+      transition: all 0.2s ease;
     }
 
-    .btn:hover {
-      background: #35231a;
-      border-color: var(--klei-orange);
+    .dst-btn:hover {
+      background: #422d22;
+      border-color: var(--dst-flame);
       color: #fff;
-      transform: translateY(-2px);
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 #000;
     }
 
-    /* AMBASSADOR CARD GRID & SEARCH BAR */
-    .amb-header {
-      text-align: center;
+    .dst-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 #000;
+    }
+
+    .dst-btn.btn-discord {
+      background: rgba(88, 101, 242, 0.2);
+      border-color: #5865F2;
+      color: #9aa5ff;
+    }
+
+    .dst-btn.btn-discord:hover {
+      background: #5865F2;
+      color: #fff;
+    }
+
+    /* --- LIVE AMBASSADORS SECTION & LANGUAGE FILTER --- */
+    .live-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
       margin-bottom: 30px;
     }
 
-    .amb-search-bar {
+    .search-input-box {
       width: 100%;
-      max-width: 600px;
-      margin: 0 auto 30px;
-      display: block;
-      background: #140e0c;
-      border: 2px solid var(--dst-border);
+      background: #15100e;
+      border: 2px solid #3d2c22;
       border-radius: var(--sketch-radius);
       padding: 12px 20px;
-      color: #fff;
+      color: var(--dst-parchment);
       font-family: var(--font-hand);
       font-size: 1.2rem;
       outline: none;
-      box-shadow: inset 0 2px 6px rgba(0,0,0,0.6);
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+      transition: border-color 0.2s ease;
     }
 
-    .amb-search-bar:focus {
-      border-color: var(--klei-orange);
+    .search-input-box:focus {
+      border-color: var(--dst-flame);
     }
 
-    .amb-search-bar::placeholder {
-      color: #6d5b50;
+    .search-input-box::placeholder {
+      color: #7d6b5e;
     }
 
+    .language-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lang-pill {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      padding: 6px 14px;
+      background: #1e1613;
+      border: 1px solid #443226;
+      border-radius: var(--sketch-radius);
+      color: var(--dst-paper-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 2px 2px 0 #000;
+    }
+
+    .lang-pill:hover {
+      color: #fff;
+      border-color: var(--dst-border-highlight);
+    }
+
+    .lang-pill.active {
+      background: var(--dst-flame);
+      color: #fff;
+      font-weight: bold;
+      border-color: #ff9d5c;
+      box-shadow: 0 0 10px rgba(231, 108, 30, 0.4), 2px 2px 0 #000;
+    }
+
+    /* Ambassador Polaroid Card Grid */
     .amb-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
       gap: 24px;
     }
 
     .amb-card {
-      background: var(--dst-card-bg);
-      border: 2px solid var(--dst-border);
+      background: #1b1411;
+      border: 2px solid #3c2a20;
       border-radius: var(--sketch-radius-soft);
       overflow: hidden;
       text-decoration: none;
       color: inherit;
-      transition: all 0.25s ease;
+      box-shadow: 4px 4px 0 #000, 0 8px 18px rgba(0, 0, 0, 0.5);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
       display: flex;
       flex-direction: column;
-      box-shadow: 3px 3px 0 #000;
+      position: relative;
     }
 
     .amb-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--klei-orange);
-      box-shadow: 4px 10px 20px rgba(0,0,0,0.7);
+      transform: translateY(-6px) rotate(-0.5deg);
+      border-color: var(--dst-flame);
+      box-shadow: 6px 12px 25px rgba(0, 0, 0, 0.8);
     }
 
-    .thumb-container {
+    .thumb-wrapper {
       position: relative;
       width: 100%;
       aspect-ratio: 16/9;
-      background: #000;
+      background: #0d0908;
       overflow: hidden;
     }
 
@@ -599,46 +818,93 @@
       transition: transform 0.3s ease;
     }
 
-    .amb-card:hover .thumb-img { transform: scale(1.05); }
+    .amb-card:hover .thumb-img {
+      transform: scale(1.05);
+    }
 
-    .live-tag {
+    .live-stamp {
       position: absolute;
-      top: 12px;
-      left: 12px;
+      top: 10px;
+      left: 10px;
       background: var(--dst-crimson);
       color: #fff;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-size: 0.7rem;
       font-family: var(--font-mono);
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      z-index: 2;
+      font-size: 0.75rem;
+      font-weight: bold;
+      padding: 3px 8px;
+      border-radius: 3px;
+      border: 1px solid #ff594a;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     }
 
-    .card-body {
+    .lang-badge-corner {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(14, 10, 8, 0.85);
+      border: 1px solid #483528;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      border-radius: 3px;
+    }
+
+    .amb-card-body {
       padding: 16px;
-      background: #181210;
-      border-top: 1px solid #2a1f19;
+      background: linear-gradient(180deg, #1d1612 0%, #15100d 100%);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      border-top: 1px solid #2e2017;
     }
 
-    .creator-meta { display: flex; align-items: center; gap: 12px; }
-    .profile-pic { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid #4a3528; }
-    .streamer-name { display: block; color: #fff; font-family: var(--font-title); font-size: 1rem; }
-    .stream-title { display: block; color: var(--dst-paper-muted); font-size: 0.95rem; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .profile-portrait {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--dst-flame);
+      object-fit: cover;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+    }
 
-    /* ASSETS DOWNLOADS */
+    .amb-card-text {
+      overflow: hidden;
+    }
+
+    .streamer-name {
+      display: block;
+      font-family: var(--font-title);
+      font-size: 1rem;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .stream-topic {
+      display: block;
+      font-family: var(--font-hand);
+      font-size: 0.95rem;
+      color: var(--dst-paper-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 2px;
+    }
+
+    /* --- ASSETS DOWNLOAD TILES --- */
     #download-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 24px;
+      gap: 25px;
     }
 
-    .download-card {
-      background: var(--dst-card-bg);
+    .asset-card {
+      background: rgba(26, 19, 16, 0.9);
       border: 2px solid var(--dst-border);
       border-radius: var(--sketch-radius-soft);
-      padding: 25px 20px;
+      padding: 24px 18px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -647,73 +913,162 @@
       box-shadow: 3px 3px 0 #000;
     }
 
-    .download-card img { height: 110px; max-width: 100%; object-fit: contain; }
-    .asset-info h4 { color: #fff; font-family: var(--font-title); font-size: 1.05rem; }
-    .asset-info p { color: var(--dst-paper-muted); font-family: var(--font-mono); font-size: 0.8rem; margin-top: 2px; }
-
-    /* INFO LIST */
-    .ambassador-info { list-style: none; display: flex; flex-direction: column; gap: 16px; }
-    .ambassador-info li {
-      background: rgba(14, 10, 8, 0.5);
-      border: 1px dashed var(--dst-border);
-      padding: 22px;
-      border-radius: 8px;
+    .asset-card img {
+      height: 120px;
+      max-width: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.8));
     }
-    .ambassador-info strong { color: var(--klei-orange); font-size: 1.2rem; display: block; margin-bottom: 6px; font-family: var(--font-title); }
-    .ambassador-info span { color: var(--dst-paper-muted); font-size: 1.05rem; line-height: 1.5; }
 
-    /* MOBILE DOCK */
-    .mobile-nav {
+    .asset-card h4 {
+      font-family: var(--font-title);
+      font-size: 1.05rem;
+      color: var(--dst-paper);
+    }
+
+    .asset-card p {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--dst-paper-muted);
+    }
+
+    /* --- DST MODAL DIALOG --- */
+    .dst-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 7, 5, 0.85);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .dst-modal.active {
+      display: flex;
+    }
+
+    .modal-box {
+      max-width: 520px;
+      width: 100%;
+      background: #1c1512;
+      border: 3px solid var(--dst-flame);
+      border-radius: var(--sketch-radius);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), inset 0 0 25px rgba(0, 0, 0, 0.7);
+      padding: 28px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      font-size: 1.8rem;
+      color: var(--dst-paper-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      color: #fff;
+    }
+
+    /* --- MOBILE DST SURVIVOR INVENTORY DOCK (Bottom Nav) --- */
+    .mobile-inventory-dock {
       display: none;
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: #140e0c;
-      border-top: 3px solid #2f221a;
-      box-shadow: 0 -8px 25px rgba(0,0,0,0.8);
-      justify-content: space-around;
-      padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+      background: #17110e;
+      border-top: 3px solid #36261c;
+      padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+      box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.8);
       z-index: 1000;
+      justify-content: space-around;
+      align-items: center;
     }
 
-    .m-btn {
+    .inv-slot {
       flex: 1;
-      max-width: 62px;
-      background: #1f1613;
-      border: 2px solid #36261d;
+      max-width: 64px;
+      background: #231915;
+      border: 2px solid #3e2d23;
       border-radius: 8px;
-      color: var(--dst-paper-muted);
-      font-family: var(--font-hand);
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
+      justify-content: center;
       padding: 6px 2px;
-      transition: all 0.15s ease;
+      color: var(--dst-paper-muted);
+      font-family: var(--font-hand);
+      font-size: 0.75rem;
+      font-weight: bold;
       text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.15s ease;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
     }
 
-    .m-btn i, .m-btn svg { width: 18px; height: 18px; }
+    .inv-slot i,
+    .inv-slot svg {
+      width: 18px;
+      height: 18px;
+      margin-bottom: 2px;
+    }
 
-    .m-btn.active {
-      background: #382115;
-      border-color: var(--klei-orange);
+    .inv-slot.active {
+      background: #3c2419;
+      border-color: var(--dst-flame);
       color: #fff;
-      transform: translateY(-3px);
+      box-shadow: 0 0 10px rgba(231, 108, 30, 0.4), inset 0 0 8px rgba(255, 142, 60, 0.3);
+      transform: translateY(-4px);
     }
 
+    .inv-badge {
+      position: absolute;
+      top: -6px;
+      right: -4px;
+      background: var(--dst-crimson);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 1px 5px;
+      border-radius: 10px;
+      border: 1px solid #fff;
+    }
+
+    /* Responsive Queries */
     @media (max-width: 900px) {
-      aside { display: none; }
-      .mobile-nav { display: flex; }
-      main { padding: 30px 18px 100px; }
-      .campaign-hero { grid-template-columns: 1fr; gap: 24px; }
-      h1 { font-size: 1.8rem; }
-      .hero-status-banner { flex-direction: column; gap: 8px; text-align: center; }
-      #timer-date { border-left: none; padding-left: 0; }
+      aside {
+        display: none;
+      }
+
+      .mobile-inventory-dock {
+        display: flex;
+      }
+
+      main {
+        padding: 25px 18px 100px;
+      }
+
+      .campaign-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .dst-heading {
+        font-size: 1.8rem;
+      }
+
+      .campfire-banner {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -722,81 +1077,101 @@
   <div class="bg-vignette"></div>
   <div class="bg-charcoal-border"></div>
 
-  <!-- LOADING SCREEN -->
+  <!-- THEMATIC LOADING SCREEN -->
   <div id="loading-screen">
-    <div class="dst-spinner-container">
-      <div class="dst-spinner"></div>
-      <div class="dst-spinner-center"></div>
+    <div class="dst-campfire">
+      <div class="dst-campfire-ring"></div>
+      <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt="Drop Embers"
+        class="dst-campfire-logo">
     </div>
-    <div class="loading-text">Syncing Compendium</div>
+    <div class="loading-title">Gathering Compendium</div>
     <div id="loading-tip" class="loading-tip">"Keep your fire lit and watch the darkness..."</div>
   </div>
 
-  <!-- SIDEBAR -->
+  <!-- DISCORD SHARE / PREVIEW MODAL -->
+  <div id="discord-modal" class="dst-modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeDiscordModal()">&times;</button>
+      <h3
+        style="font-family: var(--font-title); color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+        <i data-lucide="share-2" style="color: var(--dst-flame);"></i> Discord Share
+      </h3>
+      <p style="font-size: 1rem; color: var(--dst-paper-muted); margin-bottom: 15px;">
+        Share drop details and live links directly to your Discord channel or friends with rich markdown formatting:
+      </p>
+      <textarea id="discord-copy-box" readonly
+        style="width: 100%; height: 110px; background: #120e0c; border: 1px dashed var(--dst-border-highlight); border-radius: 6px; padding: 10px; color: #a4e67a; font-family: var(--font-mono); font-size: 0.85rem; resize: none; margin-bottom: 15px;"></textarea>
+      <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button class="dst-btn" onclick="copyDiscordPayload()">Copy Discord Markdown</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESKTOP COMPENDIUM SIDEBAR -->
   <aside>
     <div class="brand">
-      <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt="Logo" class="brand-logo">
-      <span>Starving For Drops</span>
-    </div>
-
-    <p class="sidebar-category">Drops & Ambassadors</p>
-    <hr class="sidebar-divider" />
-
-    <div class="nav-item active" onclick="nav('drops', this)">
-      <div class="nav-link">
-        <i data-lucide="award"></i>
-        <span>Drops</span>
+      <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt="Campfire Drops"
+        class="brand-logo">
+      <div>
+        <div class="brand-title">Starving For Drops</div>
+        <div class="brand-sub">Klei Drops & Ambassadors</div>
       </div>
-      <span id="side-status" class="sidebar-status">Fetch</span>
     </div>
 
-    <div class="nav-item" onclick="nav('live', this)">
-      <div class="nav-link">
+    <div class="nav-group-label">Drops & Ambassadors</div>
+
+    <div class="dst-tab active" onclick="nav('drops', this)">
+      <div class="tab-content">
+        <i data-lucide="flame"></i>
+        <span>Active Drop</span>
+      </div>
+      <span id="side-drop-status" class="dst-badge">CHECKING</span>
+    </div>
+
+    <div class="dst-tab" onclick="nav('live', this)">
+      <div class="tab-content">
         <i data-lucide="tv"></i>
-        <span>Live</span>
+        <span>Ambassadors</span>
       </div>
-      <span id="side-live-count" class="sidebar-status" style="background: rgba(255, 255, 255, 0.1); color: var(--dst-paper-muted); display: none;">0</span>
+      <span id="side-live-badge" class="dst-badge live-glow" style="display: none;">0 LIVE</span>
     </div>
 
-    <div class="nav-item" onclick="nav('info', this)">
-      <div class="nav-link">
-        <i data-lucide="help-circle"></i>
-        <span>Info</span>
-      </div>
-    </div>
-
-    <p class="sidebar-category">For Ambassadors</p>
-    <hr class="sidebar-divider" />
-
-    <div class="nav-item" onclick="nav('download', this)">
-      <div class="nav-link">
+    <div class="dst-tab" onclick="nav('download', this)">
+      <div class="tab-content">
         <i data-lucide="download"></i>
         <span>Assets</span>
       </div>
     </div>
 
-    <p class="sidebar-category">Game Related Stuff</p>
-    <hr class="sidebar-divider" />
+    <div class="dst-tab" onclick="nav('info', this)">
+      <div class="tab-content">
+        <i data-lucide="book-open"></i>
+        <span>Ambassador Info</span>
+      </div>
+    </div>
 
-    <a href="https://forums.kleientertainment.com/game-updates/dst/" target="_blank" class="nav-item">
-      <div class="nav-link">
-        <i data-lucide="file-text"></i>
+    <div class="nav-group-label">Other Links</div>
+
+    <a href="https://forums.kleientertainment.com/game-updates/dst/" target="_blank" class="dst-tab">
+      <div class="tab-content">
+        <i data-lucide="scroll"></i>
         <span>Game Updates</span>
       </div>
-      <i data-lucide="external-link" style="width:14px; height:14px; opacity:0.5;"></i>
+      <i data-lucide="external-link" style="width: 14px; opacity: 0.5;"></i>
     </a>
 
-    <a href="https://dstserverlist.appspot.com/" target="_blank" class="nav-item">
-      <div class="nav-link">
+    <a href="https://dstserverlist.appspot.com/" target="_blank" class="dst-tab">
+      <div class="tab-content">
         <i data-lucide="server"></i>
         <span>Server List</span>
       </div>
-      <i data-lucide="external-link" style="width:14px; height:14px; opacity:0.5;"></i>
+      <i data-lucide="external-link" style="width: 14px; opacity: 0.5;"></i>
     </a>
 
-    <a href="https://exspectamus.dontstarvetogether.com/" target="_blank" class="nav-item">
-      <div class="nav-link">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="20" height="20" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <a href="https://exspectamus.dontstarvetogether.com/" target="_blank" class="dst-tab">
+      <div class="tab-content">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="20" height="20" fill="white"
+          stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
           <path d="M 12,25 C 10,12 85,10 88,25 C 92,45 88,75 75,88 C 60,98 35,98 22,88 C 10,75 14,45 12,25 Z" />
           <path d="M 12,25 C 25,35 65,32 88,25" />
           <path d="M 15,20 C 30,15 65,18 85,20" />
@@ -805,289 +1180,521 @@
         </svg>
         <span>Exspectamus</span>
       </div>
-      <i data-lucide="external-link" style="width:14px; height:14px; opacity:0.5;"></i>
+      <i data-lucide="external-link" style="width: 14px; opacity: 0.5;"></i>
     </a>
 
     <div class="sidebar-footer">
-      <p>Data provided via official game API structures.</p>
-      <a href="https://www.klei.com/" target="_blank">Visit Official Site</a>
-
-      <button id="notif-btn" class="notif-button" onclick="toggleDropNotifications()">
+      <button id="notif-toggle-btn" class="notif-button" onclick="toggleDropNotifications()">
         <i data-lucide="bell"></i>
-        <span id="notif-btn-text">Enable Drop Alerts</span>
+        <span id="notif-toggle-text">Enable Drop Alerts</span>
       </button>
+      <div
+        style="font-family: var(--font-mono); font-size: 0.7rem; color: #735d4e; margin-top: 10px; text-align: center;">
+        All possible thanks to Klei.
+      </div>
     </div>
   </aside>
 
-  <!-- MAIN SECTIONS -->
+  <!-- MAIN SCROLLABLE CONTENT -->
   <main>
-    <!-- DROPS -->
+    <!-- DROPS TAB -->
     <section id="drops" class="active">
-      <h1 id="c-name">Don't Starve Together</h1>
+      <h1 id="c-name" class="dst-heading">Don't Starve Together</h1>
 
-      <div class="hero-status-banner">
-        <span id="timer">SYNCING COMPENDIUM...</span>
-        <span id="timer-date">Loading active timestamps...</span>
+      <div class="campfire-banner">
+        <div class="campfire-status">
+          <i data-lucide="flame" style="color: var(--dst-flame-bright);"></i>
+          <span id="timer-status-text">EMBERS GLOWING</span>
+        </div>
+        <div id="timer" class="campfire-countdown">CALCULATING...</div>
+        <div id="timer-date" class="campfire-date">Consulting Klei Records...</div>
       </div>
 
-      <div class="campaign-hero">
-        <div class="item-showcase">
-          <img id="c-gif" src="" alt="Item Preview">
-          <div class="helpertext">
-            <span style="color: #fff; font-weight: 600;">Instant Delivery:</span> Items are credited instantly to your Klei ID upon claiming.
+      <div class="campaign-grid">
+        <!-- Item Showcase Pedestal -->
+        <div class="item-pedestal">
+          <img id="c-gif" src="" alt="Drop Reward Artifact">
+          <div class="pedestal-note">
+            <strong style="color:#fff;">Instant Delivery:</strong> Claimed rewards materialize directly in your survivor
+            Curio Cabinet!
+          </div>
+          <div style="margin-top: 16px; display: flex; gap: 10px; width: 100%;">
+            <button class="dst-btn btn-discord" style="flex: 1;" onclick="openDiscordModal()">
+              <i data-lucide="share-2"></i> Share to Discord
+            </button>
           </div>
         </div>
 
-        <div class="klei-card">
-          <h3 style="color:#fff; margin-bottom:18px; font-size:1.2rem; font-weight:700; display:flex; align-items:center; gap:10px; font-family: var(--font-title);">
-            <i data-lucide="sparkles" style="color: var(--klei-orange); width: 20px;"></i>
-            Campaign Milestones
+        <!-- Milestones Card -->
+        <div class="dst-parchment-card">
+          <h3
+            style="font-family: var(--font-title); color: #fff; margin-bottom: 18px; font-size: 1.25rem; display: flex; align-items: center; gap: 10px;">
+            <i data-lucide="hourglass" style="color: var(--dst-flame-bright);"></i>
+            Drop Milestones
           </h3>
 
-          <!-- Milestone container populated with item icons -->
-          <div id="reward-rows" class="milestone-container"></div>
+          <div id="reward-rows" class="milestone-tree"></div>
 
-          <div style="margin-top: 25px; padding-top: 20px; border-top: 1px dashed var(--dst-border);">
-            <h3 style="color:#fff; margin-bottom:14px; font-size:1.05rem; font-weight:700; display:flex; align-items:center; gap:10px; font-family: var(--font-title);">
-              <i data-lucide="link" style="color: var(--klei-orange); width: 18px;"></i>
-              Connect Profiles
-            </h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 10px;">
-              <a href="https://accounts.klei.com/account/twitch/link" target="_blank" class="btn" style="background: rgba(100,65,165,0.2); color: #c49eff; border-color: rgba(100,65,165,0.4);">Twitch</a>
-              <a href="https://accounts.klei.com/account/bilibili/link" target="_blank" class="btn" style="background: rgba(0,174,236,0.2); color: #5ad5ff; border-color: rgba(0,174,236,0.4);">Bilibili</a>
-              <a href="https://accounts.klei.com/account/douyu/link" target="_blank" class="btn" style="background: rgba(255,93,35,0.2); color: #ff8b59; border-color: rgba(255,93,35,0.4);">Douyu</a>
+          <div style="margin-top: 25px; padding-top: 20px; border-top: 2px dashed #3a2b22;">
+            <h4
+              style="font-family: var(--font-title); color: var(--dst-paper-muted); font-size: 1rem; margin-bottom: 12px;">
+              Link Accounts
+            </h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 10px;">
+              <a href="https://accounts.klei.com/account/twitch/link" target="_blank" class="dst-btn"
+                style="font-size: 1rem; padding: 8px;">Twitch</a>
+              <a href="https://accounts.klei.com/account/bilibili/link" target="_blank" class="dst-btn"
+                style="font-size: 1rem; padding: 8px;">Bilibili</a>
+              <a href="https://accounts.klei.com/account/douyu/link" target="_blank" class="dst-btn"
+                style="font-size: 1rem; padding: 8px;">Douyu</a>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ASSETS -->
-    <section id="download">
-      <h1>Campaign Assets</h1>
-      <div class="hero-status-banner">
-        <p style="text-align: center; font-size: 1.15rem; color: var(--dst-paper-muted)">Download Drop assets for your Ambassador needs.</p>
-      </div>
-      <div id="download-grid"></div>
-    </section>
-
-    <!-- LIVE -->
+    <!-- LIVE AMBASSADORS TAB -->
     <section id="live">
-      <div class="amb-header">
-        <h1>Live Klei Ambassadors</h1>
-      </div>
-      <div class="hero-status-banner">
-        <p style="font-size: 1.15rem; color: var(--dst-paper-muted);">Watch active Klei ambassadors to have fun and perhaps collect rewards!.</p>
+      <h1 class="dst-heading">Live Ambassadors</h1>
+
+      <div class="live-controls">
+        <input type="text" id="amb-search" class="search-input-box"
+          placeholder="Search streamer by name or stream title..." oninput="applyAmbassadorFilters()">
       </div>
 
-      <input type="text" id="amb-search" class="amb-search-bar" placeholder="Search live ambassadors or stream titles..." oninput="filterAmbassadors()">
+      <div id="amb-count-indicator"
+        style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-flame); margin-bottom: 18px; text-align: center;">
+        Scanning live streamer broadcasts...
+      </div>
 
       <div id="amb-list" class="amb-grid"></div>
     </section>
 
-    <!-- INFO -->
+    <!-- ASSETS TAB -->
+    <section id="download">
+      <h1 class="dst-heading">Campaign Assets</h1>
+      <div id="download-grid"></div>
+    </section>
+
+    <!-- INFO / COMPENDIUM TAB -->
     <section id="info">
-      <h1>Why watch Ambassadors?</h1>
-      <div class="klei-card">
-        <ul class="ambassador-info">
-          <li>
-            <strong>✦ Klei Points & Spools</strong>
-            <span>Special giveaways for links that grant high-value points and spools directly to your account.</span>
-            <div style="display: flex; justify-content: left; margin-top: 12px; gap: 15px;">
-              <img src="https://accounts.klei.com/assets/images/ic-pts.png" alt="Klei Points" style="width: 55px; height: 55px; object-fit: contain;">
-              <img src="https://accounts.klei.com/assets/images/ic-spool.png" alt="Klei Spools" style="width: 55px; height: 55px; object-fit: contain;">
+      <h1 class="dst-heading">Info About Ambassadors</h1>
+      <div class="dst-parchment-card">
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 20px;">
+          <li style="border-bottom: 1px dashed #3a2b22; padding-bottom: 15px;">
+            <strong
+              style="color: var(--dst-flame-bright); font-family: var(--font-title); font-size: 1.2rem; display: block; margin-bottom: 4px;">
+              ✦ Klei Points & Spools
+            </strong>
+            <span style="color: var(--dst-paper-muted);">
+              Watch ambassador streams for promotional links granting Curio Spools and Klei Points directly into your
+              game account.
+            </span>
+            <div style="display: flex; gap: 15px; margin-top: 10px;">
+              <img src="https://accounts.klei.com/assets/images/ic-pts.png" alt="Klei Points"
+                style="width: 50px; height: 50px; object-fit: contain;">
+              <img src="https://accounts.klei.com/assets/images/ic-spool.png" alt="Klei Spools"
+                style="width: 50px; height: 50px; object-fit: contain;">
+            </div>
+          </li>
+          <li style="border-bottom: 1px dashed #3a2b22; padding-bottom: 15px;">
+            <strong
+              style="color: var(--dst-flame-bright); font-family: var(--font-title); font-size: 1.2rem; display: block; margin-bottom: 4px;">
+              ✦ Resurrected Bundles
+            </strong>
+            <span style="color: var(--dst-paper-muted);">
+              Ambassadors regularly distribute codes for past legacy skins and event items that are otherwise locked
+              away in the shadows.
+            </span>
+            <div style="display: flex; gap: 15px; margin-top: 10px;">
+              <img src="https://cdn-items.klei.com/dst/330x192/backpack_crab_ce439cbdb6fc8f0a.png" alt="Crab Backpack"
+                style="height: 60px; object-fit: contain;">
+              <img src="https://cdn-items.klei.com/dst/330x192/backpack_mandrake_f220a5efb7bfffb5.png"
+                alt="Mandrake Backpack" style="height: 60px; object-fit: contain;">
             </div>
           </li>
           <li>
-            <strong>✦ Resurrected Bundles</strong>
-            <span>Limited-time access to legacy skins from past events that are no longer obtainable elsewhere.</span>
-            <div style="display: flex; justify-content: left; margin-top: 12px; gap: 15px;">
-              <img src="https://cdn-items.klei.com/dst/330x192/backpack_crab_ce439cbdb6fc8f0a.png" alt="Crab Backpack" style="height: 65px; object-fit: contain;">
-              <img src="https://cdn-items.klei.com/dst/330x192/backpack_mandrake_f220a5efb7bfffb5.png" alt="Mandrake Backpack" style="height: 65px; object-fit: contain;">
-            </div>
-          </li>
-          <li>
-            <strong>✦ Community Hubs</strong>
-            <span>The best place to find active campaigns and learn pro gameplay tips from community experts.</span>
+            <strong
+              style="color: var(--dst-flame-bright); font-family: var(--font-title); font-size: 1.2rem; display: block; margin-bottom: 4px;">
+              ✦ Surviving Together
+            </strong>
+            <span style="color: var(--dst-paper-muted);">
+              Twitch drops accumulate across all participating channels broadcasting Don't Starve Together. Claim each
+              milestone sequentially from your Twitch Drops Inventory.
+            </span>
           </li>
         </ul>
       </div>
     </section>
   </main>
 
-  <!-- MOBILE BOTTOM DOCK -->
-  <nav class="mobile-nav">
-    <button class="m-btn active" onclick="nav('drops', this)">
-      <i data-lucide="award"></i>
+  <!-- MOBILE DST SURVIVOR BOTTOM INVENTORY BAR -->
+  <nav class="mobile-inventory-dock">
+    <div class="inv-slot active" onclick="nav('drops', this)">
+      <i data-lucide="flame"></i>
       <span>Drops</span>
-    </button>
-    <button class="m-btn" onclick="nav('live', this)">
+    </div>
+
+    <div class="inv-slot" onclick="nav('live', this)">
       <i data-lucide="tv"></i>
       <span>Live</span>
-    </button>
-    <button class="m-btn" onclick="nav('info', this)">
-      <i data-lucide="help-circle"></i>
+      <span id="mobile-live-badge" class="inv-badge" style="display: none;">0</span>
+    </div>
+
+    <div class="inv-slot" onclick="nav('download', this)">
+      <i data-lucide="download"></i>
+      <span>Assets</span>
+    </div>
+
+    <div class="inv-slot" onclick="nav('info', this)">
+      <i data-lucide="book-open"></i>
       <span>Info</span>
-    </button>
-    <a href="https://forums.kleientertainment.com/game-updates/dst/" target="_blank" class="m-btn">
-      <i data-lucide="file-text"></i>
-      <span>Updates*</span>
-    </a>
-    <a href="https://dstserverlist.appspot.com/" target="_blank" class="m-btn">
-      <i data-lucide="server"></i>
-      <span>Servers*</span>
-    </a>
-    <a href="https://exspectamus.dontstarvetogether.com/" target="_blank" class="m-btn">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="20" height="20" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M 12,25 C 10,12 85,10 88,25 C 92,45 88,75 75,88 C 60,98 35,98 22,88 C 10,75 14,45 12,25 Z" />
-        <path d="M 12,25 C 25,35 65,32 88,25" />
-        <path d="M 15,20 C 30,15 65,18 85,20" />
-        <circle cx="52" cy="31" r="2" fill="currentColor" />
-        <circle cx="55" cy="42" r="2.5" fill="currentColor" />
-      </svg>
-      <span>Lore*</span>
-    </a>
+    </div>
+
+    <div class="inv-slot" onclick="toggleDropNotifications()">
+      <i data-lucide="bell" id="m-bell-icon"></i>
+      <span>Alerts</span>
+    </div>
   </nav>
+
+  <script>
+
+
+    // --- CUSTOM SOUND CONFIGURATION ---
+    // Replace the paths below with your local file paths or URLs
+    const dstSounds = {
+      hover: new Audio('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/SFX/click_mouseover.wav'),
+      clickDown: new Audio('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/SFX/click_move.wav'),
+      clickUp: new Audio('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/SFX/click_move_release.wav'),
+      alert: new Audio('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/SFX/drop.ogg')
+    };
+
+    // Set volume level (0.0 to 1.0)
+    dstSounds.alert.volume = 0.2;
+
+
+    // Set individual volume levels (0.0 to 1.0)
+    dstSounds.hover.volume = 0.05;
+    dstSounds.clickDown.volume = 0.4;
+    dstSounds.clickUp.volume = 0.4;
+
+    // Preload audio into memory
+    Object.values(dstSounds).forEach(audio => {
+      audio.preload = 'auto';
+      audio.load();
+    });
+
+    // Helper: Plays sound without clipping if triggered rapidly
+    function playCustomSound(audio) {
+      try {
+        const clone = audio.cloneNode();
+        clone.volume = audio.volume;
+        const playPromise = clone.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => { }); // Suppress harmless browser autoplay policy warnings
+        }
+      } catch (e) { }
+    }
+
+    // --- ATTACH EVENT LISTENERS ---
+    function initCustomSoundEngine() {
+      const interactiveSelector = 'button, a, .dst-tab, .nav-item, .reward-card, .amb-card, .inv-slot, .lang-pill, .download-card, .btn';
+      let isPressed = false;
+
+      // 1. HOVER SOUND
+      document.addEventListener('mouseover', (e) => {
+        const target = e.target.closest(interactiveSelector);
+        const related = e.relatedTarget ? e.relatedTarget.closest(interactiveSelector) : null;
+
+        // Only trigger if entering a new button/card (not when moving between text/icons inside the same button)
+        if (target && target !== related) {
+          playCustomSound(dstSounds.hover);
+        }
+      }, { passive: true });
+
+      // 2. PRESS DOWN (CLICK)
+      document.addEventListener('pointerdown', (e) => {
+        if (e.target.closest(interactiveSelector)) {
+          isPressed = true;
+          playCustomSound(dstSounds.clickDown);
+        }
+      });
+
+      // 3. RELEASE CLICK (UP)
+      document.addEventListener('pointerup', (e) => {
+        if (isPressed) {
+          isPressed = false;
+          playCustomSound(dstSounds.clickUp);
+        }
+      });
+    }
+
+    // Initialize on page load
+    initCustomSoundEngine();
+
+  </script>
 
   <script>
     lucide.createIcons();
 
-    let allAmbassadors = [];
-    let currentDstCampaign = null;
-
+    // Thematic survival quotes
     const survivalTips = [
       "\"Say, Pal. You don't look so good. Find something to eat before night falls!\"",
-      "\"Logsuits and Football Helmets make a superb match against unexpected threats.\"",
-      "\"Be wary of your sanity meter when harvesting under a full moon.\""
+      "\"A log suit and football helmet will save your hide from the terrors of the dark.\"",
+      "\"Beware of your sanity meter when harvesting mushrooms under a blood moon.\"",
+      "\"Never let your campfire extinguish in the depths of winter.\""
     ];
 
-    const tipInterval = setInterval(() => {
+    setInterval(() => {
       const tipElement = document.getElementById('loading-tip');
       if (tipElement) {
         tipElement.innerText = survivalTips[Math.floor(Math.random() * survivalTips.length)];
       }
-    }, 3000);
+    }, 3500);
 
+    // Global App State
+    let rawAmbassadors = [];
+    let currentLangFilter = 'ALL';
+    let currentDstCampaign = null;
+
+    // DST Notification Chime (Web Audio Synthesizer - No External Assets Needed)
+    function playDstChime() {
+      if (dstSounds && dstSounds.alert) {
+        playCustomSound(dstSounds.alert);
+      }
+    }
+
+    // Tab Navigation
     function nav(id, el) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-      const activeSec = document.getElementById(id);
-      if (activeSec) activeSec.classList.add('active');
+      const targetSection = document.getElementById(id);
+      if (targetSection) targetSection.classList.add('active');
 
-      document.querySelectorAll('.nav-item, .m-btn').forEach(i => i.classList.remove('active'));
-      document.querySelectorAll('.nav-item, .m-btn').forEach(item => {
+      document.querySelectorAll('.dst-tab, .inv-slot').forEach(i => i.classList.remove('active'));
+
+      // Highlight matching desktop and mobile tabs
+      document.querySelectorAll('.dst-tab, .inv-slot').forEach(item => {
         if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(`'${id}'`)) {
           item.classList.add('active');
         }
       });
     }
 
-    // Filter Ambassadors via Search Bar
-    function filterAmbassadors() {
-      const q = (document.getElementById('amb-search')?.value || '').toLowerCase().trim();
+    // Language Categorization Helper
+    function detectLanguage(item) {
+      const text = ((item.Language || '') + ' ' + (item.Title || '') + ' ' + (item.Name || '')).toLowerCase();
+
+      // Explicit language property
+      if (item.Language) {
+        const l = item.Language.toLowerCase();
+        if (l.startsWith('en')) return 'EN';
+        if (l.startsWith('es')) return 'ES';
+        if (l.startsWith('pt')) return 'PT';
+        if (l.startsWith('ru')) return 'RU';
+        if (l.startsWith('zh') || l.startsWith('cn')) return 'ZH';
+      }
+
+      // Check Cyrillic (Russian / Ukrainian / etc)
+      if (/[\u0400-\u04FF]/.test(text) || text.includes('[ru]') || text.includes('ру ')) return 'RU';
+
+      // Check Chinese Characters
+      if (/[\u4e00-\u9fa5]/.test(text) || text.includes('[cn]') || text.includes('[zh]')) return 'ZH';
+
+      // Check Spanish / Portuguese
+      if (text.includes('[es]') || text.includes('[esp]') || text.includes('español') || text.includes('drops activados')) return 'ES';
+      if (text.includes('[pt]') || text.includes('[br]') || text.includes('portugues') || text.includes('português')) return 'PT';
+
+      // English defaults
+      if (text.includes('[en]') || text.includes('drops on') || text.includes('chill') || text.includes('surviving')) return 'EN';
+
+      return 'OTHER';
+    }
+
+    // Render Ambassador Cards with Filters
+    function applyAmbassadorFilters() {
+      const query = (document.getElementById('amb-search')?.value || '').toLowerCase().trim();
       const listEl = document.getElementById('amb-list');
+      const countEl = document.getElementById('amb-count-indicator');
       if (!listEl) return;
 
-      const filtered = allAmbassadors.filter(a => {
-        return !q || 
-          (a.Name && a.Name.toLowerCase().includes(q)) || 
-          (a.Title && a.Title.toLowerCase().includes(q));
+      const filtered = rawAmbassadors.filter(amb => {
+        const lang = detectLanguage(amb);
+        const matchesLang = (currentLangFilter === 'ALL') || (lang === currentLangFilter);
+        const matchesQuery = !query ||
+          (amb.Name && amb.Name.toLowerCase().includes(query)) ||
+          (amb.Title && amb.Title.toLowerCase().includes(query));
+
+        return matchesLang && matchesQuery;
       });
 
+      if (countEl) {
+        countEl.innerText = `Showing ${filtered.length} of ${rawAmbassadors.length} active Ambassadors`;
+      }
+
       if (filtered.length === 0) {
-        listEl.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--dst-paper-muted); padding: 30px;">No ambassadors matching your search.</p>`;
+        listEl.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 40px 20px; font-family: var(--font-hand); color: var(--dst-paper-muted);">
+            <i data-lucide="ghost" style="width: 44px; height: 44px; stroke: var(--dst-flame); margin: 0 auto 10px;"></i>
+            <p style="font-size: 1.3rem; color: #fff;">No survivors found in this realm!</p>
+            <p style="font-size: 1rem;">Try choosing another language tab or clearing your search keywords.</p>
+          </div>
+        `;
+        lucide.createIcons();
         return;
       }
 
-      listEl.innerHTML = filtered.map(a => `
-        <a href="${a.StreamURL}" target="_blank" class="amb-card">
-          <div class="thumb-container">
-            <div class="live-tag">LIVE</div>
-            <img class="thumb-img" src="${a.ThumbnailURL.replace('440x248', '640x360')}" loading="lazy" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2_v2.png'">
-          </div>
-          <div class="card-body">
-            <div class="creator-meta">
-              <img class="profile-pic" src="${a.ProfileIcon || 'https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg'}" loading="lazy">
-              <div style="overflow:hidden;">
+      listEl.innerHTML = filtered.map(a => {
+        const lang = detectLanguage(a);
+        const thumbUrl = (a.ThumbnailURL || '').replace('440x248', '640x360');
+        const profileUrl = a.ProfileIcon || 'https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg';
+
+        return `
+          <a href="${a.StreamURL}" target="_blank" rel="noopener noreferrer" class="amb-card">
+            <div class="thumb-wrapper">
+              <span class="live-stamp">LIVE</span>
+              <span class="lang-badge-corner">${lang}</span>
+              <img class="thumb-img" src="${thumbUrl}" alt="${a.Name}" loading="lazy" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/page_preview2_v2.png'">
+            </div>
+            <div class="amb-card-body">
+              <img class="profile-portrait" src="${profileUrl}" alt="${a.Name}" loading="lazy">
+              <div class="amb-card-text">
                 <span class="streamer-name">${a.Name}</span>
-                <span class="stream-title">${a.Title || 'Don\'t Starve Together'}</span>
+                <span class="stream-topic">${a.Title || 'Don\'t Starve Together'}</span>
               </div>
             </div>
-          </div>
-        </a>
-      `).join('');
+          </a>
+        `;
+      }).join('');
+
+      lucide.createIcons();
     }
 
-    // Native Notification Handling (Live & Ended)
-    function updateNotifUI() {
-      const isEnabled = localStorage.getItem('klei-notify-enabled') === 'true';
-      const btn = document.getElementById('notif-btn');
-      const text = document.getElementById('notif-btn-text');
+    function setLanguageFilter(lang, btn) {
+      currentLangFilter = lang;
+      document.querySelectorAll('.lang-pill').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      applyAmbassadorFilters();
+    }
+
+    // Notification System (Live & Concluded Drop alerts)
+    function updateNotifButtonUI() {
+      const isEnabled = localStorage.getItem('dst-drops-notif-enabled') === 'true';
+      const btn = document.getElementById('notif-toggle-btn');
+      const text = document.getElementById('notif-toggle-text');
+      const mIcon = document.getElementById('m-bell-icon');
+
       if (btn && text) {
         if (isEnabled) {
           btn.classList.add('active');
-          text.innerText = 'Drop Alerts Enabled';
+          text.innerText = 'Drop Alerts Active';
         } else {
           btn.classList.remove('active');
           text.innerText = 'Enable Drop Alerts';
         }
       }
+      if (mIcon) {
+        mIcon.style.stroke = isEnabled ? 'var(--dst-flame-bright)' : 'currentColor';
+      }
     }
 
     async function toggleDropNotifications() {
       if (!("Notification" in window)) {
-        alert("This browser does not support notifications.");
+        alert("Your survivor device/browser does not support web notifications.");
         return;
       }
 
-      const isEnabled = localStorage.getItem('klei-notify-enabled') === 'true';
+      const currentState = localStorage.getItem('dst-drops-notif-enabled') === 'true';
 
-      if (!isEnabled) {
+      if (!currentState) {
         const permission = await Notification.requestPermission();
         if (permission === 'granted') {
-          localStorage.setItem('klei-notify-enabled', 'true');
-          new Notification("Klei Drops Activated! 🎁", {
-            body: "You will now receive alerts here when active campaigns go live or end.",
+          localStorage.setItem('dst-drops-notif-enabled', 'true');
+          playDstChime();
+          new Notification("🔥 DST Compendium Alerts Ignited!", {
+            body: "You will receive campfire notices when new drops ignite or conclude.",
             icon: "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
           });
         } else {
-          alert("Notification permission denied. Please reset permissions in your browser's address bar.");
-          localStorage.setItem('klei-notify-enabled', 'false');
+          alert("Notification permission denied. Please allow notifications in your browser settings.");
+          localStorage.setItem('dst-drops-notif-enabled', 'false');
         }
       } else {
-        localStorage.setItem('klei-notify-enabled', 'false');
+        localStorage.setItem('dst-drops-notif-enabled', 'false');
       }
-      updateNotifUI();
+
+      updateNotifButtonUI();
     }
 
-    function checkDropNotifications(dst) {
-      if (!dst || localStorage.getItem('klei-notify-enabled') !== 'true') return;
+    function checkDropStatusAlerts(dst) {
+      if (!dst || localStorage.getItem('dst-drops-notif-enabled') !== 'true') return;
       if (Notification.permission !== 'granted') return;
 
       const now = Date.now();
       const endTimestamp = dst.campaignEnd * 1000;
-      const startTimestamp = dst.campaignStart ? dst.campaignStart * 1000 : (now - 1000);
-      const isLive = now >= startTimestamp && now < endTimestamp;
+      const startTimestamp = dst.campaignStart ? dst.campaignStart * 1000 : (now - 10000);
+      const isLive = (now >= startTimestamp) && (now < endTimestamp);
       const isEnded = now >= endTimestamp;
 
-      const dropKey = (dst.englishName || 'Drop') + '-' + dst.campaignEnd;
+      const dropId = (dst.englishName || 'DST-Drop') + '-' + dst.campaignEnd;
+      const alertedLive = localStorage.getItem('dst-alerted-live-' + dropId);
+      const alertedEnded = localStorage.getItem('dst-alerted-ended-' + dropId);
 
-      if (isLive && !localStorage.getItem('alerted-live-' + dropKey)) {
-        new Notification("New Klei Drop is LIVE! 🎁", {
-          body: `Don't Starve Together campaign for "${dst.englishName}" is now active. Start watching!`,
-          icon: dst.icon || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
+      // Trigger Alert when Drop goes live
+      if (isLive && !alertedLive) {
+        playDstChime();
+        new Notification("🔥 New Klei Drop is LIVE!", {
+          body: `Don't Starve Together drop for "${dst.englishName}" has ignited! Watch Klei Ambassadors to claim it.`,
+          icon: dst.icon || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg",
+          tag: "dst-drop-live"
         });
-        localStorage.setItem('alerted-live-' + dropKey, 'true');
+        localStorage.setItem('dst-alerted-live-' + dropId, 'true');
       }
 
-      if (isEnded && !localStorage.getItem('alerted-ended-' + dropKey)) {
-        new Notification("Klei Drop Ended 🌑", {
-          body: `Don't Starve Together campaign for "${dst.englishName}" has concluded.`,
-          icon: "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
+      // Trigger Alert when Drop concludes
+      if (isEnded && !alertedEnded) {
+        new Notification("🌑 Klei Drop Concluded", {
+          body: `The campaign for "${dst.englishName}" has extinguished into darkness. Stay tuned for the next drop!`,
+          icon: "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg",
+          tag: "dst-drop-ended"
         });
-        localStorage.setItem('alerted-ended-' + dropKey, 'true');
+        localStorage.setItem('dst-alerted-ended-' + dropId, 'true');
       }
     }
 
+    // Discord Share Modal Builders
+    function openDiscordModal() {
+      if (!currentDstCampaign) return;
+      const modal = document.getElementById('discord-modal');
+      const box = document.getElementById('discord-copy-box');
+
+      const endStr = new Date(currentDstCampaign.campaignEnd * 1000).toUTCString();
+      const payload =
+        `>>> 🎁 **Don't Starve Together — Twitch Drop Active!**
+**Item:** ${currentDstCampaign.englishName}
+**Status:** Live until ${endStr}
+**Milestones:** 30 min (Icon) | 90 min (Portrait) | 180 min (${currentDstCampaign.englishName})
+**Watch Live Ambassadors:** https://clifffordw.github.io/ClifffWidgets/Webpage/index.html`;
+
+      if (box) box.value = payload;
+      if (modal) modal.classList.add('active');
+    }
+
+    function closeDiscordModal() {
+      const modal = document.getElementById('discord-modal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function copyDiscordPayload() {
+      const box = document.getElementById('discord-copy-box');
+      if (box) {
+        box.select();
+        navigator.clipboard.writeText(box.value);
+        alert("Copied Discord Markdown to clipboard!");
+        closeDiscordModal();
+      }
+    }
+
+    // Force Asset Download
     async function forceDownload(url, fileName) {
       try {
         const response = await fetch(url);
@@ -1101,8 +1708,9 @@
       }
     }
 
+    // Initialization
     async function init() {
-      updateNotifUI();
+      updateNotifButtonUI();
 
       try {
         const [cRes, aRes] = await Promise.all([
@@ -1114,86 +1722,90 @@
         const dst = cData["Don't Starve Together"];
         currentDstCampaign = dst;
 
+        // Render DST Campaign Data
         document.getElementById('c-name').innerText = dst.englishName;
         document.getElementById('c-gif').src = dst.gif;
 
-        // Reward Milestones with images for icon, portrait and main item skin
+        // Build reward milestones using the live assets from Klei's API
         const rewards = [
-          { 
-            t: 30, 
-            n: "Profile Flair", 
-            d: "Exclusive Icon Reward", 
-            img: dst.icon || dst.gif 
+          {
+            t: 30,
+            n: "Profile Flair",
+            d: "Exclusive Icon Reward",
+            img: dst.icon || dst.gif
           },
-          { 
-            t: 90, 
-            n: "Portrait Frame", 
-            d: "Character Portrait Border", 
-            img: dst.portrait || dst.gif 
+          {
+            t: 90,
+            n: "Portrait Frame",
+            d: "Character Portrait Border",
+            img: dst.portrait || dst.gif
           },
-          { 
-            t: 180, 
-            n: dst.englishName, 
-            d: "Main Event Skin Variant", 
-            img: dst.item || dst.gif 
+          {
+            t: 180,
+            n: dst.englishName,
+            d: "Main Event Skin Variant",
+            img: dst.item || dst.gif
           }
         ];
 
         document.getElementById('reward-rows').innerHTML = rewards.map(r => `
-          <div class="reward-card">
-            <div class="reward-icon-slot">
-              <img src="${r.img}" alt="${r.n}" loading="lazy" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg'">
-            </div>
-            <div class="reward-info">
-              <h4>${r.n}</h4>
-              <p>${r.d}</p>
-            </div>
-            <div class="reward-time">${r.t} MIN</div>
-          </div>
-        `).join('');
+  <div class="milestone-node">
+    <div class="milestone-icon-slot">
+      <img src="${r.img}" alt="${r.n}" loading="lazy" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg'">
+    </div>
+    <div class="milestone-info">
+      <h4>${r.n}</h4>
+      <p>${r.d}</p>
+    </div>
+    <div class="milestone-watchtime">${r.t} MINS</div>
+  </div>
+`).join('');
 
         // Timer Loop
         const updateTimer = () => {
           const endTimestamp = dst.campaignEnd * 1000;
-          const startTimestamp = dst.campaignStart ? dst.campaignStart * 1000 : Date.now() - 1000;
+          const startTimestamp = dst.campaignStart ? dst.campaignStart * 1000 : (Date.now() - 10000);
           const diff = endTimestamp - Date.now();
           const hasStarted = Date.now() >= startTimestamp;
 
           const timerEl = document.getElementById('timer');
           const dateEl = document.getElementById('timer-date');
-          const sideStatusEl = document.getElementById('side-status');
+          const statusTextEl = document.getElementById('timer-status-text');
+          const sideStatusEl = document.getElementById('side-drop-status');
 
           if (diff <= 0) {
-            timerEl.innerText = "CAMPAIGN CONCLUDED";
-            dateEl.innerText = "No campaign in sight :(";
+            timerEl.innerText = "EXTINGUISHED";
+            statusTextEl.innerText = "NIGHTFALL HAS FALLEN";
+            dateEl.innerText = "Campaign has concluded. Awaiting next drop.";
             if (sideStatusEl) {
-              sideStatusEl.innerText = "Ended";
-              sideStatusEl.style.background = '#bd1818';
-              sideStatusEl.style.display = 'block';
+              sideStatusEl.innerText = "ENDED";
+              sideStatusEl.className = "dst-badge";
             }
           } else if (!hasStarted) {
-            timerEl.innerText = "UPCOMING CAMPAIGN";
+            timerEl.innerText = "STARTING SOON";
+            statusTextEl.innerText = "EMBER KINDLING";
             dateEl.innerText = `Starts ${new Date(startTimestamp).toLocaleDateString()}`;
             if (sideStatusEl) {
-              sideStatusEl.innerText = "SOON";
-              sideStatusEl.style.background = "#FF6B35";
-              sideStatusEl.style.display = 'block';
+              sideStatusEl.innerText = "UPCOMING";
+              sideStatusEl.className = "dst-badge";
             }
           } else {
             const d = Math.floor(diff / 86400000);
             const h = Math.floor((diff % 86400000) / 3600000);
             const m = Math.floor((diff % 3600000) / 60000);
-            timerEl.innerText = `ENDS IN: ${d}d ${h}h ${m}m`;
+            const s = Math.floor((diff % 60000) / 1000);
+
+            timerEl.innerText = `${d}d ${h}h ${m}m ${s}s`;
+            statusTextEl.innerText = "DROP BURNING";
             dateEl.innerText = `Ends ${new Date(endTimestamp).toLocaleDateString()}`;
 
             if (sideStatusEl) {
               sideStatusEl.innerText = "LIVE";
-              sideStatusEl.style.background = "#bd1818";
-              sideStatusEl.style.display = 'block';
+              sideStatusEl.className = "dst-badge live-glow";
             }
           }
 
-          checkDropNotifications(dst);
+          checkDropStatusAlerts(dst);
         };
 
         updateTimer();
@@ -1203,53 +1815,62 @@
         const assetsToRender = [
           { name: "ANIMATION", url: dst.gif },
           { name: "ITEM SKIN", url: dst.item },
-          { name: "PORTRAIT", url: dst.portrait },
-          { name: "ICON", url: dst.icon }
+          { name: "PORTRAIT FRAME", url: dst.portrait },
+          { name: "PROFILE ICON", url: dst.icon }
         ];
 
         document.getElementById('download-grid').innerHTML = assetsToRender.map(asset => {
           const ext = asset.url.split('.').pop().toUpperCase();
           return `
-            <div class="download-card">
-              <img src="${asset.url}" alt="${asset.name}">
-              <div class="asset-info">
+            <div class="asset-card">
+              <img src="${asset.url}" alt="${asset.name}" loading="lazy">
+              <div>
                 <h4>${asset.name}</h4>
-                <p>Extension format: ${ext}</p>
+                <p>Format: ${ext}</p>
               </div>
-              <button onclick="forceDownload('${asset.url}', '${asset.name}')" class="btn" style="width: 100%;">
-                Download
+              <button onclick="forceDownload('${asset.url}', '${asset.name}')" class="dst-btn" style="font-size: 0.95rem; width: 100%;">
+                <i data-lucide="download" style="width: 16px;"></i> Download
               </button>
             </div>
           `;
         }).join('');
 
-        // Ambassador List
-        allAmbassadors = await aRes.json();
-        const liveCount = allAmbassadors.length;
-        const sideBadge = document.getElementById('side-live-count');
+        // Ambassador Data
+        rawAmbassadors = await aRes.json();
+        const liveCount = rawAmbassadors.length;
 
-        if (liveCount > 0 && sideBadge) {
-          sideBadge.innerText = liveCount;
-          sideBadge.style.display = 'inline-block';
-          sideBadge.style.background = '#bd1818';
-          sideBadge.style.color = '#fff';
+        const sideBadge = document.getElementById('side-live-badge');
+        const mobileBadge = document.getElementById('mobile-live-badge');
+
+        if (liveCount > 0) {
+          if (sideBadge) {
+            sideBadge.innerText = `${liveCount} LIVE`;
+            sideBadge.style.display = 'inline-block';
+          }
+          if (mobileBadge) {
+            mobileBadge.innerText = liveCount;
+            mobileBadge.style.display = 'block';
+          }
         }
 
-        filterAmbassadors();
+        applyAmbassadorFilters();
 
-        clearInterval(tipInterval);
-        lucide.createIcons();
+        // Dismiss loading screen
         document.getElementById('loading-screen').style.opacity = '0';
-        setTimeout(() => document.getElementById('loading-screen').style.visibility = 'hidden', 500);
+        setTimeout(() => {
+          document.getElementById('loading-screen').style.visibility = 'hidden';
+        }, 600);
 
+        lucide.createIcons();
       } catch (e) {
-        console.error(e);
-        const screen = document.getElementById('loading-screen');
-        if (screen) screen.style.visibility = 'hidden';
+        console.error("Compendium synchronization failed", e);
+        const loadEl = document.getElementById('loading-screen');
+        if (loadEl) loadEl.style.visibility = 'hidden';
       }
     }
 
     init();
   </script>
 </body>
+
 </html>

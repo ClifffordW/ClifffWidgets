@@ -37,6 +37,34 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
+    .black-btn {
+      position: absolute;
+      top: 10px;
+      right: 48px;
+      /* Positioned just to the left of the star button */
+      background: rgba(14, 10, 8, 0.85);
+      border: 1px solid #483528;
+      color: #7d6b5e;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .black-btn:hover,
+    .black-btn.blacklisted {
+      color: #e74c3c;
+      background: rgba(231, 76, 60, 0.25);
+      border-color: #e74c3c;
+    }
+
+
+
     #dst-toast {
       position: fixed;
       top: 20px;
@@ -1377,18 +1405,31 @@
     <section id="live">
       <h1 class="dst-heading">Live Ambassadors</h1>
 
-      <div class="live-controls">
+<div class="live-controls">
         <div class="platform-filter-bar" id="platform-filters">
           <button class="platform-pill active" onclick="setPlatformFilter('all', this)">All Platforms</button>
           <button class="platform-pill" onclick="setPlatformFilter('twitch', this)">Twitch</button>
           <button class="platform-pill" onclick="setPlatformFilter('bilibili', this)">Bilibili</button>
           <button class="platform-pill" onclick="setPlatformFilter('douyu', this)">Douyu</button>
-          <button class="platform-pill" onclick="setPlatformFilter('favorites', this)"> <svg
-              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="16"
-              height="16" viewBox="0 0 256 256" xml:space="preserve">
+          <button class="platform-pill" onclick="setPlatformFilter('blacklist', this)"><svg
+              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="15"
+              height="15" viewBox="0 0 256 256" xml:space="preserve" style="vertical-align: -2px; display: inline-block; margin-right: 4px;">
               <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
-                transform="translate(0 15
-                ) scale(2.81 2.81)">
+                transform="translate(0 0) scale(2.81 2.81)">
+                <path
+                  d="M 45 90 c -12.02 0 -23.32 -4.681 -31.82 -13.181 C 4.681 68.32 0 57.02 0 45 c 0 -12.02 4.681 -23.32 13.18 -31.82 l 0 0 l 0 0 C 21.68 4.681 32.98 0 45 0 c 12.02 0 23.32 4.681 31.819 13.18 C 85.319 21.68 90 32.98 90 45 c 0 12.02 -4.681 23.32 -13.181 31.819 C 68.32 85.319 57.02 90 45 90 z M 45 8 c -9.883 0 -19.174 3.849 -26.163 10.837 l 0 0 C 11.849 25.826 8 35.117 8 45 c 0 9.883 3.849 19.174 10.837 26.163 C 25.826 78.151 35.117 82 45 82 c 9.883 0 19.174 -3.849 26.163 -10.837 C 78.151 64.174 82 54.883 82 45 c 0 -9.883 -3.849 -19.174 -10.837 -26.163 C 64.174 11.849 54.883 8 45 8 z"
+                  style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: currentColor; fill-rule: nonzero; opacity: 1;"
+                  transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                <rect x="4" y="41" rx="0" ry="0" width="82" height="8"
+                  style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: currentColor; fill-rule: nonzero; opacity: 1;"
+                  transform=" matrix(0.707 -0.7072 0.7072 0.707 -18.6396 45.0055) " />
+              </g>
+            </svg> Blacklist (<span id="black-count">0</span>)</button>
+          <button class="platform-pill" onclick="setPlatformFilter('favorites', this)"><svg
+              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="15"
+              height="15" viewBox="0 0 256 256" xml:space="preserve" style="vertical-align: -2px; display: inline-block; margin-right: 4px;">
+              <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
+                transform="translate(0 0) scale(2.81 2.81)">
                 <path
                   d="M 47.755 3.765 l 11.525 23.353 c 0.448 0.907 1.313 1.535 2.314 1.681 l 25.772 3.745 c 2.52 0.366 3.527 3.463 1.703 5.241 L 70.42 55.962 c -0.724 0.706 -1.055 1.723 -0.884 2.72 l 4.402 25.667 c 0.431 2.51 -2.204 4.424 -4.458 3.239 L 46.43 75.47 c -0.895 -0.471 -1.965 -0.471 -2.86 0 L 20.519 87.588 c -2.254 1.185 -4.889 -0.729 -4.458 -3.239 l 4.402 -25.667 c 0.171 -0.997 -0.16 -2.014 -0.884 -2.72 L 0.931 37.784 c -1.824 -1.778 -0.817 -4.875 1.703 -5.241 l 25.772 -3.745 c 1.001 -0.145 1.866 -0.774 2.314 -1.681 L 42.245 3.765 C 43.372 1.481 46.628 1.481 47.755 3.765 z"
                   style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: currentColor; fill-rule: nonzero; opacity: 1;"
@@ -1426,7 +1467,8 @@
               ✦ Klei Points & Spools
             </strong>
             <span style="color: var(--dst-paper-muted);">
-              Watch ambassador streams for promotional links or giveaways granting Curio Spools and Klei Points directly into your
+              Watch ambassador streams for promotional links or giveaways granting Curio Spools and Klei Points directly
+              into your
               game account.
             </span>
           </li>
@@ -1436,7 +1478,8 @@
               ✦ Resurrected Bundles
             </strong>
             <span style="color: var(--dst-paper-muted);">
-              Ambassadors regularly distribute codes for past legacy skins, event items, bundles within a giveaway or whatever they desire that are otherwise locked
+              Ambassadors regularly distribute codes for past legacy skins, event items, bundles within a giveaway or
+              whatever they desire that are otherwise locked
               away.
             </span>
           </li>
@@ -1446,7 +1489,8 @@
               ✦ Watchin Togetha!
             </strong>
             <span style="color: var(--dst-paper-muted);">
-              Twitch drops accumulate across all participating channels with DropsEnabled that are broadcasting Don't Starve Together.
+              Twitch drops accumulate across all participating channels with DropsEnabled that are broadcasting Don't
+              Starve Together.
             </span>
           </li>
         </ul>
@@ -1507,6 +1551,38 @@
         tipElement.innerText = survivalTips[Math.floor(Math.random() * survivalTips.length)];
       }
     }, 3500);
+
+
+
+    // Get blacklist from localStorage
+    function getBlacklist() {
+      try {
+        return JSON.parse(localStorage.getItem('dst-blacklisted-streamers') || '[]');
+      } catch (e) { return []; }
+    }
+
+    function toggleBlacklist(name, e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      let blacks = getBlacklist();
+      if (blacks.includes(name)) {
+        blacks = blacks.filter(b => b !== name);
+      } else {
+        blacks.push(name);
+      }
+      localStorage.setItem('dst-blacklisted-streamers', JSON.stringify(blacks));
+      updateBlacklistCountBadge();
+      applyAmbassadorFilters();
+    }
+
+    function updateBlacklistCountBadge() {
+      const blacks = getBlacklist();
+      const badge = document.getElementById('black-count');
+      if (badge) badge.innerText = blacks.length;
+    }
+
 
     // --- CUSTOM SOUND ENGINE ---
     const dstSounds = {
@@ -1617,8 +1693,19 @@
 
     function setPlatformFilter(platform, btn) {
       currentPlatformFilter = platform;
+      localStorage.setItem('dst-last-platform-filter', platform); // Save filter state
+
       document.querySelectorAll('.platform-pill').forEach(p => p.classList.remove('active'));
-      if (btn) btn.classList.add('active');
+      if (btn) {
+        btn.classList.add('active');
+      } else {
+        // Find button by filter name if restored programmatically
+        document.querySelectorAll('.platform-pill').forEach(p => {
+          if (p.getAttribute('onclick') && p.getAttribute('onclick').includes(`'${platform}'`)) {
+            p.classList.add('active');
+          }
+        });
+      }
       applyAmbassadorFilters();
     }
 
@@ -1700,6 +1787,7 @@
 
     // --- TAB NAVIGATION ---
     // Nav function updated with tab memory
+    // Nav function updated with tab memory
     function nav(id, el) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       const targetSection = document.getElementById(id);
@@ -1727,6 +1815,7 @@
       const countEl = document.getElementById('amb-count-indicator');
       if (!listEl) return;
 
+      const blacks = getBlacklist();
       const favs = getFavorites();
 
       let filtered = rawAmbassadors.filter(amb => {
@@ -1734,7 +1823,15 @@
         const title = (amb.Title || '').toLowerCase();
         const url = (amb.StreamURL || '').toLowerCase();
 
-        // Platform check
+        // If viewing the blacklist tab, ONLY show blacklisted streamers
+        if (currentPlatformFilter === 'blacklist') {
+          return blacks.includes(amb.Name);
+        }
+
+        // Otherwise, hide blacklisted streamers everywhere else
+        if (blacks.includes(amb.Name)) return false;
+
+        // Platform & Favorite filters
         if (currentPlatformFilter === 'twitch' && !url.includes('twitch.tv')) return false;
         if (currentPlatformFilter === 'bilibili' && !url.includes('bilibili')) return false;
         if (currentPlatformFilter === 'douyu' && !url.includes('douyu')) return false;
@@ -1771,27 +1868,32 @@
         const profileUrl = a.ProfileIcon || 'https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg';
         const isFav = favs.includes(a.Name);
 
-        return `
-          <div class="amb-card-container ${isFav ? 'pinned' : ''}">
-            <button class="fav-star-btn ${isFav ? 'favorited' : ''}" onclick="toggleFavorite('${a.Name}', event)" title="Pin Streamer">
-              <i data-lucide="star" style="width: 16px; height: 16px; ${isFav ? 'fill: currentColor;' : ''}"></i>
-            </button>
+        const isBlacklisted = blacks.includes(a.Name);
 
-            <a href="${a.StreamURL}" target="_blank" rel="noopener noreferrer" class="amb-card">
-              <div class="thumb-wrapper">
-                <img class="thumb-img" src="${thumbUrl}" alt="${a.Name}" loading="lazy" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg'">
-                <div class="live-stamp">LIVE</div>
-              </div>
-              <div class="amb-card-body">
-                <img class="profile-portrait" src="${profileUrl}" alt="${a.Name}" loading="lazy">
-                <div class="amb-card-text">
-                  <span class="streamer-name">${a.Name}</span>
-                  <span class="stream-topic">${a.Title || 'Don\'t Starve Together'}</span>
-                </div>
-              </div>
-            </a>
-          </div>
-        `;
+        return `
+  <div class="amb-card-container ${isFav ? 'pinned' : ''}">
+    <button class="fav-star-btn ${isFav ? 'favorited' : ''}" onclick="toggleFavorite('${a.Name}', event)" title="Pin Streamer">
+      <i data-lucide="star" style="width: 16px; height: 16px; ${isFav ? 'fill: currentColor;' : ''}"></i>
+    </button>
+    <button class="black-btn ${isBlacklisted ? 'blacklisted' : ''}" onclick="toggleBlacklist('${a.Name}', event)" title="${isBlacklisted ? 'Unblock Streamer' : 'Blacklist Streamer'}">
+      <i data-lucide="ban" style="width: 16px; height: 16px;"></i>
+    </button>
+
+    <a href="${a.StreamURL}" target="_blank" rel="noopener noreferrer" class="amb-card">
+      <div class="thumb-wrapper">
+        <img class="thumb-img" src="${thumbUrl}" alt="${a.Name}" loading="lazy" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg'">
+        <div class="live-stamp">LIVE</div>
+      </div>
+      <div class="amb-card-body">
+        <img class="profile-portrait" src="${profileUrl}" alt="${a.Name}" loading="lazy">
+        <div class="amb-card-text">
+          <span class="streamer-name">${a.Name}</span>
+          <span class="stream-topic">${a.Title || 'Don\'t Starve Together'}</span>
+        </div>
+      </div>
+    </a>
+  </div>
+`;
       }).join('');
 
       lucide.createIcons();
@@ -1964,11 +2066,25 @@
       }
     }
 
+
+
+    // 2. Restore last platform filter tab
+    const savedFilter = localStorage.getItem('dst-last-platform-filter');
+    if (savedFilter) {
+      setPlatformFilter(savedFilter, null);
+    }
+
+
+
+
+
+
     async function init() {
       updateNotifButtonUI();
       updateFavCountBadge();
       initCustomSoundEngine(); // Re-initializes sound listeners on page load
 
+      updateBlacklistCountBadge();
 
 
       try {

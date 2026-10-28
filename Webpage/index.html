@@ -1426,10 +1426,11 @@
 
         <!-- LIVE PREVIEW WINDOW (Moved to top for instant feedback) -->
         <!-- LIVE PREVIEW WINDOW -->
+        <!-- LIVE PREVIEW WINDOW -->
         <div
           style="background: #0d0908; border: 2px solid #3c2a20; border-radius: 8px; padding: 16px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
 
-          <!-- Preview Header & Custom Gothic Toggle -->
+          <!-- Preview Header & Custom Toggles -->
           <div
             style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
             <h4
@@ -1437,15 +1438,37 @@
               <i data-lucide="eye" style="color: var(--dst-flame); width: 16px; height: 16px;"></i> Live OBS Preview
             </h4>
 
-            <!-- Custom Styled Toggle Switch -->
-            <label class="dst-toggle-label"
-              style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper);">
-              <span>Solo Item Mode (?solo=1)</span>
-              <div class="dst-switch">
-                <input type="checkbox" id="obs-solo-toggle" onchange="updateObsUrlBuilder()">
-                <span class="dst-slider"></span>
+            <!-- Mode Selection Toggles -->
+            <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+              <label class="dst-toggle-label"
+                style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-mono); font-size: 0.82rem; color: var(--dst-paper);">
+                <span>Solo Mode</span>
+                <div class="dst-switch">
+                  <input type="checkbox" id="obs-solo-toggle" onchange="handleWidgetModeChange('solo')">
+                  <span class="dst-slider"></span>
+                </div>
+              </label>
+
+              <label class="dst-toggle-label"
+                style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-mono); font-size: 0.82rem; color: var(--dst-paper);">
+                <span>Carousel Mode</span>
+                <div class="dst-switch">
+                  <input type="checkbox" id="obs-carousel-toggle" onchange="handleWidgetModeChange('carousel')">
+                  <span class="dst-slider"></span>
+                </div>
+              </label>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+              <div>
+                <label
+                  style="font-family: var(--font-mono); font-size: 0.92rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+                  Carousel Swap Speed (Seconds)
+                </label>
+                <input type="number" id="obs-speed" class="search-input-box" value="4.5" min="1.5" max="30" step="0.5"
+                  oninput="updateObsUrlBuilder()" style="padding: 10px 14px; font-size: 1.2rem;" />
               </div>
-            </label>
+            </div>
           </div>
 
           <!-- Clean Scaling Wrapper -->
@@ -1458,68 +1481,90 @@
             </div>
           </div>
 
-          <!-- Dynamic Resolution Notice -->
+          <!-- Clean, Readable Resolution Notice -->
           <span id="obs-res-notice"
-            style="font-size: 0.78rem; color: #7d6b5e; margin-top: 10px; display: block; font-family: var(--font-mono);">
-            Recommended OBS Browser Source Resolution: <b style="color: var(--dst-flame);">1024 × 512 (Full
-              Mode)</b>[cite: 4]
+            style="font-size: 0.98rem; color: #bdae99; margin-top: 10px; display: block; font-family: system-ui, -apple-system, sans-serif; letter-spacing: 0.3px;">
+            Recommended OBS Browser Source Resolution: <b style="color: var(--dst-flame);">1024 × 512 (Full Mode)</b>
           </span>
         </div>
 
+
+        <!-- CONFIGURATION INPUTS -->
         <!-- CONFIGURATION INPUTS -->
         <div style="display: flex; flex-direction: column; gap: 14px;">
           <div>
             <label
-              style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+              style="font-family: var(--font-mono); font-size: 0.92rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
               Twitch Username (lowercase)
             </label>
             <input type="text" id="obs-twitch" class="search-input-box" placeholder="e.g. clifffordw"
-              style="padding: 10px 14px; font-size: 0.95rem;" />
+              oninput="updateObsUrlBuilder()" style="padding: 10px 14px; font-size: 1.5rem;" />
           </div>
 
           <div>
             <label
-              style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+              style="font-family: var(--font-mono); font-size: 0.92rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
               Avatar Image URL
             </label>
             <input type="text" id="obs-avatar" class="search-input-box" placeholder="https://static-cdn.jtvnw.net/..."
-              style="padding: 10px 14px; font-size: 0.95rem;" />
+              oninput="updateObsUrlBuilder()" style="padding: 10px 14px; font-size: 1.5rem;" />
           </div>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px;">
             <div>
               <label
-                style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
-                Glow 1 (hex, no #)
+                style="font-family: var(--font-mono); font-size: 0.98rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+                Glow 1 (hex)
               </label>
-              <input type="text" id="obs-glow1" class="search-input-box" value="90ee90"
-                style="padding: 8px 10px; font-size: 0.9rem;" />
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <input type="color" id="obs-color1" value="#90ee90" oninput="syncColorToText('1')"
+                  style="width: 38px; height: 42px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
+                <input type="text" id="obs-glow1" class="search-input-box" value="90EE90"
+                  oninput="syncTextToColor('1'); updateObsUrlBuilder();"
+                  style="padding: 8px 10px; font-size: 1.2rem; text-transform: uppercase;" />
+              </div>
             </div>
+
             <div>
               <label
-                style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
-                Glow 2 (hex, no #)
+                style="font-family: var(--font-mono); font-size: 0.98rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+                Glow 2 (hex)
               </label>
-              <input type="text" id="obs-glow2" class="search-input-box" value="64F89D"
-                style="padding: 8px 10px; font-size: 0.9rem;" />
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <input type="color" id="obs-color2" value="#64F89D" oninput="syncColorToText('2')"
+                  style="width: 38px; height: 42px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
+                <input type="text" id="obs-glow2" class="search-input-box" value="64F89D"
+                  oninput="syncTextToColor('2'); updateObsUrlBuilder();"
+                  style="padding: 8px 10px; font-size: 1.2rem; text-transform: uppercase;" />
+              </div>
             </div>
+
             <div>
               <label
-                style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
-                Glow 3 (hex, no #)
+                style="font-family: var(--font-mono); font-size: 0.98rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+                Glow 3 (hex)
               </label>
-              <input type="text" id="obs-glow3" class="search-input-box" value="AFFF60"
-                style="padding: 8px 10px; font-size: 0.9rem;" />
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <input type="color" id="obs-color3" value="#AFFF60" oninput="syncColorToText('3')"
+                  style="width: 38px; height: 42px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
+                <input type="text" id="obs-glow3" class="search-input-box" value="AFFF60"
+                  oninput="syncTextToColor('3'); updateObsUrlBuilder();"
+                  style="padding: 8px 10px; font-size: 1.2rem; text-transform: uppercase;" />
+              </div>
             </div>
           </div>
 
           <div>
             <label
               style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
-              Generated OBS Browser Source URL:
+              Generated OBS Browser Source URL <span style="color: #7d6b5e; font-size: 0.75rem;">(Click to copy or drag
+                & drop into OBS)</span>:
             </label>
-            <input type="text" id="obs-result-url" readonly class="search-input-box"
-              style="padding: 10px 12px; font-size: 0.82rem; color: #a4e67a; background: #120e0c;" />
+            <input type="text" id="obs-result-url" readonly onclick="copyObsGeneratedUrl()" draggable="true"
+              ondragstart="handleObsDragStart(event)" class="search-input-box"
+              title="Click to copy | Drag & drop directly into OBS"
+              style="padding: 10px 12px; font-size: 1rem;; color: #a4e67a; background: #120e0c; cursor: grab;" />
           </div>
         </div>
 
@@ -1728,21 +1773,86 @@
   </nav>
 
   <script>
-    // URL Generator & Real-time Sync
-    
+
+
+    function handleWidgetModeChange(changed) {
+      const soloToggle = document.getElementById('obs-solo-toggle');
+      const carouselToggle = document.getElementById('obs-carousel-toggle');
+
+      if (changed === 'solo' && soloToggle.checked) {
+        carouselToggle.checked = false;
+      } else if (changed === 'carousel' && carouselToggle.checked) {
+        soloToggle.checked = false;
+      }
+      updateObsUrlBuilder();
+    }
+
+    function syncColorToText(num) {
+      const colorPicker = document.getElementById(`obs-color${num}`);
+      const textBox = document.getElementById(`obs-glow${num}`);
+      if (colorPicker && textBox) {
+        textBox.value = colorPicker.value.replace('#', '').toUpperCase();
+        updateObsUrlBuilder();
+      }
+    }
+
+    function syncTextToColor(num) {
+      const colorPicker = document.getElementById(`obs-color${num}`);
+      const textBox = document.getElementById(`obs-glow${num}`);
+      if (colorPicker && textBox) {
+        let val = textBox.value.replace(/#/g, '').trim().toUpperCase();
+        if (/^[0-9A-F]{6}$/i.test(val)) {
+          colorPicker.value = `#${val}`;
+        }
+      }
+    }
+
+
+    // Enable dragging the URL directly into OBS sources
+    function handleObsDragStart(e) {
+      const box = document.getElementById('obs-result-url');
+      if (box && box.value) {
+        // Set standard text/uri-list so OBS accepts it as a browser source link
+        e.dataTransfer.setData('text/plain', box.value);
+        e.dataTransfer.setData('text/uri-list', box.value);
+        e.effectAllowed = 'copy';
+      }
+    }
+
+
     function updateObsUrlBuilder() {
       const twitch = (document.getElementById('obs-twitch')?.value || '').toLowerCase().trim();
       const avatar = (document.getElementById('obs-avatar')?.value || '').trim();
       const isSolo = document.getElementById('obs-solo-toggle')?.checked || false;
-      
-      const g1 = (document.getElementById('obs-glow1')?.value || '').replace(/#/g, '').trim();
-      const g2 = (document.getElementById('obs-glow2')?.value || '').replace(/#/g, '').trim();
-      const g3 = (document.getElementById('obs-glow3')?.value || '').replace(/#/g, '').trim();
+      const isCarousel = document.getElementById('obs-carousel-toggle')?.checked || false;
+      const speed = (document.getElementById('obs-speed')?.value || '4.5').trim();
+
+      const g1 = (document.getElementById('obs-glow1')?.value || '').replace(/#/g, '').trim().toUpperCase();
+      const g2 = (document.getElementById('obs-glow2')?.value || '').replace(/#/g, '').trim().toUpperCase();
+      const g3 = (document.getElementById('obs-glow3')?.value || '').replace(/#/g, '').trim().toUpperCase();
+
+      if (g1.length === 6) document.getElementById('obs-color1').value = `#${g1}`;
+      if (g2.length === 6) document.getElementById('obs-color2').value = `#${g2}`;
+      if (g3.length === 6) document.getElementById('obs-color3').value = `#${g3}`;
+
+      // Save values to localStorage
+      localStorage.setItem('dst-obs-twitch', twitch);
+      localStorage.setItem('dst-obs-avatar', avatar);
+      localStorage.setItem('dst-obs-solo', isSolo);
+      localStorage.setItem('dst-obs-carousel', isCarousel);
+      localStorage.setItem('dst-obs-speed', speed);
+      localStorage.setItem('dst-obs-g1', g1);
+      localStorage.setItem('dst-obs-g2', g2);
+      localStorage.setItem('dst-obs-g3', g3);
 
       let url = `https://clifffordw.github.io/ClifffWidgets/Drops/Streamers/drop_universal.html?`;
-      
+
       const params = [];
       if (isSolo) params.push(`solo=1`);
+      if (isCarousel) {
+        params.push(`carousel=1`);
+        if (speed && speed !== '4.5') params.push(`speed=${encodeURIComponent(speed)}`);
+      }
       if (twitch) params.push(`twitch=${encodeURIComponent(twitch)}`);
       if (avatar) params.push(`avatar=${encodeURIComponent(avatar)}`);
       if (g1) params.push(`glow=${encodeURIComponent(g1)}`);
@@ -1761,25 +1871,27 @@
       if (resultBox) resultBox.value = url;
       if (previewBtn) previewBtn.href = url;
 
-      // Handle dimensions & clean container-based scaling
+      const needsSquare = isSolo || isCarousel;
+
       if (previewViewport && scaleContainer && previewFrame) {
         const nativeWidth = 1024;
-        const nativeHeight = isSolo ? 1024 : 512;
+        const nativeHeight = needsSquare ? 1024 : 512;
 
-        previewViewport.style.aspectRatio = isSolo ? '1 / 1' : '2 / 1';
+        previewViewport.style.aspectRatio = needsSquare ? '1 / 1' : '2 / 1';
         scaleContainer.style.width = `${nativeWidth}px`;
         scaleContainer.style.height = `${nativeHeight}px`;
         previewFrame.style.width = `${nativeWidth}px`;
         previewFrame.style.height = `${nativeHeight}px`;
 
-        // Compute exact scale ratio to fit width cleanly without cropping
         const containerWidth = previewViewport.clientWidth || 500;
         const scale = containerWidth / nativeWidth;
         scaleContainer.style.transform = `scale(${scale})`;
       }
 
       if (resNotice) {
-        if (isSolo) {
+        if (isCarousel) {
+          resNotice.innerHTML = `Recommended OBS Browser Source Resolution: <b style="color: var(--dst-flame);">1024 × 1024 (Carousel Mode)</b>`;
+        } else if (isSolo) {
           resNotice.innerHTML = `Recommended OBS Browser Source Resolution: <b style="color: var(--dst-flame);">1024 × 1024 (Solo Mode)</b>`;
         } else {
           resNotice.innerHTML = `Recommended OBS Browser Source Resolution: <b style="color: var(--dst-flame);">1024 × 512 (Full Mode)</b>`;
@@ -1791,6 +1903,43 @@
       }
     }
 
+    function initWidgetState() {
+      const savedTwitch = localStorage.getItem('dst-obs-twitch');
+      const savedAvatar = localStorage.getItem('dst-obs-avatar');
+      const savedSolo = localStorage.getItem('dst-obs-solo') === 'true';
+      const savedCarousel = localStorage.getItem('dst-obs-carousel') === 'true';
+      const savedSpeed = localStorage.getItem('dst-obs-speed');
+      const savedG1 = localStorage.getItem('dst-obs-g1');
+      const savedG2 = localStorage.getItem('dst-obs-g2');
+      const savedG3 = localStorage.getItem('dst-obs-g3');
+
+      if (savedTwitch !== null && document.getElementById('obs-twitch')) {
+        document.getElementById('obs-twitch').value = savedTwitch;
+      }
+      if (savedAvatar !== null && document.getElementById('obs-avatar')) {
+        document.getElementById('obs-avatar').value = savedAvatar;
+      }
+      if (document.getElementById('obs-solo-toggle')) {
+        document.getElementById('obs-solo-toggle').checked = savedSolo;
+      }
+      if (document.getElementById('obs-carousel-toggle')) {
+        document.getElementById('obs-carousel-toggle').checked = savedCarousel;
+      }
+      if (savedSpeed !== null && document.getElementById('obs-speed')) {
+        document.getElementById('obs-speed').value = savedSpeed;
+      }
+      if (savedG1 !== null && document.getElementById('obs-glow1')) {
+        document.getElementById('obs-glow1').value = savedG1;
+      }
+      if (savedG2 !== null && document.getElementById('obs-glow2')) {
+        document.getElementById('obs-glow2').value = savedG2;
+      }
+      if (savedG3 !== null && document.getElementById('obs-glow3')) {
+        document.getElementById('obs-glow3').value = savedG3;
+      }
+
+      updateObsUrlBuilder();
+    }
 
 
 
@@ -1799,7 +1948,13 @@
       if (box && box.value) {
         box.select();
         navigator.clipboard.writeText(box.value);
-        alert("Copied OBS Widget URL to clipboard!");
+
+        // Trigger your existing top notification popup
+        showInAppToast(
+          "OBS Link Copied!",
+          "The browser source URL has been copied to your clipboard.",
+          "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
+        );
       }
     }
 
@@ -2354,7 +2509,13 @@
       if (box) {
         box.select();
         navigator.clipboard.writeText(box.value);
-        alert("Copied Discord Markdown to clipboard!");
+
+        showInAppToast(
+          "Discord Markdown!",
+          "Copied Discord Markdown to clipboard!.",
+          "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
+        );
+
         closeDiscordModal();
       }
     }
@@ -2391,7 +2552,9 @@
       initCustomSoundEngine(); // Re-initializes sound listeners on page load
 
       updateBlacklistCountBadge();
+      initWidgetState()
       initWidgetListeners();
+
 
 
       try {

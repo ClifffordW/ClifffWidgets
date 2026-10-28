@@ -2119,6 +2119,11 @@
         }
       });
       localStorage.setItem('dst-last-visited-tab', id);
+
+      // FIX: Force scale recalculation when opening the widget tab so it doesn't load cramped/collapsed
+      if (id === 'widget') {
+        setTimeout(updateObsUrlBuilder, 50);
+      }
     }
 
     const lastTab = localStorage.getItem('dst-last-visited-tab') || 'drops';

@@ -366,6 +366,20 @@ if (isCarousel) {
   document.body.classList.add('carousel', 'solo'); // Uses 1024x1024 canvas
 }
 
+// Parse URL parameters
+const urlParams = new URLSearchParams(window.location.search);
+const hideHead = urlParams.get('nohead') === '1'; // or whatever parameter name you chose
+
+// Target your streamer head element and hide it if true
+if (hideHead) {
+  const streamerHeadEl = document.querySelector('.streamer-head'); // Replace with your actual CSS selector for the head element
+  if (streamerHeadEl) {
+    streamerHeadEl.style.display = 'none';
+  }
+}
+
+
+
 /* ── FETCH KLEI CAMPAIGN DATA & SETUP SLOTS/CAROUSEL ─────────── */
 fetch('https://cdn.forums.klei.com/drops/current_campaign.json')
   .then(r => r.json())

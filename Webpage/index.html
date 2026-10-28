@@ -37,126 +37,15 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    .black-btn {
-      position: absolute;
-      top: 10px;
-      right: 48px;
-      /* Positioned just to the left of the star button */
-      background: rgba(14, 10, 8, 0.85);
-      border: 1px solid #483528;
-      color: #7d6b5e;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      z-index: 10;
-    }
-
-    .black-btn:hover {
-      color: #e74c3c;
-      background: rgba(42, 11, 8, 0.5);
-      border-color: #e74c3c;
-    }
-
-    .black-btn.blacklisted {
-      color: #e74c3c;
-      background: rgba(94, 32, 25, 0.815);
-      border-color: #e74c3c;
-    }
-
-
-
-
-
-    #dst-toast {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-160%);
-      background: #181210;
-      border: 2px solid var(--dst-flame, #ff8e3c);
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), 0 0 15px rgba(231, 108, 30, 0.4);
-      padding: 12px 18px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      z-index: 10001;
-      max-width: 90vw;
-      width: 420px;
-      transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-      pointer-events: auto;
-      cursor: pointer;
-    }
-
-    #dst-toast.show {
-      transform: translateX(-50%) translateY(0);
-    }
-
-    #dst-toast img {
-      width: 48px;
-      height: 48px;
-      object-fit: contain;
-    }
-
-    .toast-content h4 {
-      color: #fff;
-      font-family: var(--font-title);
-      font-size: 1.05rem;
-      margin-bottom: 2px;
-    }
-
-    .toast-content p {
-      color: #bdae99;
-      font-family: var(--font-hand);
-      font-size: 0.95rem;
-      line-height: 1.2;
-    }
-
     @font-face {
       font-family: Hammerhead;
       src: url(https://clifffordw.github.io/ClifffWidgets/Fonts/HammerheadBold.ttf);
     }
 
-    /* --- CUSTOM DST SKETCH CURSORS --- */
-    @media (hover: hover) and (pointer: fine) {
-
-      /* Default Cursor: DST Sketched Pointing Hand */
-      body,
-      html {
-        cursor: url("data:image/png;base64,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") 0 0, auto !important;
-      }
-
-      /* Hover Cursor: Interactive Hand with glowing ember tip */
-      button,
-      a,
-      .dst-tab,
-      .nav-item,
-      .amb-card,
-      .reward-card,
-      .inv-slot,
-      .download-card,
-      .drops,
-      .dst-toggle-label,
-      .dst-slider,
-      input[type="checkbox"],
-      input[type="text"],
-      input[type="color"] {
-
-        cursor: url("data:image/png;base64,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") 0 0, pointer !important;
-
-
-      }
-    }
-
     :root {
       --dst-black: #120e0c;
       --dst-charcoal: #1c1613;
-      --dst-card-bg: rgba(28, 22, 19, 0.88);
+      --dst-card-bg: rgba(28, 22, 19, 0.92);
       --dst-paper: #e6dbcb;
       --dst-paper-muted: #bdae99;
       --dst-parchment: #f2e9dc;
@@ -169,8 +58,49 @@
       --dst-shadow: rgba(0, 0, 0, 0.7);
 
       --font-title: 'Hammerhead', cursive, serif, bold;
-      --font-hand: 'Patrick Hand', cursive, sans-serif, bold;
-      --font-mono: 'Special Elite', monospace, bold;
+      --font-hand: 'Patrick Hand', cursive, sans-serif;
+      --font-mono: 'Special Elite', monospace;
+
+      --sketch-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+      --sketch-radius-soft: 80px 8px 90px 10px / 10px 90px 8px 80px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* --- CUSTOM DST SKETCH CURSORS --- */
+    @media (hover: hover) and (pointer: fine) {
+      body, html {
+        cursor: url("data:image/png;base64,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") 0 0, auto !important;
+      }
+
+      button, a, .dst-tab, .nav-item, .amb-card, .reward-card, .inv-slot, .download-card, .drops, .dst-toggle-label, .dst-slider, input[type="checkbox"], input[type="text"], input[type="color"] {
+        cursor: url("data:image/png;base64,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") 0 0, pointer !important;
+      }
+    }
+
+    :root {
+      --dst-black: #120e0c;
+      --dst-charcoal: #1c1613;
+      --dst-card-bg: rgba(28, 22, 19, 0.92);
+      --dst-paper: #e6dbcb;
+      --dst-paper-muted: #bdae99;
+      --dst-parchment: #f2e9dc;
+      --dst-border: #443429;
+      --dst-border-highlight: #705540;
+      --dst-flame: #e76c1e;
+      --dst-flame-bright: #ff8e3c;
+      --dst-crimson: #a62b20;
+      --dst-green: #4f802f;
+      --dst-shadow: rgba(0, 0, 0, 0.7);
+
+      --font-title: 'Hammerhead', cursive, serif, bold;
+      --font-hand: 'Patrick Hand', cursive, sans-serif;
+      --font-mono: 'Special Elite', monospace;
 
       --sketch-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
       --sketch-radius-soft: 80px 8px 90px 10px / 10px 90px 8px 80px;
@@ -197,6 +127,50 @@
         radial-gradient(circle at 15% 15%, rgba(231, 108, 30, 0.08) 0%, transparent 45%),
         radial-gradient(circle at 85% 85%, rgba(166, 43, 32, 0.06) 0%, transparent 45%),
         linear-gradient(rgba(18, 14, 12, 0.94), rgba(18, 14, 12, 0.96));
+    }
+
+    /* --- GLOBAL COMPONENT READABILITY & TYPOGRAPHY FIXES --- */
+    .asset-card p,
+    .stream-topic,
+    .amb-card-text span,
+    .milestone-info p,
+    .pedestal-note,
+    .asset-card h4,
+    .milestone-info h4,
+    .streamer-name,
+    .platform-pill,
+    .dst-tab span,
+    .inv-slot span {
+      font-family: var(--font-hand) !important;
+    }
+
+    .asset-card p {
+      font-size: 1.05rem !important;
+      color: var(--dst-paper) !important;
+    }
+
+    .asset-card h4 {
+      font-size: 1.25rem !important;
+    }
+
+    .streamer-name {
+      font-size: 1.15rem !important;
+    }
+
+    .stream-topic {
+      font-size: 1.05rem !important;
+    }
+
+    .milestone-info h4 {
+      font-size: 1.15rem !important;
+    }
+
+    .milestone-info p {
+      font-size: 1.05rem !important;
+    }
+
+    .platform-pill {
+      font-size: 1rem !important;
     }
 
     .bg-vignette {
@@ -261,13 +235,8 @@
     }
 
     @keyframes spinFire {
-      0% {
-        transform: rotate(0deg);
-      }
-
-      100% {
-        transform: rotate(360deg);
-      }
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     @keyframes pulseFlame {
@@ -275,7 +244,6 @@
         transform: scale(0.92) rotate(-3deg);
         filter: drop-shadow(0 0 8px rgba(255, 110, 20, 0.5));
       }
-
       to {
         transform: scale(1.08) rotate(3deg);
         filter: drop-shadow(0 0 16px rgba(255, 160, 40, 0.9));
@@ -445,15 +413,8 @@
     }
 
     @keyframes pulseRed {
-
-      0%,
-      100% {
-        box-shadow: 0 0 4px rgba(216, 69, 55, 0.4);
-      }
-
-      50% {
-        box-shadow: 0 0 12px rgba(216, 69, 55, 0.9);
-      }
+      0%, 100% { box-shadow: 0 0 4px rgba(216, 69, 55, 0.4); }
+      50% { box-shadow: 0 0 12px rgba(216, 69, 55, 0.9); }
     }
 
     .sidebar-footer {
@@ -517,7 +478,6 @@
         opacity: 0;
         transform: translateY(12px) scale(0.99);
       }
-
       to {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -659,7 +619,7 @@
       margin-top: 20px;
       font-family: var(--font-hand);
       color: var(--dst-paper-muted);
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       text-align: center;
       border-top: 1px dashed #3f2e24;
       padding-top: 12px;
@@ -676,7 +636,7 @@
       background: rgba(22, 17, 14, 0.7);
       border: 2px solid #3c2c22;
       border-radius: var(--sketch-radius);
-      padding: 10px 16px;
+      padding: 12px 16px;
       display: flex;
       align-items: center;
       gap: 14px;
@@ -688,13 +648,6 @@
       border-color: var(--dst-flame);
       background: rgba(45, 30, 22, 0.85);
       transform: translateX(4px);
-    }
-
-    .milestone-checkbox {
-      width: 22px;
-      height: 22px;
-      accent-color: var(--dst-flame);
-      cursor: pointer;
     }
 
     .milestone-node.claimed {
@@ -735,7 +688,7 @@
 
     .milestone-info h4 {
       font-family: var(--font-title);
-      font-size: 1.05rem;
+      font-size: 1.15rem;
       color: #fff;
       margin-bottom: 2px;
       letter-spacing: 0.5px;
@@ -744,7 +697,7 @@
     .milestone-info p {
       font-family: var(--font-hand);
       color: var(--dst-paper-muted);
-      font-size: 1rem;
+      font-size: 1.05rem;
     }
 
     .milestone-watchtime {
@@ -811,16 +764,16 @@
 
     .platform-filter-bar {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       justify-content: center;
       flex-wrap: wrap;
       margin-bottom: 10px;
     }
 
     .platform-pill {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      padding: 5px 12px;
+      font-family: var(--font-hand);
+      font-size: 1.15rem;
+      padding: 6px 16px;
       background: #1a120e;
       border: 1px solid #3c281e;
       border-radius: var(--sketch-radius);
@@ -859,11 +812,6 @@
       border-color: var(--dst-flame);
     }
 
-
-
-
-
-
     .amb-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
@@ -900,7 +848,6 @@
       width: 100%;
     }
 
-    /* Permanent visible thumbnail container */
     .thumb-wrapper {
       position: relative;
       width: 100%;
@@ -960,40 +907,10 @@
       border-color: #f39c12;
     }
 
-    .amb-card.pinned {
-      border-color: #f39c12;
-      box-shadow: 4px 4px 0 #000, 0 0 15px rgba(243, 156, 18, 0.3);
-    }
-
-    .amb-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--dst-flame);
-      box-shadow: 6px 12px 25px rgba(0, 0, 0, 0.8);
-    }
-
-
-
-
-
-    .live-stamp {
+    .black-btn {
       position: absolute;
       top: 10px;
-      left: 10px;
-      background: var(--dst-crimson);
-      color: #fff;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      font-weight: bold;
-      padding: 3px 8px;
-      border-radius: 3px;
-      border: 1px solid #ff594a;
-      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    }
-
-    .fav-star-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
+      right: 48px;
       background: rgba(14, 10, 8, 0.85);
       border: 1px solid #483528;
       color: #7d6b5e;
@@ -1005,16 +922,21 @@
       justify-content: center;
       cursor: pointer;
       transition: all 0.2s ease;
-      z-index: 5;
+      z-index: 10;
     }
 
-    .fav-star-btn:hover {
-      color: #f39c12;
-      border-color: #f39c12;
+    .black-btn:hover {
+      color: #e74c3c;
+      background: rgba(42, 11, 8, 0.5);
+      border-color: #e74c3c;
     }
 
+    .black-btn.blacklisted {
+      color: #e74c3c;
+      background: rgba(94, 32, 25, 0.815);
+      border-color: #e74c3c;
+    }
 
-    /* Custom Gothic Toggle Switch */
     .dst-switch {
       position: relative;
       display: inline-block;
@@ -1050,12 +972,12 @@
       border-radius: 50%;
     }
 
-    .dst-switch input:checked+.dst-slider {
+    .dst-switch input:checked + .dst-slider {
       background-color: #3c2a20;
       border-color: var(--dst-flame);
     }
 
-    .dst-switch input:checked+.dst-slider:before {
+    .dst-switch input:checked + .dst-slider:before {
       transform: translateX(20px);
       background-color: var(--dst-flame);
     }
@@ -1086,7 +1008,7 @@
     .streamer-name {
       display: block;
       font-family: var(--font-title);
-      font-size: 1rem;
+      font-size: 1.15rem;
       color: #fff;
       white-space: nowrap;
       overflow: hidden;
@@ -1096,7 +1018,7 @@
     .stream-topic {
       display: block;
       font-family: var(--font-hand);
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       color: var(--dst-paper-muted);
       white-space: nowrap;
       overflow: hidden;
@@ -1132,14 +1054,14 @@
 
     .asset-card h4 {
       font-family: var(--font-title);
-      font-size: 1.05rem;
+      font-size: 1.25rem;
       color: var(--dst-paper);
     }
 
     .asset-card p {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--dst-paper-muted);
+      font-family: var(--font-hand);
+      font-size: 1.05rem;
+      color: var(--dst-paper);
     }
 
     .dst-modal {
@@ -1212,7 +1134,7 @@
       padding: 6px 2px;
       color: var(--dst-paper-muted);
       font-family: var(--font-hand);
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       font-weight: bold;
       text-decoration: none;
       cursor: pointer;
@@ -1247,6 +1169,51 @@
       padding: 1px 5px;
       border-radius: 10px;
       border: 1px solid #fff;
+    }
+
+    #dst-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-160%);
+      background: #181210;
+      border: 2px solid var(--dst-flame, #ff8e3c);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), 0 0 15px rgba(231, 108, 30, 0.4);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 10001;
+      max-width: 90vw;
+      width: 420px;
+      transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    #dst-toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    #dst-toast img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
+
+    .toast-content h4 {
+      color: #fff;
+      font-family: var(--font-title);
+      font-size: 1.05rem;
+      margin-bottom: 2px;
+    }
+
+    .toast-content p {
+      color: #bdae99;
+      font-family: var(--font-hand);
+      font-size: 1rem;
+      line-height: 1.2;
     }
 
     @media (max-width: 900px) {
@@ -1308,15 +1275,14 @@
   <div id="discord-modal" class="dst-modal">
     <div class="modal-box">
       <button class="modal-close" onclick="closeDiscordModal()">&times;</button>
-      <h3
-        style="font-family: var(--font-title); color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+      <h3 style="font-family: var(--font-title); color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
         <i data-lucide="share-2" style="color: var(--dst-flame);"></i> Discord Share
       </h3>
-      <p style="font-size: 1rem; color: var(--dst-paper-muted); margin-bottom: 15px;">
+      <p style="font-size: 1.05rem; color: var(--dst-paper-muted); margin-bottom: 15px;">
         Share drop details and live links directly to your Discord channel or friends with rich markdown formatting:
       </p>
       <textarea id="discord-copy-box" readonly
-        style="width: 100%; height: 110px; background: #120e0c; border: 1px dashed var(--dst-border-highlight); border-radius: 6px; padding: 10px; color: #a4e67a; font-family: var(--font-mono); font-size: 0.85rem; resize: none; margin-bottom: 15px;"></textarea>
+        style="width: 100%; height: 110px; background: #120e0c; border: 1px dashed var(--dst-border-highlight); border-radius: 6px; padding: 10px; color: #a4e67a; font-family: var(--font-mono); font-size: 0.9rem; resize: none; margin-bottom: 15px;"></textarea>
       <div style="display: flex; gap: 10px; justify-content: flex-end;">
         <button class="dst-btn" onclick="copyDiscordPayload()">Copy Discord Markdown</button>
       </div>
@@ -1326,8 +1292,7 @@
   <!-- DESKTOP COMPENDIUM SIDEBAR -->
   <aside>
     <div class="brand">
-      <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt="Campfire Drops"
-        class="brand-logo">
+      <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt="Campfire Drops" class="brand-logo">
       <div>
         <div class="brand-title">Starving For Drops</div>
         <div class="brand-sub">Klei Drops & Ambassadors</div>
@@ -1396,8 +1361,7 @@
         <i data-lucide="bell"></i>
         <span id="notif-toggle-text">Enable Drop Alerts</span>
       </button>
-      <div
-        style="font-family: var(--font-mono); font-size: 0.7rem; color: #735d4e; margin-top: 10px; text-align: center;">
+      <div style="font-family: var(--font-mono); font-size: 0.75rem; color: #735d4e; margin-top: 10px; text-align: center;">
         All possible thanks to Klei.
       </div>
     </div>
@@ -1410,39 +1374,26 @@
     <section id="widget">
       <h1 class="dst-heading">Ambassador OBS Widget</h1>
 
-      <div class="dst-parchment-card"
-        style="max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
+      <div class="dst-parchment-card" style="max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
 
-        <!-- HEADER INTRO -->
         <div>
-          <h3
-            style="font-family: var(--font-title); color: #fff; margin-bottom: 8px; font-size: 1.3rem; display: flex; align-items: center; gap: 8px;">
+          <h3 style="font-family: var(--font-title); color: #fff; margin-bottom: 8px; font-size: 1.3rem; display: flex; align-items: center; gap: 8px;">
             <i data-lucide="cast" style="color: var(--dst-flame);"></i> Stream Overlay Generator
           </h3>
-          <p style="font-size: 0.95rem; color: var(--dst-paper-muted); line-height: 1.4;">
-            Configure your dynamic drop widget for OBS. Customize your Twitch username, avatar, and glow hex values
-            (without <code>#</code>).
+          <p style="font-size: 1.1rem; color: var(--dst-paper-muted); line-height: 1.4;">
+            Configure your dynamic drop widget for OBS. Customize your Twitch username, avatar, and glow hex values (without <code>#</code>).
           </p>
         </div>
 
-        <!-- LIVE PREVIEW WINDOW (Moved to top for instant feedback) -->
-        <!-- LIVE PREVIEW WINDOW -->
-        <!-- LIVE PREVIEW WINDOW -->
-        <div
-          style="background: #0d0908; border: 2px solid #3c2a20; border-radius: 8px; padding: 16px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+        <div style="background: #0d0908; border: 2px solid #3c2a20; border-radius: 8px; padding: 16px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
 
-          <!-- Preview Header & Custom Toggles -->
-          <div
-            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
-            <h4
-              style="font-family: var(--font-title); color: #fff; font-size: 0.95rem; display: flex; align-items: center; gap: 6px; margin: 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+            <h4 style="font-family: var(--font-title); color: #fff; font-size: 1.05rem; display: flex; align-items: center; gap: 6px; margin: 0;">
               <i data-lucide="eye" style="color: var(--dst-flame); width: 16px; height: 16px;"></i> Live OBS Preview
             </h4>
 
-            <!-- Mode Selection Toggles -->
             <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
-              <label class="dst-toggle-label"
-                style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-mono); font-size: 0.82rem; color: var(--dst-paper);">
+              <label class="dst-toggle-label" style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1.1rem; color: var(--dst-paper);">
                 <span>Solo Mode</span>
                 <div class="dst-switch">
                   <input type="checkbox" id="obs-solo-toggle" onchange="handleWidgetModeChange('solo')">
@@ -1450,8 +1401,7 @@
                 </div>
               </label>
 
-              <label class="dst-toggle-label"
-                style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-mono); font-size: 0.82rem; color: var(--dst-paper);">
+              <label class="dst-toggle-label" style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1.1rem; color: var(--dst-paper);">
                 <span>Carousel Mode</span>
                 <div class="dst-switch">
                   <input type="checkbox" id="obs-carousel-toggle" onchange="handleWidgetModeChange('carousel')">
@@ -1459,132 +1409,94 @@
                 </div>
               </label>
             </div>
+          </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
-              <div>
-                <label
-                  style="font-family: var(--font-mono); font-size: 0.92rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
-                  Carousel Swap Speed (Seconds)
-                </label>
-                <input type="number" id="obs-speed" class="search-input-box" value="4.5" min="1.5" max="30" step="0.5"
-                  oninput="updateObsUrlBuilder()" style="padding: 10px 14px; font-size: 1.2rem;" />
-              </div>
+          <div id="preview-viewport" style="position: relative; width: 100%; aspect-ratio: 2/1; margin: 0 auto; background: radial-gradient(circle, #18110e 0%, #080605 100%); border: 1px solid #2c1f18; border-radius: 6px; overflow: hidden;">
+            <div id="obs-scale-container" style="position: absolute; top: 0; left: 0; width: 1024px; height: 512px; transform-origin: top left;">
+              <iframe id="obs-preview-frame" src="" style="width: 1024px; height: 512px; border: none; background: transparent;"></iframe>
             </div>
           </div>
 
-          <!-- Clean Scaling Wrapper -->
-          <div id="preview-viewport"
-            style="position: relative; width: 100%; aspect-ratio: 2/1; margin: 0 auto; background: radial-gradient(circle, #18110e 0%, #080605 100%); border: 1px solid #2c1f18; border-radius: 6px; overflow: hidden;">
-            <div id="obs-scale-container"
-              style="position: absolute; top: 0; left: 0; width: 1024px; height: 512px; transform-origin: top left;">
-              <iframe id="obs-preview-frame" src=""
-                style="width: 1024px; height: 512px; border: none; background: transparent;"></iframe>
-            </div>
-          </div>
-
-          <!-- Clean, Readable Resolution Notice -->
-          <span id="obs-res-notice"
-            style="font-size: 0.98rem; color: #bdae99; margin-top: 10px; display: block; font-family: system-ui, -apple-system, sans-serif; letter-spacing: 0.3px;">
+          <span id="obs-res-notice" style="font-size: 1.05rem; color: #bdae99; margin-top: 10px; display: block; font-family: var(--font-hand); letter-spacing: 0.3px;">
             Recommended OBS Browser Source Resolution: <b style="color: var(--dst-flame);">1024 × 512 (Full Mode)</b>
           </span>
         </div>
 
-
-        <!-- CONFIGURATION INPUTS -->
-        <!-- CONFIGURATION INPUTS -->
-        <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
           <div>
-            <label
-              style="font-family: var(--font-mono); font-size: 0.92rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+            <label style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
               Twitch Username (lowercase)
             </label>
-            <input type="text" id="obs-twitch" class="search-input-box" placeholder="e.g. clifffordw"
-              oninput="updateObsUrlBuilder()" style="padding: 10px 14px; font-size: 1.5rem;" />
+            <input type="text" id="obs-twitch" class="search-input-box" placeholder="e.g. clifffordw" oninput="updateObsUrlBuilder()" style="padding: 12px 16px; font-size: 1.2rem;" />
           </div>
 
           <div>
-            <label
-              style="font-family: var(--font-mono); font-size: 0.92rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+            <label style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
               Avatar Image URL
             </label>
-            <input type="text" id="obs-avatar" class="search-input-box" placeholder="https://static-cdn.jtvnw.net/..."
-              oninput="updateObsUrlBuilder()" style="padding: 10px 14px; font-size: 1.5rem;" />
+            <input type="text" id="obs-avatar" class="search-input-box" placeholder="https://static-cdn.jtvnw.net/..." oninput="updateObsUrlBuilder()" style="padding: 12px 16px; font-size: 1.2rem;" />
           </div>
 
-
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
             <div>
-              <label
-                style="font-family: var(--font-mono); font-size: 0.98rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+              <label style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
+                Carousel Swap Speed (Seconds)
+              </label>
+              <input type="number" id="obs-speed" class="search-input-box" value="4.5" min="1.5" max="30" step="0.5" oninput="updateObsUrlBuilder()" style="padding: 10px 14px; font-size: 1.2rem;" />
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px;">
+            <div>
+              <label style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
                 Glow 1 (hex)
               </label>
-              <div style="display: flex; gap: 6px; align-items: center;">
-                <input type="color" id="obs-color1" value="#90ee90" oninput="syncColorToText('1')"
-                  style="width: 50px; height: 42px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
-                <input type="text" id="obs-glow1" class="search-input-box" value="90EE90"
-                  oninput="syncTextToColor('1'); updateObsUrlBuilder();"
-                  style="padding: 8px 10px; font-size: 1.2rem; text-transform: uppercase;" />
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="color" id="obs-color1" value="#90ee90" oninput="syncColorToText('1')" style="width: 48px; height: 46px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
+                <input type="text" id="obs-glow1" class="search-input-box" value="90EE90" oninput="syncTextToColor('1'); updateObsUrlBuilder();" style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
               </div>
             </div>
 
             <div>
-              <label
-                style="font-family: var(--font-mono); font-size: 0.98rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+              <label style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
                 Glow 2 (hex)
               </label>
-              <div style="display: flex; gap: 6px; align-items: center;">
-                <input type="color" id="obs-color2" value="#64F89D" oninput="syncColorToText('2')"
-                  style="width: 50px; height: 42px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
-                <input type="text" id="obs-glow2" class="search-input-box" value="64F89D"
-                  oninput="syncTextToColor('2'); updateObsUrlBuilder();"
-                  style="padding: 8px 10px; font-size: 1.2rem; text-transform: uppercase;" />
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="color" id="obs-color2" value="#64F89D" oninput="syncColorToText('2')" style="width: 48px; height: 46px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
+                <input type="text" id="obs-glow2" class="search-input-box" value="64F89D" oninput="syncTextToColor('2'); updateObsUrlBuilder();" style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
               </div>
             </div>
 
             <div>
-              <label
-                style="font-family: var(--font-mono); font-size: 0.98rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+              <label style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
                 Glow 3 (hex)
               </label>
-              <div style="display: flex; gap: 6px; align-items: center;">
-                <input type="color" id="obs-color3" value="#AFFF60" oninput="syncColorToText('3')"
-                  style="width: 50px; height: 42px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
-                <input type="text" id="obs-glow3" class="search-input-box" value="AFFF60"
-                  oninput="syncTextToColor('3'); updateObsUrlBuilder();"
-                  style="padding: 8px 10px; font-size: 1.2rem; text-transform: uppercase;" />
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="color" id="obs-color3" value="#AFFF60" oninput="syncColorToText('3')" style="width: 48px; height: 46px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
+                <input type="text" id="obs-glow3" class="search-input-box" value="AFFF60" oninput="syncTextToColor('3'); updateObsUrlBuilder();" style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
               </div>
             </div>
           </div>
 
           <div>
-            <label
-              style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
-              Generated OBS Browser Source URL <span style="color: #7d6b5e; font-size: 0.75rem;">(Click to copy or drag
-                & drop into OBS)</span>:
+            <label style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
+              Generated OBS Browser Source URL <span style="color: #9c8472; font-size: 0.95rem;">(Click to copy or drag & drop into OBS)</span>:
             </label>
-            <input type="text" id="obs-result-url" readonly onclick="copyObsGeneratedUrl()" draggable="true"
-              ondragstart="handleObsDragStart(event)" class="search-input-box"
-              title="Click to copy | Drag & drop directly into OBS"
-              style="padding: 10px 12px; font-size: 1rem;; color: #a4e67a; background: #120e0c; cursor: grab;" />
+            <input type="text" id="obs-result-url" readonly onclick="copyObsGeneratedUrl()" draggable="true" ondragstart="handleObsDragStart(event)" class="search-input-box" title="Click to copy | Drag & drop directly into OBS" style="padding: 12px 14px; font-size: 1.05rem; color: #a4e67a; background: #120e0c; cursor: grab;" />
           </div>
         </div>
 
-        <!-- ACTIONS -->
-        <div
-          style="display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; border-top: 1px dashed #3a2b22; padding-top: 15px;">
-          <a id="obs-preview-btn" href="#" target="_blank" class="dst-btn" style="font-size: 0.95rem;">
+        <div style="display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; border-top: 1px dashed #3a2b22; padding-top: 15px;">
+          <a id="obs-preview-btn" href="#" target="_blank" class="dst-btn" style="font-size: 1.05rem;">
             <i data-lucide="external-link" style="width: 16px;"></i> Open Full Preview
           </a>
-          <button class="dst-btn" style="font-size: 0.95rem;" onclick="copyObsGeneratedUrl()">
+          <button class="dst-btn" style="font-size: 1.05rem;" onclick="copyObsGeneratedUrl()">
             <i data-lucide="copy" style="width: 16px;"></i> Copy Link
           </button>
         </div>
 
       </div>
     </section>
-
-
-
 
     <!-- DROPS TAB -->
     <section id="drops" class="active">
@@ -1596,17 +1508,14 @@
           <span id="timer-status-text">EMBERS GLOWING</span>
         </div>
         <div id="timer" class="campfire-countdown">CALCULATING...</div>
-        <div id="timer-date" class="campfire-date" onclick="toggleTimerTimezone()"
-          title="Click to toggle Local / UTC time">Consulting Klei Records...</div>
+        <div id="timer-date" class="campfire-date" onclick="toggleTimerTimezone()" title="Click to toggle Local / UTC time">Consulting Klei Records...</div>
       </div>
 
       <div class="campaign-grid">
-        <!-- Item Showcase Pedestal -->
         <div class="item-pedestal">
           <img id="c-gif" src="" alt="Drop Reward Artifact">
           <div class="pedestal-note">
-            <strong style="color:#fff;">Instant Delivery:</strong> Claimed rewards materialize directly in your survivor
-            Curio Cabinet!
+            <strong style="color:#fff;">Instant Delivery:</strong> Claimed rewards materialize directly in your survivor Curio Cabinet!
           </div>
           <div style="margin-top: 16px; display: flex; gap: 10px; width: 100%;">
             <button class="dst-btn btn-discord" style="flex: 1;" onclick="openDiscordModal()">
@@ -1615,30 +1524,22 @@
           </div>
         </div>
 
-        <!-- Milestones Card -->
         <div class="dst-parchment-card">
-          <h3
-            style="font-family: var(--font-title); color: #fff; margin-bottom: 18px; font-size: 1.25rem; display: flex; align-items: center; gap: 10px;">
+          <h3 style="font-family: var(--font-title); color: #fff; margin-bottom: 18px; font-size: 1.25rem; display: flex; align-items: center; gap: 10px;">
             <i data-lucide="hourglass" style="color: var(--dst-flame-bright);"></i>
-            Drop Milestones <span
-              style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--dst-paper-muted); margin-left: auto;">(Check
-              off as claimed)</span>
+            Drop Milestones <span style="font-size: 0.85rem; font-family: var(--font-hand); color: var(--dst-paper-muted); margin-left: auto;">(Check off as claimed)</span>
           </h3>
 
           <div id="reward-rows" class="milestone-tree"></div>
 
           <div style="margin-top: 25px; padding-top: 20px; border-top: 2px dashed #3a2b22;">
-            <h4
-              style="font-family: var(--font-title); color: var(--dst-paper-muted); font-size: 1rem; margin-bottom: 12px;">
+            <h4 style="font-family: var(--font-title); color: var(--dst-paper-muted); font-size: 1.1rem; margin-bottom: 12px;">
               Link Accounts
             </h4>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 10px;">
-              <a href="https://accounts.klei.com/account/twitch/link" target="_blank" class="dst-btn"
-                style="font-size: 1rem; padding: 8px;">Twitch</a>
-              <a href="https://accounts.klei.com/account/bilibili/link" target="_blank" class="dst-btn"
-                style="font-size: 1rem; padding: 8px;">Bilibili</a>
-              <a href="https://accounts.klei.com/account/douyu/link" target="_blank" class="dst-btn"
-                style="font-size: 1rem; padding: 8px;">Douyu</a>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(105px, 1fr)); gap: 10px;">
+              <a href="https://accounts.klei.com/account/twitch/link" target="_blank" class="dst-btn" style="font-size: 1.05rem; padding: 10px;">Twitch</a>
+              <a href="https://accounts.klei.com/account/bilibili/link" target="_blank" class="dst-btn" style="font-size: 1.05rem; padding: 10px;">Bilibili</a>
+              <a href="https://accounts.klei.com/account/douyu/link" target="_blank" class="dst-btn" style="font-size: 1.05rem; padding: 10px;">Douyu</a>
             </div>
           </div>
         </div>
@@ -1655,40 +1556,24 @@
           <button class="platform-pill" onclick="setPlatformFilter('twitch', this)">Twitch</button>
           <button class="platform-pill" onclick="setPlatformFilter('bilibili', this)">Bilibili</button>
           <button class="platform-pill" onclick="setPlatformFilter('douyu', this)">Douyu</button>
-          <button class="platform-pill" onclick="setPlatformFilter('blacklist', this)"><svg
-              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="15"
-              height="15" viewBox="0 0 256 256" xml:space="preserve"
-              style="vertical-align: -2px; display: inline-block; margin-right: 4px;">
-              <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
-                transform="translate(0 0) scale(2.81 2.81)">
-                <path
-                  d="M 45 90 c -12.02 0 -23.32 -4.681 -31.82 -13.181 C 4.681 68.32 0 57.02 0 45 c 0 -12.02 4.681 -23.32 13.18 -31.82 l 0 0 l 0 0 C 21.68 4.681 32.98 0 45 0 c 12.02 0 23.32 4.681 31.819 13.18 C 85.319 21.68 90 32.98 90 45 c 0 12.02 -4.681 23.32 -13.181 31.819 C 68.32 85.319 57.02 90 45 90 z M 45 8 c -9.883 0 -19.174 3.849 -26.163 10.837 l 0 0 C 11.849 25.826 8 35.117 8 45 c 0 9.883 3.849 19.174 10.837 26.163 C 25.826 78.151 35.117 82 45 82 c 9.883 0 19.174 -3.849 26.163 -10.837 C 78.151 64.174 82 54.883 82 45 c 0 -9.883 -3.849 -19.174 -10.837 -26.163 C 64.174 11.849 54.883 8 45 8 z"
-                  style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: currentColor; fill-rule: nonzero; opacity: 1;"
-                  transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
-                <rect x="4" y="41" rx="0" ry="0" width="82" height="8"
-                  style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: currentColor; fill-rule: nonzero; opacity: 1;"
-                  transform=" matrix(0.707 -0.7072 0.7072 0.707 -18.6396 45.0055) " />
+          <button class="platform-pill" onclick="setPlatformFilter('blacklist', this)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 256 256" style="vertical-align: -2px; display: inline-block; margin-right: 4px;">
+              <g style="fill: none; stroke: currentColor; stroke-width: 12; stroke-linecap: round; stroke-linejoin: round;">
+                <circle cx="128" cy="128" r="96" />
+                <line x1="60" y1="60" x2="196" y2="196" />
               </g>
-            </svg> Blacklist (<span id="black-count">0</span>)</button>
-          <button class="platform-pill" onclick="setPlatformFilter('favorites', this)"><svg
-              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="15"
-              height="15" viewBox="0 0 256 256" xml:space="preserve"
-              style="vertical-align: -2px; display: inline-block; margin-right: 4px;">
-              <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
-                transform="translate(0 0) scale(2.81 2.81)">
-                <path
-                  d="M 47.755 3.765 l 11.525 23.353 c 0.448 0.907 1.313 1.535 2.314 1.681 l 25.772 3.745 c 2.52 0.366 3.527 3.463 1.703 5.241 L 70.42 55.962 c -0.724 0.706 -1.055 1.723 -0.884 2.72 l 4.402 25.667 c 0.431 2.51 -2.204 4.424 -4.458 3.239 L 46.43 75.47 c -0.895 -0.471 -1.965 -0.471 -2.86 0 L 20.519 87.588 c -2.254 1.185 -4.889 -0.729 -4.458 -3.239 l 4.402 -25.667 c 0.171 -0.997 -0.16 -2.014 -0.884 -2.72 L 0.931 37.784 c -1.824 -1.778 -0.817 -4.875 1.703 -5.241 l 25.772 -3.745 c 1.001 -0.145 1.866 -0.774 2.314 -1.681 L 42.245 3.765 C 43.372 1.481 46.628 1.481 47.755 3.765 z"
-                  style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: currentColor; fill-rule: nonzero; opacity: 1;"
-                  transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
-              </g>
-            </svg> Favorites (<span id="fav-count">0</span>)</button>
+            </svg> Blacklist (<span id="black-count">0</span>)
+          </button>
+          <button class="platform-pill" onclick="setPlatformFilter('favorites', this)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 256 256" style="vertical-align: -2px; display: inline-block; margin-right: 4px;">
+              <path d="M128 20l32 64 72 10-52 50 12 70-64-34-64 34 12-70-52-50 72-10z" style="fill: currentColor;" />
+            </svg> Favorites (<span id="fav-count">0</span>)
+          </button>
         </div>
-        <input type="text" id="amb-search" class="search-input-box"
-          placeholder="Search streamer by name or stream title..." oninput="applyAmbassadorFilters()">
+        <input type="text" id="amb-search" class="search-input-box" placeholder="Search streamer by name or stream title..." oninput="applyAmbassadorFilters()">
       </div>
 
-      <div id="amb-count-indicator"
-        style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-flame); margin-bottom: 18px; text-align: center;">
+      <div id="amb-count-indicator" style="font-family: var(--font-hand); font-size: 1.15rem; color: var(--dst-flame); margin-bottom: 18px; text-align: center;">
         Scanning live streamer broadcasts...
       </div>
 
@@ -1702,41 +1587,32 @@
     </section>
 
     <!-- INFO / COMPENDIUM TAB -->
-    <!-- INFO / COMPENDIUM TAB -->
     <section id="info">
       <h1 class="dst-heading">Info About Ambassadors</h1>
       <div class="dst-parchment-card">
         <ul style="list-style: none; display: flex; flex-direction: column; gap: 20px;">
           <li style="border-bottom: 1px dashed #3a2b22; padding-bottom: 15px;">
-            <strong
-              style="color: var(--dst-flame-bright); font-family: var(--font-title); font-size: 1.2rem; display: block; margin-bottom: 4px;">
+            <strong style="color: var(--dst-flame-bright); font-family: var(--font-title); font-size: 1.25rem; display: block; margin-bottom: 6px;">
               ✦ Klei Points & Spools
             </strong>
-            <span style="color: var(--dst-paper-muted);">
-              Watch ambassador streams for promotional links or giveaways granting Curio Spools and Klei Points directly
-              into your
-              game account.
+            <span style="color: var(--dst-paper-muted); font-size: 1.1rem; line-height: 1.4;">
+              Watch ambassador streams for promotional links or giveaways granting Curio Spools and Klei Points directly into your game account.
             </span>
           </li>
           <li style="border-bottom: 1px dashed #3a2b22; padding-bottom: 15px;">
-            <strong
-              style="color: var(--dst-flame-bright); font-family: var(--font-title); font-size: 1.2rem; display: block; margin-bottom: 4px;">
+            <strong style="color: var(--dst-flame-bright); font-family: var(--font-title); font-size: 1.25rem; display: block; margin-bottom: 6px;">
               ✦ Resurrected Bundles
             </strong>
-            <span style="color: var(--dst-paper-muted);">
-              Ambassadors regularly distribute codes for past legacy skins, event items, bundles within a giveaway or
-              whatever they desire that are otherwise locked
-              away.
+            <span style="color: var(--dst-paper-muted); font-size: 1.1rem; line-height: 1.4;">
+              Ambassadors regularly distribute codes for past legacy skins, event items, bundles within a giveaway or whatever they desire that are otherwise locked away.
             </span>
           </li>
           <li>
-            <strong
-              style="color: var(--dst-flame-bright); font-family: var(--font-title); font-size: 1.2rem; display: block; margin-bottom: 4px;">
+            <strong style="color: var(--dst-flame-bright); font-family: var(--font-title); font-size: 1.25rem; display: block; margin-bottom: 6px;">
               ✦ Watchin Togetha!
             </strong>
-            <span style="color: var(--dst-paper-muted);">
-              Twitch drops accumulate across all participating channels with DropsEnabled that are broadcasting Don't
-              Starve Together.
+            <span style="color: var(--dst-paper-muted); font-size: 1.1rem; line-height: 1.4;">
+              Twitch drops accumulate across all participating channels with DropsEnabled that are broadcasting Don't Starve Together.
             </span>
           </li>
         </ul>
@@ -1757,10 +1633,10 @@
       <span id="mobile-live-badge" class="inv-badge" style="display: none;">0</span>
     </div>
 
-    <div class="inv-slot" onclick="nav('download', this)">
+<!--     <div class="inv-slot" onclick="nav('download', this)">
       <i data-lucide="download"></i>
       <span>Assets</span>
-    </div>
+    </div> -->
 
     <div class="inv-slot" onclick="nav('info', this)">
       <i data-lucide="book-open"></i>
@@ -1774,8 +1650,6 @@
   </nav>
 
   <script>
-
-
     function handleWidgetModeChange(changed) {
       const soloToggle = document.getElementById('obs-solo-toggle');
       const carouselToggle = document.getElementById('obs-carousel-toggle');
@@ -1808,18 +1682,14 @@
       }
     }
 
-
-    // Enable dragging the URL directly into OBS sources
     function handleObsDragStart(e) {
       const box = document.getElementById('obs-result-url');
       if (box && box.value) {
-        // Set standard text/uri-list so OBS accepts it as a browser source link
         e.dataTransfer.setData('text/plain', box.value);
         e.dataTransfer.setData('text/uri-list', box.value);
         e.effectAllowed = 'copy';
       }
     }
-
 
     function updateObsUrlBuilder() {
       const twitch = (document.getElementById('obs-twitch')?.value || '').toLowerCase().trim();
@@ -1836,7 +1706,6 @@
       if (g2.length === 6) document.getElementById('obs-color2').value = `#${g2}`;
       if (g3.length === 6) document.getElementById('obs-color3').value = `#${g3}`;
 
-      // Save values to localStorage
       localStorage.setItem('dst-obs-twitch', twitch);
       localStorage.setItem('dst-obs-avatar', avatar);
       localStorage.setItem('dst-obs-solo', isSolo);
@@ -1847,7 +1716,6 @@
       localStorage.setItem('dst-obs-g3', g3);
 
       let url = `https://clifffordw.github.io/ClifffWidgets/Drops/Streamers/drop_universal.html?`;
-
       const params = [];
       if (isSolo) params.push(`solo=1`);
       if (isCarousel) {
@@ -1873,7 +1741,6 @@
       if (previewBtn) previewBtn.href = url;
 
       const needsSquare = isSolo || isCarousel;
-
       if (previewViewport && scaleContainer && previewFrame) {
         const nativeWidth = 1024;
         const nativeHeight = needsSquare ? 1024 : 512;
@@ -1914,69 +1781,27 @@
       const savedG2 = localStorage.getItem('dst-obs-g2');
       const savedG3 = localStorage.getItem('dst-obs-g3');
 
-      if (savedTwitch !== null && document.getElementById('obs-twitch')) {
-        document.getElementById('obs-twitch').value = savedTwitch;
-      }
-      if (savedAvatar !== null && document.getElementById('obs-avatar')) {
-        document.getElementById('obs-avatar').value = savedAvatar;
-      }
-      if (document.getElementById('obs-solo-toggle')) {
-        document.getElementById('obs-solo-toggle').checked = savedSolo;
-      }
-      if (document.getElementById('obs-carousel-toggle')) {
-        document.getElementById('obs-carousel-toggle').checked = savedCarousel;
-      }
-      if (savedSpeed !== null && document.getElementById('obs-speed')) {
-        document.getElementById('obs-speed').value = savedSpeed;
-      }
-      if (savedG1 !== null && document.getElementById('obs-glow1')) {
-        document.getElementById('obs-glow1').value = savedG1;
-      }
-      if (savedG2 !== null && document.getElementById('obs-glow2')) {
-        document.getElementById('obs-glow2').value = savedG2;
-      }
-      if (savedG3 !== null && document.getElementById('obs-glow3')) {
-        document.getElementById('obs-glow3').value = savedG3;
-      }
+      if (savedTwitch !== null && document.getElementById('obs-twitch')) document.getElementById('obs-twitch').value = savedTwitch;
+      if (savedAvatar !== null && document.getElementById('obs-avatar')) document.getElementById('obs-avatar').value = savedAvatar;
+      if (document.getElementById('obs-solo-toggle')) document.getElementById('obs-solo-toggle').checked = savedSolo;
+      if (document.getElementById('obs-carousel-toggle')) document.getElementById('obs-carousel-toggle').checked = savedCarousel;
+      if (savedSpeed !== null && document.getElementById('obs-speed')) document.getElementById('obs-speed').value = savedSpeed;
+      if (savedG1 !== null && document.getElementById('obs-glow1')) document.getElementById('obs-glow1').value = savedG1;
+      if (savedG2 !== null && document.getElementById('obs-glow2')) document.getElementById('obs-glow2').value = savedG2;
+      if (savedG3 !== null && document.getElementById('obs-glow3')) document.getElementById('obs-glow3').value = savedG3;
 
       updateObsUrlBuilder();
     }
-
-
 
     function copyObsGeneratedUrl() {
       const box = document.getElementById('obs-result-url');
       if (box && box.value) {
         box.select();
         navigator.clipboard.writeText(box.value);
-
-        // Trigger your existing top notification popup
-        showInAppToast(
-          "OBS Link Copied!",
-          "The browser source URL has been copied to your clipboard.",
-          "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
-        );
+        showInAppToast("OBS Link Copied!", "The browser source URL has been copied to your clipboard.", "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg");
       }
     }
 
-    // Auto-fill from an Ambassador Card & Switch to Widget Tab
-    function generateWidgetForStreamer(streamerName, profileUrl, e) {
-      if (e) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-
-      const twitchInput = document.getElementById('obs-twitch');
-      const avatarInput = document.getElementById('obs-avatar');
-
-      if (twitchInput) twitchInput.value = (streamerName || '').toLowerCase().trim();
-      if (avatarInput) avatarInput.value = profileUrl || '';
-
-      updateObsUrlBuilder();
-      nav('widget'); // Switch tab
-    }
-
-    // Initialize input listeners in init()
     function initWidgetListeners() {
       ['obs-twitch', 'obs-avatar', 'obs-glow1', 'obs-glow2', 'obs-glow3'].forEach(id => {
         const el = document.getElementById(id);
@@ -1984,9 +1809,7 @@
       });
       updateObsUrlBuilder();
     }
-  </script>
 
-  <script>
     lucide.createIcons();
 
     const survivalTips = [
@@ -1996,14 +1819,6 @@
       "\"Never let your campfire extinguish in the depths of winter.\""
     ];
 
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register(
-        URL.createObjectURL(new Blob([
-          `self.addEventListener('notificationclick', e => { e.notification.close(); clients.openWindow('/'); });`
-        ], { type: 'application/javascript' }))
-      ).catch(() => { });
-    }
-
     setInterval(() => {
       const tipElement = document.getElementById('loading-tip');
       if (tipElement) {
@@ -2011,9 +1826,6 @@
       }
     }, 3500);
 
-
-
-    // Get blacklist from localStorage
     function getBlacklist() {
       try {
         return JSON.parse(localStorage.getItem('dst-blacklisted-streamers') || '[]');
@@ -2021,10 +1833,7 @@
     }
 
     function toggleBlacklist(name, e) {
-      if (e) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
+      if (e) { e.preventDefault(); e.stopPropagation(); }
       let blacks = getBlacklist();
       if (blacks.includes(name)) {
         blacks = blacks.filter(b => b !== name);
@@ -2042,8 +1851,6 @@
       if (badge) badge.innerText = blacks.length;
     }
 
-
-    // --- CUSTOM SOUND ENGINE ---
     const dstSounds = {
       hover: new Audio('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/SFX/click_mouseover.wav'),
       clickDown: new Audio('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/SFX/click_move.wav'),
@@ -2051,7 +1858,6 @@
       alert: new Audio('https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/SFX/drop.ogg')
     };
 
-    // Volume configurations
     dstSounds.hover.volume = 0.12;
     dstSounds.clickDown.volume = 0.35;
     dstSounds.clickUp.volume = 0.35;
@@ -2068,34 +1874,24 @@
         const clone = audio.cloneNode();
         clone.volume = audio.volume;
         const playPromise = clone.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => { });
-        }
-      } catch (e) { }
+        if (playPromise !== undefined) playPromise.catch(() => {});
+      } catch (e) {}
     }
 
-    function playDstChime() {
-      playCustomSound(dstSounds.alert);
-    }
+    function playDstChime() { playCustomSound(dstSounds.alert); }
 
     function initCustomSoundEngine() {
-      const interactiveSelector = 'button, a, .dst-tab, .nav-item, .reward-card, .amb-card, .inv-slot, .download-card, .dst-btn, .platform-pill, .fav-star-btn,.dst-toggle-label, input[type="checkbox"]';
+      const interactiveSelector = 'button, a, .dst-tab, .nav-item, .reward-card, .amb-card, .inv-slot, .download-card, .dst-btn, .platform-pill, .fav-star-btn, .dst-toggle-label, input[type="checkbox"]';
       const isTouchDevice = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
       let isPressed = false;
 
-      // 1. Hover Sound
       document.addEventListener('mouseover', (e) => {
         if (isTouchDevice()) return;
-
         const target = e.target.closest(interactiveSelector);
         const related = e.relatedTarget ? e.relatedTarget.closest(interactiveSelector) : null;
-
-        if (target && target !== related) {
-          playCustomSound(dstSounds.hover);
-        }
+        if (target && target !== related) playCustomSound(dstSounds.hover);
       }, { passive: true });
 
-      // 2. Press Down Sound
       document.addEventListener('pointerdown', (e) => {
         if (e.target.closest(interactiveSelector)) {
           isPressed = true;
@@ -2103,7 +1899,6 @@
         }
       });
 
-      // 3. Release Click Sound
       document.addEventListener('pointerup', () => {
         if (isPressed) {
           isPressed = false;
@@ -2111,7 +1906,6 @@
         }
       });
     }
-
 
     let rawAmbassadors = [];
     let currentDstCampaign = null;
@@ -2121,18 +1915,13 @@
     let showLocalTime = false;
     let cachedEndTimestamp = 0;
 
-    // Local Storage state wrappers
     function getFavorites() {
-      try {
-        return JSON.parse(localStorage.getItem('dst-favorite-ambassadors') || '[]');
-      } catch (e) { return []; }
+      try { return JSON.parse(localStorage.getItem('dst-favorite-ambassadors') || '[]'); }
+      catch (e) { return []; }
     }
 
     function toggleFavorite(name, e) {
-      if (e) {
-        e.preventDefault();     // Stops the <a> tag from opening the link
-        e.stopPropagation();    // Stops the click from bubbling up to the card
-      }
+      if (e) { e.preventDefault(); e.stopPropagation(); }
       let favs = getFavorites();
       if (favs.includes(name)) {
         favs = favs.filter(f => f !== name);
@@ -2141,7 +1930,7 @@
       }
       localStorage.setItem('dst-favorite-ambassadors', JSON.stringify(favs));
       updateFavCountBadge();
-      applyAmbassadorFilters()
+      applyAmbassadorFilters();
     }
 
     function updateFavCountBadge() {
@@ -2152,13 +1941,12 @@
 
     function setPlatformFilter(platform, btn) {
       currentPlatformFilter = platform;
-      localStorage.setItem('dst-last-platform-filter', platform); // Save filter state
+      localStorage.setItem('dst-last-platform-filter', platform);
 
       document.querySelectorAll('.platform-pill').forEach(p => p.classList.remove('active'));
       if (btn) {
         btn.classList.add('active');
       } else {
-        // Find button by filter name if restored programmatically
         document.querySelectorAll('.platform-pill').forEach(p => {
           if (p.getAttribute('onclick') && p.getAttribute('onclick').includes(`'${platform}'`)) {
             p.classList.add('active');
@@ -2170,9 +1958,7 @@
 
     function toggleTimerTimezone() {
       showLocalTime = !showLocalTime;
-      if (cachedEndTimestamp > 0) {
-        renderTimerDate(cachedEndTimestamp);
-      }
+      if (cachedEndTimestamp > 0) renderTimerDate(cachedEndTimestamp);
     }
 
     function renderTimerDate(endTimestamp) {
@@ -2186,95 +1972,29 @@
       }
     }
 
-    // Milestone Checkboxes Local Storage
-    function getMilestoneState(index) {
-      try {
-        const states = JSON.parse(localStorage.getItem('dst-milestone-states') || '{}');
-        return !!states[index];
-      } catch (e) { return false; }
-    }
-
-    function toggleMilestoneState(index, checkbox) {
-      try {
-        const states = JSON.parse(localStorage.getItem('dst-milestone-states') || '{}');
-        states[index] = checkbox.checked;
-        localStorage.setItem('dst-milestone-states', JSON.stringify(states));
-        const node = checkbox.closest('.milestone-node');
-        if (checkbox.checked) {
-          node.classList.add('claimed');
-        } else {
-          node.classList.remove('claimed');
-        }
-      } catch (e) { }
-    }
-
-    // Export / Import Backup Hub
-    function exportUserData() {
-      const backupData = {
-        favorites: getFavorites(),
-        milestones: localStorage.getItem('dst-milestone-states'),
-        notifications: localStorage.getItem('dst-drops-notif-enabled'),
-        exportDate: new Date().toISOString()
-      };
-      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `DST_Compendium_Backup_${new Date().toISOString().slice(0, 10)}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function importUserData(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        try {
-          const data = JSON.parse(e.target.result);
-          if (data.favorites) localStorage.setItem('dst-favorite-ambassadors', JSON.stringify(data.favorites));
-          if (data.milestones) localStorage.setItem('dst-milestone-states', data.milestones);
-          if (data.notifications) localStorage.setItem('dst-drops-notif-enabled', data.notifications);
-          alert("Backup restored successfully! Reloading view...");
-          location.reload();
-        } catch (err) {
-          alert("Invalid backup JSON file.");
-        }
-      };
-      reader.readAsText(file);
-    }
-
-    // --- TAB NAVIGATION ---
-    // Nav function updated with tab memory
-    // Nav function updated with tab memory
-    function nav(id, el) {
+    function nav(id) {
       document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
       const targetSection = document.getElementById(id);
       if (targetSection) targetSection.classList.add('active');
 
-      document.querySelectorAll('.dst-tab, .inv-slot').forEach(i => i.classList.remove('active'));
       document.querySelectorAll('.dst-tab, .inv-slot').forEach(item => {
         if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(`'${id}'`)) {
           item.classList.add('active');
+        } else {
+          item.classList.remove('active');
         }
       });
-
-      // Save last visited tab ID
       localStorage.setItem('dst-last-visited-tab', id);
     }
 
-    // Add this line at the top of your init() function to restore the last page:
     const lastTab = localStorage.getItem('dst-last-visited-tab') || 'drops';
     nav(lastTab);
 
-    // --- AMBASSADOR FILTER ---
     function applyAmbassadorFilters() {
       const query = (document.getElementById('amb-search')?.value || '').toLowerCase().trim();
       const listEl = document.getElementById('amb-list');
       const countEl = document.getElementById('amb-count-indicator');
       if (!listEl) return;
-
-
 
       const blacks = getBlacklist();
       const favs = getFavorites();
@@ -2284,15 +2004,9 @@
         const title = (amb.Title || '').toLowerCase();
         const url = (amb.StreamURL || '').toLowerCase();
 
-        // If viewing the blacklist tab, ONLY show blacklisted streamers
-        if (currentPlatformFilter === 'blacklist') {
-          return blacks.includes(amb.Name);
-        }
-
-        // Otherwise, hide blacklisted streamers everywhere else
+        if (currentPlatformFilter === 'blacklist') return blacks.includes(amb.Name);
         if (blacks.includes(amb.Name)) return false;
 
-        // Platform & Favorite filters
         if (currentPlatformFilter === 'twitch' && !url.includes('twitch.tv')) return false;
         if (currentPlatformFilter === 'bilibili' && !url.includes('bilibili')) return false;
         if (currentPlatformFilter === 'douyu' && !url.includes('douyu')) return false;
@@ -2301,7 +2015,6 @@
         return !query || name.includes(query) || title.includes(query);
       });
 
-      // Sort favorites to top
       filtered.sort((a, b) => {
         const aFav = favs.includes(a.Name) ? 1 : 0;
         const bFav = favs.includes(b.Name) ? 1 : 0;
@@ -2317,9 +2030,8 @@
           <div style="grid-column: 1/-1; text-align: center; padding: 40px 20px; font-family: var(--font-hand); color: var(--dst-paper-muted);">
             <i data-lucide="ghost" style="width: 44px; height: 44px; stroke: var(--dst-flame); margin: 0 auto 10px;"></i>
             <p style="font-size: 1.3rem; color: #fff;">No survivors found in this realm!</p>
-            <p style="font-size: 1rem;">Try clearing or changing your filters.</p>
+            <p style="font-size: 1.1rem;">Try clearing or changing your filters.</p>
           </div>
-          
         `;
         lucide.createIcons();
         return;
@@ -2329,33 +2041,32 @@
         const thumbUrl = (a.ThumbnailURL || '').replace('440x248', '640x360');
         const profileUrl = a.ProfileIcon || 'https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg';
         const isFav = favs.includes(a.Name);
-
         const isBlacklisted = blacks.includes(a.Name);
 
         return `
-  <div class="amb-card-container ${isFav ? 'pinned' : ''}">
-    <button class="fav-star-btn ${isFav ? 'favorited' : ''}" onclick="toggleFavorite('${a.Name}', event)" title="Pin Streamer">
-      <i data-lucide="star" style="width: 16px; height: 16px; ${isFav ? 'fill: currentColor;' : ''}"></i>
-    </button>
-    <button class="black-btn ${isBlacklisted ? 'blacklisted' : ''}" onclick="toggleBlacklist('${a.Name}', event)" title="${isBlacklisted ? 'Unblock Streamer' : 'Blacklist Streamer'}">
-      <i data-lucide="ban" style="width: 16px; height: 16px;"></i>
-    </button>
+          <div class="amb-card-container ${isFav ? 'pinned' : ''}">
+            <button class="fav-star-btn ${isFav ? 'favorited' : ''}" onclick="toggleFavorite('${a.Name}', event)" title="Pin Streamer">
+              <i data-lucide="star" style="width: 16px; height: 16px; ${isFav ? 'fill: currentColor;' : ''}"></i>
+            </button>
+            <button class="black-btn ${isBlacklisted ? 'blacklisted' : ''}" onclick="toggleBlacklist('${a.Name}', event)" title="${isBlacklisted ? 'Unblock Streamer' : 'Blacklist Streamer'}">
+              <i data-lucide="ban" style="width: 16px; height: 16px;"></i>
+            </button>
 
-    <a href="${a.StreamURL}" target="_blank" rel="noopener noreferrer" class="amb-card">
-      <div class="thumb-wrapper">
-        <img class="thumb-img" src="${thumbUrl}" alt="${a.Name}" loading="lazy" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg'">
-        <div class="live-stamp">LIVE</div>
-      </div>
-      <div class="amb-card-body">
-        <img class="profile-portrait" src="${profileUrl}" alt="${a.Name}" loading="lazy">
-        <div class="amb-card-text">
-          <span class="streamer-name">${a.Name}</span>
-          <span class="stream-topic">${a.Title || 'Don\'t Starve Together'}</span>
-        </div>
-      </div>
-    </a>
-  </div>
-`;
+            <a href="${a.StreamURL}" target="_blank" rel="noopener noreferrer" class="amb-card">
+              <div class="thumb-wrapper">
+                <img class="thumb-img" src="${thumbUrl}" alt="${a.Name}" loading="lazy" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg'">
+                <div class="live-stamp">LIVE</div>
+              </div>
+              <div class="amb-card-body">
+                <img class="profile-portrait" src="${profileUrl}" alt="${a.Name}" loading="lazy">
+                <div class="amb-card-text">
+                  <span class="streamer-name">${a.Name}</span>
+                  <span class="stream-topic">${a.Title || 'Don\'t Starve Together'}</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        `;
       }).join('');
 
       lucide.createIcons();
@@ -2393,14 +2104,8 @@
               return;
             }
           }
-
-          new Notification(title, {
-            body: body,
-            icon: iconUrl || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
-          });
-        } catch (e) {
-          // Suppresses mobile "Illegal constructor" error
-        }
+          new Notification(title, { body: body, icon: iconUrl || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" });
+        } catch (e) {}
       }
     }
 
@@ -2429,16 +2134,11 @@
       }
 
       const currentState = localStorage.getItem('dst-drops-notif-enabled') === 'true';
-
       if (!currentState) {
         const permission = await Notification.requestPermission();
         if (permission === 'granted') {
           localStorage.setItem('dst-drops-notif-enabled', 'true');
-          triggerSafeNotification(
-            "DST Drop Alerts Enabled!",
-            "You will receive alerts when new drops arrive or conclude.",
-            "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
-          );
+          triggerSafeNotification("DST Drop Alerts Enabled!", "You will receive alerts when new drops arrive or conclude.", "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg");
         } else {
           alert("Notification permission denied. Please allow notifications in your browser settings.");
           localStorage.setItem('dst-drops-notif-enabled', 'false');
@@ -2446,9 +2146,9 @@
       } else {
         localStorage.setItem('dst-drops-notif-enabled', 'false');
       }
-
       updateNotifButtonUI();
     }
+
     function checkDropStatusAlerts(dst) {
       if (!dst || localStorage.getItem('dst-drops-notif-enabled') !== 'true') return;
 
@@ -2457,39 +2157,27 @@
       const startTimestamp = dst.campaignStart ? dst.campaignStart * 1000 : (now - 10000);
       const isLive = (now >= startTimestamp) && (now < endTimestamp);
       const isEnded = now >= endTimestamp;
-
       const dropId = (dst.englishName || 'DST-Drop') + '-' + dst.campaignEnd;
 
-      // 1. DROP GOES LIVE
       if (isLive) {
         const alreadySaved = localStorage.getItem('dst-alerted-live-' + dropId);
         if (!alreadySaved && !sessionAlertedLive) {
           sessionAlertedLive = true;
-          try { localStorage.setItem('dst-alerted-live-' + dropId, 'true'); } catch (e) { }
-
-          triggerSafeNotification(
-            `New "${dst.englishName}" Drop is LIVE!`,
-            `Don't Starve Together drop for "${dst.englishName}" has arrived! Watch Klei Ambassadors to claim it.`,
-            dst.icon || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
-          );
+          try { localStorage.setItem('dst-alerted-live-' + dropId, 'true'); } catch (e) {}
+          triggerSafeNotification(`New "${dst.englishName}" Drop is LIVE!`, `Don't Starve Together drop for "${dst.englishName}" has arrived! Watch Klei Ambassadors to claim it.`, dst.icon || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg");
         }
       }
 
-      // 2. DROP CONCLUDES
       if (isEnded) {
         const alreadySaved = localStorage.getItem('dst-alerted-ended-' + dropId);
         if (!alreadySaved && !sessionAlertedEnded) {
           sessionAlertedEnded = true;
-          try { localStorage.setItem('dst-alerted-ended-' + dropId, 'true'); } catch (e) { }
-
-          triggerSafeNotification(
-            "🌑 Klei Drop Concluded",
-            `The campaign for "${dst.englishName}" has disappeared into darkness. Stay tuned for the next drop!`,
-            dst.icon || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
-          );
+          try { localStorage.setItem('dst-alerted-ended-' + dropId, 'true'); } catch (e) {}
+          triggerSafeNotification("🌑 Klei Drop Concluded", `The campaign for "${dst.englishName}" has disappeared into darkness. Stay tuned for the next drop!`, dst.icon || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg");
         }
       }
     }
+
     function openDiscordModal() {
       if (!currentDstCampaign) return;
       const modal = document.getElementById('discord-modal');
@@ -2510,13 +2198,7 @@
       if (box) {
         box.select();
         navigator.clipboard.writeText(box.value);
-
-        showInAppToast(
-          "Discord Markdown!",
-          "Copied Discord Markdown to clipboard!.",
-          "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
-        );
-
+        showInAppToast("Discord Markdown!", "Copied Discord Markdown to clipboard!", "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg");
         closeDiscordModal();
       }
     }
@@ -2534,29 +2216,16 @@
       }
     }
 
-
-
-    // 2. Restore last platform filter tab
     const savedFilter = localStorage.getItem('dst-last-platform-filter');
-    if (savedFilter) {
-      setPlatformFilter(savedFilter, null);
-    }
-
-
-
-
-
+    if (savedFilter) setPlatformFilter(savedFilter, null);
 
     async function init() {
       updateNotifButtonUI();
       updateFavCountBadge();
-      initCustomSoundEngine(); // Re-initializes sound listeners on page load
-
+      initCustomSoundEngine();
       updateBlacklistCountBadge();
-      initWidgetState()
+      initWidgetState();
       initWidgetListeners();
-
-
 
       try {
         const [cRes, aRes] = await Promise.all([
@@ -2579,17 +2248,17 @@
         ];
 
         document.getElementById('reward-rows').innerHTML = rewards.map(r => `
-  <div class="milestone-node">
-    <div class="milestone-icon-slot">
-      <img src="${r.img}" alt="${r.n}" loading="lazy" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg'">
-    </div>
-    <div class="milestone-info">
-      <h4>${r.n}</h4>
-      <p>${r.d}</p>
-    </div>
-    <div class="milestone-watchtime">${r.t} MINS</div>
-  </div>
-`).join('');
+          <div class="milestone-node">
+            <div class="milestone-icon-slot">
+              <img src="${r.img}" alt="${r.n}" loading="lazy" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg'">
+            </div>
+            <div class="milestone-info">
+              <h4>${r.n}</h4>
+              <p>${r.d}</p>
+            </div>
+            <div class="milestone-watchtime">${r.t} MINS</div>
+          </div>
+        `).join('');
 
         const updateTimer = () => {
           const endTimestamp = dst.campaignEnd * 1000;
@@ -2621,7 +2290,6 @@
             statusTextEl.innerText = "DROP BURNING";
             renderTimerDate(endTimestamp);
             if (sideStatusEl) { sideStatusEl.innerText = "LIVE"; sideStatusEl.className = "dst-badge live-glow"; }
-
           }
           checkDropStatusAlerts(dst);
         };
@@ -2645,7 +2313,7 @@
                 <h4>${asset.name}</h4>
                 <p>Format: ${ext}</p>
               </div>
-              <button onclick="forceDownload('${asset.url}', '${asset.name}')" class="dst-btn" style="font-size: 0.95rem; width: 100%;">
+              <button onclick="forceDownload('${asset.url}', '${asset.name}')" class="dst-btn" style="font-size: 1.05rem; width: 100%;">
                 <i data-lucide="download" style="width: 16px;"></i> Download
               </button>
             </div>
@@ -2680,9 +2348,6 @@
 
     init();
   </script>
-
-
-
 </body>
 
 </html>

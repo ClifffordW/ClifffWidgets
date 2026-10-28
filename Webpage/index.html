@@ -144,7 +144,8 @@
       .dst-toggle-label,
       .dst-slider,
       input[type="checkbox"],
-      input[type="text"] {
+      input[type="text"],
+      input[type="color"] {
 
         cursor: url("data:image/png;base64,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") 0 0, pointer !important;
 
@@ -1519,7 +1520,7 @@
               </label>
               <div style="display: flex; gap: 6px; align-items: center;">
                 <input type="color" id="obs-color1" value="#90ee90" oninput="syncColorToText('1')"
-                  style="width: 38px; height: 42px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
+                  style="width: 50px; height: 42px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
                 <input type="text" id="obs-glow1" class="search-input-box" value="90EE90"
                   oninput="syncTextToColor('1'); updateObsUrlBuilder();"
                   style="padding: 8px 10px; font-size: 1.2rem; text-transform: uppercase;" />
@@ -1533,7 +1534,7 @@
               </label>
               <div style="display: flex; gap: 6px; align-items: center;">
                 <input type="color" id="obs-color2" value="#64F89D" oninput="syncColorToText('2')"
-                  style="width: 38px; height: 42px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
+                  style="width: 50px; height: 42px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
                 <input type="text" id="obs-glow2" class="search-input-box" value="64F89D"
                   oninput="syncTextToColor('2'); updateObsUrlBuilder();"
                   style="padding: 8px 10px; font-size: 1.2rem; text-transform: uppercase;" />
@@ -1547,7 +1548,7 @@
               </label>
               <div style="display: flex; gap: 6px; align-items: center;">
                 <input type="color" id="obs-color3" value="#AFFF60" oninput="syncColorToText('3')"
-                  style="width: 38px; height: 42px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
+                  style="width: 50px; height: 42px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
                 <input type="text" id="obs-glow3" class="search-input-box" value="AFFF60"
                   oninput="syncTextToColor('3'); updateObsUrlBuilder();"
                   style="padding: 8px 10px; font-size: 1.2rem; text-transform: uppercase;" />

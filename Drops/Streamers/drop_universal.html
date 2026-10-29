@@ -414,6 +414,8 @@
     const hatX = parseInt(urlParams.get('hatx') || '0', 10);
     const hatY = parseInt(urlParams.get('haty') || '0', 10);
     const hatScaleVal = parseInt(urlParams.get('hatscale') || '100', 10) / 100;
+    const hatRot = parseInt(urlParams.get('hatrot') || '15', 10); // Added rotation parameter reader
+
 
     const defaultHatUrls = {
       xmas: "https://dontstarve.wiki.gg/images/Winter_Hat_Dropped.png?72e0b5",
@@ -444,11 +446,12 @@
           targetEl.appendChild(phWrap);
           
           // Apply custom offset variables and transform safely to the image without breaking animation
+// Apply custom offset variables, scale, and rotation safely
           ph.style.setProperty('--hat-offset-x', `${hatX}px`);
           ph.style.setProperty('--hat-offset-y', `${hatY}px`);
           ph.style.setProperty('--hat-scale', hatScaleVal);
-          ph.style.transform = 'translate(calc(-50% + var(--hat-offset-x)), var(--hat-offset-y)) scale(var(--hat-scale)) rotate(15deg)';
-        }
+          ph.style.setProperty('--hat-rotate', `${hatRot}deg`); // Added rotation property
+          ph.style.transform = 'translate(calc(-50% + var(--hat-offset-x)), var(--hat-offset-y)) scale(var(--hat-scale)) rotate(var(--hat-rotate))';        }
       }
     }
 

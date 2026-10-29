@@ -2103,18 +2103,32 @@
                       <span>Offset X</span>
                       <span id="hat-x-val" style="color: var(--dst-flame); font-weight: bold;">0px</span>
                     </div>
-                    <input type="range" id="obs-hat-x" min="-60" max="60" value="0" step="1"
-                      oninput="updateHatOffsets()" />
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                      <i data-lucide="arrow-left"
+                        style="width: 14px; height: 14px; color: var(--dst-paper-muted); flex-shrink: 0;"
+                        title="Move Left"></i>
+                      <input type="range" id="obs-hat-x" min="-100" max="100" value="0" step="1" style="flex: 1;" />
+                      <i data-lucide="arrow-right"
+                        style="width: 14px; height: 14px; color: var(--dst-paper-muted); flex-shrink: 0;"
+                        title="Move Right"></i>
+                    </div>
                   </div>
 
                   <div>
-                    <div title="Offset Y Left - Up / Offset Y Right - Down" ;
+                    <div
                       style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
-                      <span><u>Offset Y</span></u>
+                      <span><u>Offset Y</u></span>
                       <span id="hat-y-val" style="color: var(--dst-flame); font-weight: bold;">0px</span>
                     </div>
-                    <input type="range" id="obs-hat-y" min="-60" max="60" value="0" step="1"
-                      oninput="updateHatOffsets()" />
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                      <i data-lucide="arrow-up"
+                        style="width: 14px; height: 14px; color: var(--dst-paper-muted); flex-shrink: 0;"
+                        title="Move Up"></i>
+                      <input type="range" id="obs-hat-y" min="-100" max="100" value="0" step="1" style="flex: 1;" />
+                      <i data-lucide="arrow-down"
+                        style="width: 14px; height: 14px; color: var(--dst-paper-muted); flex-shrink: 0;"
+                        title="Move Down"></i>
+                    </div>
                   </div>
                 </div>
 
@@ -2125,9 +2139,35 @@
                     <span>Hat Scale</span>
                     <span id="hat-scale-val" style="color: var(--dst-flame); font-weight: bold;">100%</span>
                   </div>
-                  <input type="range" id="obs-hat-scale" min="50" max="200" value="100" step="5"
-                    oninput="updateHatOffsets()" />
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <i data-lucide="minimize-2"
+                      style="width: 14px; height: 14px; color: var(--dst-paper-muted); flex-shrink: 0;"
+                      title="Smaller"></i>
+                    <input type="range" id="obs-hat-scale" min="200" max="400" value="100" step="5" style="flex: 1;" />
+                    <i data-lucide="maximize-2"
+                      style="width: 14px; height: 14px; color: var(--dst-paper-muted); flex-shrink: 0;"
+                      title="Larger"></i>
+                  </div>
                 </div>
+
+                <!-- HAT ROTATION CONTROL -->
+                <div style="margin-top: 8px;">
+                  <div
+                    style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
+                    <span>Hat Rotation</span>
+                    <span id="hat-rot-val" style="color: var(--dst-flame); font-weight: bold;">15°</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <i data-lucide="rotate-ccw"
+                      style="width: 14px; height: 14px; color: var(--dst-paper-muted); flex-shrink: 0;"
+                      title="Rotate Counter-Clockwise"></i>
+                    <input type="range" id="obs-hat-rot" min="-180" max="180" value="15" step="5" style="flex: 1;" />
+                    <i data-lucide="rotate-cw"
+                      style="width: 14px; height: 14px; color: var(--dst-paper-muted); flex-shrink: 0;"
+                      title="Rotate Clockwise"></i>
+                  </div>
+                </div>
+
 
               </div>
             </div>
@@ -2423,21 +2463,7 @@
     });
 
 
-    function updateHatOffsets() {
-      const xVal = document.getElementById('obs-hat-x')?.value || 0;
-      const yVal = document.getElementById('obs-hat-y')?.value || 0;
-      const scaleVal = document.getElementById('obs-hat-scale')?.value || 100;
 
-      const xText = document.getElementById('hat-x-val');
-      const yText = document.getElementById('hat-y-val');
-      const scaleText = document.getElementById('hat-scale-val');
-
-      if (xText) xText.innerText = `${xVal}px`;
-      if (yText) yText.innerText = `${yVal}px`;
-      if (scaleText) scaleText.innerText = `${scaleVal}%`;
-
-      updateObsUrlBuilder();
-    }
 
     function setHatPosition(pos, btn) {
       const posInput = document.getElementById('obs-hat-pos');
@@ -2634,7 +2660,7 @@
 
 
 
-
+      updateHatOffsetsOnly();
 
       const borderHex = (document.getElementById('obs-border-hex')?.value || '').replace(/#/g, '').trim().toUpperCase();
       const fillHex = (document.getElementById('obs-fill-hex')?.value || '').replace(/#/g, '').trim().toUpperCase();
@@ -2643,17 +2669,16 @@
 
       const hatType = (document.getElementById('obs-seasonal-hat')?.value || '').trim();
       const hatUrl = (document.getElementById('obs-hat-url')?.value || '').trim();
-      let hatPos = (document.getElementById('obs-hat-pos')?.value || 'avatar').trim();
+      const hatPos = (document.getElementById('obs-hat-pos')?.value || 'avatar').trim();
       const flairBtn = document.querySelector('.hat-pos-pill:not(#hat-btn-avatar)'); // or select your other pills
       const allPills = document.querySelectorAll('.hat-pos-pill');
 
       const hatX = document.getElementById('obs-hat-x')?.value || '0';
       const hatY = document.getElementById('obs-hat-y')?.value || '0';
       const hatScale = document.getElementById('obs-hat-scale')?.value || '100';
+      const hatRot = document.getElementById('obs-hat-rot')?.value || '15'; // Added rotation variable
 
-      localStorage.setItem('dst-obs-hatx', hatX);
-      localStorage.setItem('dst-obs-haty', hatY);
-      localStorage.setItem('dst-obs-hatscale', hatScale);
+
 
 
 
@@ -2722,7 +2747,7 @@
 
         // Refresh active state visually
         /* allPills.forEach(p => p.classList.remove('active')); */
-       /*  if (avatarBtn && hatPos === 'avatar') avatarBtn.classList.add('active'); */
+        /*  if (avatarBtn && hatPos === 'avatar') avatarBtn.classList.add('active'); */
       }
 
 
@@ -2753,6 +2778,13 @@
       localStorage.setItem('dst-obs-hattype', hatType);
       localStorage.setItem('dst-obs-haturl', hatUrl);
       localStorage.setItem('dst-obs-hatpos', hatPos); // ADDED
+
+      localStorage.setItem('dst-obs-hatx', hatX);
+      localStorage.setItem('dst-obs-haty', hatY);
+      localStorage.setItem('dst-obs-hatscale', hatScale);
+      localStorage.setItem('dst-obs-hatrot', hatRot); // Added rotation storage
+
+
 
 
 
@@ -2851,6 +2883,10 @@
       const savedHatX = localStorage.getItem('dst-obs-hatx') || '0';
       const savedHatY = localStorage.getItem('dst-obs-haty') || '0';
       const savedHatScale = localStorage.getItem('dst-obs-hatscale') || '100';
+      const savedHatRot = localStorage.getItem('dst-obs-hatrot') || '15';
+
+
+      if (document.getElementById('obs-hat-rot')) document.getElementById('obs-hat-rot').value = savedHatRot;
 
       if (document.getElementById('obs-hat-x')) document.getElementById('obs-hat-x').value = savedHatX;
       if (document.getElementById('obs-hat-y')) document.getElementById('obs-hat-y').value = savedHatY;
@@ -2908,6 +2944,30 @@
       }
     }
 
+    function updateHatOffsetsOnly() {
+      const xVal = document.getElementById('obs-hat-x')?.value || 0;
+      const yVal = document.getElementById('obs-hat-y')?.value || 0;
+      const scaleVal = document.getElementById('obs-hat-scale')?.value || 100;
+      const rotVal = document.getElementById('obs-hat-rot')?.value || 15;
+
+      const xText = document.getElementById('hat-x-val');
+      const yText = document.getElementById('hat-y-val');
+      const scaleText = document.getElementById('hat-scale-val');
+      const rotText = document.getElementById('hat-rot-val');
+
+      if (xText) xText.innerText = `${xVal}px`;
+      if (yText) yText.innerText = `${yVal}px`;
+      if (scaleText) scaleText.innerText = `${scaleVal}%`;
+      if (rotText) rotText.innerText = `${rotVal}°`;
+    }
+
+    // Keep your original updateHatOffsets for initial setup or direct changes if needed
+    function updateHatOffsets() {
+      updateHatOffsetsOnly();
+      updateObsUrlBuilder();
+    }
+
+
     function initWidgetListeners() {
       const fields = [
         'obs-twitch', 'obs-avatar', 'obs-speed',
@@ -2924,6 +2984,24 @@
           el.addEventListener('change', updateObsUrlBuilder);
         }
       });
+
+
+      // Attach smooth range slider handlers
+      const rangeSliders = ['obs-hat-x', 'obs-hat-y', 'obs-hat-scale', 'obs-hat-rot'];
+      rangeSliders.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          // Live text update on drag (No cursor flicker)
+          el.addEventListener('input', () => {
+            updateHatOffsetsOnly();
+          });
+          // Final URL & iframe rebuild on release
+          el.addEventListener('change', () => {
+            updateObsUrlBuilder();
+          });
+        }
+      });
+
       updateObsUrlBuilder();
     }
 

@@ -2450,6 +2450,29 @@
         gap: 4px;
       }
     }
+
+
+    @media (max-width: 900px) {
+      .mobile-inventory-dock {
+        justify-content: center;
+        gap: 8px;
+        padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+      }
+
+      .inv-slot {
+        flex: 1 1 0;
+        /* equal widths, fill the row */
+        max-width: none;
+        /* remove the 64–78px cap */
+        min-width: 0;
+        padding: 8px 4px;
+      }
+
+      .inv-slot.active {
+        transform: translateY(-2px);
+        /* smaller lift so it doesn't look detached */
+      }
+    }
   </style>
 </head>
 
@@ -3094,7 +3117,7 @@
 
     // Loop through each element and change the cursor (e.g., to 'help')
     elementsWithTitle.forEach(element => {
-      element.style.cursor = 'help';
+      element.style.cursor = 'var(--cursor-help) 0 16, help';
     });
 
 

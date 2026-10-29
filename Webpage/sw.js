@@ -1,20 +1,26 @@
-self.addEventListener('install', (event) => {
+const CACHE = 'dst-cache-v2'; // bump this number on every update
+
+self.addEventListener('install', (e) => {
   self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
-  event.waitUntil(clients.claim());
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
+  );
 });
 
-// Optional: Handle notification click event to focus/open your app
-self.addEventListener('notificationclick', (event) => {
-  event.notification.close();
-  event.waitUntil(
-    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
-      for (const client of clientList) {
-        if ('focus' in client) return client.focus();
-      }
-      if (clients.openWindow) return clients.openWindow('./index.html');
-    })
+self.addEventListener('fetch', (e) => {
+  if (e.request.method !== 'GET') return;
+  e.respondWith(
+    fetch(e.request)
+      .then(res => {
+        const copy = res.clone();
+        caches.open(CACHE).then(c => c.put(e.request, copy));
+        return res;
+      })
+      .catch(() => caches.match(e.request))
   );
 });

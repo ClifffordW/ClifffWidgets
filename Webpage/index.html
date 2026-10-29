@@ -1587,12 +1587,12 @@
               <div>
 
 
-                <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+<div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
                   <label class="dst-toggle-label"
                     style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1.1rem; color: var(--dst-paper);">
                     <span>Disable Border</span>
                     <div class="dst-switch">
-                      <input type="checkbox" id="obs-solo-toggle" onchange="toggleBorderDisable()">
+                      <input type="checkbox" id="obs-no-border" onchange="toggleBorderDisable()">
                       <span class="dst-slider"></span>
                     </div>
                   </label>
@@ -1959,8 +1959,8 @@
     function updateObsUrlBuilder() {
       const twitch = (document.getElementById('obs-twitch')?.value || '').toLowerCase().trim();
       const avatar = (document.getElementById('obs-avatar')?.value || '').trim();
-      const isSolo = document.getElementById('obs-solo')?.checked || false;
-      const isCarousel = document.getElementById('obs-carousel')?.checked || false;
+      const isSolo = document.getElementById('obs-solo-toggle')?.checked || false;
+      const isCarousel = document.getElementById('obs-carousel-toggle')?.checked || false;
       const hideHead = document.getElementById('obs-hide-head')?.checked || false;
       const speed = (document.getElementById('obs-speed')?.value || '4.5').trim();
 

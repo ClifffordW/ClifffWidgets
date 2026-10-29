@@ -549,8 +549,6 @@
   </div>
 
   <script>
-
-    /* ─── 3. BORDER & FILL CONFIGURATION ─────────────────────────── */
     // ─── 1. INITIALIZE URL PARAMETERS FIRST ───────────────────────
     const urlParams = new URLSearchParams(window.location.search);
     const root = document.documentElement;
@@ -569,25 +567,32 @@
         streamerHeadEl.style.boxShadow = 'none';
       } else {
         if (borderHex) streamerHeadEl.style.border = `3px solid #${borderHex}`;
-        if (fillHex) streamerHeadEl.style.backgroundColor = `#${fillHex}`; // Explicitly set background-color
+        if (fillHex) streamerHeadEl.style.backgroundColor = `#${fillHex}`;
       }
     }
 
-    /* ─── 4. HIDE STREAMER HEAD TOGGLE ───────────────────────────── */
+    /* ─── 3. HIDE STREAMER HEAD TOGGLE ───────────────────────────── */
     const hideHead = urlParams.get('nohead') === '1';
     if (hideHead && streamerHeadEl) {
       streamerHeadEl.style.display = 'none';
     }
 
-    /* ─── 5. SEASONAL HAT & POSITIONING (Smart Overrides) ────────── */
+    /* ─── 4. STREAMER AVATAR RESOLUTION (Direct URL or Twitch Fallback) ─ */
+    const avatarUrl = urlParams.get('avatar');
+    const twitchUser = urlParams.get('twitch');
+    const resolvedAvatarSrc = avatarUrl || (twitchUser ? `https://decapi.me/twitch/avatar/${encodeURIComponent(twitchUser)}` : '');
+
+    if (resolvedAvatarSrc && streamerHeadEl && !hideHead) {
+      streamerHeadEl.src = resolvedAvatarSrc;
+      const wrapEl = document.getElementById('streamer-wrap');
+      if (wrapEl) wrapEl.style.display = 'block';
+    }
+
+    /* ─── 5. SEASONAL HAT & POSITIONING ──────────────────────────── */
     const hatType = urlParams.get('hat');
     const hatUrl = urlParams.get('haturl');
     let hatPos = urlParams.get('hatpos') || 'avatar';
 
-    // If avatar is hidden (nohead=1), disallow/hide the hat entirely
-    const isAvatarDisabled = hideHead || !urlParams.get('avatar');
-
-    // If Solo or Carousel mode is active, lock hat position to avatar by default
     const isSoloOrCarousel = urlParams.has('solo') || urlParams.has('carousel') || urlParams.has('cycle');
     if (isSoloOrCarousel) {
       hatPos = 'avatar';
@@ -599,7 +604,7 @@
       birthday: "https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/birthday_hat.png"
     };
 
-    if (hatType) {
+    if (hatType && !hideHead) {
       const resolvedHatSrc = hatUrl || defaultHatUrls[hatType] || '';
       const ph = document.getElementById('partyhat');
 
@@ -628,15 +633,15 @@
             ph.style.transform = 'rotate(-15deg)';
           }
         }
-        // Otherwise stays attached to streamer-wrap automatically via HTML structure
       }
     }
 
-    /* ─── 5. SOLO & CAROUSEL MODES ───────────────────────────────── */
+    /* ─── 6. SOLO & CAROUSEL MODES ───────────────────────────────── */
     const isSolo = urlParams.has('solo');
     if (isSolo) {
       document.body.classList.add('solo');
-      document.getElementById('drops').setAttribute('data-solo', '');
+      const dropsEl = document.getElementById('drops');
+      if (dropsEl) dropsEl.setAttribute('data-solo', '');
     }
 
     const isCarousel = urlParams.has('carousel') || urlParams.has('cycle');
@@ -644,7 +649,7 @@
       document.body.classList.add('carousel', 'solo');
     }
 
-    /* ─── 6. FETCH KLEI CAMPAIGN DATA & SETUP SLOTS/CAROUSEL ─────────── */
+    /* ─── 7. FETCH KLEI CAMPAIGN DATA & SETUP SLOTS/CAROUSEL ─────────── */
     fetch('https://cdn.forums.klei.com/drops/current_campaign.json')
       .then(r => r.json())
       .then(data => {
@@ -657,9 +662,13 @@
         }
 
         const { icon, item, portrait } = dst;
-        if (icon) document.querySelector('.bg-flair').src = icon;
-        if (portrait) document.querySelector('.bg-portrait').src = portrait;
-        if (item) document.querySelector('.bg-item').src = item;
+        const flairEl = document.querySelector('.bg-flair');
+        const portraitEl = document.querySelector('.bg-portrait');
+        const itemEl = document.querySelector('.bg-item');
+
+        if (icon && flairEl) flairEl.src = icon;
+        if (portrait && portraitEl) portraitEl.src = portrait;
+        if (item && itemEl) itemEl.src = item;
 
         if (isCarousel) {
           const slots = [

@@ -475,7 +475,7 @@
 
       if (resolvedHatSrc && ph) {
         ph.src = resolvedHatSrc;
-        ph.style.display = 'block';
+        ph.style.display = 'none';
 
         if (hatPos === 'drop') {
           const itemSlot = document.querySelector('.slot--item') || document.querySelector('.drops');
@@ -486,6 +486,7 @@
             ph.style.left = '50%';
             ph.style.right = 'auto';
             ph.style.transform = 'translateX(-50%) rotate(15deg)';
+            ph.style.display = 'block';
           }
         } else if (hatPos === 'top-left') {
           const dropsContainer = document.getElementById('drops');

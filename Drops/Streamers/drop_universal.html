@@ -500,49 +500,14 @@
           ph.style.left = '50%';
           ph.style.right = 'auto';
           
-          // Apply base anchor rotation + custom X/Y pixel translation offsets
-          ph.style.transform = `translate(calc(-50% + ${hatX}px), ${hatY}px) rotate(15deg)`;
+          // Inject offsets cleanly while letting it inherit parent container animations
+          ph.style.setProperty('--hat-offset-x', `${hatX}px`);
+          ph.style.setProperty('--hat-offset-y', `${hatY}px`);
+          ph.style.transform = 'translate(calc(-50% + var(--hat-offset-x)), var(--hat-offset-y)) rotate(15deg)';
           ph.style.zIndex = '20';
         }
       }
     }
-
-    const defaultHatUrls = {
-      xmas: "https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/xmas_hat.png",
-      halloween: "https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/halloween_hat.png",
-      birthday: "https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/birthday_hat.png"
-    };
-
-    if (hatType) {
-      const resolvedHatSrc = hatUrl || defaultHatUrls[hatType] || '';
-      const ph = document.getElementById('partyhat');
-
-      if (resolvedHatSrc && ph) {
-        ph.src = resolvedHatSrc;
-        ph.style.display = 'block';
-
-        // Determine target element based on chosen position
-        let targetEl = document.getElementById('streamer-wrap'); // default avatar
-        if (hatPos === 'flair') {
-          targetEl = document.querySelector('.slot--flair');
-        } else if (hatPos === 'portrait') {
-          targetEl = document.querySelector('.slot--portrait');
-        } else if (hatPos === 'item') {
-          targetEl = document.querySelector('.slot--item');
-        }
-
-        if (targetEl) {
-          targetEl.appendChild(ph);
-          ph.style.position = 'absolute';
-          ph.style.top = '-25px';
-          ph.style.left = '50%';
-          ph.style.right = 'auto';
-          ph.style.transform = 'translateX(-50%) rotate(15deg)';
-          ph.style.zIndex = '20';
-        }
-      }
-    }
-
     /* ─── 6. SOLO & CAROUSEL MODES ───────────────────────────────── */
     const isSolo = urlParams.has('solo');
     if (isSolo) {

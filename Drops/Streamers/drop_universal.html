@@ -9,6 +9,7 @@
 
     /* ─── SHARED HAT ANIMATION & GLOW ────────────────────────────── */
 /* ─── SHARED HAT ANIMATION & GLOW ────────────────────────────── */
+/* ─── SHARED HAT ANIMATION & GLOW ────────────────────────────── */
     .partyhat-wrap.is-animated {
       animation:
         float-streamer 4.5s ease-in-out infinite,
@@ -19,11 +20,17 @@
       position: absolute;
       top: -25px;
       left: 50%;
+      width: 0;
+      height: 0;
       z-index: 20;
       pointer-events: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .partyhat {
+      position: absolute;
       width: 46px;
       height: auto;
       display: block;
@@ -218,18 +225,7 @@
     }
 
     /* ─── SEASONAL HAT ───────────────────────────────────────────── */
-    .partyhat {
-      position: absolute;
-      top: -25px;
-      left: 50%;
-      width: 46px;
-      height: auto;
-      z-index: 20;
-      transform: translate(-50%, 0) rotate(15deg);
-      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.9));
-      display: none;
-      pointer-events: none;
-    }
+
 
     /* ══════════════════════════════════════════════════════════════
        SOLO MODE — 1024 × 1024 Layout Cluster

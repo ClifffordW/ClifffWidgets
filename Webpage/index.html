@@ -319,7 +319,7 @@
       :root,
       .preview-viewport
       {
-        cursor: var(--cursor-pointer) 0 0, pointer !important;
+        cursor: var(--cursor-pointer) 0 16, pointer !important;
       }
 
 
@@ -327,19 +327,19 @@
       
       /* Prevent cursor flickering on body while dragging range sliders */
       body:has(input[type="range"]:active) {
-        cursor: var(--cursor-grabbing) 16 16, grabbing !important;
+        cursor: var(--cursor-grabbing) 0 16, grabbing !important;
       }
 
       [draggable="true"],
       .draggable-item
        {
-        cursor: var(--cursor-grabbing) 0 0, grab !important;
+        cursor: var(--cursor-grabbing) 0 16, grab !important;
       }
 
       [draggable="true"]:active,
       .draggable-item:active,
       img:active {
-        cursor: var(--cursor-grabbing) 16 16, grabbing !important;
+        cursor: var(--cursor-grabbing) 0 16, grabbing !important;
       }
 
       
@@ -358,23 +358,23 @@
       input[type="color"],
       .dst-slider,
       .dst-toggle-label {
-        cursor: var(--cursor-link) 0 0, pointer !important;
+        cursor: var(--cursor-link) 0 16, pointer !important;
       }
 
       /* Sliders & Draggables (Grab state) */
       input[type="range"] {
-        cursor: var(--cursor-grabbing) 16 16, grab !important;
+        cursor: var(--cursor-grabbing) 0 16, grab !important;
       }
 
       /* Sliders & Draggables (Active / Grabbing state) */
       input[type="range"]:active {
-        cursor: var(--cursor-grabbing) 16 16, grabbing !important;
+        cursor: var(--cursor-grabbing) 0 16, grabbing !important;
       }
     }
 
     input[type="text"]:not(#obs-result-url), input[type="number"]
     {
-      cursor: var(--cursor-text) 0 0, text !important;
+      cursor: var(--cursor-text) 0 16, text !important;
 
     }
 

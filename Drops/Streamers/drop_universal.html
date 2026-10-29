@@ -624,12 +624,12 @@
             ph.style.transform = 'translateX(-50%) rotate(15deg)';
           }
         } else if (hatPos === 'top-left') {
-          const itemSlot = document.querySelector('slot--flair') || document.querySelector('.drops');
+          const itemSlot = document.querySelector('.slot--flair') || document.querySelector('.drops');
           if (itemSlot) {
             itemSlot.appendChild(ph);
             ph.style.position = 'absolute';
-            ph.style.top = '-25px';
-            ph.style.left = '50%';
+            ph.style.top = '-10px';
+            ph.style.left = '5%';
             ph.style.width = '90px';
             ph.style.right = 'auto';
             ph.style.transform = 'translateX(-50%) rotate(15deg)';

@@ -454,7 +454,9 @@
    /* ─── 5. SEASONAL HAT & POSITIONING ──────────────────────────── */
     const hatType = urlParams.get('hat');
     const hatUrl = urlParams.get('haturl');
-    const hatPos = urlParams.get('hatpos') || 'avatar';
+    // Solo & Carousel only allow the hat on the avatar; other placements are Default-mode only
+    const isSoloOrCarousel = urlParams.has('solo') || urlParams.has('carousel') || urlParams.has('cycle');
+    const hatPos = isSoloOrCarousel ? 'avatar' : (urlParams.get('hatpos') || 'avatar');
     const hatX = parseInt(urlParams.get('hatx') || '0', 10);
     const hatY = parseInt(urlParams.get('haty') || '0', 10);
     const hatScaleVal = parseInt(urlParams.get('hatscale') || '100', 10) / 100;

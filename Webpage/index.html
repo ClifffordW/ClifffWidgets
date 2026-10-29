@@ -432,9 +432,9 @@
         cursor: var(--cursor-grabbing) 0 11, grabbing;
       }
 
-      [title] {
+/*       [title] {
         cursor: var(--cursor-help) 0 16, help !important;
-      }
+      } */
 
 
 
@@ -1727,6 +1727,169 @@
         text-align: center;
       }
     }
+
+    /* ═══════════════════════════════════════════════════════════
+       AMBASSADOR WIDGET TAB — redesigned layout (wg-*)
+       ═══════════════════════════════════════════════════════════ */
+    #widget [hidden] { display: none !important; }
+
+    .wg-card { max-width: 1550px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; overflow: visible; padding-bottom: 36px; }
+    .wg-intro h3 { font-family: var(--font-title); color: #fff; margin-bottom: 6px; font-size: 1.3rem; display: flex; align-items: center; gap: 8px; }
+    .wg-intro h3 i { color: var(--dst-flame); }
+    .wg-intro p { font-size: 1.1rem; color: var(--dst-paper-muted); line-height: 1.4; }
+
+    .wg-layout { display: grid; grid-template-columns: minmax(340px, 1fr) 1.8fr; gap: 28px; align-items: start; }
+    .wg-settings { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+
+    .wg-panel { background: rgba(13, 9, 8, 0.55); border: 2px solid #3c2a20; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 14px; box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.45); }
+    .wg-panel-head { display: flex; align-items: center; gap: 8px; padding-bottom: 10px; border-bottom: 1px dashed #3a2b22; }
+    .wg-panel-head h4 { font-family: var(--font-title); color: #fff; font-size: 1.05rem; margin: 0; }
+    .wg-panel-head i { color: var(--dst-flame); width: 18px; height: 18px; }
+
+    .wg-label { font-family: var(--font-mono); font-size: 1rem; color: var(--dst-paper); display: block; margin-bottom: 4px; }
+    .wg-label-sm { font-size: 0.9rem; color: var(--dst-paper-muted); }
+    .wg-sub { color: #9c8472; font-size: 0.85rem; }
+    .wg-hint { font-family: var(--font-hand); font-size: 1rem; color: var(--dst-paper-muted); line-height: 1.3; margin: 0; }
+    .wg-hint-tight { font-size: 0.9rem; margin-top: -4px; }
+
+    .wg-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .wg-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+    .wg-color { display: flex; gap: 6px; align-items: center; min-width: 0; }
+    .wg-color input[type="color"] { width: 40px; height: 40px; flex-shrink: 0; padding: 0; background: none; border: 2px solid #3d2c22; border-radius: 6px; }
+    .wg-color .search-input-box { padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase; min-width: 0; width: 100%; }
+
+    .wg-toggle { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper); margin-bottom: 6px; }
+    .wg-panel > .wg-toggle { margin-bottom: 0; }
+
+    /* Mode selector */
+    .wg-seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .wg-seg-btn { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 6px; background: #1a120e; border: 1px solid #3c281e; border-radius: var(--sketch-radius); color: var(--dst-paper-muted); font-family: var(--font-hand); font-size: 1.1rem; transition: all 0.2s ease; cursor: var(--cursor-link) 0 16, pointer; }
+    .wg-seg-btn i { width: 20px; height: 20px; }
+    .wg-seg-btn small { font-family: var(--font-mono); font-size: 0.75rem; opacity: 0.75; }
+    .wg-seg-btn:hover { color: #fff; border-color: var(--dst-flame); }
+    .wg-seg-btn.active { background: var(--dst-flame); color: #fff; border-color: #ff9d5c; font-weight: bold; }
+
+    /* Hat panel */
+    .wg-hat-options { display: flex; flex-direction: column; gap: 14px; background: #140d0a; border: 1px dashed var(--dst-border-highlight); padding: 12px; border-radius: 6px; }
+    .wg-pos-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    .wg-pos-grid .hat-pos-pill { display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .wg-pos-grid .hat-pos-pill img { width: 18px; height: 18px; object-fit: contain; }
+    .hat-pos-pill.locked, .hat-pos-pill:disabled { opacity: 0.35; cursor: not-allowed !important; filter: grayscale(100%); border-color: #2c1f18; background: #120e0c; color: #6c584c; }
+    .hat-pos-pill.locked:hover { color: #6c584c; border-color: #2c1f18; }
+
+    .wg-note { display: flex; gap: 8px; align-items: flex-start; margin-top: 8px; padding: 8px 10px; border: 1px solid var(--dst-border-highlight); border-radius: 6px; background: rgba(231, 108, 30, 0.08); font-family: var(--font-hand); font-size: 0.98rem; line-height: 1.25; color: var(--dst-paper); }
+    .wg-note i { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; color: var(--dst-flame-bright); }
+    .wg-note-warn { border-color: var(--dst-crimson); background: rgba(166, 43, 32, 0.15); }
+    .wg-note-warn i { color: #e74c3c; }
+
+    .wg-sub-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+    .wg-reset { display: inline-flex; align-items: center; gap: 4px; background: none; border: 1px solid #3c281e; border-radius: 4px; padding: 2px 8px; color: var(--dst-paper-muted); font-family: var(--font-hand); font-size: 0.9rem; cursor: var(--cursor-link) 0 16, pointer; }
+    .wg-reset i { width: 12px; height: 12px; }
+    .wg-reset:hover { color: #fff; border-color: var(--dst-flame); }
+    .wg-sliders { gap: 10px 14px; }
+    .wg-slider-top { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px; }
+    .wg-slider-top b { color: var(--dst-flame); }
+    .wg-slider-row { display: flex; align-items: center; gap: 6px; }
+    .wg-slider-row i { width: 14px; height: 14px; color: var(--dst-paper-muted); flex-shrink: 0; }
+    .wg-slider-row input[type="range"] { flex: 1; min-width: 0; }
+
+    /* Preview column */
+    .wg-preview { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 20px; min-width: 0; }
+    .wg-preview-card { background: #0d0908; border: 2px solid #3c2a20; border-radius: 8px; padding: 16px; box-shadow: 0 4px 25px rgba(0, 0, 0, 0.7); }
+    .wg-preview-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .wg-preview-head h4 { font-family: var(--font-title); color: #fff; font-size: 1.15rem; display: flex; align-items: center; gap: 6px; margin: 0; }
+    .wg-preview-head h4 i { color: var(--dst-flame); width: 20px; height: 20px; }
+    .wg-res { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; background: rgba(5, 3, 2, 0.95); border: 1px solid rgba(138, 92, 49, 0.6); border-radius: 4px; font-family: monospace; font-size: 0.95rem; color: #d1c2b4; }
+    .wg-res i { width: 14px; height: 14px; color: var(--dst-flame); }
+    .wg-res strong { color: #ffc247; }
+    .wg-viewport { position: relative; width: 100%; aspect-ratio: 2 / 1; margin: 0 auto; background: radial-gradient(circle, #18110e 0%, #080605 100%); border: 2px solid #2c1f18; border-radius: 8px; overflow: hidden; box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.9); }
+    .wg-viewport.is-square { max-width: 600px; aspect-ratio: 1 / 1; }
+
+    .wg-url-row { display: flex; gap: 8px; align-items: stretch; flex-wrap: wrap; }
+    .wg-url-row .search-input-box { flex: 1 1 260px; min-width: 0; padding: 10px 12px; font-size: 0.95rem; color: #a4e67a; background: #120e0c; cursor: var(--cursor-grabbing) 0 11, grab; }
+    .wg-url-row .dst-btn { font-size: 1rem; padding: 8px 16px; }
+
+    @media (max-width: 900px) {
+      .wg-layout { grid-template-columns: 1fr; }
+      .wg-preview { position: static; order: -1; }
+      .wg-grid-3 { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       PAGE LAYOUT v2 — top navigation bar (desktop) / header + dock (mobile)
+       Theme (colours, fonts, sketch borders) is untouched.
+       ═══════════════════════════════════════════════════════════ */
+    body { flex-direction: column; }
+
+    aside {
+      width: 100%; flex-direction: row; align-items: center; flex-wrap: wrap;
+      gap: 8px; padding: 10px 28px; flex-shrink: 0;
+      border-right: 0; border-bottom: 3px solid #2a201b;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      background: linear-gradient(180deg, #1d1714 0%, #15100e 100%);
+    }
+    aside::after {
+      top: auto; left: 0; right: 0; bottom: -3px; width: auto; height: 3px;
+      background: repeating-linear-gradient(90deg, #36271e, #36271e 10px, #1a120d 10px, #1a120d 20px);
+    }
+    .brand { padding: 0; margin: 0 18px 0 0; border: 0; flex-shrink: 0; }
+    .nav-group-label { display: none; }
+
+    aside .dst-tab { margin: 0; padding: 8px 14px; gap: 10px; }
+    aside .dst-tab:hover { transform: translateY(-2px); }
+    aside .dst-tab.active { transform: translateY(-2px); }
+    aside .dst-tab.active::before { left: -6px; top: -9px; }
+    aside .tab-content { font-size: 1.1rem; }
+
+    /* external links become compact icon buttons, separated from the main tabs */
+    aside a.dst-tab { padding: 8px 10px; }
+    aside a.dst-tab .tab-content span,
+    aside a.dst-tab > i { display: none; }
+    aside a.dst-tab:first-of-type { margin-left: 10px; }
+
+    .sidebar-footer { margin: 0 0 0 auto; padding: 0; border: 0; }
+    .sidebar-footer > div { display: none; }
+    .notif-button { width: auto; padding: 8px 14px; }
+
+    main { padding: 30px 36px 60px; }
+    section { max-width: 1200px; }
+    #widget { max-width: 1450px; }
+    .dst-heading { margin-bottom: 22px; }
+    .amb-grid { grid-template-columns: repeat(auto-fill, minmax(min(290px, 100%), 1fr)); }
+
+    @media (max-width: 1250px) {
+      .brand-sub { display: none; }
+      aside { padding: 10px 18px; }
+      aside .dst-tab { padding: 8px 10px; }
+      aside .tab-content { font-size: 1rem; gap: 7px; }
+      .notif-button span { display: none; }
+      .notif-button { padding: 8px 10px; }
+    }
+
+    @media (max-width: 900px) {
+      /* slim brand header; navigation moves to the bottom dock */
+      aside { display: flex; flex-wrap: nowrap; padding: 8px 14px; }
+      aside .dst-tab, aside a.dst-tab { display: none; }
+      .brand { margin: 0; }
+      .brand-logo { width: 30px; height: 30px; }
+      .brand-title { font-size: 1.05rem; }
+      .notif-button { padding: 7px 9px; }
+
+      main { padding: 18px 14px calc(96px + env(safe-area-inset-bottom)); }
+      .dst-parchment-card { padding: 18px 14px; }
+      .dst-heading { font-size: 1.6rem; margin-bottom: 16px; }
+
+      .mobile-inventory-dock { gap: 6px; }
+      .inv-slot { max-width: 78px; padding: 8px 2px; }
+      .inv-slot i, .inv-slot svg { width: 20px; height: 20px; }
+
+      /* filters scroll sideways instead of wrapping into a tall block */
+      .platform-filter-bar { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; -webkit-overflow-scrolling: touch; }
+      .platform-filter-bar .platform-pill { flex-shrink: 0; white-space: nowrap; }
+      .amb-grid { gap: 16px; }
+      .campfire-banner { max-width: 100%; padding: 12px 16px; }
+    }
   </style>
 </head>
 
@@ -1814,20 +1977,20 @@
     <div class="dst-tab" onclick="nav('widget', this)">
       <div class="tab-content">
         <i data-lucide="cast"></i>
-        <span>Ambassador Widget</span>
+        <span>OBS Widget</span>
       </div>
     </div>
 
     <div class="dst-tab" onclick="nav('info', this)">
       <div class="tab-content">
         <i data-lucide="book-open"></i>
-        <span>Ambassador Info</span>
+        <span>Info</span>
       </div>
     </div>
 
     <div class="nav-group-label">Other Links</div>
 
-    <a href="https://forums.kleientertainment.com/game-updates/dst/" target="_blank" class="dst-tab">
+    <a href="https://forums.kleientertainment.com/game-updates/dst/" target="_blank" class="dst-tab" title="Game Updates">
       <div class="tab-content">
         <i data-lucide="scroll"></i>
         <span>Game Updates</span>
@@ -1835,7 +1998,7 @@
       <i data-lucide="external-link" style="width: 14px; opacity: 0.5;"></i>
     </a>
 
-    <a href="https://dstserverlist.appspot.com/" target="_blank" class="dst-tab">
+    <a href="https://dstserverlist.appspot.com/" target="_blank" class="dst-tab" title="Server List">
       <div class="tab-content">
         <i data-lucide="server"></i>
         <span>Server List</span>
@@ -1862,145 +2025,155 @@
     <section id="widget">
       <h1 class="dst-heading">Ambassador OBS Widget</h1>
 
-      <div class="dst-parchment-card"
-        style="max-width: 1550px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; overflow: visible; padding-bottom: 40px;">
+      <div class="dst-parchment-card wg-card">
 
-        <div>
-          <h3
-            style="font-family: var(--font-title); color: #fff; margin-bottom: 8px; font-size: 1.3rem; display: flex; align-items: center; gap: 8px;">
-            <i data-lucide="cast" style="color: var(--dst-flame);"></i> Stream Overlay Generator
-          </h3>
-          <p style="font-size: 1.1rem; color: var(--dst-paper-muted); line-height: 1.4;">
-            Configure your dynamic drop widget for OBS. Customize your Twitch username, avatar, and glow hex values.
-          </p>
+        <div class="wg-intro">
+          <h3><i data-lucide="cast"></i> Stream Overlay Generator</h3>
+          <p>Configure your drop widget for OBS: pick a layout, add your Twitch details, tune the glow, and drop the
+            generated link straight into a Browser Source.</p>
         </div>
 
-        <!-- 2-COLUMN SPLIT CONTAINER (Settings: 1fr, Large Preview: 1.8fr) -->
-        <div style="display: grid; grid-template-columns: 1fr 1.8fr; gap: 30px; align-items: start;">
+        <div class="wg-layout">
 
+          <!-- ═════════ LEFT: SETTINGS ═════════ -->
+          <div class="wg-settings">
 
-
-
-          <!-- LEFT COLUMN: COMPACT SETTINGS -->
-          <div style="display: flex; flex-direction: column; gap: 14px;">
-            <div>
-              <label
-                style="font-family: var(--font-mono); font-size: 1rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
-                Twitch Username
-              </label>
-              <input type="text" id="obs-twitch" class="search-input-box" placeholder="e.g. clifffordw"
-                style="padding: 10px 14px; font-size: 1.1rem;" />
-            </div>
-
-            <div>
-              <label
-                style="font-family: var(--font-mono); font-size: 1rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
-                Avatar Image URL
-              </label>
-              <input type="text" id="obs-avatar" class="search-input-box" placeholder="https://static-cdn.jtvnw.net/..."
-                style="padding: 10px 14px; font-size: 1.1rem;" />
-            </div>
-
-            <div>
-              <label title="How fast do the items swap between each other" ;
-                style="font-family: var(--font-mono); font-size: 1rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
-                <u>Carousel Swap Speed (Sec)</u>
-
-              </label>
-
-              <input type="number" id="obs-speed" class="search-input-box" value="4.5" min="1.5" max="30" step="0.5"
-                style="padding: 10px 14px; font-size: 1.1rem;" />
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
-              <div>
-                <label
-                  style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">Glow
-                  1</label>
-                <div style="display: flex; gap: 4px; align-items: center;">
-                  <input type="color" id="obs-color1" value="#90EE90" oninput="syncColorToText('1')"
-                    style="width: 80px; height: 45px;" />
-                  <input type="text" id="obs-glow1" class="search-input-box" value="90EE90"
-                    oninput="syncTextToColor('1'); updateObsUrlBuilder();"
-                    style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
-                </div>
+            <!-- 1 · LAYOUT MODE -->
+            <div class="wg-panel">
+              <div class="wg-panel-head"><i data-lucide="layout-template"></i>
+                <h4>Layout Mode</h4>
               </div>
 
-              <div>
-                <label
-                  style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">Glow
-                  2</label>
-                <div style="display: flex; gap: 4px; align-items: center;">
-                  <input type="color" id="obs-color2" value="#64F89D" oninput="syncColorToText('2')"
-                    style="width: 80px; height: 45px;" />
-                  <input type="text" id="obs-glow2" class="search-input-box" value="64F89D"
-                    oninput="syncTextToColor('2'); updateObsUrlBuilder();"
-                    style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
-                </div>
+              <!-- Hidden checkboxes keep the existing URL-builder bindings -->
+              <input type="checkbox" id="obs-solo-toggle" hidden>
+              <input type="checkbox" id="obs-carousel-toggle" hidden>
+
+              <div class="wg-seg" role="group" aria-label="Layout mode">
+                <button type="button" class="wg-seg-btn active" data-mode="default" onclick="setWidgetMode('default')"
+                  title="Flair, portrait and item side by side. Hat can sit on any piece.">
+                  <i data-lucide="layout-grid"></i><span>Default</span><small>1024 × 512</small>
+                </button>
+                <button type="button" class="wg-seg-btn" data-mode="solo" onclick="setWidgetMode('solo')"
+                  title="Shows the main item only. Hat is Avatar-only.">
+                  <i data-lucide="square"></i><span>Solo</span><small>1024 × 1024</small>
+                </button>
+                <button type="button" class="wg-seg-btn" data-mode="carousel" onclick="setWidgetMode('carousel')"
+                  title="Cycles through every item. Hat is Avatar-only.">
+                  <i data-lucide="repeat"></i><span>Carousel</span><small>1024 × 1024</small>
+                </button>
               </div>
 
-              <div>
-                <label
-                  style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">Glow
-                  3</label>
-                <div style="display: flex; gap: 4px; align-items: center;">
-                  <input type="color" id="obs-color3" value="#AFFF60" oninput="syncColorToText('3')"
-                    style="width: 80px; height: 45px;" />
-                  <input type="text" id="obs-glow3" class="search-input-box" value="AFFF60"
-                    oninput="syncTextToColor('3'); updateObsUrlBuilder();"
-                    style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
-                </div>
+              <p class="wg-hint" id="wg-mode-hint"></p>
+
+              <div id="wg-speed-field" hidden>
+                <label class="wg-label" for="obs-speed" title="How fast the items swap between each other">Swap
+                  Speed <span class="wg-sub">(seconds)</span></label>
+                <input type="number" id="obs-speed" class="search-input-box" value="4.5" min="1.5" max="30" step="0.5"
+                  style="padding: 10px 14px; font-size: 1.1rem;" />
               </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px;">
+            <!-- 2 · STREAMER -->
+            <div class="wg-panel">
+              <div class="wg-panel-head"><i data-lucide="user-round"></i>
+                <h4>Streamer</h4>
+              </div>
+
               <div>
-                <label class="dst-toggle-label"
-                  style="display: flex; align-items: center; gap: 6px; cursor: var(--cursor-link) 0 11, pointer; font-family: var(--font-hand); font-size: 1rem; color: var(--dst-paper); margin-bottom: 4px;">
-                  <span>Disable Border</span>
-                  <div class="dst-switch">
-                    <input type="checkbox" id="obs-no-border" onchange="toggleBorderDisable()">
-                    <span class="dst-slider"></span>
+                <label class="wg-label" for="obs-twitch">Twitch Username</label>
+                <input type="text" id="obs-twitch" class="search-input-box" placeholder="e.g. clifffordw"
+                  style="padding: 10px 14px; font-size: 1.1rem;" />
+              </div>
+
+              <div>
+                <label class="wg-label" for="obs-avatar">Avatar Image URL</label>
+                <input type="text" id="obs-avatar" class="search-input-box"
+                  placeholder="https://static-cdn.jtvnw.net/..." style="padding: 10px 14px; font-size: 1.1rem;" />
+              </div>
+
+              <label class="dst-toggle-label wg-toggle" title="Hides the streamer head if needed">
+                <span>Hide Head</span>
+                <div class="dst-switch">
+                  <input type="checkbox" id="obs-hide-head" onchange="updateObsUrlBuilder()">
+                  <span class="dst-slider"></span>
+                </div>
+              </label>
+            </div>
+
+            <!-- 3 · APPEARANCE -->
+            <div class="wg-panel">
+              <div class="wg-panel-head"><i data-lucide="palette"></i>
+                <h4>Glow &amp; Frame</h4>
+              </div>
+
+              <div class="wg-grid-3">
+                <div>
+                  <label class="wg-label wg-label-sm">Glow 1</label>
+                  <div class="wg-color">
+                    <input type="color" id="obs-color1" value="#90EE90" oninput="syncColorToText('1')" />
+                    <input type="text" id="obs-glow1" class="search-input-box" value="90EE90"
+                      oninput="syncTextToColor('1'); updateObsUrlBuilder();" />
                   </div>
-                </label>
-                <div id="border-picker-wrapper" style="display: flex; gap: 6px; align-items: center;">
-                  <input type="color" id="obs-border-color" value="#443429" oninput="syncColorToText('border')"
-                    style="width: 60px; height: 45px;" />
-                  <input type="text" id="obs-border-hex" class="search-input-box" value="443429"
-                    oninput="syncTextToColor('border'); updateObsUrlBuilder();"
-                    style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
+                </div>
+                <div>
+                  <label class="wg-label wg-label-sm">Glow 2</label>
+                  <div class="wg-color">
+                    <input type="color" id="obs-color2" value="#64F89D" oninput="syncColorToText('2')" />
+                    <input type="text" id="obs-glow2" class="search-input-box" value="64F89D"
+                      oninput="syncTextToColor('2'); updateObsUrlBuilder();" />
+                  </div>
+                </div>
+                <div>
+                  <label class="wg-label wg-label-sm">Glow 3</label>
+                  <div class="wg-color">
+                    <input type="color" id="obs-color3" value="#AFFF60" oninput="syncColorToText('3')" />
+                    <input type="text" id="obs-glow3" class="search-input-box" value="AFFF60"
+                      oninput="syncTextToColor('3'); updateObsUrlBuilder();" />
+                  </div>
                 </div>
               </div>
 
-              <div>
-                <label class="dst-toggle-label"
-                  style="display: flex; align-items: center; gap: 6px; cursor: var(--cursor-link) 0 11, pointer; font-family: var(--font-hand); font-size: 1rem; color: var(--dst-paper); margin-bottom: 4px;">
-                  <span>Disable Fill</span>
-                  <div class="dst-switch">
-                    <input type="checkbox" id="obs-no-fill" onchange="toggleFillDisable()">
-                    <span class="dst-slider"></span>
+              <div class="wg-grid-2">
+                <div>
+                  <label class="dst-toggle-label wg-toggle">
+                    <span>Border</span>
+                    <div class="dst-switch">
+                      <input type="checkbox" id="obs-no-border" onchange="toggleBorderDisable()">
+                      <span class="dst-slider"></span>
+                    </div>
+                  </label>
+                  <div id="border-picker-wrapper" class="wg-color">
+                    <input type="color" id="obs-border-color" value="#443429" oninput="syncColorToText('border')" />
+                    <input type="text" id="obs-border-hex" class="search-input-box" value="443429"
+                      oninput="syncTextToColor('border'); updateObsUrlBuilder();" />
                   </div>
-                </label>
-                <div id="fill-picker-wrapper" style="display: flex; gap: 6px; align-items: center;">
-                  <input type="color" id="obs-fill-color" value="#1c1613" oninput="syncColorToText('fill')"
-                    style="width: 60px; height: 45px;" />
-                  <input type="text" id="obs-fill-hex" class="search-input-box" value="1C1613"
-                    oninput="syncTextToColor('fill'); updateObsUrlBuilder();"
-                    style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
+                </div>
+                <div>
+                  <label class="dst-toggle-label wg-toggle">
+                    <span>Fill</span>
+                    <div class="dst-switch">
+                      <input type="checkbox" id="obs-no-fill" onchange="toggleFillDisable()">
+                      <span class="dst-slider"></span>
+                    </div>
+                  </label>
+                  <div id="fill-picker-wrapper" class="wg-color">
+                    <input type="color" id="obs-fill-color" value="#1c1613" oninput="syncColorToText('fill')" />
+                    <input type="text" id="obs-fill-hex" class="search-input-box" value="1C1613"
+                      oninput="syncTextToColor('fill'); updateObsUrlBuilder();" />
+                  </div>
                 </div>
               </div>
+              <p class="wg-hint wg-hint-tight">Switch off to remove the avatar's border or fill.</p>
             </div>
 
-            <div>
-              <label
-                style="font-family: var(--font-mono); font-size: 1rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
-                Seasonal Hat Accessory
-              </label>
+            <!-- 4 · SEASONAL HAT -->
+            <div class="wg-panel">
+              <div class="wg-panel-head"><i data-lucide="party-popper"></i>
+                <h4>Seasonal Hat</h4>
+              </div>
 
-              <!-- Hidden input to preserve value bindings for updateObsUrlBuilder -->
               <input type="hidden" id="obs-seasonal-hat" value="" />
 
-              <!-- Custom SVG-enabled Dropdown Container -->
               <div id="custom-hat-dropdown" class="custom-dst-dropdown">
                 <div id="hat-dropdown-trigger" class="custom-dropdown-trigger" onclick="toggleHatDropdown(event)">
                   <span id="hat-selected-content" class="dropdown-selected-label">
@@ -2013,263 +2186,157 @@
                 <div id="hat-dropdown-options" class="custom-dropdown-menu">
                   <div class="custom-dropdown-item active"
                     onclick="selectHatOption('', 'None (Standard)', 'circle-slash')">
-                    <i data-lucide="circle-slash" class="dst-svg-icon"></i>
-                    <span>None (Standard)</span>
+                    <i data-lucide="circle-slash" class="dst-svg-icon"></i><span>None (Standard)</span>
                   </div>
                   <div class="custom-dropdown-item"
                     onclick="selectHatOption('xmas', 'Winter / Santa Hat', 'snowflake')">
-                    <i data-lucide="snowflake" class="dst-svg-icon"></i>
-                    <span>Winter / Santa Hat</span>
+                    <i data-lucide="snowflake" class="dst-svg-icon"></i><span>Winter / Santa Hat</span>
                   </div>
                   <div class="custom-dropdown-item"
                     onclick="selectHatOption('halloween', 'Halloween / Witch Hat', 'ghost')">
-                    <i data-lucide="ghost" class="dst-svg-icon"></i>
-                    <span>Halloween / Witch Hat</span>
+                    <i data-lucide="ghost" class="dst-svg-icon"></i><span>Halloween / Witch Hat</span>
                   </div>
                   <div class="custom-dropdown-item"
                     onclick="selectHatOption('birthday', 'Anniversary Party Hat', 'party-popper')">
-                    <i data-lucide="party-popper" class="dst-svg-icon"></i>
-                    <span>Anniversary Party Hat</span>
+                    <i data-lucide="party-popper" class="dst-svg-icon"></i><span>Anniversary Party Hat</span>
                   </div>
                   <div class="custom-dropdown-item"
                     onclick="selectHatOption('custom', 'Custom Hat URL...', 'sparkles')">
-                    <i data-lucide="sparkles" class="dst-svg-icon"></i>
-                    <span>Custom Hat URL...</span>
+                    <i data-lucide="sparkles" class="dst-svg-icon"></i><span>Custom Hat URL...</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Shown only once a hat is chosen -->
+              <div id="hat-url-container" class="wg-hat-options" hidden>
+
+                <div>
+                  <label id="hat-url-label" class="wg-label wg-label-sm" for="obs-hat-url">Hat Image URL</label>
+                  <input type="text" id="obs-hat-url" class="search-input-box" placeholder="https://..."
+                    style="width: 100%; padding: 8px 12px; font-size: 0.95rem;" />
+                </div>
+
+                <div>
+                  <label class="wg-label wg-label-sm">Placement</label>
+                  <input type="hidden" id="obs-hat-pos" value="avatar" />
+                  <div class="wg-pos-grid">
+                    <button type="button" id="hat-btn-avatar" class="hat-pos-pill active" data-pos="avatar"
+                      title="Attaches the hat to your Twitch avatar" onclick="setHatPosition('avatar', this)">
+                      <img id="pill-icon-avatar" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
+                        alt="Avatar" /><span>Avatar</span>
+                    </button>
+                    <button type="button" class="hat-pos-pill" data-pos="flair"
+                      title="Attaches the hat to the flair icon (Default mode only)"
+                      onclick="setHatPosition('flair', this)">
+                      <img id="pill-icon-flair" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
+                        alt="Flair" /><span>Flair</span>
+                    </button>
+                    <button type="button" class="hat-pos-pill" data-pos="portrait"
+                      title="Attaches the hat to the portrait (Default mode only)"
+                      onclick="setHatPosition('portrait', this)">
+                      <img id="pill-icon-portrait"
+                        src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt="Portrait" /><span>Portrait</span>
+                    </button>
+                    <button type="button" class="hat-pos-pill" data-pos="item"
+                      title="Attaches the hat to the item (Default mode only)" onclick="setHatPosition('item', this)">
+                      <img id="pill-icon-item" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
+                        alt="Item" /><span>Item</span>
+                    </button>
+                  </div>
+
+                  <div id="hat-lock-note" class="wg-note" hidden>
+                    <i data-lucide="lock"></i>
+                    <span>Solo and Carousel only allow the hat on <b>Avatar</b>. Switch to Default to use Flair,
+                      Portrait or Item.</span>
+                  </div>
+                  <div id="hat-avatar-warning" class="wg-note wg-note-warn" hidden>
+                    <i data-lucide="triangle-alert"></i>
+                    <span id="hat-avatar-warning-text"></span>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="wg-sub-head">
+                    <label class="wg-label wg-label-sm" style="margin:0;">Position &amp; Size</label>
+                    <button type="button" class="wg-reset" onclick="resetHatTransform()" title="Reset offsets, scale and rotation">
+                      <i data-lucide="rotate-ccw"></i> Reset
+                    </button>
+                  </div>
+                  <div class="wg-grid-2 wg-sliders">
+                    <div class="wg-slider">
+                      <div class="wg-slider-top"><span>Offset X</span><b id="hat-x-val">0px</b></div>
+                      <div class="wg-slider-row"><i data-lucide="arrow-left"></i>
+                        <input type="range" id="obs-hat-x" min="-100" max="100" value="0" step="1" />
+                        <i data-lucide="arrow-right"></i>
+                      </div>
+                    </div>
+                    <div class="wg-slider">
+                      <div class="wg-slider-top"><span>Offset Y</span><b id="hat-y-val">0px</b></div>
+                      <div class="wg-slider-row"><i data-lucide="arrow-up"></i>
+                        <input type="range" id="obs-hat-y" min="-100" max="100" value="0" step="1" />
+                        <i data-lucide="arrow-down"></i>
+                      </div>
+                    </div>
+                    <div class="wg-slider">
+                      <div class="wg-slider-top"><span>Scale</span><b id="hat-scale-val">100%</b></div>
+                      <div class="wg-slider-row"><i data-lucide="minimize-2"></i>
+                        <input type="range" id="obs-hat-scale" min="50" max="400" value="100" step="5" />
+                        <i data-lucide="maximize-2"></i>
+                      </div>
+                    </div>
+                    <div class="wg-slider">
+                      <div class="wg-slider-top"><span>Rotation</span><b id="hat-rot-val">15°</b></div>
+                      <div class="wg-slider-row"><i data-lucide="rotate-ccw"></i>
+                        <input type="range" id="obs-hat-rot" min="-180" max="180" value="15" step="5" />
+                        <i data-lucide="rotate-cw"></i>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div id="hat-url-container"
-              style="display: none; background: #140d0a; border: 1px dashed var(--dst-border-highlight); padding: 12px; border-radius: 6px; display: flex; flex-direction: column; gap: 10px;">
-              <div>
-                <label id="hat-url-label"
-                  style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--dst-paper-muted); display: block; margin-bottom: 4px;">Hat
-                  Image URL</label>
-                <input type="text" id="obs-hat-url" class="search-input-box" placeholder="https://..."
-                  style="width: 100%; padding: 8px 12px; font-size: 0.95rem;" />
-              </div>
-              <br></br>
-              <div>
-                <label
-                  style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--dst-paper-muted); display: block; margin-bottom: 6px;">Hat
-                  Placement Target</label>
-                <input type="hidden" id="obs-hat-pos" value="avatar" />
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px;">
-
-                  <!-- Avatar Button (Dynamic & Greys out if no avatar) -->
-                  <button type="button" id="hat-btn-avatar" class="hat-pos-pill active"
-                    title="Attaches hat to the icon twitch avatar" ; onclick="setHatPosition('avatar', this)"
-                    style="display: flex; align-items: center; justify-content: center; gap: 6px;">
-                    <img id="pill-icon-avatar" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
-                      alt="Avatar" style="width: 18px; height: 18px; object-fit: contain;" />
-                    <span>Avatar</span>
-                  </button>
-
-                  <!-- Flair Button -->
-                  <button type="button" class="hat-pos-pill" onclick="setHatPosition('flair', this)"
-                    style="display: flex; align-items: center; justify-content: center; gap: 6px;">
-                    <img id="pill-icon-flair" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
-                      title="Attaches hat to the icon flair" ; alt="Flair"
-                      style="width: 18px; height: 18px; object-fit: contain;" />
-
-                    <span>Flair</span>
-                  </button>
-
-                  <!-- Portrait Button -->
-                  <button type="button" class="hat-pos-pill" onclick="setHatPosition('portrait', this)"
-                    title="Attaches hat to the portrait" ;
-                    style="display: flex; align-items: center; justify-content: center; gap: 6px;">
-                    <img id="pill-icon-portrait" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
-                      alt="Portrait" style="width: 18px; height: 18px; object-fit: contain;" />
-                    <span>Portrait</span>
-                  </button>
-
-                  <!-- Item Button -->
-                  <button type="button" class="hat-pos-pill" onclick="setHatPosition('item', this)"
-                    title="Attaches hat to the icon item" ;
-                    style="display: flex; align-items: center; justify-content: center; gap: 6px;">
-                    <img id="pill-icon-item" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
-                      alt="Item" style="width: 18px; height: 18px; object-fit: contain;" />
-                    <span>Item</span>
-                  </button>
-
-                </div>
-                <!-- HAT X & Y OFFSET CONTROLS -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px;">
-                  <div>
-                    <div
-                      style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
-                      <span>Offset X</span>
-                      <span id="hat-x-val" style="color: var(--dst-flame); font-weight: bold;">0px</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                      <i data-lucide="arrow-left"
-                        style="width: 14px; height: 14px; color: var(--dst-paper-muted); flex-shrink: 0;"
-                        title="Move Left"></i>
-                      <input type="range" id="obs-hat-x" min="-100" max="100" value="0" step="1" style="flex: 1;" />
-                      <i data-lucide="arrow-right"
-                        style="width: 14px; height: 14px; color: var(--dst-paper-muted); flex-shrink: 0;"
-                        title="Move Right"></i>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div
-                      style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
-                      <span><u>Offset Y</u></span>
-                      <span id="hat-y-val" style="color: var(--dst-flame); font-weight: bold;">0px</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                      <i data-lucide="arrow-up"
-                        style="width: 14px; height: 14px; color: var(--dst-paper-muted); flex-shrink: 0;"
-                        title="Move Up"></i>
-                      <input type="range" id="obs-hat-y" min="-100" max="100" value="0" step="1" style="flex: 1;" />
-                      <i data-lucide="arrow-down"
-                        style="width: 14px; height: 14px; color: var(--dst-paper-muted); flex-shrink: 0;"
-                        title="Move Down"></i>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- HAT SCALE CONTROL -->
-                <div style="margin-top: 8px;">
-                  <div
-                    style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
-                    <span>Hat Scale</span>
-                    <span id="hat-scale-val" style="color: var(--dst-flame); font-weight: bold;">100%</span>
-                  </div>
-                  <div style="display: flex; align-items: center; gap: 6px;">
-                    <i data-lucide="minimize-2"
-                      style="width: 14px; height: 14px; color: var(--dst-paper-muted); flex-shrink: 0;"
-                      title="Smaller"></i>
-                    <input type="range" id="obs-hat-scale" min="50" max="400" value="100" step="5" style="flex: 1;" />
-                    <i data-lucide="maximize-2"
-                      style="width: 14px; height: 14px; color: var(--dst-paper-muted); flex-shrink: 0;"
-                      title="Larger"></i>
-                  </div>
-                </div>
-
-                <!-- HAT ROTATION CONTROL -->
-                <div style="margin-top: 8px;">
-                  <div
-                    style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
-                    <span>Hat Rotation</span>
-                    <span id="hat-rot-val" style="color: var(--dst-flame); font-weight: bold;">15°</span>
-                  </div>
-                  <div style="display: flex; align-items: center; gap: 6px;">
-                    <i data-lucide="rotate-ccw"
-                      style="width: 14px; height: 14px; color: var(--dst-paper-muted); flex-shrink: 0;"
-                      title="Rotate Counter-Clockwise"></i>
-                    <input type="range" id="obs-hat-rot" min="-180" max="180" value="15" step="5" style="flex: 1;" />
-                    <i data-lucide="rotate-cw"
-                      style="width: 14px; height: 14px; color: var(--dst-paper-muted); flex-shrink: 0;"
-                      title="Rotate Clockwise"></i>
-                  </div>
-                </div>
-
-
-              </div>
-            </div>
           </div>
 
+          <!-- ═════════ RIGHT: PREVIEW + OUTPUT ═════════ -->
+          <div class="wg-preview">
 
-          <!-- RIGHT COLUMN: MASSIVE STICKY PREVIEW -->
-          <div style="display: flex; flex-direction: column; gap: 16px; position: sticky; top: 20px;">
-
-            <div
-              style="background: #0d0908; border: 2px solid #3c2a20; border-radius: 8px; padding: 18px; text-align: center; box-shadow: 0 4px 25px rgba(0,0,0,0.7);">
-
-              <div
-                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-                <h4
-                  style="font-family: var(--font-title); color: #fff; font-size: 1.15rem; display: flex; align-items: center; gap: 6px; margin: 0;">
-                  <i data-lucide="eye" style="color: var(--dst-flame); width: 20px; height: 20px;"></i> Live Preview
-                </h4>
-
-
-
-                <div style="display: flex; gap: 12px; align-items: center;">
-                  <label class="dst-toggle-label" title="Shows main item. Hat only on Avatar" ;
-                    style="display: flex; align-items: center; gap: 5px; cursor: var(--cursor-link) 0 11, pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
-                    <span><u>Solo</u></span>
-                    <div class="dst-switch">
-                      <input type="checkbox" id="obs-solo-toggle" onchange="handleWidgetModeChange('solo')">
-                      <span class="dst-slider"></span>
-                    </div>
-                  </label>
-
-                  <label class="dst-toggle-label" title="Cycles through all items. Hat only on Avatar" ;
-                    style="display: flex; align-items: center; gap: 5px; cursor: var(--cursor-link) 0 11, pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
-                    <span><u>Carousel</u></span>
-                    <div class="dst-switch">
-                      <input type="checkbox" id="obs-carousel-toggle" onchange="handleWidgetModeChange('carousel')">
-                      <span class="dst-slider"></span>
-                    </div>
-                  </label>
-
-                  <label class="dst-toggle-label" title="Hides streamer head if needed" ;
-                    style="display: flex; align-items: center; gap: 5px; cursor: var(--cursor-link) 0 11, pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
-                    <span><u>Hide Head</u></span>
-                    <div class="dst-switch">
-                      <input type="checkbox" id="obs-hide-head" onchange="updateObsUrlBuilder()">
-                      <span class="dst-slider"></span>
-                    </div>
-                  </label>
+            <div class="wg-preview-card">
+              <div class="wg-preview-head">
+                <h4><i data-lucide="eye"></i> Live Preview</h4>
+                <div class="wg-res" title="Recommended OBS Browser Source size">
+                  <i data-lucide="monitor"></i>
+                  <span id="obs-res-display"><strong>1024</strong> × <strong>512</strong> px</span>
                 </div>
               </div>
 
-              <!-- PREVIEW VIEWPORT (Maximized via 1.8fr width allocation) -->
-              <div id="preview-viewport"
-                style="position: relative; width: 100%; aspect-ratio: 2/1; margin: 0 auto; background: radial-gradient(circle, #18110e 0%, #080605 100%); border: 2px solid #2c1f18; border-radius: 8px; overflow: hidden; box-shadow: inset 0 0 25px rgba(0,0,0,0.9);">
+              <div id="preview-viewport" class="wg-viewport">
                 <div id="obs-scale-container"
                   style="position: absolute; top: 0; left: 0; width: 1024px; height: 512px; transform-origin: top left;">
                   <iframe id="obs-preview-frame" src=""
                     style="width: 1024px; height: 512px; border: none; background: transparent;"></iframe>
                 </div>
               </div>
+            </div>
 
-              <!-- Add this inside your live preview or configuration container -->
-              <!-- OBS Specs Card (Dynamic Resolution) -->
-              <!-- OBS Specs Card (Dynamic Resolution) -->
-              <div class="obs-specs-card"
-                style="margin-top: 14px; padding: 10px 14px; background: rgba(15, 10, 6, 0.92); border: 1px solid rgba(138, 92, 49, 0.7); border-radius: 4px; font-size: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.8);">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <span style="color: #d1c2b4;">Recommended Resolution</span>
-                </div>
-                <div id="obs-res-display"
-                  style="font-family: monospace; background: rgba(5, 3, 2, 0.95); padding: 5px 10px; border-radius: 3px; color: #fff; border: 1px solid rgba(138, 92, 49, 0.6); box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-                  Width: <strong style="color: #ffc247; font-weight: 700;">1024</strong>px &nbsp;|&nbsp; Height: <strong
-                    style="color: #ffc247; font-weight: 700;">512</strong>px
-                </div>
+            <div class="wg-output">
+              <label class="wg-label" for="obs-result-url">Generated OBS URL <span class="wg-sub">(click to copy, or
+                  drag into OBS)</span></label>
+              <div class="wg-url-row">
+                <input type="text" id="obs-result-url" readonly onclick="copyObsGeneratedUrl()" draggable="true"
+                  ondragstart="handleObsDragStart(event)" class="search-input-box"
+                  title="Click to copy or drag & drop directly into OBS" />
+                <button class="dst-btn" onclick="copyObsGeneratedUrl()">
+                  <i data-lucide="copy" style="width: 16px;"></i> Copy
+                </button>
+                <a id="obs-preview-btn" href="#" target="_blank" class="dst-btn">
+                  <i data-lucide="external-link" style="width: 16px;"></i> Full Preview
+                </a>
               </div>
             </div>
 
-            <div>
-              <label
-                style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
-                Generated OBS URL <span style="color: #9c8472; font-size: 0.85rem;">(Click to copy or drag)</span>:
-              </label>
-              <input type="text" id="obs-result-url" readonly onclick="copyObsGeneratedUrl()" draggable="true"
-                ondragstart="handleObsDragStart(event)" class="search-input-box"
-                title="Click to copy or Drag & drop directly into OBS"
-                style="padding: 10px 12px; font-size: 0.95rem; color: #a4e67a; background: #120e0c; cursor: var(--cursor-grabbing) 0 11, grab;" />
-            </div>
-
-            <div style="display: flex; gap: 10px; justify-content: flex-end;">
-              <a id="obs-preview-btn" href="#" target="_blank" class="dst-btn"
-                style="font-size: 1rem; padding: 8px 16px;">
-                <i data-lucide="external-link" style="width: 16px;"></i> Full Preview
-              </a>
-              <button class="dst-btn" style="font-size: 1rem; padding: 8px 16px;" onclick="copyObsGeneratedUrl()">
-                <i data-lucide="copy" style="width: 16px;"></i> Copy Link
-              </button>
-            </div>
-
           </div>
-
         </div>
-
       </div>
     </section>
 
@@ -2440,6 +2507,11 @@
       <span>Assets</span>
     </div> -->
 
+    <div class="inv-slot" onclick="nav('widget', this)">
+      <i data-lucide="cast"></i>
+      <span>Widget</span>
+    </div>
+
     <div class="inv-slot" onclick="nav('info', this)">
       <i data-lucide="book-open"></i>
       <span>Info</span>
@@ -2466,20 +2538,20 @@
 
 
     function setHatPosition(pos, btn) {
+      // Solo / Carousel only allow the hat on Avatar
+      const restricted = document.getElementById('obs-solo-toggle')?.checked || document.getElementById('obs-carousel-toggle')?.checked;
+      if (restricted && pos !== 'avatar') return;
+
       const posInput = document.getElementById('obs-hat-pos');
       if (posInput) posInput.value = pos;
-
-      document.querySelectorAll('.hat-pos-pill').forEach(p => p.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-
       updateObsUrlBuilder();
     }
 
-
-
-
-
-
+    function resetHatTransform() {
+      const defaults = { 'obs-hat-x': 0, 'obs-hat-y': 0, 'obs-hat-scale': 100, 'obs-hat-rot': 15 };
+      Object.entries(defaults).forEach(([id, v]) => { const el = document.getElementById(id); if (el) el.value = v; });
+      updateObsUrlBuilder();
+    }
 
     // Map option keys to display labels and Lucide icon names
     const hatMetadata = {
@@ -2580,9 +2652,9 @@
       const val = hiddenInput.value;
 
       if (!val) {
-        if (containerEl) containerEl.style.display = 'none';
+        if (containerEl) containerEl.hidden = true;
       } else {
-        if (containerEl) containerEl.style.display = 'block';
+        if (containerEl) containerEl.hidden = false;
         if (val === 'custom') {
           if (labelEl) labelEl.innerText = "Custom Hat Image URL";
           if (urlInput && !urlInput.value) urlInput.value = "";
@@ -2597,22 +2669,45 @@
       updateObsUrlBuilder();
     }
 
+    const widgetModeHints = {
+      'default': 'Flair, portrait and item shown together. The hat can sit on any of the four pieces.',
+      'solo': 'Shows the main item only. The hat can only sit on Avatar.',
+      'carousel': 'Cycles through every item, one at a time. The hat can only sit on Avatar.'
+    };
+
+    // Called by the Default / Solo / Carousel buttons
+    function setWidgetMode(mode) {
+      const soloToggle = document.getElementById('obs-solo-toggle');
+      const carouselToggle = document.getElementById('obs-carousel-toggle');
+      soloToggle.checked = (mode === 'solo');
+      carouselToggle.checked = (mode === 'carousel');
+      handleWidgetModeChange();
+    }
+
     function handleWidgetModeChange(changed) {
       const soloToggle = document.getElementById('obs-solo-toggle');
       const carouselToggle = document.getElementById('obs-carousel-toggle');
 
-      if (changed === 'solo' && soloToggle.checked) {
-        carouselToggle.checked = false;
-      } else if (changed === 'carousel' && carouselToggle.checked) {
-        soloToggle.checked = false;
-      }
+      // Solo and Carousel are mutually exclusive
+      if (changed === 'solo' && soloToggle.checked) carouselToggle.checked = false;
+      else if (changed === 'carousel' && carouselToggle.checked) soloToggle.checked = false;
 
-      // Determine active mode and update the OBS resolution text dynamically
+      const mode = carouselToggle.checked ? 'carousel' : (soloToggle.checked ? 'solo' : 'default');
+
+      document.querySelectorAll('.wg-seg-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === mode);
+      });
+
+      const speedField = document.getElementById('wg-speed-field');
+      if (speedField) speedField.hidden = (mode !== 'carousel');
+
+      const hint = document.getElementById('wg-mode-hint');
+      if (hint) hint.innerText = widgetModeHints[mode];
+
       const resDisplay = document.getElementById('obs-res-display');
       if (resDisplay) {
-        const isSquare = (soloToggle.checked || carouselToggle.checked);
-        const height = isSquare ? 1024 : 512;
-        resDisplay.innerHTML = `Width: <strong style="color: #ffc247; font-weight: 700;">1024</strong>px &nbsp;|&nbsp; Height: <strong style="color: #ffc247; font-weight: 700;">${height}</strong>px`;
+        const height = (mode === 'default') ? 512 : 1024;
+        resDisplay.innerHTML = `<strong>1024</strong> × <strong>${height}</strong> px`;
       }
 
       updateObsUrlBuilder();
@@ -2669,8 +2764,8 @@
 
       const hatType = (document.getElementById('obs-seasonal-hat')?.value || '').trim();
       const hatUrl = (document.getElementById('obs-hat-url')?.value || '').trim();
-      const hatPos = (document.getElementById('obs-hat-pos')?.value || 'avatar').trim();
-      const flairBtn = document.querySelector('.hat-pos-pill:not(#hat-btn-avatar)'); // or select your other pills
+      const chosenHatPos = (document.getElementById('obs-hat-pos')?.value || 'avatar').trim(); // what the user picked (kept for Default mode)
+      let hatPos = chosenHatPos; // effective position, may be forced to avatar below
       const allPills = document.querySelectorAll('.hat-pos-pill');
 
       const hatX = document.getElementById('obs-hat-x')?.value || '0';
@@ -2688,22 +2783,19 @@
 
 
 
-      // DYNAMICALLY SYNC PILL ICON & AVATAR HAT PLACEMENT STATE
+      // ── HAT PLACEMENT RULES ──────────────────────────────────────
+      // Default mode : hat may sit on Avatar, Flair, Portrait or Item.
+      // Solo/Carousel: hat may ONLY sit on Avatar.
+      const restricted = isSolo || isCarousel;
       const avatarBtn = document.getElementById('hat-btn-avatar');
       const pillIconAvatar = document.getElementById('pill-icon-avatar');
       const posInput = document.getElementById('obs-hat-pos');
 
       if (avatarBtn && pillIconAvatar) {
         if (!avatar) {
-          pillIconAvatar.src = "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"; // Fallback placeholder
+          pillIconAvatar.src = "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg";
           pillIconAvatar.style.opacity = '0.2';
           avatarBtn.classList.add('disabled');
-
-          // If avatar was selected but URL was cleared, fallback safely to another active placement
-          if (posInput && posInput.value === 'avatar') {
-            const fallbackBtn = document.querySelector('.hat-pos-pill:not(.disabled)');
-            if (fallbackBtn) fallbackBtn.click();
-          }
         } else {
           pillIconAvatar.src = avatar;
           pillIconAvatar.style.opacity = '1';
@@ -2711,46 +2803,35 @@
         }
       }
 
-
-      // Force hat position to avatar if in Carousel or Solo mode
-
-      if (isSolo || isCarousel) {
-        if (hatPos !== 'avatar') {
-          hatPos = 'avatar';
-          if (posInput) posInput.value = 'avatar';
-        }
-
-        // In Solo/Carousel, force select Avatar and hide the other non-avatar buttons
-        allPills.forEach(p => {
-          if (p.id === 'hat-btn-avatar') {
-            p.style.display = 'flex';
-            p.classList.add('active');
-            p.style.opacity = '1';
-          } else {
-            p.style.opacity = '0.4'
-            p.classList.remove('active'); // Hide other options completely
-          }
-        });
-      } else {
-        // In Default mode, show all placement buttons normally
-        allPills.forEach(p => {
-          p.style.display = 'flex';
-          if (p.id !== 'hat-btn-avatar') {
-
-            p.style.opacity = '1'
-          }
-
-
-
-
-        });
-
-        // Refresh active state visually
-        /* allPills.forEach(p => p.classList.remove('active')); */
-        /*  if (avatarBtn && hatPos === 'avatar') avatarBtn.classList.add('active'); */
+      if (restricted) {
+        hatPos = 'avatar'; // forced; the user's Default-mode choice stays remembered in #obs-hat-pos
+      } else if (!avatar && hatPos === 'avatar') {
+        hatPos = 'flair'; // no avatar to attach to, fall back to a Default-mode piece
+        if (posInput) posInput.value = hatPos;
       }
 
+      allPills.forEach(p => {
+        const isAvatarPill = p.dataset.pos === 'avatar';
+        const locked = restricted && !isAvatarPill;
+        p.classList.toggle('locked', locked);
+        p.disabled = locked;
+        p.classList.toggle('active', p.dataset.pos === hatPos);
+      });
 
+      const lockNote = document.getElementById('hat-lock-note');
+      if (lockNote) lockNote.hidden = !restricted;
+
+      const warnEl = document.getElementById('hat-avatar-warning');
+      const warnText = document.getElementById('hat-avatar-warning-text');
+      if (warnEl && warnText) {
+        let msg = '';
+        if (hatType && hatPos === 'avatar') {
+          if (!avatar) msg = 'Add an Avatar Image URL above. The hat needs your avatar to sit on.';
+          else if (hideHead) msg = 'Hide Head is on, so the hat has nothing to sit on and will not show.';
+        }
+        warnText.innerText = msg;
+        warnEl.hidden = !msg;
+      }
 
       const g1 = (document.getElementById('obs-glow1')?.value || '').replace(/#/g, '').trim().toUpperCase();
       const g2 = (document.getElementById('obs-glow2')?.value || '').replace(/#/g, '').trim().toUpperCase();
@@ -2777,7 +2858,7 @@
       // Save to localStorage
       localStorage.setItem('dst-obs-hattype', hatType);
       localStorage.setItem('dst-obs-haturl', hatUrl);
-      localStorage.setItem('dst-obs-hatpos', hatPos); // ADDED
+      localStorage.setItem('dst-obs-hatpos', chosenHatPos); // store the user's choice, not the forced one
 
       localStorage.setItem('dst-obs-hatx', hatX);
       localStorage.setItem('dst-obs-haty', hatY);
@@ -2848,7 +2929,7 @@
         const nativeWidth = 1024;
         const nativeHeight = needsSquare ? 1024 : 512;
 
-        previewViewport.style.aspectRatio = needsSquare ? '1 / 1' : '2 / 1';
+        previewViewport.classList.toggle('is-square', needsSquare);
         scaleContainer.style.width = `${nativeWidth}px`;
         scaleContainer.style.height = `${nativeHeight}px`;
         previewFrame.style.width = `${nativeWidth}px`;
@@ -2941,9 +3022,9 @@
       if (savedG2 !== null && document.getElementById('obs-glow2')) document.getElementById('obs-glow2').value = savedG2;
       if (savedG3 !== null && document.getElementById('obs-glow3')) document.getElementById('obs-glow3').value = savedG3;
 
-      // 6. Finally, update text labels and build the URL once everything is safely loaded
+      // 6. Finally, sync the mode buttons / labels and build the URL once everything is safely loaded
       updateHatOffsetsOnly();
-      updateObsUrlBuilder();
+      handleWidgetModeChange();
     }
 
     function copyObsGeneratedUrl() {

@@ -1960,9 +1960,9 @@
     function updateObsUrlBuilder() {
       const twitch = (document.getElementById('obs-twitch')?.value || '').toLowerCase().trim();
       const avatar = (document.getElementById('obs-avatar')?.value || '').trim();
-      const isSolo = document.getElementById('obs-solo-toggle')?.checked || false;
-      const isCarousel = document.getElementById('obs-carousel-toggle')?.checked || false;
-      const hideHead = document.getElementById('obs-hide-head')?.checked || false; // Added
+      const isSolo = document.getElementById('obs-solo')?.checked || false;
+      const isCarousel = document.getElementById('obs-carousel')?.checked || false;
+      const hideHead = document.getElementById('obs-hide-head')?.checked || false;
       const speed = (document.getElementById('obs-speed')?.value || '4.5').trim();
 
       const borderHex = (document.getElementById('obs-border-hex')?.value || '').replace(/#/g, '').trim().toUpperCase();
@@ -1977,6 +1977,23 @@
       const hatType = (document.getElementById('obs-seasonal-hat')?.value || '').trim();
       const hatUrl = (document.getElementById('obs-hat-url')?.value || '').trim();
       const hatPos = (document.getElementById('obs-hat-pos')?.value || 'avatar').trim();
+
+
+      const hatContainer = document.getElementById('hat-url-container');
+      const hatTypeSelect = document.getElementById('obs-seasonal-hat');
+
+      const hatPosSelect = document.getElementById('obs-hat-pos');
+      if (hatPosSelect) {
+        if (isSolo || isCarousel) {
+          hatPosSelect.value = 'avatar';
+          hatPosSelect.disabled = true;
+          hatPosSelect.title = "Hat position is locked to avatar in Solo/Carousel modes.";
+        } else {
+          hatPosSelect.disabled = false;
+          hatPosSelect.title = "";
+        }
+      }
+
 
 
 
@@ -2053,6 +2070,11 @@
         params.push(`hat=${encodeURIComponent(hatType)}`);
         if (hatUrl) params.push(`haturl=${encodeURIComponent(hatUrl)}`);
         if (hatPos) params.push(`hatpos=${encodeURIComponent(hatPos)}`);
+      }
+
+      if (hideHead) {
+        if (hatContainer) hatContainer.style.display = 'none';
+        if (hatTypeSelect) hatTypeSelect.value = '';
       }
 
       url += params.join('&');

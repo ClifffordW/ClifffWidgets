@@ -214,7 +214,7 @@
       height: auto;
     }
 
-   /* ─── STREAMER AVATAR WRAPPER ────────────────────────────────── */
+    /* ─── STREAMER AVATAR WRAPPER ────────────────────────────────── */
     .streamer-wrap {
       position: absolute;
       bottom: 210px;
@@ -259,11 +259,17 @@
     }
 
     /* Solo / Carousel Mode Scaling for the Hat */
-    body.solo .partyhat, 
+    body.solo .partyhat {
+      width: 60px;
+      top: -25px;
+      left: 25px;
+    }
+
+
     body.carousel .partyhat {
       width: 60px;
       top: -25px;
-      left: 25px !important;
+      left: 25px;
     }
 
     /* ══════════════════════════════════════════════════════════════
@@ -296,13 +302,13 @@
       height: 110px;
     }
 
-/*     body.solo .partyhat {
+    /*     body.solo .partyhat {
       width: 68px;
       top: 25px;
       left: calc(50% + 28px);
     } */
 
- 
+
 
 
     /* ─── GIFT BOX SPIN-IN & GOTHIC FLOAT KEYFRAMES ────────────── */
@@ -511,7 +517,8 @@
         glow-pulse 6.0s ease-in-out 1.3s infinite;
     }
 
-    .streamer-head, .partyhat {
+    .streamer-head,
+    .partyhat {
       animation:
         gift-spin-streamer 1.0s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.7s both,
         float-streamer 4.5s ease-in-out 1.7s infinite,
@@ -548,33 +555,6 @@
 
 
 
-    // ─── 1. INITIALIZE URL PARAMETERS ─────────────────────────────
-    const urlParams = new URLSearchParams(window.location.search);
-    const root = document.documentElement;
-    const hex = k => { const v = urlParams.get(k); return v ? '#' + v.replace(/^#/, '') : null; };
-
-    /* Custom Color Overrides */
-    if (hex('glow')) { root.style.setProperty('--glow1', hex('glow')); root.style.setProperty('--amber', hex('glow')); }
-    if (hex('glow2')) root.style.setProperty('--glow2', hex('glow2'));
-    if (hex('glow3')) root.style.setProperty('--glow3', hex('glow3'));
-    if (hex('ember')) root.style.setProperty('--ember', hex('ember'));
-
-    /* Streamer Avatar */
-    const avatar = urlParams.get('avatar');
-    if (avatar) {
-      document.getElementById('streamer-head').src = avatar;
-      document.getElementById('streamer-wrap').style.display = 'block';
-    }
-
-    /* ─── 2. HIDE STREAMER HEAD TOGGLE ───────────────────────────── */
-    const hideHead = urlParams.get('nohead') === '1';
-    if (hideHead) {
-      const streamerHeadEl = document.querySelector('.streamer-head');
-      if (streamerHeadEl) {
-        streamerHeadEl.style.display = 'none';
-      }
-    }
-
     /* ─── 3. BORDER & FILL CONFIGURATION ─────────────────────────── */
     const noBorder = urlParams.get('noborder') === '1';
     const borderHex = urlParams.get('border');
@@ -584,18 +564,33 @@
     if (streamerHeadEl) {
       if (noBorder) {
         streamerHeadEl.style.border = 'none';
-        streamerHeadEl.style.background = 'transparent';
+        streamerHeadEl.style.backgroundColor = 'transparent';
         streamerHeadEl.style.boxShadow = 'none';
       } else {
         if (borderHex) streamerHeadEl.style.border = `3px solid #${borderHex}`;
-        if (fillHex) streamerHeadEl.style.background = `#${fillHex}`;
+        if (fillHex) streamerHeadEl.style.backgroundColor = `#${fillHex}`; // Explicitly set background-color
       }
     }
 
-    /* ─── 4. SEASONAL HAT & POSITIONING ──────────────────────────── */
+    /* ─── 4. HIDE STREAMER HEAD TOGGLE ───────────────────────────── */
+    const hideHead = urlParams.get('nohead') === '1';
+    if (hideHead && streamerHeadEl) {
+      streamerHeadEl.style.display = 'none';
+    }
+
+    /* ─── 5. SEASONAL HAT & POSITIONING (Smart Overrides) ────────── */
     const hatType = urlParams.get('hat');
     const hatUrl = urlParams.get('haturl');
-    const hatPos = urlParams.get('hatpos') || 'avatar';
+    let hatPos = urlParams.get('hatpos') || 'avatar';
+
+    // If avatar is hidden (nohead=1), disallow/hide the hat entirely
+    const isAvatarDisabled = hideHead || !urlParams.get('avatar');
+
+    // If Solo or Carousel mode is active, lock hat position to avatar by default
+    const isSoloOrCarousel = urlParams.has('solo') || urlParams.has('carousel') || urlParams.has('cycle');
+    if (isSoloOrCarousel) {
+      hatPos = 'avatar';
+    }
 
     const defaultHatUrls = {
       xmas: "https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/xmas_hat.png",
@@ -611,7 +606,6 @@
         ph.src = resolvedHatSrc;
         ph.style.display = 'block';
 
-        // Dynamic Position Handling across widget layouts
         if (hatPos === 'drop') {
           const itemSlot = document.querySelector('.slot--item') || document.querySelector('.drops');
           if (itemSlot) {
@@ -619,23 +613,21 @@
             ph.style.position = 'absolute';
             ph.style.top = '-25px';
             ph.style.left = '50%';
-            ph.style.width = '90px';
             ph.style.right = 'auto';
             ph.style.transform = 'translateX(-50%) rotate(15deg)';
           }
         } else if (hatPos === 'top-left') {
-          const itemSlot = document.querySelector('.slot--flair') || document.querySelector('.drops');
-          if (itemSlot) {
-            itemSlot.appendChild(ph);
+          const dropsContainer = document.getElementById('drops');
+          if (dropsContainer) {
+            dropsContainer.appendChild(ph);
             ph.style.position = 'absolute';
-            ph.style.top = '-10px';
-            ph.style.left = '5%';
-            ph.style.width = '90px';
+            ph.style.top = '10px';
+            ph.style.left = '10px';
             ph.style.right = 'auto';
-            ph.style.transform = 'translateX(-50%) rotate(15deg)';
+            ph.style.transform = 'rotate(-15deg)';
           }
-        } 
-        // If hatPos === 'avatar', it stays right where it is in the HTML inside #streamer-wrap using the CSS absolute coordinates above!
+        }
+        // Otherwise stays attached to streamer-wrap automatically via HTML structure
       }
     }
 

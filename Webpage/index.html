@@ -28,6 +28,8 @@
 
   <link rel="shortcut icon" type="image/x-icon" href="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg">
 
+
+
   <!-- Klei / DST Gothic Hand-Drawn Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,6 +61,14 @@
       opacity: 1; /* Fully visible */
       transition: background-color 0.2s ease;
     }
+
+
+
+    .pill-icon-portrait, .pill-icon-item, .pill-icon-flair, .pill-icon-avatar
+    {
+      -webkit-user-drag: none;
+    }
+
 
     input[type="number"]::-webkit-inner-spin-button:hover,
     input[type="number"]::-webkit-outer-spin-button:hover {
@@ -353,6 +363,12 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    iframe#obs-preview-frame
+    {
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+
     /* --- COMPENDIUM CURSOR MATRIX --- */
     @media (hover: hover) and (pointer: fine) {
 
@@ -377,15 +393,19 @@
         cursor: var(--cursor-grabbing) 0 16, grabbing !important;
       }
 
+
+      
+
       [draggable="true"],
-      .draggable-item
+      .draggable-item,
+      .asset-card img
        {
         cursor: var(--cursor-grabbing) 0 16, grab !important;
       }
 
       [draggable="true"]:active,
       .draggable-item:active,
-      img:active {
+      img:active:not(img.thumb-img) {
         cursor: var(--cursor-grabbing) 0 16, grabbing !important;
       }
 
@@ -504,7 +524,10 @@
     .asset-card p {
       font-size: 1.05rem !important;
       color: var(--dst-paper) !important;
+  
     }
+
+
 
     .asset-card h4 {
       font-size: 1.25rem !important;
@@ -972,14 +995,23 @@
       align-items: center;
       position: relative;
       box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 5px 5px 0 #090605;
+      
+      
+    }
+
+    .milestone-icon-slot img
+    {
+      pointer-events: none;
     }
 
     .item-pedestal img {
       width: 100%;
-      max-width: 320px;
+      max-width: 512px;
       object-fit: contain;
       filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.9));
       transition: transform 0.4s ease;
+      pointer-events: none;
+      
     }
 
     .item-pedestal img:hover {
@@ -1218,12 +1250,18 @@
       flex-direction: column;
       width: 100%;
     }
+    a.amb-card
+    {
+      -webkit-user-drag: none;
+    }
 
     .thumb-wrapper {
       position: relative;
       width: 100%;
       background: #0d0908;
       border-bottom: 2px solid #3c2a20;
+            
+
     }
 
     .thumb-img {
@@ -1231,6 +1269,7 @@
       aspect-ratio: 16/9;
       object-fit: cover;
       display: block;
+      -webkit-user-drag: none;
     }
 
     .live-stamp {
@@ -1452,6 +1491,7 @@
       max-width: 100%;
       object-fit: contain;
       filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.8));
+      
     }
 
     .asset-card h4 {
@@ -2113,7 +2153,7 @@
               </label>
               <input type="text" id="obs-result-url" readonly onclick="copyObsGeneratedUrl()" draggable="true"
                 ondragstart="handleObsDragStart(event)" class="search-input-box"
-                title="Click to copy | Drag & drop directly into OBS"
+                title="Click to copy or Drag & drop directly into OBS"
                 style="padding: 10px 12px; font-size: 0.95rem; color: #a4e67a; background: #120e0c; cursor: grab;" />
             </div>
 
@@ -2145,7 +2185,10 @@
         </div>
         <div id="timer" class="campfire-countdown">CALCULATING...</div>
         <div id="timer-date" class="campfire-date" onclick="toggleTimerTimezone()"
+        
           title="Click to toggle Local / UTC time">Consulting Klei Records...</div>
+
+          
       </div>
 
       <div class="campaign-grid">
@@ -2155,10 +2198,14 @@
             <strong style="color:#fff;">Instant Delivery:</strong> Claimed rewards materialize directly in your survivor
             Curio Cabinet!
           </div>
-          <div style="margin-top: 16px; display: flex; gap: 10px; width: 100%;">
+          <div title="Share markdown with friends" style="margin-top: 16px; display: flex; gap: 10px; width: 100% "  </div>
+            
             <button class="dst-btn btn-discord" style="flex: 1;" onclick="openDiscordModal()">
+              
               <i data-lucide="share-2"></i> Share to Discord
+              
             </button>
+            
           </div>
         </div>
 
@@ -2497,6 +2544,8 @@ function handleWidgetModeChange(changed) {
       }
     }
 
+
+
     function handleObsDragStart(e) {
       const box = document.getElementById('obs-result-url');
       if (box && box.value) {
@@ -2629,11 +2678,16 @@ function handleWidgetModeChange(changed) {
         if (hatScale !== '100') params.push(`hatscale=${encodeURIComponent(hatScale)}`);
       }
 
+
+
       url += params.join('&');
 
       const resultBox = document.getElementById('obs-result-url');
       const previewBtn = document.getElementById('obs-preview-btn');
       const previewFrame = document.getElementById('obs-preview-frame');
+
+
+
 
       if (resultBox) resultBox.value = url;
       if (previewBtn) previewBtn.href = url;
@@ -2691,10 +2745,15 @@ function handleWidgetModeChange(changed) {
 
 
 
+
+
       if (document.getElementById('obs-no-border')) {
         document.getElementById('obs-no-border').checked = savedNoBorder;
         toggleBorderDisable();
       }
+
+
+
 
       if (document.getElementById('obs-no-fill')) {
         document.getElementById('obs-no-fill').checked = savedNoFill;
@@ -3280,7 +3339,7 @@ function handleWidgetModeChange(changed) {
           const ext = asset.url.split('.').pop().toUpperCase();
           return `
             <div class="asset-card">
-              <img src="${asset.url}" alt="${asset.name}" loading="lazy">
+              <img title="Drag me into your folder/desktop!" src="${asset.url}" alt="${asset.name}" loading="lazy">
               <div>
                 <h4>${asset.name}</h4>
                 <p>Format: ${ext}</p>

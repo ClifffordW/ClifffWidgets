@@ -8,10 +8,26 @@
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap');
 
     /* ─── SHARED HAT ANIMATION & GLOW ────────────────────────────── */
-    .partyhat.is-animated {
+/* ─── SHARED HAT ANIMATION & GLOW ────────────────────────────── */
+    .partyhat-wrap.is-animated {
       animation:
         float-streamer 4.5s ease-in-out infinite,
         glow-pulse 6.0s ease-in-out infinite;
+    }
+
+    .partyhat-wrap {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .partyhat {
+      width: 46px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.9));
     }
 
     /* ─── VARS ───────────────────────────────────────────────────── */
@@ -334,7 +350,10 @@
 <body>
 
   <div class="drops" id="drops">
-    <img class="partyhat" id="partyhat" src="" alt="Party Hat">
+    
+    <div class="partyhat-wrap" id="partyhat-wrap" style="display: none;">
+      <img class="partyhat" id="partyhat" src="" alt="Party Hat">
+    </div>
 
     <div class="streamer-wrap" id="streamer-wrap">
       <img class="streamer-head" id="streamer-head" src="" alt="Streamer Avatar">
@@ -393,7 +412,7 @@
       if (wrapEl) wrapEl.style.display = 'none';
     }
 
-    /* ─── SEASONAL HAT & POSITIONING ──────────────────────────── */
+   /* ─── 5. SEASONAL HAT & POSITIONING ──────────────────────────── */
     const hatType = urlParams.get('hat');
     const hatUrl = urlParams.get('haturl');
     const hatPos = urlParams.get('hatpos') || 'avatar';
@@ -410,11 +429,12 @@
     if (hatType) {
       const resolvedHatSrc = hatUrl || defaultHatUrls[hatType] || '';
       const ph = document.getElementById('partyhat');
+      const phWrap = document.getElementById('partyhat-wrap');
 
-      if (resolvedHatSrc && ph) {
+      if (resolvedHatSrc && ph && phWrap) {
         ph.src = resolvedHatSrc;
-        ph.style.display = 'block';
-        ph.classList.add('is-animated');
+        phWrap.style.display = 'block';
+        phWrap.classList.add('is-animated');
 
         let targetEl = document.getElementById('streamer-wrap');
         if (hatPos === 'flair') {
@@ -426,17 +446,13 @@
         }
 
         if (targetEl) {
-          targetEl.appendChild(ph);
-          ph.style.position = 'absolute';
-          ph.style.top = '-25px';
-          ph.style.left = '50%';
-          ph.style.right = 'auto';
+          targetEl.appendChild(phWrap);
           
+          // Apply custom offset variables and transform safely to the image without breaking animation
           ph.style.setProperty('--hat-offset-x', `${hatX}px`);
           ph.style.setProperty('--hat-offset-y', `${hatY}px`);
           ph.style.setProperty('--hat-scale', hatScaleVal);
           ph.style.transform = 'translate(calc(-50% + var(--hat-offset-x)), var(--hat-offset-y)) scale(var(--hat-scale)) rotate(15deg)';
-          ph.style.zIndex = '20';
         }
       }
     }

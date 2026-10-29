@@ -333,6 +333,44 @@
         glow-pulse 5.5s ease-in-out 1.6s infinite;
     }
 
+
+.flair-inner {
+      animation:
+        gift-spin-flair 1.1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s both,
+        float-flair 6.0s ease-in-out 1.2s infinite,
+        glow-pulse 6.5s ease-in-out 1.2s infinite;
+    }
+
+    .portrait-inner {
+      animation:
+        gift-spin-portrait 1.1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s both,
+        float-portrait 5.2s ease-in-out 1.4s infinite,
+        glow-pulse 7.0s ease-in-out 1.4s infinite;
+    }
+
+    .item-inner {
+      animation:
+        gift-spin-item 1.1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s both,
+        float-item 4.6s ease-in-out 1.6s infinite,
+        glow-pulse 5.5s ease-in-out 1.6s infinite;
+    }
+
+    [data-solo] .item-inner {
+      animation:
+        gift-spin-solo 1.1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both,
+        float-solo 5.0s ease-in-out 1.3s infinite,
+        glow-pulse 6.0s ease-in-out 1.3s infinite;
+    }
+
+    /* Keep images static inside the wrapper so they don't double-animate */
+    .bg-flair,
+    .bg-portrait,
+    .bg-item {
+      display: block;
+      height: auto;
+    }
+
+
     [data-solo] .bg-item {
       animation:
         gift-spin-solo 1.1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both,
@@ -354,14 +392,20 @@
       <img class="streamer-head" id="streamer-head" src="" alt="Streamer Avatar">
     </div>
 
-    <div class="slot slot--flair">
-      <img class="bg-flair" src="" alt="Flair Icon">
+<div class="slot slot--flair">
+      <div class="asset-inner flair-inner">
+        <img class="bg-flair" src="" alt="Flair Icon">
+      </div>
     </div>
     <div class="slot slot--portrait">
-      <img class="bg-portrait" src="" alt="Portrait">
+      <div class="asset-inner portrait-inner">
+        <img class="bg-portrait" src="" alt="Portrait">
+      </div>
     </div>
     <div class="slot slot--item">
-      <img class="bg-item" src="" alt="Drop Item">
+      <div class="asset-inner item-inner">
+        <img class="bg-item" src="" alt="Drop Item">
+      </div>
     </div>
   </div>
 
@@ -435,11 +479,11 @@
 
         let targetEl = document.getElementById('streamer-wrap');
         if (hatPos === 'flair') {
-          targetEl = document.querySelector('.slot--flair');
+          targetEl = document.querySelector('.flair-inner');
         } else if (hatPos === 'portrait') {
-          targetEl = document.querySelector('.slot--portrait');
+          targetEl = document.querySelector('.portrait-inner');
         } else if (hatPos === 'item') {
-          targetEl = document.querySelector('.slot--item');
+          targetEl = document.querySelector('.item-inner');
         }
 
         if (targetEl) {

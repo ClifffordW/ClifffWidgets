@@ -2815,6 +2815,7 @@
       }
 
       // In your params push block:
+// In your params push block:
       if (hatType !== '') {
         params.push(`hat=${encodeURIComponent(hatType)}`);
         if (hatUrl !== '') params.push(`haturl=${encodeURIComponent(hatUrl)}`);
@@ -2822,6 +2823,7 @@
         if (hatX !== '0') params.push(`hatx=${encodeURIComponent(hatX)}`);
         if (hatY !== '0') params.push(`haty=${encodeURIComponent(hatY)}`);
         if (hatScale !== '100') params.push(`hatscale=${encodeURIComponent(hatScale)}`);
+        if (hatRot !== '15') params.push(`hatrot=${encodeURIComponent(hatRot)}`); // <-- ADDED THIS LINE
       }
 
 
@@ -2878,32 +2880,25 @@
       const savedNoBorder = localStorage.getItem('dst-obs-noborder') === 'true';
       const savedNoFill = localStorage.getItem('dst-obs-nofill') === 'true';
 
-      const savedHatType = localStorage.getItem('dst-obs-hattype'); // ADDED
-      const savedHatUrl = localStorage.getItem('dst-obs-haturl');   // ADDED
+      const savedHatType = localStorage.getItem('dst-obs-hattype');
+      const savedHatUrl = localStorage.getItem('dst-obs-haturl');
+      const savedHatPos = localStorage.getItem('dst-obs-hatpos') || 'avatar'; // Restore saved position!
       const savedHatX = localStorage.getItem('dst-obs-hatx') || '0';
       const savedHatY = localStorage.getItem('dst-obs-haty') || '0';
       const savedHatScale = localStorage.getItem('dst-obs-hatscale') || '100';
       const savedHatRot = localStorage.getItem('dst-obs-hatrot') || '15';
 
-
-      if (document.getElementById('obs-hat-rot')) document.getElementById('obs-hat-rot').value = savedHatRot;
-
+      // 1. Assign all slider values first
       if (document.getElementById('obs-hat-x')) document.getElementById('obs-hat-x').value = savedHatX;
       if (document.getElementById('obs-hat-y')) document.getElementById('obs-hat-y').value = savedHatY;
       if (document.getElementById('obs-hat-scale')) document.getElementById('obs-hat-scale').value = savedHatScale;
-      updateHatOffsets();
+      if (document.getElementById('obs-hat-rot')) document.getElementById('obs-hat-rot').value = savedHatRot;
 
-
-
-
-
+      // 2. Assign toggle and checkbox states
       if (document.getElementById('obs-no-border')) {
         document.getElementById('obs-no-border').checked = savedNoBorder;
         toggleBorderDisable();
       }
-
-
-
 
       if (document.getElementById('obs-no-fill')) {
         document.getElementById('obs-no-fill').checked = savedNoFill;
@@ -2913,7 +2908,7 @@
       if (savedBorder !== null && document.getElementById('obs-border-hex')) document.getElementById('obs-border-hex').value = savedBorder;
       if (savedFill !== null && document.getElementById('obs-fill-hex')) document.getElementById('obs-fill-hex').value = savedFill;
 
-      // RESTORE HAT STATE
+      // 3. Assign Hat Type and URL
       if (savedHatType !== null && document.getElementById('obs-seasonal-hat')) {
         const meta = hatMetadata[savedHatType] || hatMetadata[''];
         selectHatOption(savedHatType, meta.label, meta.icon);
@@ -2922,6 +2917,20 @@
         document.getElementById('obs-hat-url').value = savedHatUrl;
       }
 
+      // 4. Assign Hat Position (Pills)
+      if (savedHatPos) {
+        const posInput = document.getElementById('obs-hat-pos');
+        if (posInput) posInput.value = savedHatPos;
+        document.querySelectorAll('.hat-pos-pill').forEach(p => {
+          p.classList.remove('active');
+          // Match and activate the correct button based on its onclick attribute
+          if (p.getAttribute('onclick')?.includes(`'${savedHatPos}'`)) {
+            p.classList.add('active');
+          }
+        });
+      }
+
+      // 5. Assign remaining text/toggle fields
       if (savedTwitch !== null && document.getElementById('obs-twitch')) document.getElementById('obs-twitch').value = savedTwitch;
       if (savedAvatar !== null && document.getElementById('obs-avatar')) document.getElementById('obs-avatar').value = savedAvatar;
       if (document.getElementById('obs-solo-toggle')) document.getElementById('obs-solo-toggle').checked = savedSolo;
@@ -2932,6 +2941,8 @@
       if (savedG2 !== null && document.getElementById('obs-glow2')) document.getElementById('obs-glow2').value = savedG2;
       if (savedG3 !== null && document.getElementById('obs-glow3')) document.getElementById('obs-glow3').value = savedG3;
 
+      // 6. Finally, update text labels and build the URL once everything is safely loaded
+      updateHatOffsetsOnly();
       updateObsUrlBuilder();
     }
 

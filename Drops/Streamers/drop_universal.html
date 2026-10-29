@@ -556,6 +556,12 @@
 
 
     /* ─── 3. BORDER & FILL CONFIGURATION ─────────────────────────── */
+    // ─── 1. INITIALIZE URL PARAMETERS FIRST ───────────────────────
+    const urlParams = new URLSearchParams(window.location.search);
+    const root = document.documentElement;
+    const hex = k => { const v = urlParams.get(k); return v ? '#' + v.replace(/^#/, '') : null; };
+
+    /* ─── 2. BORDER & FILL CONFIGURATION ─────────────────────────── */
     const noBorder = urlParams.get('noborder') === '1';
     const borderHex = urlParams.get('border');
     const fillHex = urlParams.get('fill');

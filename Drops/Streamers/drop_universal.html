@@ -472,16 +472,19 @@
       0% {
         opacity: 0;
         transform: scale(0) rotate(-180deg) translateY(40px);
+        filter: drop-shadow(0 0 5rem var(--glow1));
       }
 
       70% {
         opacity: 1;
         transform: scale(1.15) rotate(10deg) translateY(-5px);
+        filter: drop-shadow(0 0 2.2rem var(--glow3));
       }
 
       100% {
         opacity: 1;
         transform: scale(1) rotate(-3deg) translateY(0);
+        filter: drop-shadow(0 0 0.5rem var(--glow1));
       }
     }
 

@@ -541,39 +541,7 @@
     const hex = k => { const v = p.get(k); return v ? '#' + v.replace(/^#/, '') : null; };
 
 
-    // Read parameters
-    const hatType = urlParams.get('hat');
-    const hatUrl = urlParams.get('haturl');
-    const hatPos = urlParams.get('hatpos') || 'avatar';
 
-
-    const defaultHatUrls = {
-      xmas: "https://dontstarve.wiki.gg/images/Winter_Hat_Dropped.png?72e0b5",
-      halloween: "https://cdn-items.klei.com/dst/512x512/tophat_witch_pyre_cf2ed86a1a4d83b3.png",
-      birthday: "https://dontstarve.wiki.gg/images/thumb/Balloon_Hat_Dropped.png/300px-Balloon_Hat_Dropped.png?1d91e1"
-    };
-
-    const resolvedHatSrc = hatUrl || defaultHatUrls[hatType] || '';
-
-    if (hatType && hatElement) {
-      // Determine source image based on type or custom url
-      const resolvedHatSrc = hatUrl || (hatType === 'xmas' ? 'https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/xmas_hat.png' : hatType === 'halloween' ? 'https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/halloween_hat.png' : 'https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/birthday_hat.png'); hatElement.style.backgroundImage = `url(${resolvedHatSrc})`;
-
-      // Reposition based on user choice & current widget mode (Full, Solo, Carousel)
-      if (hatPos === 'avatar') {
-        // Attach dynamically to the streamer head container
-        streamerHeadContainer.appendChild(hatElement);
-        hatElement.className = 'obs-hat-overlay avatar-mode';
-      } else if (hatPos === 'drop') {
-        // Attach to the top of the drop item frame
-        dropBoxContainer.appendChild(hatElement);
-        hatElement.className = 'obs-hat-overlay drop-mode';
-      } else {
-        // Absolute top-left of the widget container
-        widgetRoot.appendChild(hatElement);
-        hatElement.className = 'obs-hat-overlay absolute-mode';
-      }
-    }
 
     /* Custom Color Overrides */
     if (hex('glow')) { root.style.setProperty('--glow1', hex('glow')); root.style.setProperty('--amber', hex('glow')); }
@@ -620,6 +588,42 @@
         streamerHeadEl.style.display = 'none';
       }
     }
+
+
+    // Read parameters
+    const hatType = urlParams.get('hat');
+    const hatUrl = urlParams.get('haturl');
+    const hatPos = urlParams.get('hatpos') || 'avatar';
+
+
+    const defaultHatUrls = {
+      xmas: "https://dontstarve.wiki.gg/images/Winter_Hat_Dropped.png?72e0b5",
+      halloween: "https://cdn-items.klei.com/dst/512x512/tophat_witch_pyre_cf2ed86a1a4d83b3.png",
+      birthday: "https://dontstarve.wiki.gg/images/thumb/Balloon_Hat_Dropped.png/300px-Balloon_Hat_Dropped.png?1d91e1"
+    };
+
+    const resolvedHatSrc = hatUrl || defaultHatUrls[hatType] || '';
+
+    if (hatType && hatElement) {
+      // Determine source image based on type or custom url
+      const resolvedHatSrc = hatUrl || (hatType === 'xmas' ? 'https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/xmas_hat.png' : hatType === 'halloween' ? 'https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/halloween_hat.png' : 'https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/birthday_hat.png'); hatElement.style.backgroundImage = `url(${resolvedHatSrc})`;
+
+      // Reposition based on user choice & current widget mode (Full, Solo, Carousel)
+      if (hatPos === 'avatar') {
+        // Attach dynamically to the streamer head container
+        streamerHeadContainer.appendChild(hatElement);
+        hatElement.className = 'obs-hat-overlay avatar-mode';
+      } else if (hatPos === 'drop') {
+        // Attach to the top of the drop item frame
+        dropBoxContainer.appendChild(hatElement);
+        hatElement.className = 'obs-hat-overlay drop-mode';
+      } else {
+        // Absolute top-left of the widget container
+        widgetRoot.appendChild(hatElement);
+        hatElement.className = 'obs-hat-overlay absolute-mode';
+      }
+    }
+
 
 
     // Parse parameters

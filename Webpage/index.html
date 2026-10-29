@@ -1591,7 +1591,7 @@
                 <div style="display: flex; gap: 8px; align-items: center;">
                   <input type="color" id="obs-border-color" value="#443429" oninput="syncColorToText('border')"
                     style="width: 48px; height: 46px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
-                  <input type="text" id="obs-border-hex" class="search-input-box" value="443429"
+                  <input type="text" id="obs-border-hex" class="search-input-box" value="e8a040"
                     oninput="syncTextToColor('border'); updateObsUrlBuilder();"
                     style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
                 </div>
@@ -1605,7 +1605,7 @@
                 <div style="display: flex; gap: 8px; align-items: center;">
                   <input type="color" id="obs-fill-color" value="#1c1613" oninput="syncColorToText('fill')"
                     style="width: 48px; height: 46px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
-                  <input type="text" id="obs-fill-hex" class="search-input-box" value="1C1613"
+                  <input type="text" id="obs-fill-hex" class="search-input-box" value="0000"
                     oninput="syncTextToColor('fill'); updateObsUrlBuilder();"
                     style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
                 </div>
@@ -1838,25 +1838,25 @@
       updateObsUrlBuilder();
     }
 
-    function syncColorToText(type) {
-      const colorPicker = document.getElementById(`obs-${type}-color`);
-      const textBox = document.getElementById(`obs-${type}-hex`);
-      if (colorPicker && textBox) {
-        textBox.value = colorPicker.value.replace('#', '').toUpperCase();
-        updateObsUrlBuilder();
-      }
-    }
+function syncColorToText(type) {
+  const colorPicker = document.getElementById(`obs-${type}-color`);
+  const textBox = document.getElementById(`obs-${type}-hex`);
+  if (colorPicker && textBox) {
+    textBox.value = colorPicker.value.replace('#', '').toUpperCase();
+    updateObsUrlBuilder();
+  }
+}
 
-    function syncTextToColor(type) {
-      const colorPicker = document.getElementById(`obs-${type}-color`);
-      const textBox = document.getElementById(`obs-${type}-hex`);
-      if (colorPicker && textBox) {
-        let val = textBox.value.replace(/#/g, '').trim().toUpperCase();
-        if (/^[0-9A-F]{6}$/i.test(val)) {
-          colorPicker.value = `#${val}`;
-        }
-      }
+function syncTextToColor(type) {
+  const colorPicker = document.getElementById(`obs-${type}-color`);
+  const textBox = document.getElementById(`obs-${type}-hex`);
+  if (colorPicker && textBox) {
+    let val = textBox.value.replace(/#/g, '').trim().toUpperCase();
+    if (/^[0-9A-F]{6}$/i.test(val)) {
+      colorPicker.value = `#${val}`;
     }
+  }
+}
 
     function handleObsDragStart(e) {
       const box = document.getElementById('obs-result-url');
@@ -1884,10 +1884,7 @@
       localStorage.setItem('dst-obs-fill', fillHex);
       localStorage.setItem('dst-obs-hat', seasonalHat);
 
-      // In your params array builder, add:
-      if (borderHex) params.push(`border=${encodeURIComponent(borderHex)}`);
-      if (fillHex) params.push(`fill=${encodeURIComponent(fillHex)}`);
-      if (seasonalHat) params.push(`hat=${encodeURIComponent(seasonalHat)}`);
+
 
 
 
@@ -1923,6 +1920,11 @@
       if (g1) params.push(`glow=${encodeURIComponent(g1)}`);
       if (g2) params.push(`glow2=${encodeURIComponent(g2)}`);
       if (g3) params.push(`glow3=${encodeURIComponent(g3)}`);
+      // In your params array builder, add:
+      if (borderHex) params.push(`border=${encodeURIComponent(borderHex)}`);
+      if (fillHex) params.push(`fill=${encodeURIComponent(fillHex)}`);
+      if (seasonalHat) params.push(`hat=${encodeURIComponent(seasonalHat)}`);
+
 
       url += params.join('&');
 

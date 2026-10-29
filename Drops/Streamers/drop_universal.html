@@ -11,6 +11,10 @@
   --glow1: #e8a040;
   --glow2: #c45c10;
   --glow3: #f0c060;
+
+  --border: #e8a040;
+  --fill: #000;
+
   --amber: #d4882a;
   --ember: #e03600;
   --paper: #c8a96e;
@@ -162,9 +166,9 @@ body.carousel .partyhat      { width: 68px; top: 20px; left: calc(50% + 28px); }
 .streamer-head {
   width: 84px; height: 84px;
   border-radius: 50%; object-fit: cover;
-  border: 2px solid var(--glow1);
+  border: 2px solid var(--border);
   background: black;
-  filter: drop-shadow(0 0 0.8rem var(--glow1));
+  filter: drop-shadow(0 0 0.8rem var(--fill));
   animation:
     appear-streamer 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s both,
     float-streamer  4.5s ease-in-out                             3s infinite,

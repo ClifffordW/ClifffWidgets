@@ -42,6 +42,12 @@
 
 
   <style>
+    .wg-reset-btn.confirm {
+      border-color: var(--dst-crimson);
+      background: rgba(166, 43, 32, 0.35);
+      color: #fff;
+    }
+
     @font-face {
       font-family: Hammerhead;
       src: url(https://clifffordw.github.io/ClifffWidgets/Fonts/HammerheadBold.ttf);
@@ -433,7 +439,7 @@
         cursor: var(--cursor-grabbing) 0 11, grabbing;
       }
 
-/*       [title] {
+      /*       [title] {
         cursor: var(--cursor-help) 0 16, help !important;
       } */
 
@@ -2558,6 +2564,41 @@
         /* smaller lift so it doesn't look detached */
       }
     }
+
+    .sidebar-footer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sound-button .snd-off {
+      display: none;
+    }
+
+    .sound-button.muted .snd-on {
+      display: none;
+    }
+
+    .sound-button.muted .snd-off {
+      display: inline-block;
+      color: #e74c3c;
+    }
+
+    .sound-button.muted {
+      border-color: var(--dst-crimson);
+      background: rgba(166, 43, 32, 0.15);
+      color: #e8a29a;
+    }
+
+    @media (max-width: 900px) {
+      .sidebar-footer {
+        gap: 6px;
+      }
+
+      .sound-button span {
+        display: none;
+      }
+    }
   </style>
 </head>
 
@@ -2680,6 +2721,15 @@
         <i data-lucide="bell"></i>
         <span id="notif-toggle-text">Enable Drop Alerts</span>
       </button>
+      <button id="sound-toggle-btn" class="notif-button sound-button" onclick="toggleSound()"
+        title="Turn site sounds on or off">
+        <i data-lucide="volume-2" class="snd-on"></i>
+        <i data-lucide="volume-x" class="snd-off"></i>
+        <span id="sound-toggle-text">Sound On</span>
+      </button>
+
+
+
       <div
         style="font-family: var(--font-mono); font-size: 0.75rem; color: #a08c7a; margin-top: 10px; text-align: center;">
         All possible thanks to Klei.
@@ -3000,6 +3050,11 @@
                 <button class="dst-btn" onclick="copyObsGeneratedUrl()">
                   <i data-lucide="copy" style="width: 16px;"></i> Copy
                 </button>
+                <button id="obs-reset-btn" type="button" class="dst-btn wg-reset-btn" onclick="resetObsWidgetSettings()"
+                  title="Clear everything saved for the OBS widget">
+                  <i data-lucide="rotate-ccw" style="width: 16px;"></i> <span>Reset</span>
+                </button>
+
                 <a id="obs-preview-btn" href="#" target="_blank" class="dst-btn">
                   <i data-lucide="external-link" style="width: 16px;"></i> Full Preview
                 </a>
@@ -3202,6 +3257,57 @@
       if (posInput) posInput.value = pos;
       updateObsUrlBuilder();
     }
+
+
+
+    let obsResetTimer = null;
+    function resetObsWidgetSettings() {
+      const btn = document.getElementById('obs-reset-btn');
+      const label = btn ? btn.querySelector('span') : null;
+
+      // first tap arms it, second tap within 4s confirms
+      if (!btn.classList.contains('confirm')) {
+        btn.classList.add('confirm');
+        if (label) label.innerText = 'Tap again to confirm';
+        obsResetTimer = setTimeout(() => {
+          btn.classList.remove('confirm');
+          if (label) label.innerText = 'Reset';
+        }, 4000);
+        return;
+      }
+
+      clearTimeout(obsResetTimer);
+      btn.classList.remove('confirm');
+      if (label) label.innerText = 'Reset';
+
+      Object.keys(localStorage).filter(k => k.startsWith('dst-obs-')).forEach(k => localStorage.removeItem(k));
+
+      const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+      const check = (id, v) => { const el = document.getElementById(id); if (el) el.checked = v; };
+
+      set('obs-twitch', ''); set('obs-avatar', ''); set('obs-speed', '4.5');
+      set('obs-glow1', '90EE90'); set('obs-color1', '#90EE90');
+      set('obs-glow2', '64F89D'); set('obs-color2', '#64F89D');
+      set('obs-glow3', 'AFFF60'); set('obs-color3', '#AFFF60');
+      set('obs-border-hex', '443429'); set('obs-border-color', '#443429');
+      set('obs-fill-hex', '1C1613'); set('obs-fill-color', '#1c1613');
+      check('obs-no-border', false); check('obs-no-fill', false); check('obs-hide-head', false);
+      toggleBorderDisable(); toggleFillDisable();
+
+      set('obs-hat-url', ''); set('obs-hat-pos', 'avatar');
+      set('obs-hat-x', 0); set('obs-hat-y', 0); set('obs-hat-scale', 100); set('obs-hat-rot', 15);
+      selectHatOption('', 'None (Standard)', 'circle-slash');
+
+      setWidgetMode('default');
+      showInAppToast("Widget Reset", "Your OBS widget settings are back to defaults.",
+        "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg");
+    }
+
+
+
+
+
+
 
     function resetHatTransform() {
       const defaults = { 'obs-hat-x': 0, 'obs-hat-y': 0, 'obs-hat-scale': 100, 'obs-hat-rot': 15 };
@@ -3811,8 +3917,27 @@
       audio.preload = 'auto';
     });
 
+
+    let soundEnabled = localStorage.getItem('dst-sound-enabled') !== 'false';
+
+    function updateSoundButtonUI() {
+      const btn = document.getElementById('sound-toggle-btn');
+      const text = document.getElementById('sound-toggle-text');
+      if (btn) btn.classList.toggle('muted', !soundEnabled);
+      if (text) text.innerText = soundEnabled ? 'Sound On' : 'Sound Off';
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      localStorage.setItem('dst-sound-enabled', soundEnabled ? 'true' : 'false');
+      updateSoundButtonUI();
+      if (soundEnabled) playCustomSound(dstSounds.clickUp);
+    }
+
+
+
     function playCustomSound(audio) {
-      if (!audio) return;
+      if (!audio || !soundEnabled) return;
       try {
         const clone = audio.cloneNode();
         clone.volume = audio.volume;
@@ -4188,6 +4313,7 @@
       updateBlacklistCountBadge();
       initWidgetState();
       initWidgetListeners();
+      updateSoundButtonUI();;
 
       try {
         const [cRes, aRes] = await Promise.all([

@@ -482,6 +482,7 @@
     const hatPos = urlParams.get('hatpos') || 'avatar';
     const hatX = parseInt(urlParams.get('hatx') || '0', 10);
     const hatY = parseInt(urlParams.get('haty') || '0', 10);
+    const hatScaleVal = parseInt(urlParams.get('hatscale') || '100', 10) / 100;
 
     const defaultHatUrls = {
       xmas: "https://dontstarve.wiki.gg/images/Winter_Hat_Dropped.png?72e0b5",
@@ -496,7 +497,7 @@
       if (resolvedHatSrc && ph) {
         ph.src = resolvedHatSrc;
         ph.style.display = 'block';
-        ph.classList.add('is-animated'); // ADDED: Ensures glow & float apply everywhere
+        ph.classList.add('is-animated');
 
         let targetEl = document.getElementById('streamer-wrap');
         if (hatPos === 'flair') {
@@ -514,10 +515,11 @@
           ph.style.left = '50%';
           ph.style.right = 'auto';
           
-          // Inject offsets cleanly while letting it inherit parent container animations
+          // Combine translate offsets, scaling, and rotation cleanly in one transform rule
           ph.style.setProperty('--hat-offset-x', `${hatX}px`);
           ph.style.setProperty('--hat-offset-y', `${hatY}px`);
-          ph.style.transform = 'translate(calc(-50% + var(--hat-offset-x)), var(--hat-offset-y)) rotate(15deg)';
+          ph.style.setProperty('--hat-scale', hatScaleVal);
+          ph.style.transform = 'translate(calc(-50% + var(--hat-offset-x)), var(--hat-offset-y)) scale(var(--hat-scale)) rotate(15deg)';
           ph.style.zIndex = '20';
         }
       }

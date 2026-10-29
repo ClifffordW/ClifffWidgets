@@ -45,6 +45,7 @@
     @font-face {
       font-family: Hammerhead;
       src: url(https://clifffordw.github.io/ClifffWidgets/Fonts/HammerheadBold.ttf);
+      font-display: swap;
     }
 
 
@@ -432,7 +433,7 @@
         cursor: var(--cursor-grabbing) 0 11, grabbing;
       }
 
-      /*       [title] {
+/*       [title] {
         cursor: var(--cursor-help) 0 16, help !important;
       } */
 
@@ -2269,12 +2270,7 @@
       font-size: 1.1rem;
     }
 
-    /* external links become compact icon buttons, separated from the main tabs */
-    aside a.dst-tab {
-      padding: 8px 10px;
-    }
-
-    aside a.dst-tab .tab-content span,
+    /* external links keep their text, set apart from the main tabs */
     aside a.dst-tab>i {
       display: none;
     }
@@ -2427,6 +2423,96 @@
       }
     }
 
+    /* ═══════════════════════════════════════════════════════════
+       READABILITY PASS — larger tiny text, better contrast (theme unchanged)
+       ═══════════════════════════════════════════════════════════ */
+    html {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    /* tiny labels: bigger, and the clean hand font instead of the distressed typewriter font */
+    .brand-sub,
+    .nav-group-label,
+    .dst-badge,
+    .live-stamp,
+    .wg-slider-top,
+    .wg-seg-btn small,
+    .wg-sub {
+      font-family: var(--font-hand);
+      letter-spacing: 0.5px;
+    }
+
+    .brand-sub {
+      font-size: 0.85rem;
+      color: var(--dst-paper-muted);
+    }
+
+    .nav-group-label {
+      font-size: 0.9rem;
+      color: #a89482;
+    }
+
+    .dst-badge {
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .live-stamp {
+      font-size: 0.9rem;
+    }
+
+    .inv-slot {
+      font-size: 0.95rem;
+    }
+
+    .inv-badge {
+      font-size: 0.8rem;
+      min-width: 18px;
+    }
+
+    .wg-slider-top {
+      font-size: 0.95rem;
+    }
+
+    .wg-seg-btn small {
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+
+    .wg-sub {
+      font-size: 0.95rem;
+      color: #b09c8a;
+    }
+
+    /* low-contrast greys → readable on the dark panels */
+    .sidebar-footer>div,
+    .wg-hint,
+    .wg-label-sm {
+      color: #b09c8a;
+    }
+
+    .hat-pos-pill.locked,
+    .hat-pos-pill:disabled {
+      color: #8a7566;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        font-size: 1.2rem;
+      }
+
+      .wg-label,
+      .wg-label-sm {
+        font-size: 1rem;
+      }
+
+      .tab-content,
+      .notif-button {
+        font-size: 1.1rem;
+      }
+    }
+
 
     @media (max-width: 900px) {
       .platform-filter-bar {
@@ -2450,7 +2536,6 @@
         gap: 4px;
       }
     }
-
 
     @media (max-width: 900px) {
       .mobile-inventory-dock {
@@ -2596,7 +2681,7 @@
         <span id="notif-toggle-text">Enable Drop Alerts</span>
       </button>
       <div
-        style="font-family: var(--font-mono); font-size: 0.75rem; color: #735d4e; margin-top: 10px; text-align: center;">
+        style="font-family: var(--font-mono); font-size: 0.75rem; color: #a08c7a; margin-top: 10px; text-align: center;">
         All possible thanks to Klei.
       </div>
     </div>
@@ -3088,25 +3173,10 @@
       <span id="mobile-live-badge" class="inv-badge" style="display: none;">0</span>
     </div>
 
-    <!--     <div class="inv-slot" onclick="nav('download', this)">
-      <i data-lucide="download"></i>
-      <span>Assets</span>
-    </div> -->
-
-    <!--     <div class="inv-slot" onclick="nav('widget', this)">
-      <i data-lucide="cast"></i>
-      <span>Widget</span>
-    </div> -->
-
     <div class="inv-slot" onclick="nav('info', this)">
       <i data-lucide="book-open"></i>
       <span>Info</span>
     </div>
-
-    <!--   <div class="inv-slot" onclick="toggleDropNotifications()">
-      <i data-lucide="bell" id="m-bell-icon"></i>
-      <span>Alerts</span>
-    </div> -->
   </nav>
 
   <script>
@@ -3865,7 +3935,9 @@
       }
     }
 
-    const lastTab = localStorage.getItem('dst-last-visited-tab') || 'drops';
+    let lastTab = localStorage.getItem('dst-last-visited-tab') || 'drops';
+    // The phone dock only has Drops / Live / Info, so don't reopen a tab it can't reach
+    if (window.matchMedia('(max-width: 900px)').matches && ['widget', 'download'].includes(lastTab)) lastTab = 'drops';
     nav(lastTab);
 
     function applyAmbassadorFilters() {

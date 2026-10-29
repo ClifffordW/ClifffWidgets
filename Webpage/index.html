@@ -76,7 +76,7 @@
 
 
     @media (hover: hover) and (pointer: fine) {
-    /* This automatically finds every element with a title="" attribute and fixes the cursor */
+      /* This automatically finds every element with a title="" attribute and fixes the cursor */
 
 
 
@@ -2058,8 +2058,8 @@
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px;">
 
                   <!-- Avatar Button (Dynamic & Greys out if no avatar) -->
-                  <button type="button" id="hat-btn-avatar" class="hat-pos-pill active" title="Attaches hat to the icon twitch avatar";
-                    onclick="setHatPosition('avatar', this)"
+                  <button type="button" id="hat-btn-avatar" class="hat-pos-pill active"
+                    title="Attaches hat to the icon twitch avatar" ; onclick="setHatPosition('avatar', this)"
                     style="display: flex; align-items: center; justify-content: center; gap: 6px;">
                     <img id="pill-icon-avatar" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
                       alt="Avatar" style="width: 18px; height: 18px; object-fit: contain;" />
@@ -2069,14 +2069,16 @@
                   <!-- Flair Button -->
                   <button type="button" class="hat-pos-pill" onclick="setHatPosition('flair', this)"
                     style="display: flex; align-items: center; justify-content: center; gap: 6px;">
-                    <img id="pill-icon-flair" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" title="Attaches hat to the icon flair";
-                      alt="Flair" style="width: 18px; height: 18px; object-fit: contain;" />
-                      
+                    <img id="pill-icon-flair" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
+                      title="Attaches hat to the icon flair" ; alt="Flair"
+                      style="width: 18px; height: 18px; object-fit: contain;" />
+
                     <span>Flair</span>
                   </button>
 
                   <!-- Portrait Button -->
-                  <button type="button" class="hat-pos-pill" onclick="setHatPosition('portrait', this)" title="Attaches hat to the portrait";
+                  <button type="button" class="hat-pos-pill" onclick="setHatPosition('portrait', this)"
+                    title="Attaches hat to the portrait" ;
                     style="display: flex; align-items: center; justify-content: center; gap: 6px;">
                     <img id="pill-icon-portrait" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
                       alt="Portrait" style="width: 18px; height: 18px; object-fit: contain;" />
@@ -2084,7 +2086,8 @@
                   </button>
 
                   <!-- Item Button -->
-                  <button type="button" class="hat-pos-pill" onclick="setHatPosition('item', this)" title="Attaches hat to the icon item";
+                  <button type="button" class="hat-pos-pill" onclick="setHatPosition('item', this)"
+                    title="Attaches hat to the icon item" ;
                     style="display: flex; align-items: center; justify-content: center; gap: 6px;">
                     <img id="pill-icon-item" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
                       alt="Item" style="width: 18px; height: 18px; object-fit: contain;" />
@@ -2097,7 +2100,7 @@
                   <div>
                     <div
                       style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
-                      <span>Offset X</span> 
+                      <span>Offset X</span>
                       <span id="hat-x-val" style="color: var(--dst-flame); font-weight: bold;">0px</span>
                     </div>
                     <input type="range" id="obs-hat-x" min="-60" max="60" value="0" step="1"
@@ -2105,7 +2108,7 @@
                   </div>
 
                   <div>
-                    <div title="Offset Y Left - Up / Offset Y Right - Down";
+                    <div title="Offset Y Left - Up / Offset Y Right - Down" ;
                       style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
                       <span><u>Offset Y</span></u>
                       <span id="hat-y-val" style="color: var(--dst-flame); font-weight: bold;">0px</span>
@@ -2147,7 +2150,7 @@
 
 
                 <div style="display: flex; gap: 12px; align-items: center;">
-                  <label class="dst-toggle-label" title="Shows main item";
+                  <label class="dst-toggle-label" title="Shows main item. Hat only on Avatar" ;
                     style="display: flex; align-items: center; gap: 5px; cursor: var(--cursor-link) 0 11, pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
                     <span><u>Solo</u></span>
                     <div class="dst-switch">
@@ -2156,7 +2159,7 @@
                     </div>
                   </label>
 
-                  <label class="dst-toggle-label" title="Cycles through all items";
+                  <label class="dst-toggle-label" title="Cycles through all items. Hat only on Avatar" ;
                     style="display: flex; align-items: center; gap: 5px; cursor: var(--cursor-link) 0 11, pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
                     <span><u>Carousel</u></span>
                     <div class="dst-switch">
@@ -2165,7 +2168,7 @@
                     </div>
                   </label>
 
-                  <label class="dst-toggle-label" title="Hides streamer head if needed";
+                  <label class="dst-toggle-label" title="Hides streamer head if needed" ;
                     style="display: flex; align-items: center; gap: 5px; cursor: var(--cursor-link) 0 11, pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
                     <span><u>Hide Head</u></span>
                     <div class="dst-switch">
@@ -2188,7 +2191,7 @@
 
               <!-- Add this inside your live preview or configuration container -->
               <!-- OBS Specs Card (Dynamic Resolution) -->
-<!-- OBS Specs Card (Dynamic Resolution) -->
+              <!-- OBS Specs Card (Dynamic Resolution) -->
               <div class="obs-specs-card"
                 style="margin-top: 14px; padding: 10px 14px; background: rgba(15, 10, 6, 0.92); border: 1px solid rgba(138, 92, 49, 0.7); border-radius: 4px; font-size: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.8);">
                 <div style="display: flex; align-items: center; gap: 8px;">
@@ -2568,7 +2571,7 @@
       updateObsUrlBuilder();
     }
 
-function handleWidgetModeChange(changed) {
+    function handleWidgetModeChange(changed) {
       const soloToggle = document.getElementById('obs-solo-toggle');
       const carouselToggle = document.getElementById('obs-carousel-toggle');
 
@@ -2631,6 +2634,8 @@ function handleWidgetModeChange(changed) {
 
 
 
+
+
       const borderHex = (document.getElementById('obs-border-hex')?.value || '').replace(/#/g, '').trim().toUpperCase();
       const fillHex = (document.getElementById('obs-fill-hex')?.value || '').replace(/#/g, '').trim().toUpperCase();
       const noBorder = document.getElementById('obs-no-border')?.checked || false;
@@ -2638,8 +2643,9 @@ function handleWidgetModeChange(changed) {
 
       const hatType = (document.getElementById('obs-seasonal-hat')?.value || '').trim();
       const hatUrl = (document.getElementById('obs-hat-url')?.value || '').trim();
-      const hatPos = (document.getElementById('obs-hat-pos')?.value || 'avatar').trim(); // ADDED
-
+      let hatPos = (document.getElementById('obs-hat-pos')?.value || 'avatar').trim();
+      const flairBtn = document.querySelector('.hat-pos-pill:not(#hat-btn-avatar)'); // or select your other pills
+      const allPills = document.querySelectorAll('.hat-pos-pill');
 
       const hatX = document.getElementById('obs-hat-x')?.value || '0';
       const hatY = document.getElementById('obs-hat-y')?.value || '0';
@@ -2648,6 +2654,9 @@ function handleWidgetModeChange(changed) {
       localStorage.setItem('dst-obs-hatx', hatX);
       localStorage.setItem('dst-obs-haty', hatY);
       localStorage.setItem('dst-obs-hatscale', hatScale);
+
+
+
 
 
 
@@ -2675,6 +2684,45 @@ function handleWidgetModeChange(changed) {
           pillIconAvatar.style.opacity = '1';
           avatarBtn.classList.remove('disabled');
         }
+      }
+
+
+      // Force hat position to avatar if in Carousel or Solo mode
+
+      if (isSolo || isCarousel) {
+        if (hatPos !== 'avatar') {
+          hatPos = 'avatar';
+          if (posInput) posInput.value = 'avatar';
+        }
+
+        // In Solo/Carousel, force select Avatar and hide the other non-avatar buttons
+        allPills.forEach(p => {
+          if (p.id === 'hat-btn-avatar') {
+            p.style.display = 'flex';
+            p.classList.add('active');
+            p.style.opacity = '1';
+          } else {
+            p.style.opacity = '0.4'
+            p.classList.remove('active'); // Hide other options completely
+          }
+        });
+      } else {
+        // In Default mode, show all placement buttons normally
+        allPills.forEach(p => {
+          p.style.display = 'flex';
+          if (p.id !== 'hat-btn-avatar') {
+
+            p.style.opacity = '1'
+          }
+
+
+
+
+        });
+
+        // Refresh active state visually
+        /* allPills.forEach(p => p.classList.remove('active')); */
+       /*  if (avatarBtn && hatPos === 'avatar') avatarBtn.classList.add('active'); */
       }
 
 

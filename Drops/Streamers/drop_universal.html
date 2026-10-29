@@ -1,446 +1,710 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>DST Drops Widget</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap');
+  <meta charset="UTF-8">
+  <title>DST Drops Widget</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap');
 
-/* ─── VARS ───────────────────────────────────────────────────── */
-:root {
-  --glow1: #e8a040;
-  --glow2: #c45c10;
-  --glow3: #f0c060;
+    /* ─── VARS ───────────────────────────────────────────────────── */
+    :root {
+      --glow1: #e8a040;
+      --glow2: #c45c10;
+      --glow3: #f0c060;
 
-  --border: #e8a040;
-  --fill: #000;
+      --border: #e8a040;
+      --fill: #000;
 
-  --amber: #d4882a;
-  --ember: #e03600;
-  --paper: #c8a96e;
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-/* ── FIXED CANVAS SIZES (OBS Browser Source Standard) ────────── */
-html, body {
-  width:  1024px;
-  height: 512px;
-  background: transparent;
-  overflow: hidden;
-}
-
-body.solo {
-  height: 1024px;
-}
-
-/* Subtle gothic paper grain texture overlay */
-body::before {
-  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.10'/%3E%3C/svg%3E");
-  opacity: 0.28;
-}
-
-
-/* ─── CAROUSEL / CYCLE MODE (1024 × 1024) ─────────────────────── */
-body.carousel .drops {
-  width: 1024px; height: 1024px;
-  padding: 0;
-  justify-content: center;
-  align-items: center;
-}
-
-body.carousel .slot {
-  position: absolute;
-  display: flex;
-  opacity: 0;
-  pointer-events: none;
-  transform: perspective(1200px) rotateY(-180deg) scale(0.1);
-}
-
-/* Spin-In Entry Animation */
-body.carousel .slot.active-carousel-item {
-  display: flex;
-  opacity: 1;
-  z-index: 5;
-  pointer-events: auto;
-  animation: gift-carousel-spin-in 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-/* Spin-Out Exit Animation */
-body.carousel .slot.exiting-carousel-item {
-  display: flex;
-  z-index: 4;
-  animation: gift-carousel-spin-out 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
-}
-
-/* ── SPIN-IN & SPIN-OUT KEYFRAMES ───────────────────────────── */
-@keyframes gift-carousel-spin-in {
-  0% {
-    opacity: 0;
-    transform: perspective(1200px) rotateY(360deg) rotateX(30deg) scale(0.1) translateY(60px);
-    filter: drop-shadow(0 0 5rem var(--glow1));
-  }
-  70% {
-    opacity: 1;
-    transform: perspective(1200px) rotateY(-10deg) rotateX(-5deg) scale(1.1) translateY(-10px);
-    filter: drop-shadow(0 0 2.2rem var(--glow3));
-  }
-  100% {
-    opacity: 1;
-    transform: perspective(1200px) rotateY(-6deg) rotateX(3deg) scale(1) translateY(0);
-    filter: drop-shadow(0 0 0.6rem var(--glow1));
-  }
-}
-
-@keyframes gift-carousel-spin-out {
-  0% {
-    opacity: 1;
-    transform: perspective(1200px) rotateY(-6deg) rotateX(3deg) scale(1) translateY(0);
-    filter: drop-shadow(0 0 0.6rem var(--glow1));
-    scale: 100%;
-  }
-  30% {
-    opacity: 1;
-    transform: perspective(1200px) rotateY(15deg) rotateX(5deg) scale(1.05) translateY(-8px);
-    filter: drop-shadow(0 0 2rem var(--glow2));
-  }
-  100% {
-    opacity: 0;
-    transform: perspective(1200px) rotateY(-360deg) rotateX(-45deg) scale(0.05) translateY(-80px);
-    filter: drop-shadow(0 0 4rem var(--glow1));
-    scale: 0%;
-  }
-}
-
-body.carousel .slot--flair    .bg-flair    { width: 520px; }
-body.carousel .slot--portrait .bg-portrait { width: 580px; }
-body.carousel .slot--item     .bg-item     { width: 640px; }
-
-body.carousel .streamer-wrap {
-  bottom: auto;
-  top: 320px;
-  left: 175px;
-}
-body.carousel .streamer-head { width: 110px; height: 110px; }
-body.carousel .partyhat      { width: 68px; top: 20px; left: calc(50% + 28px); }
-
-/* ══════════════════════════════════════════════════════════════
-   FULL MODE — 1024 × 512 Layout Cluster
-   ══════════════════════════════════════════════════════════════ */
-.drops {
-  position: absolute;
-  bottom: 45px;
-  left: 0;
-  width: 1024px;
-  height: 512px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 28px;
-  padding-bottom: 20px;
-  padding-left: 32px;
-  padding-right: 32px;
-}
-
-.slot { position: relative; display: flex; align-items: flex-end; }
-.slot--flair    { z-index: 1; }
-.slot--portrait { z-index: 2; }
-.slot--item     { z-index: 3; }
-
-.slot--flair    .bg-flair    { width: 280px; }
-.slot--portrait .bg-portrait { width: 320px; }
-.slot--item     .bg-item     { width: 350px; }
-
-.bg-flair, .bg-portrait, .bg-item { display: block; height: auto; }
-
-/* ─── STREAMER AVATAR ────────────────────────────────────────── */
-.streamer-wrap {
-  position: absolute;
-  bottom: 210px;
-  left: 21%;
-  transform: translateX(-50%);
-  z-index: 10;
-  display: none;
-}
-.streamer-head {
-  width: 84px; height: 84px;
-  border-radius: 50%; object-fit: cover;
-  border: 2px solid var(--border);
-  background: black;
-  filter: drop-shadow(0 0 0.8rem var(--fill));
-  animation:
-    appear-streamer 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s both,
-    float-streamer  4.5s ease-in-out                             3s infinite,
-    glow-pulse      6s   ease-in-out                             3s infinite;
-}
-
-.streamer-wrap.solo {
-  bottom: auto;
-  top: 340px;
-  left: 175px;
-}
-
-/* ─── SEASONAL HAT ───────────────────────────────────────────── */
-.partyhat {
-  position: absolute; bottom: 105%; left: 55%;
-  width: 52px; height: auto;
-  z-index: 11; transform: rotate(30deg);
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.9));
-  display: none; pointer-events: none;
-}
-
-/* ══════════════════════════════════════════════════════════════
-   SOLO MODE — 1024 × 1024 Layout Cluster
-   ══════════════════════════════════════════════════════════════ */
-body.solo .drops {
-  width: 1024px; height: 1024px;
-  padding: 0;
-  justify-content: center;
-  align-items: center;
-}
-body.solo .slot--flair,
-body.solo .slot--portrait { display: none; }
-body.solo .slot--item {
-  margin-left: 0;
-  z-index: 1;
-}
-body.solo .slot--item .bg-item { width: 640px; }
-body.solo .streamer-head { width: 110px; height: 110px; }
-body.solo .partyhat      { width: 68px; top: 25px; left: calc(50% + 28px); }
-
-
-/* ─── GIFT BOX SPIN-IN & GOTHIC FLOAT KEYFRAMES ────────────── */
-@keyframes glow-pulse {
-  0%  { filter: drop-shadow(0 0 0.5rem var(--glow1)); }
-  50% { filter: drop-shadow(0 0 1.2rem var(--glow2)); }
-  100%{ filter: drop-shadow(0 0 0.5rem var(--glow1)); }
-}
-
-/* Organic floating loops */
-@keyframes float-flair {
-  0%, 100% { transform: perspective(1000px) rotateY(22deg) rotateX(2deg) translateY(0px); }
-  50%      { transform: perspective(1000px) rotateY(16deg) rotateX(6deg) translateY(-12px); }
-}
-@keyframes float-portrait {
-  0%, 100% { transform: perspective(1000px) rotateY(-2deg) rotateX(3deg) translateY(0px); }
-  50%      { transform: perspective(1000px) rotateY(5deg)  rotateX(7deg) translateY(-14px); }
-}
-@keyframes float-item {
-  0%, 100% { transform: perspective(1000px) rotateY(-18deg) rotateX(3deg) translateY(0px); }
-  50%      { transform: perspective(1000px) rotateY(-12deg) rotateX(8deg) translateY(-16px); }
-}
-@keyframes float-solo {
-  0%, 100% { transform: perspective(1200px) rotateY(-6deg) rotateX(3deg) translateY(0px); }
-  50%      { transform: perspective(1200px) rotateY(4deg)  rotateX(8deg) translateY(-20px); }
-}
-@keyframes float-streamer {
-  0%, 100% { transform: translateY(0px) rotate(-3deg); }
-  50%      { transform: translateY(-8px) rotate(2deg); }
-}
-
-/* DST Gift-Box Spin-In Entry (Fast rotational snap + elastic bounce) */
-@keyframes gift-spin-flair {
-  0%   { opacity: 0; transform: perspective(1000px) rotateY(380deg) rotateX(45deg) scale(0.1) translateY(80px); filter: drop-shadow(0 0 4rem var(--glow1)); }
-  70%  { opacity: 1; transform: perspective(1000px) rotateY(-15deg) rotateX(-5deg) scale(1.08) translateY(-6px); filter: drop-shadow(0 0 1.5rem var(--glow2)); }
-  100% { opacity: 1; transform: perspective(1000px) rotateY(22deg) rotateX(2deg) scale(1) translateY(0); filter: drop-shadow(0 0 0.6rem var(--glow1)); }
-}
-
-@keyframes gift-spin-portrait {
-  0%   { opacity: 0; transform: perspective(1000px) rotateY(-360deg) rotateX(45deg) scale(0.1) translateY(80px); filter: drop-shadow(0 0 4rem var(--glow1)); }
-  70%  { opacity: 1; transform: perspective(1000px) rotateY(12deg) rotateX(-5deg) scale(1.08) translateY(-6px); filter: drop-shadow(0 0 1.5rem var(--glow2)); }
-  100% { opacity: 1; transform: perspective(1000px) rotateY(-2deg) rotateX(3deg) scale(1) translateY(0); filter: drop-shadow(0 0 0.6rem var(--glow1)); }
-}
-
-@keyframes gift-spin-item {
-  0%   { opacity: 0; transform: perspective(1000px) rotateY(-400deg) rotateX(50deg) scale(0.1) translateY(90px); filter: drop-shadow(0 0 4rem var(--glow1)); }
-  70%  { opacity: 1; transform: perspective(1000px) rotateY(10deg) rotateX(-8deg) scale(1.1) translateY(-8px); filter: drop-shadow(0 0 1.8rem var(--glow3)); }
-  100% { opacity: 1; transform: perspective(1000px) rotateY(-18deg) rotateX(3deg) scale(1) translateY(0); filter: drop-shadow(0 0 0.6rem var(--glow1)); }
-}
-
-@keyframes gift-spin-solo {
-  0%   { opacity: 0; transform: perspective(1200px) rotateY(360deg) rotateX(30deg) scale(0.1) translateY(60px); filter: drop-shadow(0 0 5rem var(--glow1)); }
-  70%  { opacity: 1; transform: perspective(1200px) rotateY(-10deg) rotateX(-5deg) scale(1.1) translateY(-10px); filter: drop-shadow(0 0 2.2rem var(--glow3)); }
-  100% { opacity: 1; transform: perspective(1200px) rotateY(-6deg) rotateX(3deg) scale(1) translateY(0); filter: drop-shadow(0 0 0.6rem var(--glow1)); }
-}
-
-@keyframes gift-spin-streamer {
-  0%   { opacity: 0; transform: scale(0) rotate(-180deg) translateY(40px); }
-  70%  { opacity: 1; transform: scale(1.15) rotate(10deg) translateY(-5px); }
-  100% { opacity: 1; transform: scale(1) rotate(-3deg) translateY(0); }
-}
-
-
-
-
-/* ─── ANIMATION BINDINGS (Staggered Unboxing Sequence) ────────── */
-.bg-flair {
-  animation:
-    gift-spin-flair 1.1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s both,
-    float-flair     6.0s ease-in-out                            1.2s infinite,
-    glow-pulse      6.5s ease-in-out                            1.2s infinite;
-}
-.bg-portrait {
-  animation:
-    gift-spin-portrait 1.1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s both,
-    float-portrait     5.2s ease-in-out                             1.4s infinite,
-    glow-pulse         7.0s ease-in-out                             1.4s infinite;
-}
-.bg-item {
-  animation:
-    gift-spin-item 1.1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s both,
-    float-item     4.6s ease-in-out                             1.6s infinite,
-    glow-pulse     5.5s ease-in-out                             1.6s infinite;
-}
-[data-solo] .bg-item {
-  animation:
-    gift-spin-solo 1.1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both,
-    float-solo     5.0s ease-in-out                             1.3s infinite,
-    glow-pulse     6.0s ease-in-out                             1.3s infinite;
-}
-.streamer-head {
-  animation:
-    gift-spin-streamer 1.0s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.7s both,
-    float-streamer     4.5s ease-in-out                             1.7s infinite,
-    glow-pulse         6.0s ease-in-out                             1.7s infinite;
-}
-</style>
-</head>
-<body>
-
-<div class="drops" id="drops">
-  <div class="streamer-wrap" id="streamer-wrap">
-    <img class="streamer-head" id="streamer-head" src="" alt="Streamer Avatar">
-  </div>
-  <img class="partyhat" id="partyhat" src="" alt="Party Hat">
-
-  <div class="slot slot--flair">
-    <img class="bg-flair" src="" alt="Flair Icon">
-  </div>
-  <div class="slot slot--portrait">
-    <img class="bg-portrait" src="" alt="Portrait">
-  </div>
-  <div class="slot slot--item">
-    <img class="bg-item" src="" alt="Drop Item">
-  </div>
-</div>
-
-<script>
-
-
-
-
-
-
-const p    = new URLSearchParams(location.search);
-const root = document.documentElement;
-const hex  = k => { const v = p.get(k); return v ? '#' + v.replace(/^#/,'') : null; };
-
-/* Custom Color Overrides */
-if (hex('glow'))  { root.style.setProperty('--glow1', hex('glow')); root.style.setProperty('--amber', hex('glow')); }
-if (hex('glow2')) root.style.setProperty('--glow2', hex('glow2'));
-if (hex('glow3')) root.style.setProperty('--glow3', hex('glow3'));
-if (hex('ember')) root.style.setProperty('--ember', hex('ember'));
-
-/* Streamer Avatar */
-const avatar = p.get('avatar');
-if (avatar) {
-  document.getElementById('streamer-head').src = avatar;
-  document.getElementById('streamer-wrap').style.display = 'block';
-}
-
-/* Seasonal Hat */
-const hat = p.get('hat');
-if (hat) {
-  const ph = document.getElementById('partyhat');
-  ph.src = hat; 
-  ph.style.display = 'block';
-}
-
-/* Solo Mode Setup */
-const isSolo = p.has('solo');
-if (isSolo) {
-  document.body.classList.add('solo');
-  document.getElementById('drops').setAttribute('data-solo', '');
-}
-
-/* ── CAROUSEL / CYCLE MODE ────────────────────────────────────── */
-const isCarousel = p.has('carousel') || p.has('cycle');
-if (isCarousel) {
-  document.body.classList.add('carousel', 'solo'); // Uses 1024x1024 canvas
-}
-
-// Parse URL parameters
-const urlParams = new URLSearchParams(window.location.search);
-const hideHead = urlParams.get('nohead') === '1'; // or whatever parameter name you chose
-
-// Target your streamer head element and hide it if true
-if (hideHead) {
-  const streamerHeadEl = document.querySelector('.streamer-head'); // Replace with your actual CSS selector for the head element
-  if (streamerHeadEl) {
-    streamerHeadEl.style.display = 'none';
-  }
-}
-
-
-
-/* ── FETCH KLEI CAMPAIGN DATA & SETUP SLOTS/CAROUSEL ─────────── */
-fetch('https://cdn.forums.klei.com/drops/current_campaign.json')
-  .then(r => r.json())
-  .then(data => {
-    const dst = data["Don't Starve Together"];
-    const now = Date.now() / 1000;
-
-    if (!dst || now > dst.campaignEnd || now < dst.campaignStart) {
-      document.getElementById('drops').style.display = 'none';
-      return;
+      --amber: #d4882a;
+      --ember: #e03600;
+      --paper: #c8a96e;
     }
 
-    const { icon, item, portrait } = dst;
-    if (icon)     document.querySelector('.bg-flair').src    = icon;
-    if (portrait) document.querySelector('.bg-portrait').src = portrait;
-    if (item)     document.querySelector('.bg-item').src     = item;
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    // If Carousel mode is enabled, cycle through the 3 slots smoothly with fade-out/fade-in
-   // If Carousel mode is enabled, cycle through the 3 slots smoothly with spin-in/spin-out
+    /* ── FIXED CANVAS SIZES (OBS Browser Source Standard) ────────── */
+    html,
+    body {
+      width: 1024px;
+      height: 512px;
+      background: transparent;
+      overflow: hidden;
+    }
+
+    body.solo {
+      height: 1024px;
+    }
+
+    /* Subtle gothic paper grain texture overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.10'/%3E%3C/svg%3E");
+      opacity: 0.28;
+    }
+
+
+    /* ─── CAROUSEL / CYCLE MODE (1024 × 1024) ─────────────────────── */
+    body.carousel .drops {
+      width: 1024px;
+      height: 1024px;
+      padding: 0;
+      justify-content: center;
+      align-items: center;
+    }
+
+    body.carousel .slot {
+      position: absolute;
+      display: flex;
+      opacity: 0;
+      pointer-events: none;
+      transform: perspective(1200px) rotateY(-180deg) scale(0.1);
+    }
+
+    /* Spin-In Entry Animation */
+    body.carousel .slot.active-carousel-item {
+      display: flex;
+      opacity: 1;
+      z-index: 5;
+      pointer-events: auto;
+      animation: gift-carousel-spin-in 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    /* Spin-Out Exit Animation */
+    body.carousel .slot.exiting-carousel-item {
+      display: flex;
+      z-index: 4;
+      animation: gift-carousel-spin-out 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
+    }
+
+    /* ── SPIN-IN & SPIN-OUT KEYFRAMES ───────────────────────────── */
+    @keyframes gift-carousel-spin-in {
+      0% {
+        opacity: 0;
+        transform: perspective(1200px) rotateY(360deg) rotateX(30deg) scale(0.1) translateY(60px);
+        filter: drop-shadow(0 0 5rem var(--glow1));
+      }
+
+      70% {
+        opacity: 1;
+        transform: perspective(1200px) rotateY(-10deg) rotateX(-5deg) scale(1.1) translateY(-10px);
+        filter: drop-shadow(0 0 2.2rem var(--glow3));
+      }
+
+      100% {
+        opacity: 1;
+        transform: perspective(1200px) rotateY(-6deg) rotateX(3deg) scale(1) translateY(0);
+        filter: drop-shadow(0 0 0.6rem var(--glow1));
+      }
+    }
+
+    @keyframes gift-carousel-spin-out {
+      0% {
+        opacity: 1;
+        transform: perspective(1200px) rotateY(-6deg) rotateX(3deg) scale(1) translateY(0);
+        filter: drop-shadow(0 0 0.6rem var(--glow1));
+        scale: 100%;
+      }
+
+      30% {
+        opacity: 1;
+        transform: perspective(1200px) rotateY(15deg) rotateX(5deg) scale(1.05) translateY(-8px);
+        filter: drop-shadow(0 0 2rem var(--glow2));
+      }
+
+      100% {
+        opacity: 0;
+        transform: perspective(1200px) rotateY(-360deg) rotateX(-45deg) scale(0.05) translateY(-80px);
+        filter: drop-shadow(0 0 4rem var(--glow1));
+        scale: 0%;
+      }
+    }
+
+    body.carousel .slot--flair .bg-flair {
+      width: 520px;
+    }
+
+    body.carousel .slot--portrait .bg-portrait {
+      width: 580px;
+    }
+
+    body.carousel .slot--item .bg-item {
+      width: 640px;
+    }
+
+    body.carousel .streamer-wrap {
+      bottom: auto;
+      top: 320px;
+      left: 175px;
+    }
+
+    body.carousel .streamer-head {
+      width: 110px;
+      height: 110px;
+    }
+
+    body.carousel .partyhat {
+      width: 68px;
+      top: 20px;
+      left: calc(50% + 28px);
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+   FULL MODE — 1024 × 512 Layout Cluster
+   ══════════════════════════════════════════════════════════════ */
+    .drops {
+      position: absolute;
+      bottom: 45px;
+      left: 0;
+      width: 1024px;
+      height: 512px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 28px;
+      padding-bottom: 20px;
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+
+    .slot {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .slot--flair {
+      z-index: 1;
+    }
+
+    .slot--portrait {
+      z-index: 2;
+    }
+
+    .slot--item {
+      z-index: 3;
+    }
+
+    .slot--flair .bg-flair {
+      width: 280px;
+    }
+
+    .slot--portrait .bg-portrait {
+      width: 320px;
+    }
+
+    .slot--item .bg-item {
+      width: 350px;
+    }
+
+    .bg-flair,
+    .bg-portrait,
+    .bg-item {
+      display: block;
+      height: auto;
+    }
+
+    /* ─── STREAMER AVATAR ────────────────────────────────────────── */
+    .streamer-wrap {
+      position: absolute;
+      bottom: 210px;
+      left: 21%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: none;
+    }
+
+    .streamer-head {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border);
+      background: black;
+      filter: drop-shadow(0 0 0.8rem var(--fill));
+      animation:
+        appear-streamer 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s both,
+        float-streamer 4.5s ease-in-out 3s infinite,
+        glow-pulse 6s ease-in-out 3s infinite;
+    }
+
+    .streamer-wrap.solo {
+      bottom: auto;
+      top: 340px;
+      left: 175px;
+    }
+
+    /* ─── SEASONAL HAT ───────────────────────────────────────────── */
+    .partyhat {
+      position: absolute;
+      bottom: 105%;
+      left: 55%;
+      width: 52px;
+      height: auto;
+      z-index: 11;
+      transform: rotate(30deg);
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+      display: none;
+      pointer-events: none;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+   SOLO MODE — 1024 × 1024 Layout Cluster
+   ══════════════════════════════════════════════════════════════ */
+    body.solo .drops {
+      width: 1024px;
+      height: 1024px;
+      padding: 0;
+      justify-content: center;
+      align-items: center;
+    }
+
+    body.solo .slot--flair,
+    body.solo .slot--portrait {
+      display: none;
+    }
+
+    body.solo .slot--item {
+      margin-left: 0;
+      z-index: 1;
+    }
+
+    body.solo .slot--item .bg-item {
+      width: 640px;
+    }
+
+    body.solo .streamer-head {
+      width: 110px;
+      height: 110px;
+    }
+
+    body.solo .partyhat {
+      width: 68px;
+      top: 25px;
+      left: calc(50% + 28px);
+    }
+
+
+    /* ─── GIFT BOX SPIN-IN & GOTHIC FLOAT KEYFRAMES ────────────── */
+    @keyframes glow-pulse {
+      0% {
+        filter: drop-shadow(0 0 0.5rem var(--glow1));
+      }
+
+      50% {
+        filter: drop-shadow(0 0 1.2rem var(--glow2));
+      }
+
+      100% {
+        filter: drop-shadow(0 0 0.5rem var(--glow1));
+      }
+    }
+
+    /* Organic floating loops */
+    @keyframes float-flair {
+
+      0%,
+      100% {
+        transform: perspective(1000px) rotateY(22deg) rotateX(2deg) translateY(0px);
+      }
+
+      50% {
+        transform: perspective(1000px) rotateY(16deg) rotateX(6deg) translateY(-12px);
+      }
+    }
+
+    @keyframes float-portrait {
+
+      0%,
+      100% {
+        transform: perspective(1000px) rotateY(-2deg) rotateX(3deg) translateY(0px);
+      }
+
+      50% {
+        transform: perspective(1000px) rotateY(5deg) rotateX(7deg) translateY(-14px);
+      }
+    }
+
+    @keyframes float-item {
+
+      0%,
+      100% {
+        transform: perspective(1000px) rotateY(-18deg) rotateX(3deg) translateY(0px);
+      }
+
+      50% {
+        transform: perspective(1000px) rotateY(-12deg) rotateX(8deg) translateY(-16px);
+      }
+    }
+
+    @keyframes float-solo {
+
+      0%,
+      100% {
+        transform: perspective(1200px) rotateY(-6deg) rotateX(3deg) translateY(0px);
+      }
+
+      50% {
+        transform: perspective(1200px) rotateY(4deg) rotateX(8deg) translateY(-20px);
+      }
+    }
+
+    @keyframes float-streamer {
+
+      0%,
+      100% {
+        transform: translateY(0px) rotate(-3deg);
+      }
+
+      50% {
+        transform: translateY(-8px) rotate(2deg);
+      }
+    }
+
+    /* DST Gift-Box Spin-In Entry (Fast rotational snap + elastic bounce) */
+    @keyframes gift-spin-flair {
+      0% {
+        opacity: 0;
+        transform: perspective(1000px) rotateY(380deg) rotateX(45deg) scale(0.1) translateY(80px);
+        filter: drop-shadow(0 0 4rem var(--glow1));
+      }
+
+      70% {
+        opacity: 1;
+        transform: perspective(1000px) rotateY(-15deg) rotateX(-5deg) scale(1.08) translateY(-6px);
+        filter: drop-shadow(0 0 1.5rem var(--glow2));
+      }
+
+      100% {
+        opacity: 1;
+        transform: perspective(1000px) rotateY(22deg) rotateX(2deg) scale(1) translateY(0);
+        filter: drop-shadow(0 0 0.6rem var(--glow1));
+      }
+    }
+
+    @keyframes gift-spin-portrait {
+      0% {
+        opacity: 0;
+        transform: perspective(1000px) rotateY(-360deg) rotateX(45deg) scale(0.1) translateY(80px);
+        filter: drop-shadow(0 0 4rem var(--glow1));
+      }
+
+      70% {
+        opacity: 1;
+        transform: perspective(1000px) rotateY(12deg) rotateX(-5deg) scale(1.08) translateY(-6px);
+        filter: drop-shadow(0 0 1.5rem var(--glow2));
+      }
+
+      100% {
+        opacity: 1;
+        transform: perspective(1000px) rotateY(-2deg) rotateX(3deg) scale(1) translateY(0);
+        filter: drop-shadow(0 0 0.6rem var(--glow1));
+      }
+    }
+
+    @keyframes gift-spin-item {
+      0% {
+        opacity: 0;
+        transform: perspective(1000px) rotateY(-400deg) rotateX(50deg) scale(0.1) translateY(90px);
+        filter: drop-shadow(0 0 4rem var(--glow1));
+      }
+
+      70% {
+        opacity: 1;
+        transform: perspective(1000px) rotateY(10deg) rotateX(-8deg) scale(1.1) translateY(-8px);
+        filter: drop-shadow(0 0 1.8rem var(--glow3));
+      }
+
+      100% {
+        opacity: 1;
+        transform: perspective(1000px) rotateY(-18deg) rotateX(3deg) scale(1) translateY(0);
+        filter: drop-shadow(0 0 0.6rem var(--glow1));
+      }
+    }
+
+    @keyframes gift-spin-solo {
+      0% {
+        opacity: 0;
+        transform: perspective(1200px) rotateY(360deg) rotateX(30deg) scale(0.1) translateY(60px);
+        filter: drop-shadow(0 0 5rem var(--glow1));
+      }
+
+      70% {
+        opacity: 1;
+        transform: perspective(1200px) rotateY(-10deg) rotateX(-5deg) scale(1.1) translateY(-10px);
+        filter: drop-shadow(0 0 2.2rem var(--glow3));
+      }
+
+      100% {
+        opacity: 1;
+        transform: perspective(1200px) rotateY(-6deg) rotateX(3deg) scale(1) translateY(0);
+        filter: drop-shadow(0 0 0.6rem var(--glow1));
+      }
+    }
+
+    @keyframes gift-spin-streamer {
+      0% {
+        opacity: 0;
+        transform: scale(0) rotate(-180deg) translateY(40px);
+      }
+
+      70% {
+        opacity: 1;
+        transform: scale(1.15) rotate(10deg) translateY(-5px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(-3deg) translateY(0);
+      }
+    }
+
+
+
+
+    /* ─── ANIMATION BINDINGS (Staggered Unboxing Sequence) ────────── */
+    .bg-flair {
+      animation:
+        gift-spin-flair 1.1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s both,
+        float-flair 6.0s ease-in-out 1.2s infinite,
+        glow-pulse 6.5s ease-in-out 1.2s infinite;
+    }
+
+    .bg-portrait {
+      animation:
+        gift-spin-portrait 1.1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s both,
+        float-portrait 5.2s ease-in-out 1.4s infinite,
+        glow-pulse 7.0s ease-in-out 1.4s infinite;
+    }
+
+    .bg-item {
+      animation:
+        gift-spin-item 1.1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s both,
+        float-item 4.6s ease-in-out 1.6s infinite,
+        glow-pulse 5.5s ease-in-out 1.6s infinite;
+    }
+
+    [data-solo] .bg-item {
+      animation:
+        gift-spin-solo 1.1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both,
+        float-solo 5.0s ease-in-out 1.3s infinite,
+        glow-pulse 6.0s ease-in-out 1.3s infinite;
+    }
+
+    .streamer-head {
+      animation:
+        gift-spin-streamer 1.0s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.7s both,
+        float-streamer 4.5s ease-in-out 1.7s infinite,
+        glow-pulse 6.0s ease-in-out 1.7s infinite;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="drops" id="drops">
+    <div class="streamer-wrap" id="streamer-wrap">
+      <img class="streamer-head" id="streamer-head" src="" alt="Streamer Avatar">
+    </div>
+    <img class="partyhat" id="partyhat" src="" alt="Party Hat">
+
+    <div class="slot slot--flair">
+      <img class="bg-flair" src="" alt="Flair Icon">
+    </div>
+    <div class="slot slot--portrait">
+      <img class="bg-portrait" src="" alt="Portrait">
+    </div>
+    <div class="slot slot--item">
+      <img class="bg-item" src="" alt="Drop Item">
+    </div>
+  </div>
+
+  <script>
+
+
+
+
+
+
+    const p = new URLSearchParams(location.search);
+    const root = document.documentElement;
+    const hex = k => { const v = p.get(k); return v ? '#' + v.replace(/^#/, '') : null; };
+
+
+    // Read parameters
+    const hatType = urlParams.get('hat');
+    const hatUrl = urlParams.get('haturl');
+    const hatPos = urlParams.get('hatpos') || 'avatar';
+
+
+    const defaultHatUrls = {
+      xmas: "https://dontstarve.wiki.gg/images/Winter_Hat_Dropped.png?72e0b5",
+      halloween: "https://cdn-items.klei.com/dst/512x512/tophat_witch_pyre_cf2ed86a1a4d83b3.png",
+      birthday: "https://dontstarve.wiki.gg/images/thumb/Balloon_Hat_Dropped.png/300px-Balloon_Hat_Dropped.png?1d91e1"
+    };
+
+    const resolvedHatSrc = hatUrl || defaultHatUrls[hatType] || '';
+
+    if (hatType && hatElement) {
+      // Determine source image based on type or custom url
+      const resolvedHatSrc = hatUrl || (hatType === 'xmas' ? 'https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/xmas_hat.png' : hatType === 'halloween' ? 'https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/halloween_hat.png' : 'https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/birthday_hat.png'); hatElement.style.backgroundImage = `url(${resolvedHatSrc})`;
+
+      // Reposition based on user choice & current widget mode (Full, Solo, Carousel)
+      if (hatPos === 'avatar') {
+        // Attach dynamically to the streamer head container
+        streamerHeadContainer.appendChild(hatElement);
+        hatElement.className = 'obs-hat-overlay avatar-mode';
+      } else if (hatPos === 'drop') {
+        // Attach to the top of the drop item frame
+        dropBoxContainer.appendChild(hatElement);
+        hatElement.className = 'obs-hat-overlay drop-mode';
+      } else {
+        // Absolute top-left of the widget container
+        widgetRoot.appendChild(hatElement);
+        hatElement.className = 'obs-hat-overlay absolute-mode';
+      }
+    }
+
+    /* Custom Color Overrides */
+    if (hex('glow')) { root.style.setProperty('--glow1', hex('glow')); root.style.setProperty('--amber', hex('glow')); }
+    if (hex('glow2')) root.style.setProperty('--glow2', hex('glow2'));
+    if (hex('glow3')) root.style.setProperty('--glow3', hex('glow3'));
+    if (hex('ember')) root.style.setProperty('--ember', hex('ember'));
+
+    /* Streamer Avatar */
+    const avatar = p.get('avatar');
+    if (avatar) {
+      document.getElementById('streamer-head').src = avatar;
+      document.getElementById('streamer-wrap').style.display = 'block';
+    }
+
+    /* Seasonal Hat */
+    const hat = p.get('hat');
+    if (hat) {
+      const ph = document.getElementById('partyhat');
+      ph.src = hat;
+      ph.style.display = 'block';
+    }
+
+    /* Solo Mode Setup */
+    const isSolo = p.has('solo');
+    if (isSolo) {
+      document.body.classList.add('solo');
+      document.getElementById('drops').setAttribute('data-solo', '');
+    }
+
+    /* ── CAROUSEL / CYCLE MODE ────────────────────────────────────── */
+    const isCarousel = p.has('carousel') || p.has('cycle');
     if (isCarousel) {
-      const slots = [
-        document.querySelector('.slot--flair'),
-        document.querySelector('.slot--portrait'),
-        document.querySelector('.slot--item')
-      ].filter(s => s && s.querySelector('img')?.src);
+      document.body.classList.add('carousel', 'solo'); // Uses 1024x1024 canvas
+    }
 
-      // Read custom speed from URL (e.g. ?speed=5 or ?interval=6), defaulting to 4.5 seconds
-      const speedParam = parseFloat(p.get('speed') || p.get('interval') || '4.5');
-      const switchInterval = Math.max(1.5, speedParam) * 1000; // Minimum 1.5s to allow animations to finish
+    // Parse URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const hideHead = urlParams.get('nohead') === '1'; // or whatever parameter name you chose
 
-      let currentIndex = 0;
-      if (slots.length > 0) {
-        slots[0].classList.add('active-carousel-item');
+    // Target your streamer head element and hide it if true
+    if (hideHead) {
+      const streamerHeadEl = document.querySelector('.streamer-head'); // Replace with your actual CSS selector for the head element
+      if (streamerHeadEl) {
+        streamerHeadEl.style.display = 'none';
+      }
+    }
 
-        if (slots.length > 1) {
-          setInterval(() => {
-            const currentSlot = slots[currentIndex];
-            currentSlot.classList.remove('active-carousel-item');
-            currentSlot.classList.add('exiting-carousel-item');
 
-            // Clean up exiting class after spin-out completes (800ms)
-            setTimeout(() => {
-              currentSlot.classList.remove('exiting-carousel-item');
-            }, 800);
+    // Parse parameters
+    const noBorder = urlParams.get('noborder') === '1';
+    const borderHex = urlParams.get('border');
+    const fillHex = urlParams.get('fill');
 
-            currentIndex = (currentIndex + 1) % slots.length;
-            
-            const nextSlot = slots[currentIndex];
-            nextSlot.classList.add('active-carousel-item');
-          }, switchInterval);
+    const streamerHeadEl = document.querySelector('.streamer-head'); // Replace with your actual element selector
+
+    if (streamerHeadEl) {
+      if (noBorder) {
+        // Completely remove the border and background fill
+        streamerHeadEl.style.border = 'none';
+        streamerHeadEl.style.background = 'transparent';
+        streamerHeadEl.style.boxShadow = 'none';
+      } else {
+        // Apply custom border and fill if provided
+        if (borderHex) {
+          streamerHeadEl.style.border = `3px solid #${borderHex}`;
+        }
+        if (fillHex) {
+          streamerHeadEl.style.background = `#${fillHex}`;
         }
       }
     }
-  })
-  .catch(err => {
-    console.error('Drops fetch error:', err);
-  });
-</script>
+
+
+    /* ── FETCH KLEI CAMPAIGN DATA & SETUP SLOTS/CAROUSEL ─────────── */
+    fetch('https://cdn.forums.klei.com/drops/current_campaign.json')
+      .then(r => r.json())
+      .then(data => {
+        const dst = data["Don't Starve Together"];
+        const now = Date.now() / 1000;
+
+        if (!dst || now > dst.campaignEnd || now < dst.campaignStart) {
+          document.getElementById('drops').style.display = 'none';
+          return;
+        }
+
+        const { icon, item, portrait } = dst;
+        if (icon) document.querySelector('.bg-flair').src = icon;
+        if (portrait) document.querySelector('.bg-portrait').src = portrait;
+        if (item) document.querySelector('.bg-item').src = item;
+
+        // If Carousel mode is enabled, cycle through the 3 slots smoothly with fade-out/fade-in
+        // If Carousel mode is enabled, cycle through the 3 slots smoothly with spin-in/spin-out
+        if (isCarousel) {
+          const slots = [
+            document.querySelector('.slot--flair'),
+            document.querySelector('.slot--portrait'),
+            document.querySelector('.slot--item')
+          ].filter(s => s && s.querySelector('img')?.src);
+
+          // Read custom speed from URL (e.g. ?speed=5 or ?interval=6), defaulting to 4.5 seconds
+          const speedParam = parseFloat(p.get('speed') || p.get('interval') || '4.5');
+          const switchInterval = Math.max(1.5, speedParam) * 1000; // Minimum 1.5s to allow animations to finish
+
+          let currentIndex = 0;
+          if (slots.length > 0) {
+            slots[0].classList.add('active-carousel-item');
+
+            if (slots.length > 1) {
+              setInterval(() => {
+                const currentSlot = slots[currentIndex];
+                currentSlot.classList.remove('active-carousel-item');
+                currentSlot.classList.add('exiting-carousel-item');
+
+                // Clean up exiting class after spin-out completes (800ms)
+                setTimeout(() => {
+                  currentSlot.classList.remove('exiting-carousel-item');
+                }, 800);
+
+                currentIndex = (currentIndex + 1) % slots.length;
+
+                const nextSlot = slots[currentIndex];
+                nextSlot.classList.add('active-carousel-item');
+              }, switchInterval);
+            }
+          }
+        }
+      })
+      .catch(err => {
+        console.error('Drops fetch error:', err);
+      });
+  </script>
 </body>
+
 </html>

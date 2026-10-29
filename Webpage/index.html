@@ -1582,21 +1582,34 @@
 
             <!-- Custom Streamer Head Styles & Seasonal Hats -->
             <div
-              style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-top: 14px;">
+              style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 14px;">
+
+              <!-- Border Controls -->
               <div>
-                <label
-                  style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
-                  Head Border Color
-                </label>
-                <div style="display: flex; gap: 8px; align-items: center;">
+
+
+                <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+                  <label class="dst-toggle-label"
+                    style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1.1rem; color: var(--dst-paper);">
+                    <span>Disable Border</span>
+                    <div class="dst-switch">
+                      <input type="checkbox" id="obs-solo-toggle" onchange="toggleBorderDisable()">
+                      <span class="dst-slider"></span>
+                    </div>
+                  </label>
+                </div>
+
+
+                <div id="border-picker-wrapper" style="display: flex; gap: 8px; align-items: center;">
                   <input type="color" id="obs-border-color" value="#443429" oninput="syncColorToText('border')"
                     style="width: 48px; height: 46px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
-                  <input type="text" id="obs-border-hex" class="search-input-box" value="e8a040"
+                  <input type="text" id="obs-border-hex" class="search-input-box" value="443429"
                     oninput="syncTextToColor('border'); updateObsUrlBuilder();"
                     style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
                 </div>
               </div>
 
+              <!-- Fill Color -->
               <div>
                 <label
                   style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
@@ -1605,24 +1618,56 @@
                 <div style="display: flex; gap: 8px; align-items: center;">
                   <input type="color" id="obs-fill-color" value="#1c1613" oninput="syncColorToText('fill')"
                     style="width: 48px; height: 46px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
-                  <input type="text" id="obs-fill-hex" class="search-input-box" value="0000"
+                  <input type="text" id="obs-fill-hex" class="search-input-box" value="1C1613"
                     oninput="syncTextToColor('fill'); updateObsUrlBuilder();"
                     style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
                 </div>
               </div>
 
+              <!-- Seasonal Hat Selector -->
               <div>
                 <label
                   style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
                   Seasonal Hat Accessory
                 </label>
-                <select id="obs-seasonal-hat" class="search-input-box" onchange="updateObsUrlBuilder()"
+                <select id="obs-seasonal-hat" class="search-input-box" onchange="handleHatSelectionChange()"
                   style="padding: 11px 14px; font-size: 1.1rem; cursor: pointer;">
                   <option value="">None (Standard)</option>
                   <option value="xmas">🎄 Winter / Santa Hat</option>
                   <option value="halloween">🎃 Halloween / Witch Hat</option>
                   <option value="birthday">🎂 Anniversary Party Hat</option>
+                  <option value="custom">✨ Custom Hat URL...</option>
                 </select>
+              </div>
+            </div>
+
+            <!-- Dynamic Hat Image URL Configuration Box (Appears when a hat is selected) -->
+            <!-- Dynamic Hat Image URL Configuration Box (Spans full width so links aren't cramped) -->
+            <!-- Dynamic Hat Image URL Configuration Box -->
+            <div id="hat-url-container"
+              style="display: none; grid-column: 1 / -1; margin-top: 4px; background: #140d0a; border: 1px dashed var(--dst-border-highlight); padding: 14px; border-radius: 6px;">
+              <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px; align-items: end;">
+                <div>
+                  <label id="hat-url-label"
+                    style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--dst-paper-muted); display: block; margin-bottom: 6px;">
+                    Hat Image URL
+                  </label>
+                  <input type="text" id="obs-hat-url" class="search-input-box" placeholder="https://..."
+                    oninput="updateObsUrlBuilder()"
+                    style="width: 100%; box-sizing: border-box; padding: 10px 14px; font-size: 1.05rem;" />
+                </div>
+                <div>
+                  <label
+                    style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--dst-paper-muted); display: block; margin-bottom: 6px;">
+                    Hat Position
+                  </label>
+                  <select id="obs-hat-pos" class="search-input-box" onchange="updateObsUrlBuilder()"
+                    style="width: 100%; padding: 10px 12px; font-size: 1.05rem; cursor: pointer;">
+                    <option value="avatar">On Streamer Head</option>
+                    <option value="drop">On Drop Box Top</option>
+                    <option value="top-left">Widget Top-Left</option>
+                  </select>
+                </div>
               </div>
             </div>
 
@@ -1631,7 +1676,8 @@
           <div>
             <label
               style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
-              Generated OBS Browser Source URL <span style="color: #9c8472; font-size: 0.95rem;">(Click to copy or drag
+              Generated OBS Browser Source URL <span style="color: #9c8472; font-size: 0.95rem;">(Click to copy or
+                drag
                 & drop into OBS)</span>:
             </label>
             <input type="text" id="obs-result-url" readonly onclick="copyObsGeneratedUrl()" draggable="true"
@@ -1826,6 +1872,50 @@
   </nav>
 
   <script>
+
+    function toggleBorderDisable() {
+      const isNoBorder = document.getElementById('obs-no-border')?.checked || false;
+      const pickerWrapper = document.getElementById('border-picker-wrapper');
+      if (pickerWrapper) {
+        pickerWrapper.style.opacity = isNoBorder ? '0.4' : '1';
+        pickerWrapper.style.pointerEvents = isNoBorder ? 'none' : 'auto';
+      }
+      updateObsUrlBuilder();
+    }
+
+    const defaultHatUrls = {
+      xmas: "https://dontstarve.wiki.gg/images/Winter_Hat_Dropped.png?72e0b5",
+      halloween: "https://cdn-items.klei.com/dst/512x512/tophat_witch_pyre_cf2ed86a1a4d83b3.png",
+      birthday: "https://dontstarve.wiki.gg/images/thumb/Balloon_Hat_Dropped.png/300px-Balloon_Hat_Dropped.png?1d91e1"
+    };
+
+    function handleHatSelectionChange() {
+      const selectEl = document.getElementById('obs-seasonal-hat');
+      const containerEl = document.getElementById('hat-url-container');
+      const urlInput = document.getElementById('obs-hat-url');
+      const labelEl = document.getElementById('hat-url-label');
+
+      if (!selectEl) return;
+      const val = selectEl.value;
+
+      if (!val) {
+        if (containerEl) containerEl.style.display = 'none';
+      } else {
+        if (containerEl) containerEl.style.display = 'block';
+        if (val === 'custom') {
+          if (labelEl) labelEl.innerText = "Custom Hat Image URL";
+          if (urlInput && !urlInput.value) urlInput.value = "";
+        } else {
+          if (labelEl) labelEl.innerText = `${selectEl.options[selectEl.selectedIndex].text} URL (Editable)`;
+          // Populate default URL if empty or switching presets
+          if (urlInput && (!urlInput.value || Object.values(defaultHatUrls).includes(urlInput.value))) {
+            urlInput.value = defaultHatUrls[val] || "";
+          }
+        }
+      }
+      updateObsUrlBuilder();
+    }
+
     function handleWidgetModeChange(changed) {
       const soloToggle = document.getElementById('obs-solo-toggle');
       const carouselToggle = document.getElementById('obs-carousel-toggle');
@@ -1838,25 +1928,25 @@
       updateObsUrlBuilder();
     }
 
-function syncColorToText(type) {
-  const colorPicker = document.getElementById(`obs-${type}-color`);
-  const textBox = document.getElementById(`obs-${type}-hex`);
-  if (colorPicker && textBox) {
-    textBox.value = colorPicker.value.replace('#', '').toUpperCase();
-    updateObsUrlBuilder();
-  }
-}
-
-function syncTextToColor(type) {
-  const colorPicker = document.getElementById(`obs-${type}-color`);
-  const textBox = document.getElementById(`obs-${type}-hex`);
-  if (colorPicker && textBox) {
-    let val = textBox.value.replace(/#/g, '').trim().toUpperCase();
-    if (/^[0-9A-F]{6}$/i.test(val)) {
-      colorPicker.value = `#${val}`;
+    function syncColorToText(type) {
+      const colorPicker = document.getElementById(`obs-${type}-color`);
+      const textBox = document.getElementById(`obs-${type}-hex`);
+      if (colorPicker && textBox) {
+        textBox.value = colorPicker.value.replace('#', '').toUpperCase();
+        updateObsUrlBuilder();
+      }
     }
-  }
-}
+
+    function syncTextToColor(type) {
+      const colorPicker = document.getElementById(`obs-${type}-color`);
+      const textBox = document.getElementById(`obs-${type}-hex`);
+      if (colorPicker && textBox) {
+        let val = textBox.value.replace(/#/g, '').trim().toUpperCase();
+        if (/^[0-9A-F]{6}$/i.test(val)) {
+          colorPicker.value = `#${val}`;
+        }
+      }
+    }
 
     function handleObsDragStart(e) {
       const box = document.getElementById('obs-result-url');
@@ -1877,12 +1967,17 @@ function syncTextToColor(type) {
 
       const borderHex = (document.getElementById('obs-border-hex')?.value || '').replace(/#/g, '').trim().toUpperCase();
       const fillHex = (document.getElementById('obs-fill-hex')?.value || '').replace(/#/g, '').trim().toUpperCase();
-      const seasonalHat = (document.getElementById('obs-seasonal-hat')?.value || '').trim();
 
-      // Save to localStorage
-      localStorage.setItem('dst-obs-border', borderHex);
-      localStorage.setItem('dst-obs-fill', fillHex);
-      localStorage.setItem('dst-obs-hat', seasonalHat);
+
+      const noBorder = document.getElementById('obs-no-border')?.checked || false;
+
+
+
+
+      const hatType = (document.getElementById('obs-seasonal-hat')?.value || '').trim();
+      const hatUrl = (document.getElementById('obs-hat-url')?.value || '').trim();
+      const hatPos = (document.getElementById('obs-hat-pos')?.value || 'avatar').trim();
+
 
 
 
@@ -1896,6 +1991,9 @@ function syncTextToColor(type) {
       if (g2.length === 6) document.getElementById('obs-color2').value = `#${g2}`;
       if (g3.length === 6) document.getElementById('obs-color3').value = `#${g3}`;
 
+
+
+
       // Save to localStorage
       localStorage.setItem('dst-obs-twitch', twitch);
       localStorage.setItem('dst-obs-avatar', avatar);
@@ -1906,6 +2004,26 @@ function syncTextToColor(type) {
       localStorage.setItem('dst-obs-g1', g1);
       localStorage.setItem('dst-obs-g2', g2);
       localStorage.setItem('dst-obs-g3', g3);
+
+      // Save to localStorage
+      localStorage.setItem('dst-obs-border', borderHex);
+      localStorage.setItem('dst-obs-fill', fillHex);
+      // Save to localStorage
+      localStorage.setItem('dst-obs-noborder', noBorder);
+      localStorage.setItem('dst-obs-border', borderHex);
+      localStorage.setItem('dst-obs-fill', fillHex);
+
+
+
+
+      // Save to localStorage
+      localStorage.setItem('dst-obs-hattype', hatType);
+      localStorage.setItem('dst-obs-haturl', hatUrl);
+      localStorage.setItem('dst-obs-hatpos', hatPos);
+
+
+
+
 
       let url = `https://clifffordw.github.io/ClifffWidgets/Drops/Streamers/drop_universal.html?`;
       const params = [];
@@ -1923,8 +2041,19 @@ function syncTextToColor(type) {
       // In your params array builder, add:
       if (borderHex) params.push(`border=${encodeURIComponent(borderHex)}`);
       if (fillHex) params.push(`fill=${encodeURIComponent(fillHex)}`);
-      if (seasonalHat) params.push(`hat=${encodeURIComponent(seasonalHat)}`);
-
+      // In your parameter array building block:
+      if (noBorder) {
+        params.push(`noborder=1`);
+      } else if (borderHex) {
+        params.push(`border=${encodeURIComponent(borderHex)}`);
+      }
+      if (fillHex) params.push(`fill=${encodeURIComponent(fillHex)}`);
+      // Append to URL parameters
+      if (hatType) {
+        params.push(`hat=${encodeURIComponent(hatType)}`);
+        if (hatUrl) params.push(`haturl=${encodeURIComponent(hatUrl)}`);
+        if (hatPos) params.push(`hatpos=${encodeURIComponent(hatPos)}`);
+      }
 
       url += params.join('&');
 
@@ -1982,6 +2111,24 @@ function syncTextToColor(type) {
       const savedBorder = localStorage.getItem('dst-obs-border');
       const savedFill = localStorage.getItem('dst-obs-fill');
       const savedHat = localStorage.getItem('dst-obs-hat');
+
+
+      const savedNoBorder = localStorage.getItem('dst-obs-noborder') === 'true';
+      const savedHatType = localStorage.getItem('dst-obs-hattype');
+      const savedHatUrl = localStorage.getItem('dst-obs-haturl');
+
+      if (document.getElementById('obs-no-border')) {
+        document.getElementById('obs-no-border').checked = savedNoBorder;
+        toggleBorderDisable();
+      }
+      if (savedBorder !== null && document.getElementById('obs-border-hex')) document.getElementById('obs-border-hex').value = savedBorder;
+      if (savedFill !== null && document.getElementById('obs-fill-hex')) document.getElementById('obs-fill-hex').value = savedFill;
+      if (savedHatType !== null && document.getElementById('obs-seasonal-hat')) {
+        document.getElementById('obs-seasonal-hat').value = savedHatType;
+        handleHatSelectionChange();
+      }
+      if (savedHatUrl !== null && document.getElementById('obs-hat-url')) document.getElementById('obs-hat-url').value = savedHatUrl;
+
 
       if (savedBorder !== null && document.getElementById('obs-border-hex')) document.getElementById('obs-border-hex').value = savedBorder;
       if (savedFill !== null && document.getElementById('obs-fill-hex')) document.getElementById('obs-fill-hex').value = savedFill;

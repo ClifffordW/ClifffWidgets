@@ -41,7 +41,52 @@
       font-family: Hammerhead;
       src: url(https://clifffordw.github.io/ClifffWidgets/Fonts/HammerheadBold.ttf);
     }
+/* ─── CUSTOM NUMBER INPUT SPINNERS (HIGH CONTRAST) ───────────── */
+    input[type="number"] {
+      -moz-appearance: textfield;
+      appearance: textfield;
+    }
 
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      appearance: none;
+      background: #2b190d url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%23ffc247'><path d='M12 2l-10 10h20zM12 22l-10-10h20z'/></svg>") no-repeat center;
+      width: 26px;
+      height: 100%;
+      cursor: var(--cursor-link, pointer);
+      border-left: 2px solid #8a5c31;
+      opacity: 1; /* Fully visible */
+      transition: background-color 0.2s ease;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button:hover,
+    input[type="number"]::-webkit-outer-spin-button:hover {
+      background-color: #422613;
+    }
+
+
+    /* ─── CUSTOM THEMED SCROLLBAR (WIDER & HIGHER CONTRAST) ──────── */
+    ::-webkit-scrollbar {
+      width: 12px;  /* Wider so it's easy to grab */
+      height: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0d0805;
+      border-left: 1px solid #422613;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #8a5c31; /* Solid, bright antiqued bronze */
+      border: 2px solid #0d0805;
+      border-radius: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #e5a93b; /* Lights up gold on hover */
+      border-color: #0d0805;
+    }
     /* --- DST GOTHIC CUSTOM RANGE SLIDERS --- */
     input[type="range"] {
       -webkit-appearance: none;
@@ -318,6 +363,8 @@
       label,
       :root,
       .preview-viewport
+      .drops
+      
       {
         cursor: var(--cursor-pointer) 0 16, pointer !important;
       }
@@ -357,7 +404,8 @@
       input[type="checkbox"],
       input[type="color"],
       .dst-slider,
-      .dst-toggle-label {
+      .dst-toggle-label,
+      #timer-date {
         cursor: var(--cursor-link) 0 16, pointer !important;
       }
 
@@ -1747,6 +1795,9 @@
         <!-- 2-COLUMN SPLIT CONTAINER (Settings: 1fr, Large Preview: 1.8fr) -->
         <div style="display: grid; grid-template-columns: 1fr 1.8fr; gap: 30px; align-items: start;">
 
+
+
+
           <!-- LEFT COLUMN: COMPACT SETTINGS -->
           <div style="display: flex; flex-direction: column; gap: 14px;">
             <div>
@@ -2001,6 +2052,8 @@
                   <i data-lucide="eye" style="color: var(--dst-flame); width: 20px; height: 20px;"></i> Live Preview
                 </h4>
 
+                
+
                 <div style="display: flex; gap: 12px; align-items: center;">
                   <label class="dst-toggle-label"
                     style="display: flex; align-items: center; gap: 5px; cursor: pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
@@ -2040,6 +2093,17 @@
                     style="width: 1024px; height: 512px; border: none; background: transparent;"></iframe>
                 </div>
               </div>
+
+              <!-- Add this inside your live preview or configuration container -->
+ <!-- OBS Specs Card (Dynamic Resolution) -->
+<div class="obs-specs-card" style="margin-top: 14px; padding: 10px 14px; background: rgba(15, 10, 6, 0.92); border: 1px solid rgba(138, 92, 49, 0.7); border-radius: 4px; font-size: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.8);">
+  <div style="display: flex; align-items: center; gap: 8px;">
+    <span style="color: #d1c2b4;">Recommended Resolution</span>
+  </div>
+  <div id="obs-res-display" style="font-family: monospace; background: rgba(5, 3, 2, 0.95); padding: 5px 10px; border-radius: 3px; color: #fff; border: 1px solid rgba(138, 92, 49, 0.6); box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+    Width: <strong style="color: #ffc247; font-weight: 700;">1024</strong>px &nbsp;|&nbsp; Height: <strong style="color: #ffc247; font-weight: 700;">512</strong>px
+  </div>
+</div>
             </div>
 
             <div>
@@ -2272,6 +2336,9 @@ function updateHatOffsets() {
 
 
 
+
+
+
     // Map option keys to display labels and Lucide icon names
     const hatMetadata = {
       '': { label: 'None (Standard)', icon: 'circle-slash' },
@@ -2388,7 +2455,7 @@ function updateHatOffsets() {
       updateObsUrlBuilder();
     }
 
-    function handleWidgetModeChange(changed) {
+function handleWidgetModeChange(changed) {
       const soloToggle = document.getElementById('obs-solo-toggle');
       const carouselToggle = document.getElementById('obs-carousel-toggle');
 
@@ -2397,6 +2464,15 @@ function updateHatOffsets() {
       } else if (changed === 'carousel' && carouselToggle.checked) {
         soloToggle.checked = false;
       }
+
+      // Determine active mode and update the OBS resolution text dynamically
+      const resDisplay = document.getElementById('obs-res-display');
+      if (resDisplay) {
+        const isSquare = (soloToggle.checked || carouselToggle.checked);
+        const height = isSquare ? 1024 : 512;
+        resDisplay.innerHTML = `Width: <strong style="color: #ffc247; font-weight: 700;">1024</strong>px &nbsp;|&nbsp; Height: <strong style="color: #ffc247; font-weight: 700;">${height}</strong>px`;
+      }
+
       updateObsUrlBuilder();
     }
 
@@ -2749,7 +2825,7 @@ function updateHatOffsets() {
     function playDstChime() { playCustomSound(dstSounds.alert); }
 
     function initCustomSoundEngine() {
-      const interactiveSelector = 'button, a, .dst-tab, .nav-item, .reward-card, .amb-card, .inv-slot, .download-card, .dst-btn, .platform-pill, .fav-star-btn, .dst-toggle-label, input[type="checkbox"]';
+      const interactiveSelector = 'button,#obs-result-url, #timer-date, a, .dst-tab, .nav-item, .reward-card, .amb-card, .inv-slot, .download-card, .dst-btn, .platform-pill, .fav-star-btn, .dst-toggle-label, input[type="checkbox"],input[type="color"],input[type="range"],input[type="text"], input[type="number"], #hat-dropdown-trigger,.custom-dropdown-trigger,.custom-dropdown-item';
       const isTouchDevice = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
       let isPressed = false;
 

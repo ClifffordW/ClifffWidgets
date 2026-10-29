@@ -30,6 +30,7 @@
 
 
 
+
   <!-- Klei / DST Gothic Hand-Drawn Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,15 +39,25 @@
     rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
+
+
   <style>
     @font-face {
       font-family: Hammerhead;
       src: url(https://clifffordw.github.io/ClifffWidgets/Fonts/HammerheadBold.ttf);
     }
-/* ─── CUSTOM NUMBER INPUT SPINNERS (HIGH CONTRAST) ───────────── */
+
+
+
+    /* ─── CUSTOM NUMBER INPUT SPINNERS (HIGH CONTRAST) ───────────── */
     input[type="number"] {
       -moz-appearance: textfield;
       appearance: textfield;
+    }
+
+    .profile-portrait {
+      -webkit-user-drag: none;
+
     }
 
     input[type="number"]::-webkit-inner-spin-button,
@@ -56,16 +67,30 @@
       background: #2b190d url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%23ffc247'><path d='M12 2l-10 10h20zM12 22l-10-10h20z'/></svg>") no-repeat center;
       width: 26px;
       height: 100%;
-      cursor: var(--cursor-link, pointer);
+      cursor: var(--cursor-link) 0 11, pointer;
       border-left: 2px solid #8a5c31;
-      opacity: 1; /* Fully visible */
+      opacity: 1;
+      /* Fully visible */
       transition: background-color 0.2s ease;
     }
 
 
+    @media (hover: hover) and (pointer: fine) {
+    /* This automatically finds every element with a title="" attribute and fixes the cursor */
 
-    .pill-icon-portrait, .pill-icon-item, .pill-icon-flair, .pill-icon-avatar
-    {
+
+
+      html:has(input[type="range"]:active),
+      html:has(input[type="range"]:active) * {
+        cursor: var(--cursor-grabbing) 0 11, grabbing !important;
+      }
+    }
+
+
+    .pill-icon-portrait,
+    .pill-icon-item,
+    .pill-icon-flair,
+    .pill-icon-avatar {
       -webkit-user-drag: none;
     }
 
@@ -78,7 +103,8 @@
 
     /* ─── CUSTOM THEMED SCROLLBAR (WIDER & HIGHER CONTRAST) ──────── */
     ::-webkit-scrollbar {
-      width: 12px;  /* Wider so it's easy to grab */
+      width: 12px;
+      /* Wider so it's easy to grab */
       height: 12px;
     }
 
@@ -88,15 +114,18 @@
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #8a5c31; /* Solid, bright antiqued bronze */
+      background: #8a5c31;
+      /* Solid, bright antiqued bronze */
       border: 2px solid #0d0805;
       border-radius: 6px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      background: #e5a93b; /* Lights up gold on hover */
+      background: #e5a93b;
+      /* Lights up gold on hover */
       border-color: #0d0805;
     }
+
     /* --- DST GOTHIC CUSTOM RANGE SLIDERS --- */
     input[type="range"] {
       -webkit-appearance: none;
@@ -158,7 +187,7 @@
       background: radial-gradient(circle at 35% 35%, var(--dst-flame-bright) 0%, var(--dst-flame) 60%, #5a200b 100%);
       border: 2px solid #281d17;
       box-shadow: 0 0 8px var(--dst-flame-bright), 0 2px 5px rgba(0, 0, 0, 0.9);
-      cursor: grab;
+      cursor: var(--cursor-grabbing) 0 11, grab;
       transition: transform 0.15s ease;
     }
 
@@ -177,7 +206,7 @@
       border: 1px solid #3c281e;
       border-radius: var(--sketch-radius);
       color: var(--dst-paper-muted);
-      cursor: pointer;
+      cursor: var(--cursor-link) 0 11, pointer;
       transition: all 0.2s ease;
       text-align: center;
     }
@@ -224,7 +253,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      cursor: pointer;
+      cursor: var(--cursor-link) 0 11, pointer;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
       box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
     }
@@ -286,7 +315,7 @@
       font-family: var(--font-hand);
       font-size: 1rem;
       color: var(--dst-paper);
-      cursor: pointer;
+      cursor: var(--cursor-link) 0 11, pointer;
       transition: background 0.15s ease, color 0.15s ease;
     }
 
@@ -308,7 +337,7 @@
       border: 2px solid #3d2c22;
       border-radius: 6px;
       background: #15100e;
-      cursor: pointer;
+      cursor: var(--cursor-link) 0 11, pointer;
       padding: 2px;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
@@ -363,8 +392,7 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    iframe#obs-preview-frame
-    {
+    iframe#obs-preview-frame {
       -webkit-user-drag: none;
       pointer-events: none;
     }
@@ -375,41 +403,54 @@
 
       body,
       button,
-  
+
       label,
       :root,
-      .preview-viewport
-      .drops
-      
-      {
+      .preview-viewport,
+      .drops {
         cursor: var(--cursor-pointer) 0 16, pointer !important;
       }
 
 
 
-      
-      /* Prevent cursor flickering on body while dragging range sliders */
-      body:has(input[type="range"]:active) {
-        cursor: var(--cursor-grabbing) 0 16, grabbing !important;
+
+      /* WebKit thumb */
+      input[type="range"]::-webkit-slider-thumb {
+        cursor: var(--cursor-grabbing) 0 11, grab;
+      }
+
+      input[type="range"]::-webkit-slider-thumb:active {
+        cursor: var(--cursor-grabbing) 0 11, grabbing;
+      }
+
+      /* Firefox thumb */
+      input[type="range"]::-moz-range-thumb {
+        cursor: var(--cursor-grabbing) 0 11, grab;
+      }
+
+      input[type="range"]::-moz-range-thumb:active {
+        cursor: var(--cursor-grabbing) 0 11, grabbing;
+      }
+
+      [title] {
+        cursor: var(--cursor-help) 0 16, help !important;
       }
 
 
-      
 
       [draggable="true"],
       .draggable-item,
-      .asset-card img
-       {
+      .asset-card img {
         cursor: var(--cursor-grabbing) 0 16, grab !important;
       }
 
       [draggable="true"]:active,
       .draggable-item:active,
-      img:active:not(img.thumb-img) {
+      img:active:not(img.thumb-img, .profile-portrait) {
         cursor: var(--cursor-grabbing) 0 16, grabbing !important;
       }
 
-      
+
       /* Standard Clickables (Buttons, Links, Tabs) */
       button,
       a,
@@ -440,14 +481,14 @@
       }
     }
 
-    input[type="text"]:not(#obs-result-url), input[type="number"]
-    {
+    input[type="text"]:not(#obs-result-url),
+    input[type="number"] {
       cursor: var(--cursor-text) 0 16, text !important;
 
     }
 
 
-    
+
 
     /* Custom image when hovering */
 
@@ -460,6 +501,7 @@
       --cursor-link: url("data:image/png;base64,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");
       --cursor-grabbing: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAJcklEQVR4AexYCWyOZxz/vy3qrLOos9XREKTqXBQlGhaxVtnogbJJa4Stm7mWGirEwjBdR4NSZc5mSMTZUlTrPoo6pu6jaJ1VtN9+v0de+da8+N5+TZYlbfr/nud9zv/vfz3/53GQ//lfGYD/WoFlGijTgJ0SKDMhOwVo9/QyDdgtQjsXKNOAnQK0e3qZBuwWoZ0L2K2BVatWuW/fvv27vXv3btu5c+dV0Kp169YNJ23dunV8cnLyxN27d0euXLmyhZ28Gk4vEYBFixY5galv0tLSTnXs2PHvevXqza9SpUq/Bg0auNWpU2eoh4dHfMOGDeNr1669wMXFZU6LFi3m9ejRI+vcuXPPDx8+vKA0wZgCsGnTpu4pKSmHOnfunFu3bt2YW7dutU1ISJBRo0bJhAkTZOjQoYIxUrlyZXF2dhb0y4gRI8TPz0/GjRsn0EZltI/v2bNnVnp6+nYKwlCsJhptBgCJf+Xm5rYXEv70zJkzlaZMmSLR0dGyZcsWefHihTx48ECePXsm69evFzAmjo6OkpmZKS9fvhSLxSKYIwsXLpQ+ffpIfHy8QEt9vb29F5vg1XCoTQD27Nkz1dXVNe758+eOc+bMUYxcuXJF3rx5I5qmKSoqKlJMa5omeXl5qn706FGljcLCQgXi9evX6nvFihWCtaR+/frXDbky0fhRAHDKedgoGtLUIiMjJSMj4x3jZJrMadpbENyX0q5evbqQ2du3b7NJKlasqEA6OTmpuZ06dVKA8vPzu0FbzmpQCX8+CACSj4DkI2/evClRUVHy+PFjtTH3IvNklozym3WSg4ODUPKVKlWSjRs3yuzZsxWAcuXKCfvKly8vffv2VRqoWbOmn6+v758A4cQ1SkLvBRAXF+cO5udSalR5UdFbE+EmtO9q1apJmzZtZPDgwTJy5EjhOLZrmqaYO3v2rAKLSCWQtNSoUUPIPIG4u7vLmjVrhOtWrVr1s/bt2y/juiWh9wJo165dNKJJtR07dgiZ0DRNMdSsWTOZNGmS2nzGjBkSFBSkJBoWFqbsm0zQNzZv3iwFBQWCsKlKTdMUAIIkeIRU2bBhgyQmJoqrq2vI/v37B3GuWTIEQJUi3A2kmeCgUnZL8xg7dqzExsYKJGaBE26FZH+6fPnyN4hCGf369RNfX19l6wRw8OBBOXHihIpEmqbJ06dPpUKFCoLzQpnS9evXhf5DEAwIABVrlnmONwTQqFGjEKjWKSUlRW7cuCGwVSXxQYMGUZrXID1fnAWfQ0uz/P39Y8+fPz8ODFhwWElubq4Kq2SYmnry5InyHbYzOvGbIfXVq1dKIwRx4cIFgqlKhsySIQBI+BMudODAAUHsV87YvHlzCxj9ZdeuXZ4DBw7cz36dhg0blv7w4cNDbdu2VdKltqg9aOmdRqAtuXfvnpDxa9euqTDLcVyjVq1aBMCqaTIE8OjRIy9unpOTI/Hx8dSA5dKlS5N69er1I07UAqNdsrOzE+Ez0rp1a8W0pmnKZAiE4zVNU6EV5iawd+XYNDUCYwDQNO0Zx5klB6MJ3JTSgS9QzTk4A/y6du06l2PRZhjyYB53Oadly5YWMCOMNvxmnY7LuSSaEIMCT25qg5GJJU7x0gOAg+cEfEAAJB9m5APJ7+HmqampvyO+e7JenKC1LIwX+I/GksQxOvM8A0hsY0mm6RdMNeA/KsKxzywZauDkyZMZkFQOnXX48OEXuSjS5UBkm18jcTvN7+IE0zpHiZMZSp3OSUbZxrGsk9jHb5Y8BCF5QX6lfILtZskQQEhIyF/Jycnt+vfvn8EFYTbOTZo0+UNnhm1GBGZek0ld+iw5h8xyPPtI/KZmWOcYmhFNjmPMkiEALjJ69OhbLEnIXcYjv3HBaVoeYFzYVpzQ7gzTcyDDZEzvZ51EptnHdpZknO38JphSB8CFdYI/jGGdZoHLSTDrxQlhNggAHBFO6TsqEjHKcJxekkkCYRtBcD0CYRu/2W6W3qsBfaGlS5d6wUbrMXZzIzAaqvdZl02bNg1m/507d1RM15mjnevjdGb5TYZ1YijlKc12s/RRANjEiYwhAgmPf6QYHZAmLLXeCJEqDje07vABFeNpGpxjTWzjHL2NdZ0Qghl2S+8k1hfWS0qTm0yfPl3lRdDCKJzKach1puKMuIzY/zUlPXHiRAWSzNKuWZJhSh6CUGbFku0k1kncB+NL7xzggjqFh4enEwAkry4zERERcvr0acFlvQsiUzQySQ+aDdtx7XyXSpAxMsl1WPKbxG+ddHAIEGy6wh+z9FET4oIAYOnWrZuK1UeOHFF3gICAAAkNDZXg4GAZMGCA0MR0BskY5+kUGBio+o8dOyY4L1SKwT5qBtoUT09P+o0H28ySTQCQWe7G04m0atVKmQHULciNhAzx9sXIozNNEACsTlZKnveHadOmWbKysr7E2NCwsLBLSAYVCEYlPL0I02lo0w13h20Ix4apyvuA2QQAd9skSovPI2SUAFhyUTLMkkRJ8gqJQ1BoTkuWLJEhQ4YIksKb/v7+G6CJRNypo5C9Kl/iOhQCs1Sc/Hko50JDhski1zcimwBAestxu8rn9dHDw0PZOaVLCepAeNlJSkqiOVlwHqxFbvQ98qIVSEWYzdbXN0fu8xSgC/mNUnjHwPNKISKbD0D+K03nmI+RTQAoFZjJr1wsKipKPVqReX5TinidkzFjxlCqBcePH+8CTQQjAZyPhC0JD1i/4RZWLi4uLhTm4ezl5TULZ4Yj35RwQAovQXgs2AhfyuR6ZskmAFwU6fRU5PKZbm5uwjsC/YHMM5efOXOm0gr84ge8OGQIJqzEWygiVBKeZHLu3r17CM7aEYJ4AvPqfPHixSnwA8uyZcukQ4cOglePNEwp0b/NALg61Nwf50EqDi2JiYmRyZMnC02ncePGcv/+/VQ8GS7mOBK08sPq1asdUY9A2A1HJvsAdUahAtydZ+Na+QVeNSxcC2l1HvtKQqYAIJW+iutmd6QVM3D8v+BFnk6K+pt9+/YFWTMAh9wCmy5ESt4Acd4bb0zLrfsREDYh+qwF89bNpuumAOirQ4LTcD+ohdgfiAjzE/zjW+vsleOgjW24dQX4+PgUIpSGF+/nmFOnTv2IMhfaeefk+Db1XyIA3AH2XICDLAkamQVziWFbcSIIPLsE4K7cJSEhwbt4P0FBUz/jDDAV+63XKTEA60U+VO/du/e27OzscORKLkbjEBwWwZQOGvXZ0vYPAAAA///RsR4XAAAABklEQVQDAHNtyuFp/9FFAAAAAElFTkSuQmCC");
 
+      --cursor-help: url("data:image/png;base64,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");
       --cursor-text: url("data:image/png;base64,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");
       --dst-black: #120e0c;
       --dst-charcoal: #1c1613;
@@ -524,7 +566,7 @@
     .asset-card p {
       font-size: 1.05rem !important;
       color: var(--dst-paper) !important;
-  
+
     }
 
 
@@ -728,7 +770,7 @@
       justify-content: space-between;
       padding: 10px 14px;
       margin-bottom: 8px;
-      cursor: pointer;
+      cursor: var(--cursor-link) 0 11, pointer;
       color: var(--dst-paper-muted);
       background: rgba(36, 27, 23, 0.45);
       border: 2px solid #362820;
@@ -826,7 +868,7 @@
       font-family: var(--font-hand);
       font-size: 1.05rem;
       font-weight: bold;
-      cursor: pointer;
+      cursor: var(--cursor-link) 0 11, pointer;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -975,7 +1017,7 @@
       font-family: var(--font-hand);
       font-size: 1.15rem;
       color: var(--dst-paper-muted);
-      cursor: pointer;
+      cursor: var(--cursor-link) 0 11, pointer;
     }
 
     .campaign-grid {
@@ -995,12 +1037,11 @@
       align-items: center;
       position: relative;
       box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 5px 5px 0 #090605;
-      
-      
+
+
     }
 
-    .milestone-icon-slot img
-    {
+    .milestone-icon-slot img {
       pointer-events: none;
     }
 
@@ -1011,7 +1052,7 @@
       filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.9));
       transition: transform 0.4s ease;
       pointer-events: none;
-      
+
     }
 
     .item-pedestal img:hover {
@@ -1124,7 +1165,7 @@
       border: 2px solid var(--dst-border-highlight);
       border-radius: var(--sketch-radius);
       padding: 10px 18px;
-      cursor: pointer;
+      cursor: var(--cursor-link) 0 11, pointer;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
@@ -1181,7 +1222,7 @@
       border: 1px solid #3c281e;
       border-radius: var(--sketch-radius);
       color: var(--dst-paper-muted);
-      cursor: pointer;
+      cursor: var(--cursor-link) 0 11, pointer;
       transition: all 0.2s ease;
     }
 
@@ -1250,8 +1291,8 @@
       flex-direction: column;
       width: 100%;
     }
-    a.amb-card
-    {
+
+    a.amb-card {
       -webkit-user-drag: none;
     }
 
@@ -1260,7 +1301,7 @@
       width: 100%;
       background: #0d0908;
       border-bottom: 2px solid #3c2a20;
-            
+
 
     }
 
@@ -1300,7 +1341,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
+      cursor: var(--cursor-link) 0 11, pointer;
       transition: all 0.2s ease;
       z-index: 10;
     }
@@ -1330,7 +1371,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
+      cursor: var(--cursor-link) 0 11, pointer;
       transition: all 0.2s ease;
       z-index: 10;
     }
@@ -1351,7 +1392,7 @@
 
     .dst-slider {
       position: absolute;
-      cursor: pointer;
+      cursor: var(--cursor-link) 0 11, pointer;
       inset: 0;
       background-color: #181210;
       border: 1px solid #483528;
@@ -1387,7 +1428,7 @@
 
     .dst-slider {
       position: absolute;
-      cursor: pointer;
+      cursor: var(--cursor-link) 0 11, pointer;
       inset: 0;
       background-color: #120e0c;
       border: 2px solid #4a362b;
@@ -1491,7 +1532,7 @@
       max-width: 100%;
       object-fit: contain;
       filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.8));
-      
+
     }
 
     .asset-card h4 {
@@ -1541,7 +1582,7 @@
       color: var(--dst-paper-muted);
       background: none;
       border: none;
-      cursor: pointer;
+      cursor: var(--cursor-link) 0 11, pointer;
     }
 
     .modal-close:hover {
@@ -1579,7 +1620,7 @@
       font-size: 0.85rem;
       font-weight: bold;
       text-decoration: none;
-      cursor: pointer;
+      cursor: var(--cursor-link) 0 11, pointer;
       position: relative;
       transition: all 0.15s ease;
       box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
@@ -1631,7 +1672,7 @@
       width: 420px;
       transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
       pointer-events: auto;
-      cursor: pointer;
+      cursor: var(--cursor-link) 0 11, pointer;
     }
 
     #dst-toast.show {
@@ -1688,6 +1729,8 @@
     }
   </style>
 </head>
+
+
 
 <body>
 
@@ -1859,10 +1902,12 @@
             </div>
 
             <div>
-              <label
+              <label title="How fast do the items swap between each other" ;
                 style="font-family: var(--font-mono); font-size: 1rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
-                Carousel Swap Speed (Sec)
+                <u>Carousel Swap Speed (Sec)</u>
+
               </label>
+
               <input type="number" id="obs-speed" class="search-input-box" value="4.5" min="1.5" max="30" step="0.5"
                 style="padding: 10px 14px; font-size: 1.1rem;" />
             </div>
@@ -1911,7 +1956,7 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px;">
               <div>
                 <label class="dst-toggle-label"
-                  style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1rem; color: var(--dst-paper); margin-bottom: 4px;">
+                  style="display: flex; align-items: center; gap: 6px; cursor: var(--cursor-link) 0 11, pointer; font-family: var(--font-hand); font-size: 1rem; color: var(--dst-paper); margin-bottom: 4px;">
                   <span>Disable Border</span>
                   <div class="dst-switch">
                     <input type="checkbox" id="obs-no-border" onchange="toggleBorderDisable()">
@@ -1929,7 +1974,7 @@
 
               <div>
                 <label class="dst-toggle-label"
-                  style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1rem; color: var(--dst-paper); margin-bottom: 4px;">
+                  style="display: flex; align-items: center; gap: 6px; cursor: var(--cursor-link) 0 11, pointer; font-family: var(--font-hand); font-size: 1rem; color: var(--dst-paper); margin-bottom: 4px;">
                   <span>Disable Fill</span>
                   <div class="dst-switch">
                     <input type="checkbox" id="obs-no-fill" onchange="toggleFillDisable()">
@@ -2013,7 +2058,7 @@
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px;">
 
                   <!-- Avatar Button (Dynamic & Greys out if no avatar) -->
-                  <button type="button" id="hat-btn-avatar" class="hat-pos-pill active"
+                  <button type="button" id="hat-btn-avatar" class="hat-pos-pill active" title="Attaches hat to the icon twitch avatar";
                     onclick="setHatPosition('avatar', this)"
                     style="display: flex; align-items: center; justify-content: center; gap: 6px;">
                     <img id="pill-icon-avatar" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
@@ -2024,13 +2069,14 @@
                   <!-- Flair Button -->
                   <button type="button" class="hat-pos-pill" onclick="setHatPosition('flair', this)"
                     style="display: flex; align-items: center; justify-content: center; gap: 6px;">
-                    <img id="pill-icon-flair" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
+                    <img id="pill-icon-flair" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" title="Attaches hat to the icon flair";
                       alt="Flair" style="width: 18px; height: 18px; object-fit: contain;" />
+                      
                     <span>Flair</span>
                   </button>
 
                   <!-- Portrait Button -->
-                  <button type="button" class="hat-pos-pill" onclick="setHatPosition('portrait', this)"
+                  <button type="button" class="hat-pos-pill" onclick="setHatPosition('portrait', this)" title="Attaches hat to the portrait";
                     style="display: flex; align-items: center; justify-content: center; gap: 6px;">
                     <img id="pill-icon-portrait" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
                       alt="Portrait" style="width: 18px; height: 18px; object-fit: contain;" />
@@ -2038,7 +2084,7 @@
                   </button>
 
                   <!-- Item Button -->
-                  <button type="button" class="hat-pos-pill" onclick="setHatPosition('item', this)"
+                  <button type="button" class="hat-pos-pill" onclick="setHatPosition('item', this)" title="Attaches hat to the icon item";
                     style="display: flex; align-items: center; justify-content: center; gap: 6px;">
                     <img id="pill-icon-item" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
                       alt="Item" style="width: 18px; height: 18px; object-fit: contain;" />
@@ -2049,29 +2095,35 @@
                 <!-- HAT X & Y OFFSET CONTROLS -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px;">
                   <div>
-                    <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
-                      <span>Offset X</span>
+                    <div
+                      style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
+                      <span>Offset X</span> 
                       <span id="hat-x-val" style="color: var(--dst-flame); font-weight: bold;">0px</span>
                     </div>
-                    <input type="range" id="obs-hat-x" min="-60" max="60" value="0" step="1" oninput="updateHatOffsets()" />
+                    <input type="range" id="obs-hat-x" min="-60" max="60" value="0" step="1"
+                      oninput="updateHatOffsets()" />
                   </div>
 
                   <div>
-                    <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
-                      <span>Offset Y</span>
+                    <div title="Offset Y Left - Up / Offset Y Right - Down";
+                      style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
+                      <span><u>Offset Y</span></u>
                       <span id="hat-y-val" style="color: var(--dst-flame); font-weight: bold;">0px</span>
                     </div>
-                    <input type="range" id="obs-hat-y" min="-60" max="60" value="0" step="1" oninput="updateHatOffsets()" />
+                    <input type="range" id="obs-hat-y" min="-60" max="60" value="0" step="1"
+                      oninput="updateHatOffsets()" />
                   </div>
                 </div>
 
                 <!-- HAT SCALE CONTROL -->
                 <div style="margin-top: 8px;">
-                  <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
+                  <div
+                    style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
                     <span>Hat Scale</span>
                     <span id="hat-scale-val" style="color: var(--dst-flame); font-weight: bold;">100%</span>
                   </div>
-                  <input type="range" id="obs-hat-scale" min="50" max="200" value="100" step="5" oninput="updateHatOffsets()" />
+                  <input type="range" id="obs-hat-scale" min="50" max="200" value="100" step="5"
+                    oninput="updateHatOffsets()" />
                 </div>
 
               </div>
@@ -2092,30 +2144,30 @@
                   <i data-lucide="eye" style="color: var(--dst-flame); width: 20px; height: 20px;"></i> Live Preview
                 </h4>
 
-                
+
 
                 <div style="display: flex; gap: 12px; align-items: center;">
-                  <label class="dst-toggle-label"
-                    style="display: flex; align-items: center; gap: 5px; cursor: pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
-                    <span>Solo</span>
+                  <label class="dst-toggle-label" title="Shows main item";
+                    style="display: flex; align-items: center; gap: 5px; cursor: var(--cursor-link) 0 11, pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
+                    <span><u>Solo</u></span>
                     <div class="dst-switch">
                       <input type="checkbox" id="obs-solo-toggle" onchange="handleWidgetModeChange('solo')">
                       <span class="dst-slider"></span>
                     </div>
                   </label>
 
-                  <label class="dst-toggle-label"
-                    style="display: flex; align-items: center; gap: 5px; cursor: pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
-                    <span>Carousel</span>
+                  <label class="dst-toggle-label" title="Cycles through all items";
+                    style="display: flex; align-items: center; gap: 5px; cursor: var(--cursor-link) 0 11, pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
+                    <span><u>Carousel</u></span>
                     <div class="dst-switch">
                       <input type="checkbox" id="obs-carousel-toggle" onchange="handleWidgetModeChange('carousel')">
                       <span class="dst-slider"></span>
                     </div>
                   </label>
 
-                  <label class="dst-toggle-label"
-                    style="display: flex; align-items: center; gap: 5px; cursor: pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
-                    <span>Hide Head</span>
+                  <label class="dst-toggle-label" title="Hides streamer head if needed";
+                    style="display: flex; align-items: center; gap: 5px; cursor: var(--cursor-link) 0 11, pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
+                    <span><u>Hide Head</u></span>
                     <div class="dst-switch">
                       <input type="checkbox" id="obs-hide-head" onchange="updateObsUrlBuilder()">
                       <span class="dst-slider"></span>
@@ -2135,15 +2187,18 @@
               </div>
 
               <!-- Add this inside your live preview or configuration container -->
- <!-- OBS Specs Card (Dynamic Resolution) -->
-<div class="obs-specs-card" style="margin-top: 14px; padding: 10px 14px; background: rgba(15, 10, 6, 0.92); border: 1px solid rgba(138, 92, 49, 0.7); border-radius: 4px; font-size: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.8);">
-  <div style="display: flex; align-items: center; gap: 8px;">
-    <span style="color: #d1c2b4;">Recommended Resolution</span>
-  </div>
-  <div id="obs-res-display" style="font-family: monospace; background: rgba(5, 3, 2, 0.95); padding: 5px 10px; border-radius: 3px; color: #fff; border: 1px solid rgba(138, 92, 49, 0.6); box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
-    Width: <strong style="color: #ffc247; font-weight: 700;">1024</strong>px &nbsp;|&nbsp; Height: <strong style="color: #ffc247; font-weight: 700;">512</strong>px
-  </div>
-</div>
+              <!-- OBS Specs Card (Dynamic Resolution) -->
+              <div class="obs-specs-card"
+                style="margin-top: 14px; padding: 10px 14px; background: rgba(15, 10, 6, 0.92); border: 1px solid rgba(138, 92, 49, 0.7); border-radius: 4px; font-size: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.8);">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="color: #d1c2b4;">Recommended Resolution</span>
+                </div>
+                <div id="obs-res-display"
+                  style="font-family: monospace; background: rgba(5, 3, 2, 0.95); padding: 5px 10px; border-radius: 3px; color: #fff; border: 1px solid rgba(138, 92, 49, 0.6); box-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                  Width: <strong style="color: #ffc247; font-weight: 700;">1024</strong>px &nbsp;|&nbsp; Height: <strong
+                    style="color: #ffc247; font-weight: 700;">512</strong>px
+                </div>
+              </div>
             </div>
 
             <div>
@@ -2154,7 +2209,7 @@
               <input type="text" id="obs-result-url" readonly onclick="copyObsGeneratedUrl()" draggable="true"
                 ondragstart="handleObsDragStart(event)" class="search-input-box"
                 title="Click to copy or Drag & drop directly into OBS"
-                style="padding: 10px 12px; font-size: 0.95rem; color: #a4e67a; background: #120e0c; cursor: grab;" />
+                style="padding: 10px 12px; font-size: 0.95rem; color: #a4e67a; background: #120e0c; cursor: var(--cursor-grabbing) 0 11, grab;" />
             </div>
 
             <div style="display: flex; gap: 10px; justify-content: flex-end;">
@@ -2185,10 +2240,9 @@
         </div>
         <div id="timer" class="campfire-countdown">CALCULATING...</div>
         <div id="timer-date" class="campfire-date" onclick="toggleTimerTimezone()"
-        
           title="Click to toggle Local / UTC time">Consulting Klei Records...</div>
 
-          
+
       </div>
 
       <div class="campaign-grid">
@@ -2198,14 +2252,15 @@
             <strong style="color:#fff;">Instant Delivery:</strong> Claimed rewards materialize directly in your survivor
             Curio Cabinet!
           </div>
-          <div title="Share markdown with friends" style="margin-top: 16px; display: flex; gap: 10px; width: 100% "  </div>
-            
+          <div title="Share markdown with friends" style="margin-top: 16px; display: flex; gap: 10px; width: 100% "
+            </div>
+
             <button class="dst-btn btn-discord" style="flex: 1;" onclick="openDiscordModal()">
-              
+
               <i data-lucide="share-2"></i> Share to Discord
-              
+
             </button>
-            
+
           </div>
         </div>
 
@@ -2354,7 +2409,17 @@
 
   <script>
 
-function updateHatOffsets() {
+
+    // Select all elements that have a "title" attribute
+    const elementsWithTitle = document.querySelectorAll('[title]');
+
+    // Loop through each element and change the cursor (e.g., to 'help')
+    elementsWithTitle.forEach(element => {
+      element.style.cursor = 'help';
+    });
+
+
+    function updateHatOffsets() {
       const xVal = document.getElementById('obs-hat-x')?.value || 0;
       const yVal = document.getElementById('obs-hat-y')?.value || 0;
       const scaleVal = document.getElementById('obs-hat-scale')?.value || 100;
@@ -2502,7 +2567,7 @@ function updateHatOffsets() {
       updateObsUrlBuilder();
     }
 
-function handleWidgetModeChange(changed) {
+    function handleWidgetModeChange(changed) {
       const soloToggle = document.getElementById('obs-solo-toggle');
       const carouselToggle = document.getElementById('obs-carousel-toggle');
 
@@ -2969,9 +3034,9 @@ function handleWidgetModeChange(changed) {
       if (!dateEl) return;
       const endDate = new Date(endTimestamp);
       if (showLocalTime) {
-        dateEl.innerText = `Ends: ${endDate.toLocaleString()} (Local)`;
+        dateEl.innerHTML = `<u>Ends: ${endDate.toLocaleString()} (Local)</u>`;
       } else {
-        dateEl.innerText = `Ends ${endDate.toLocaleDateString()} (Click for Local)`;
+        dateEl.innerHTML = `<u>Ends ${endDate.toLocaleDateString()} (Click for Local)</u>`;
       }
     }
 

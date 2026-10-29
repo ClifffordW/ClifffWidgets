@@ -42,6 +42,38 @@
       src: url(https://clifffordw.github.io/ClifffWidgets/Fonts/HammerheadBold.ttf);
     }
 
+/* --- CUSTOM DST COLOR PICKER STYLING --- */
+input[type="color"] {
+  -webkit-appearance: none;
+  appearance: none;
+  border: 2px solid #3d2c22;
+  border-radius: 6px;
+  background: #15100e;
+  cursor: pointer;
+  padding: 2px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="color"]:hover {
+  border-color: var(--dst-flame);
+  box-shadow: 0 0 8px rgba(231, 108, 30, 0.3);
+}
+
+/* Remove default browser swatch border/padding quirks */
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: 1px solid #281d17;
+  border-radius: 4px;
+}
+
+input[type="color"]::-moz-color-swatch {
+  border: 1px solid #281d17;
+  border-radius: 4px;
+}
+
     :root {
       --dst-black: #120e0c;
       --dst-charcoal: #1c1613;
@@ -1544,7 +1576,7 @@
               </label>
               <div style="display: flex; gap: 8px; align-items: center;">
                 <input type="color" id="obs-color1" value="#90ee90" oninput="syncColorToText('1')"
-                  style="width: 48px; height: 46px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
+                  style="width: 55px; height: 48px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
                 <input type="text" id="obs-glow1" class="search-input-box" value="90EE90"
                   oninput="syncTextToColor('1'); updateObsUrlBuilder();"
                   style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
@@ -1558,7 +1590,7 @@
               </label>
               <div style="display: flex; gap: 8px; align-items: center;">
                 <input type="color" id="obs-color2" value="#64F89D" oninput="syncColorToText('2')"
-                  style="width: 48px; height: 46px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
+                  style="width: 55px; height: 48px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
                 <input type="text" id="obs-glow2" class="search-input-box" value="64F89D"
                   oninput="syncTextToColor('2'); updateObsUrlBuilder();"
                   style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
@@ -1572,7 +1604,7 @@
               </label>
               <div style="display: flex; gap: 8px; align-items: center;">
                 <input type="color" id="obs-color3" value="#AFFF60" oninput="syncColorToText('3')"
-                  style="width: 48px; height: 46px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
+                  style="width: 55px; height: 48px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
                 <input type="text" id="obs-glow3" class="search-input-box" value="AFFF60"
                   oninput="syncTextToColor('3'); updateObsUrlBuilder();"
                   style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
@@ -1606,7 +1638,7 @@
                 <div id="border-picker-wrapper" style="display: flex; gap: 8px; align-items: center;">
 
                   <input type="color" id="obs-border-color" value="#443429" oninput="syncColorToText('border')"
-                    style="width: 48px; height: 46px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
+                    style="width: 55px; height: 48px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
                   <input type="text" id="obs-border-hex" class="search-input-box" value="443429"
                     oninput="syncTextToColor('border'); updateObsUrlBuilder();"
                     style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
@@ -1635,7 +1667,7 @@
                 </label>
                 <div id="fill-picker-wrapper" style="display: flex; gap: 8px; align-items: center;">
                   <input type="color" id="obs-fill-color" value="#1c1613" oninput="syncColorToText('fill')"
-                    style="width: 48px; height: 46px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
+                    style="width: 55px; height: 48px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
                   <input type="text" id="obs-fill-hex" class="search-input-box" value="1C1613"
                     oninput="syncTextToColor('fill'); updateObsUrlBuilder();"
                     style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
@@ -2004,39 +2036,11 @@
 
       const borderHex = (document.getElementById('obs-border-hex')?.value || '').replace(/#/g, '').trim().toUpperCase();
       const fillHex = (document.getElementById('obs-fill-hex')?.value || '').replace(/#/g, '').trim().toUpperCase();
-
-
       const noBorder = document.getElementById('obs-no-border')?.checked || false;
-      const noFill = document.getElementById('obs-no-fill')?.checked || false;
-
-
-
 
       const hatType = (document.getElementById('obs-seasonal-hat')?.value || '').trim();
       const hatUrl = (document.getElementById('obs-hat-url')?.value || '').trim();
       const hatPos = (document.getElementById('obs-hat-pos')?.value || 'avatar').trim();
-
-
-      const hatContainer = document.getElementById('hat-url-container');
-      const hatTypeSelect = document.getElementById('obs-seasonal-hat');
-
-      const hatPosSelect = document.getElementById('obs-hat-pos');
-      if (hatPosSelect) {
-        if (isSolo || isCarousel) {
-          hatPosSelect.value = 'avatar';
-          hatPosSelect.disabled = true;
-          hatPosSelect.title = "Hat position is locked to avatar in Solo/Carousel modes.";
-        } else {
-          hatPosSelect.disabled = false;
-          hatPosSelect.title = "";
-        }
-      }
-
-
-
-
-
-
 
       const g1 = (document.getElementById('obs-glow1')?.value || '').replace(/#/g, '').trim().toUpperCase();
       const g2 = (document.getElementById('obs-glow2')?.value || '').replace(/#/g, '').trim().toUpperCase();
@@ -2046,81 +2050,45 @@
       if (g2.length === 6) document.getElementById('obs-color2').value = `#${g2}`;
       if (g3.length === 6) document.getElementById('obs-color3').value = `#${g3}`;
 
-
-
-
       // Save to localStorage
       localStorage.setItem('dst-obs-twitch', twitch);
       localStorage.setItem('dst-obs-avatar', avatar);
       localStorage.setItem('dst-obs-solo', isSolo);
       localStorage.setItem('dst-obs-carousel', isCarousel);
-      localStorage.setItem('dst-obs-hidehead', hideHead); // Added
+      localStorage.setItem('dst-obs-hidehead', hideHead);
       localStorage.setItem('dst-obs-speed', speed);
       localStorage.setItem('dst-obs-g1', g1);
       localStorage.setItem('dst-obs-g2', g2);
       localStorage.setItem('dst-obs-g3', g3);
-
-      // Save to localStorage
-      localStorage.setItem('dst-obs-border', borderHex);
-      localStorage.setItem('dst-obs-fill', fillHex);
-      // Save to localStorage
       localStorage.setItem('dst-obs-noborder', noBorder);
-      localStorage.setItem('dst-obs-nofill', noFill);
-
       localStorage.setItem('dst-obs-border', borderHex);
       localStorage.setItem('dst-obs-fill', fillHex);
-
-
-
-
-      // Save to localStorage
-      localStorage.setItem('dst-obs-hattype', hatType);
-      localStorage.setItem('dst-obs-haturl', hatUrl);
-      localStorage.setItem('dst-obs-hatpos', hatPos);
-
-
-
-
 
       let url = `https://clifffordw.github.io/ClifffWidgets/Drops/Streamers/drop_universal.html?`;
       const params = [];
       if (isSolo) params.push(`solo=1`);
       if (isCarousel) {
         params.push(`carousel=1`);
-        if (speed && speed !== '4.5') params.push(`speed=${encodeURIComponent(speed)}`);
+        if (speed) params.push(`speed=${encodeURIComponent(speed)}`);
       }
-      if (hideHead) params.push(`nohead=1`); // Added parameter (change `nohead` if your external script uses a different name like `hidehead=1` or `head=0`)
+      if (hideHead) params.push(`nohead=1`);
       if (twitch) params.push(`twitch=${encodeURIComponent(twitch)}`);
       if (avatar) params.push(`avatar=${encodeURIComponent(avatar)}`);
       if (g1) params.push(`glow=${encodeURIComponent(g1)}`);
       if (g2) params.push(`glow2=${encodeURIComponent(g2)}`);
       if (g3) params.push(`glow3=${encodeURIComponent(g3)}`);
-      // In your params array builder, add:
-      if (borderHex) params.push(`border=${encodeURIComponent(borderHex)}`);
-      if (fillHex) params.push(`fill=${encodeURIComponent(fillHex)}`);
-      // In your parameter array building block:
+      
       if (noBorder) {
         params.push(`noborder=1`);
       } else if (borderHex) {
         params.push(`border=${encodeURIComponent(borderHex)}`);
       }
-      if (noFill) {
-        params.push(`nofill=1`);
-      } else if (borderHex) {
-        params.push(`fill=${encodeURIComponent(borderHex)}`);
-      }
-
       if (fillHex) params.push(`fill=${encodeURIComponent(fillHex)}`);
-      // Append to URL parameters
+
       if (hatType) {
         params.push(`hat=${encodeURIComponent(hatType)}`);
         if (hatUrl) params.push(`haturl=${encodeURIComponent(hatUrl)}`);
         if (hatPos) params.push(`hatpos=${encodeURIComponent(hatPos)}`);
-      }
-
-      if (hideHead) {
-        if (hatContainer) hatContainer.style.display = 'none';
-        if (hatTypeSelect) hatTypeSelect.value = '';
       }
 
       url += params.join('&');
@@ -2128,14 +2096,14 @@
       const resultBox = document.getElementById('obs-result-url');
       const previewBtn = document.getElementById('obs-preview-btn');
       const previewFrame = document.getElementById('obs-preview-frame');
-      const scaleContainer = document.getElementById('obs-scale-container');
-      const previewViewport = document.getElementById('preview-viewport');
-      const resNotice = document.getElementById('obs-res-notice');
 
       if (resultBox) resultBox.value = url;
       if (previewBtn) previewBtn.href = url;
 
       const needsSquare = isSolo || isCarousel;
+      const previewViewport = document.getElementById('preview-viewport');
+      const scaleContainer = document.getElementById('obs-scale-container');
+
       if (previewViewport && scaleContainer && previewFrame) {
         const nativeWidth = 1024;
         const nativeHeight = needsSquare ? 1024 : 512;
@@ -2149,16 +2117,6 @@
         const containerWidth = previewViewport.clientWidth || 500;
         const scale = containerWidth / nativeWidth;
         scaleContainer.style.transform = `scale(${scale})`;
-      }
-
-      if (resNotice) {
-        if (isCarousel) {
-          resNotice.innerHTML = `Recommended OBS Browser Source Resolution: <b style="color: var(--dst-flame);">1024 × 1024 (Carousel Mode)</b>`;
-        } else if (isSolo) {
-          resNotice.innerHTML = `Recommended OBS Browser Source Resolution: <b style="color: var(--dst-flame);">1024 × 1024 (Solo Mode)</b>`;
-        } else {
-          resNotice.innerHTML = `Recommended OBS Browser Source Resolution: <b style="color: var(--dst-flame);">1024 × 512 (Full Mode)</b>`;
-        }
       }
 
       if (previewFrame && previewFrame.src !== url) {

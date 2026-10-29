@@ -403,52 +403,50 @@
     </div>
   </div>
 
-  <script>
+ <script>
     // ─── 1. INITIALIZE URL PARAMETERS FIRST ───────────────────────
     const urlParams = new URLSearchParams(window.location.search);
     const root = document.documentElement;
-    const hex = k => { const v = urlParams.get(k); return v ? '#' + v.replace(/^#/, '') : null; };
+
+    // Apply custom glow colors from URL parameters if present
+    const g1 = urlParams.get('glow');
+    const g2 = urlParams.get('glow2');
+    const g3 = urlParams.get('glow3');
+    if (g1) root.style.setProperty('--glow1', '#' + g1.replace(/^#/, ''));
+    if (g2) root.style.setProperty('--glow2', '#' + g2.replace(/^#/, ''));
+    if (g3) root.style.setProperty('--glow3', '#' + g3.replace(/^#/, ''));
 
     /* ─── 2. BORDER & FILL CONFIGURATION ─────────────────────────── */
     const noBorder = urlParams.get('noborder') === '1';
     const borderHex = urlParams.get('border');
-    const noFill = urlParams.get('nofill') === '1';
-
     const fillHex = urlParams.get('fill');
     const streamerHeadEl = document.querySelector('.streamer-head');
 
     if (streamerHeadEl) {
       if (noBorder) {
         streamerHeadEl.style.border = 'none';
-        streamerHeadEl.style.boxShadow = 'none';
-      } else {
-        if (borderHex) streamerHeadEl.style.border = `3px solid #${borderHex}`;
-      }
-
-      if (noFill) {
         streamerHeadEl.style.background = 'none';
         streamerHeadEl.style.boxShadow = 'none';
       } else {
+        if (borderHex) streamerHeadEl.style.border = `3px solid #${borderHex}`;
         if (fillHex) streamerHeadEl.style.background = `#${fillHex}`;
       }
-
     }
 
     /* ─── 3. HIDE STREAMER HEAD TOGGLE ───────────────────────────── */
     const hideHead = urlParams.get('nohead') === '1';
-    if (hideHead && streamerHeadEl) {
-      streamerHeadEl.style.display = 'none';
-    }
 
-    /* ─── 4. STREAMER AVATAR RESOLUTION (Direct URL or Twitch Fallback) ─ */
+    /* ─── 4. STREAMER AVATAR RESOLUTION (Strict Empty Check) ─────── */
     const avatarUrl = urlParams.get('avatar');
     const twitchUser = urlParams.get('twitch');
-    const resolvedAvatarSrc = avatarUrl || (twitchUser ? `https://decapi.me/twitch/avatar/${encodeURIComponent(twitchUser)}` : '');
+    const resolvedAvatarSrc = avatarUrl ? avatarUrl.trim() : (twitchUser ? `https://decapi.me/twitch/avatar/${encodeURIComponent(twitchUser.trim())}` : '');
+    const wrapEl = document.getElementById('streamer-wrap');
 
-    if (resolvedAvatarSrc && streamerHeadEl && !hideHead) {
+    if (!hideHead && resolvedAvatarSrc && streamerHeadEl && resolvedAvatarSrc !== '') {
       streamerHeadEl.src = resolvedAvatarSrc;
-      const wrapEl = document.getElementById('streamer-wrap');
       if (wrapEl) wrapEl.style.display = 'block';
+    } else {
+      if (wrapEl) wrapEl.style.display = 'none';
     }
 
     /* ─── 5. SEASONAL HAT & POSITIONING ──────────────────────────── */
@@ -467,7 +465,7 @@
       birthday: "https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/birthday_hat.png"
     };
 
-    if (hatType && !hideHead) {
+    if (hatType && !hideHead && resolvedAvatarSrc) {
       const resolvedHatSrc = hatUrl || defaultHatUrls[hatType] || '';
       const ph = document.getElementById('partyhat');
 
@@ -540,8 +538,8 @@
             document.querySelector('.slot--item')
           ].filter(s => s && s.querySelector('img')?.src);
 
-          const speedParam = parseFloat(urlParams.get('speed') || urlParams.get('interval') || '4.5');
-          const switchInterval = Math.max(1.5, speedParam) * 1000;
+          const speedParam = parseFloat(urlParams.get('speed') || '4.5');
+          const switchInterval = Math.max(1.0, speedParam) * 1000;
 
           let currentIndex = 0;
           if (slots.length > 0) {

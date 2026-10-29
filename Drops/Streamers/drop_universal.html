@@ -7,6 +7,13 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap');
 
+/* ─── SHARED HAT ANIMATION & GLOW ────────────────────────────── */
+    .partyhat.is-animated {
+      animation:
+        float-streamer 4.5s ease-in-out infinite,
+        glow-pulse 6.0s ease-in-out infinite;
+    }
+
     /* ─── VARS ───────────────────────────────────────────────────── */
     :root {
       --glow1: #e8a040;
@@ -392,9 +399,10 @@
 <body>
 
   <div class="drops" id="drops">
+          <img class="partyhat" id="partyhat" src="" alt="Party Hat">
+
     <div class="streamer-wrap" id="streamer-wrap">
       <img class="streamer-head" id="streamer-head" src="" alt="Streamer Avatar">
-      <img class="partyhat" id="partyhat" src="" alt="Party Hat">
     </div>
 
     <div class="slot slot--flair">
@@ -468,13 +476,18 @@
       if (wrapEl) wrapEl.style.display = 'none';
     }
 
-   /* ─── 5. SEASONAL HAT & POSITIONING ──────────────────────────── */
-/* ─── SEASONAL HAT POSITIONING & OFFSETS ──────────────────────────── */
+ /* ─── 5. SEASONAL HAT & POSITIONING ──────────────────────────── */
     const hatType = urlParams.get('hat');
     const hatUrl = urlParams.get('haturl');
     const hatPos = urlParams.get('hatpos') || 'avatar';
     const hatX = parseInt(urlParams.get('hatx') || '0', 10);
     const hatY = parseInt(urlParams.get('haty') || '0', 10);
+
+    const defaultHatUrls = {
+      xmas: "https://dontstarve.wiki.gg/images/Winter_Hat_Dropped.png?72e0b5",
+      halloween: "https://cdn-items.klei.com/dst/512x512/tophat_witch_pyre_cf2ed86a1a4d83b3.png",
+      birthday: "https://dontstarve.wiki.gg/images/thumb/Balloon_Hat_Dropped.png/300px-Balloon_Hat_Dropped.png?1d91e1"
+    };
 
     if (hatType) {
       const resolvedHatSrc = hatUrl || defaultHatUrls[hatType] || '';
@@ -483,6 +496,7 @@
       if (resolvedHatSrc && ph) {
         ph.src = resolvedHatSrc;
         ph.style.display = 'block';
+        ph.classList.add('is-animated'); // ADDED: Ensures glow & float apply everywhere
 
         let targetEl = document.getElementById('streamer-wrap');
         if (hatPos === 'flair') {

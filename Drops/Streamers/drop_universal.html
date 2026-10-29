@@ -412,18 +412,26 @@
     /* ─── 2. BORDER & FILL CONFIGURATION ─────────────────────────── */
     const noBorder = urlParams.get('noborder') === '1';
     const borderHex = urlParams.get('border');
+    const noFill = urlParams.get('nofill') === '1';
+
     const fillHex = urlParams.get('fill');
     const streamerHeadEl = document.querySelector('.streamer-head');
 
     if (streamerHeadEl) {
       if (noBorder) {
         streamerHeadEl.style.border = 'none';
-        streamerHeadEl.style.background = 'none';
         streamerHeadEl.style.boxShadow = 'none';
       } else {
         if (borderHex) streamerHeadEl.style.border = `3px solid #${borderHex}`;
+      }
+
+      if (noFill) {
+        streamerHeadEl.style.background = 'none';
+        streamerHeadEl.style.boxShadow = 'none';
+      } else {
         if (fillHex) streamerHeadEl.style.background = `#${fillHex}`;
       }
+
     }
 
     /* ─── 3. HIDE STREAMER HEAD TOGGLE ───────────────────────────── */

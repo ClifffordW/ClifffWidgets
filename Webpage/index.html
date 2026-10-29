@@ -1596,10 +1596,15 @@
                       <span class="dst-slider"></span>
                     </div>
                   </label>
+                  <br> </br>
                 </div>
 
-
+                  <label
+                    style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
+                    Head Border Color
+                  </label>
                 <div id="border-picker-wrapper" style="display: flex; gap: 8px; align-items: center;">
+
                   <input type="color" id="obs-border-color" value="#443429" oninput="syncColorToText('border')"
                     style="width: 48px; height: 46px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
                   <input type="text" id="obs-border-hex" class="search-input-box" value="443429"
@@ -1609,12 +1614,26 @@
               </div>
 
               <!-- Fill Color -->
+
+
               <div>
+
+                <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+                  <label class="dst-toggle-label"
+                    style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1.1rem; color: var(--dst-paper);">
+                    <span>Disable Fill</span>
+                    <div class="dst-switch">
+                      <input type="checkbox" id="obs-no-fill" onchange="toggleFillDisable()">
+                      <span class="dst-slider"></span>
+                    </div>
+                  </label>
+                  <br> </br>
+                </div>
                 <label
                   style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
                   Head Fill Color
                 </label>
-                <div style="display: flex; gap: 8px; align-items: center;">
+                <div id="fill-picker-wrapper" style="display: flex; gap: 8px; align-items: center;">
                   <input type="color" id="obs-fill-color" value="#1c1613" oninput="syncColorToText('fill')"
                     style="width: 48px; height: 46px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
                   <input type="text" id="obs-fill-hex" class="search-input-box" value="1C1613"
@@ -1656,16 +1675,16 @@
                     style="width: 100%; box-sizing: border-box; padding: 10px 14px; font-size: 1.05rem;" />
                 </div>
                 <div>
-                  <label
+                  <!--                   <label
                     style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--dst-paper-muted); display: block; margin-bottom: 6px;">
                     Hat Position
-                  </label>
-                  <select id="obs-hat-pos" class="search-input-box" onchange="updateObsUrlBuilder()"
+                  </label> -->
+                  <!--                   <select id="obs-hat-pos" class="search-input-box" onchange="updateObsUrlBuilder()"
                     style="width: 100%; padding: 10px 12px; font-size: 1.05rem; cursor: pointer;">
                     <option value="avatar">On Streamer Head</option>
                     <option value="drop">On Drop Box Top</option>
                     <option value="top-left">Widget Top-Left</option>
-                  </select>
+                  </select> -->
                 </div>
               </div>
             </div>
@@ -1882,6 +1901,16 @@
       updateObsUrlBuilder();
     }
 
+    function toggleFillDisable() {
+      const isNoFill = document.getElementById('obs-no-fill')?.checked || false;
+      const pickerWrapper = document.getElementById('fill-picker-wrapper');
+      if (pickerWrapper) {
+        pickerWrapper.style.opacity = isNoFill ? '0.4' : '1';
+        pickerWrapper.style.pointerEvents = isNoFill ? 'none' : 'auto';
+      }
+      updateObsUrlBuilder();
+    }
+
     const defaultHatUrls = {
       xmas: "https://dontstarve.wiki.gg/images/Winter_Hat_Dropped.png?72e0b5",
       halloween: "https://cdn-items.klei.com/dst/512x512/tophat_witch_pyre_cf2ed86a1a4d83b3.png",
@@ -1969,6 +1998,7 @@
 
 
       const noBorder = document.getElementById('obs-no-border')?.checked || false;
+      const noFill = document.getElementById('obs-no-fill')?.checked || false;
 
 
 
@@ -2026,6 +2056,8 @@
       localStorage.setItem('dst-obs-fill', fillHex);
       // Save to localStorage
       localStorage.setItem('dst-obs-noborder', noBorder);
+      localStorage.setItem('dst-obs-nofill', noFill);
+
       localStorage.setItem('dst-obs-border', borderHex);
       localStorage.setItem('dst-obs-fill', fillHex);
 
@@ -2063,6 +2095,12 @@
       } else if (borderHex) {
         params.push(`border=${encodeURIComponent(borderHex)}`);
       }
+      if (noFill) {
+        params.push(`nofill=1`);
+      } else if (borderHex) {
+        params.push(`fill=${encodeURIComponent(borderHex)}`);
+      }
+
       if (fillHex) params.push(`fill=${encodeURIComponent(fillHex)}`);
       // Append to URL parameters
       if (hatType) {
@@ -2135,6 +2173,9 @@
 
 
       const savedNoBorder = localStorage.getItem('dst-obs-noborder') === 'true';
+      const savedNoFill = localStorage.getItem('dst-obs-nofill') === 'true';
+
+
       const savedHatType = localStorage.getItem('dst-obs-hattype');
       const savedHatUrl = localStorage.getItem('dst-obs-haturl');
 
@@ -2142,6 +2183,12 @@
         document.getElementById('obs-no-border').checked = savedNoBorder;
         toggleBorderDisable();
       }
+
+      if (document.getElementById('obs-no-fill')) {
+        document.getElementById('obs-no-fill').checked = savedNoFill;
+        toggleFillDisable();
+      }
+
       if (savedBorder !== null && document.getElementById('obs-border-hex')) document.getElementById('obs-border-hex').value = savedBorder;
       if (savedFill !== null && document.getElementById('obs-fill-hex')) document.getElementById('obs-fill-hex').value = savedFill;
       if (savedHatType !== null && document.getElementById('obs-seasonal-hat')) {

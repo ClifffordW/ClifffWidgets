@@ -1620,6 +1620,12 @@
                 <option value="birthday">🎂 Anniversary Party Hat</option>
                 <option value="custom">✨ Custom Hat URL...</option>
               </select>
+<!--               <select id="obs-hat-pos" class="search-input-box"  style="opacity: 0.25; pointer-events: none;"
+                style="padding: 10px 12px; font-size: 1rem; cursor: pointer;">
+                <option value="drop">Avatar</option>
+ 
+              </select> -->
+
             </div>
 
             <div id="hat-url-container"
@@ -2554,7 +2560,7 @@
         if (!alreadySaved && !sessionAlertedLive) {
           sessionAlertedLive = true;
           try { localStorage.setItem('dst-alerted-live-' + dropId, 'true'); } catch (e) { }
-          triggerSafeNotification(`New "${dst.englishName}" Drop is LIVE!`, `Don't Starve Together drop for "${dst.englishName}" has arrived! Watch Klei Ambassadors to claim it.`, dst.icon || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg");
+          triggerSafeNotification(`New "${dst.englishName}" Drop is LIVE!`, `Don't Starve Together drop for "${dst.englishName}" has arrived! \nWatch Klei Ambassadors to claim it.`, dst.icon || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg");
         }
       }
 

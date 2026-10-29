@@ -1467,12 +1467,11 @@
   <main>
 
     <!-- AMBASSADOR WIDGET TAB -->
-    <!-- AMBASSADOR WIDGET TAB -->
     <section id="widget">
       <h1 class="dst-heading">Ambassador OBS Widget</h1>
 
       <div class="dst-parchment-card"
-        style="max-width: 1380px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; overflow: visible; padding-bottom: 40px;">
+        style="max-width: 1550px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; overflow: visible; padding-bottom: 40px;">
 
         <div>
           <h3
@@ -1484,8 +1483,8 @@
           </p>
         </div>
 
-        <!-- 2-COLUMN SPLIT CONTAINER (Preview gets 1.25fr vs 1fr) -->
-        <div style="display: grid; grid-template-columns: 1fr 1.25fr; gap: 30px; align-items: start;">
+        <!-- 2-COLUMN SPLIT CONTAINER (Settings: 1fr, Large Preview: 1.8fr) -->
+        <div style="display: grid; grid-template-columns: 1fr 1.8fr; gap: 30px; align-items: start;">
 
           <!-- LEFT COLUMN: COMPACT SETTINGS -->
           <div style="display: flex; flex-direction: column; gap: 14px;">
@@ -1518,65 +1517,90 @@
 
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
               <div>
-                <label style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">Glow 1</label>
+                <label
+                  style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">Glow
+                  1</label>
                 <div style="display: flex; gap: 4px; align-items: center;">
-                  <input type="color" id="obs-color1" value="#90EE90" oninput="syncColorToText('1')" style="width: 70px; height: 50px;" />
-                  <input type="text" id="obs-glow1" class="search-input-box" value="90EE90" oninput="syncTextToColor('1'); updateObsUrlBuilder();" style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
+                  <input type="color" id="obs-color1" value="#90EE90" oninput="syncColorToText('1')"
+                    style="width: 80px; height: 45px;" />
+                  <input type="text" id="obs-glow1" class="search-input-box" value="90EE90"
+                    oninput="syncTextToColor('1'); updateObsUrlBuilder();"
+                    style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
                 </div>
               </div>
 
               <div>
-                <label style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">Glow 2</label>
+                <label
+                  style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">Glow
+                  2</label>
                 <div style="display: flex; gap: 4px; align-items: center;">
-                  <input type="color" id="obs-color2" value="#64F89D" oninput="syncColorToText('2')" style="width: 70px; height: 50px;" />
-                  <input type="text" id="obs-glow2" class="search-input-box" value="64F89D" oninput="syncTextToColor('2'); updateObsUrlBuilder();" style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
+                  <input type="color" id="obs-color2" value="#64F89D" oninput="syncColorToText('2')"
+                    style="width: 80px; height: 45px;" />
+                  <input type="text" id="obs-glow2" class="search-input-box" value="64F89D"
+                    oninput="syncTextToColor('2'); updateObsUrlBuilder();"
+                    style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
                 </div>
               </div>
 
               <div>
-                <label style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">Glow 3</label>
+                <label
+                  style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">Glow
+                  3</label>
                 <div style="display: flex; gap: 4px; align-items: center;">
-                  <input type="color" id="obs-color3" value="#AFFF60" oninput="syncColorToText('3')" style="width: 70px; height: 50px;" />
-                  <input type="text" id="obs-glow3" class="search-input-box" value="AFFF60" oninput="syncTextToColor('3'); updateObsUrlBuilder();" style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
+                  <input type="color" id="obs-color3" value="#AFFF60" oninput="syncColorToText('3')"
+                    style="width: 80px; height: 45px;" />
+                  <input type="text" id="obs-glow3" class="search-input-box" value="AFFF60"
+                    oninput="syncTextToColor('3'); updateObsUrlBuilder();"
+                    style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
                 </div>
               </div>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px;">
               <div>
-                <label class="dst-toggle-label" style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1rem; color: var(--dst-paper); margin-bottom: 4px;">
+                <label class="dst-toggle-label"
+                  style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1rem; color: var(--dst-paper); margin-bottom: 4px;">
                   <span>Disable Border</span>
-                  <div class="dst-switch" >
+                  <div class="dst-switch">
                     <input type="checkbox" id="obs-no-border" onchange="toggleBorderDisable()">
                     <span class="dst-slider"></span>
                   </div>
                 </label>
                 <div id="border-picker-wrapper" style="display: flex; gap: 6px; align-items: center;">
-                  <input type="color" id="obs-border-color" value="#443429" oninput="syncColorToText('border')" style="width: 50px; height: 46px;" />
-                  <input type="text" id="obs-border-hex" class="search-input-box" value="443429" oninput="syncTextToColor('border'); updateObsUrlBuilder();" style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
+                  <input type="color" id="obs-border-color" value="#443429" oninput="syncColorToText('border')"
+                    style="width: 60px; height: 45px;" />
+                  <input type="text" id="obs-border-hex" class="search-input-box" value="443429"
+                    oninput="syncTextToColor('border'); updateObsUrlBuilder();"
+                    style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
                 </div>
               </div>
 
               <div>
-                <label class="dst-toggle-label" style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1rem; color: var(--dst-paper); margin-bottom: 4px;">
+                <label class="dst-toggle-label"
+                  style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1rem; color: var(--dst-paper); margin-bottom: 4px;">
                   <span>Disable Fill</span>
-                  <div class="dst-switch" >
+                  <div class="dst-switch">
                     <input type="checkbox" id="obs-no-fill" onchange="toggleFillDisable()">
                     <span class="dst-slider"></span>
                   </div>
                 </label>
                 <div id="fill-picker-wrapper" style="display: flex; gap: 6px; align-items: center;">
-                  <input type="color" id="obs-fill-color" value="#1c1613" oninput="syncColorToText('fill')" style="width: 50px; height: 46px;" />
-                  <input type="text" id="obs-fill-hex" class="search-input-box" value="1C1613" oninput="syncTextToColor('fill'); updateObsUrlBuilder();" style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
+                  <input type="color" id="obs-fill-color" value="#1c1613" oninput="syncColorToText('fill')"
+                    style="width: 60px; height: 45px;" />
+                  <input type="text" id="obs-fill-hex" class="search-input-box" value="1C1613"
+                    oninput="syncTextToColor('fill'); updateObsUrlBuilder();"
+                    style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
                 </div>
               </div>
             </div>
 
             <div>
-              <label style="font-family: var(--font-mono); font-size: 1rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+              <label
+                style="font-family: var(--font-mono); font-size: 1rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
                 Seasonal Hat Accessory
               </label>
-              <select id="obs-seasonal-hat" class="search-input-box" onchange="handleHatSelectionChange()" style="padding: 10px 12px; font-size: 1rem; cursor: pointer;">
+              <select id="obs-seasonal-hat" class="search-input-box" onchange="handleHatSelectionChange()"
+                style="padding: 10px 12px; font-size: 1rem; cursor: pointer;">
                 <option value="">None (Standard)</option>
                 <option value="xmas">🎄 Winter / Santa Hat</option>
                 <option value="halloween">🎃 Halloween / Witch Hat</option>
@@ -1585,42 +1609,52 @@
               </select>
             </div>
 
-            <div id="hat-url-container" style="display: none; background: #140d0a; border: 1px dashed var(--dst-border-highlight); padding: 10px; border-radius: 6px;">
-              <label id="hat-url-label" style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--dst-paper-muted); display: block; margin-bottom: 4px;">Hat Image URL</label>
-              <input type="text" id="obs-hat-url" class="search-input-box" placeholder="https://..." style="width: 100%; padding: 8px 12px; font-size: 0.95rem;" />
+            <div id="hat-url-container"
+              style="display: none; background: #140d0a; border: 1px dashed var(--dst-border-highlight); padding: 10px; border-radius: 6px;">
+              <label id="hat-url-label"
+                style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--dst-paper-muted); display: block; margin-bottom: 4px;">Hat
+                Image URL</label>
+              <input type="text" id="obs-hat-url" class="search-input-box" placeholder="https://..."
+                style="width: 100%; padding: 8px 12px; font-size: 0.95rem;" />
             </div>
           </div>
 
-          <!-- RIGHT COLUMN: EXPANDED PROPORTIONAL PREVIEW -->
+          <!-- RIGHT COLUMN: MASSIVE STICKY PREVIEW -->
           <div style="display: flex; flex-direction: column; gap: 16px; position: sticky; top: 20px;">
-            
-            <div style="background: #0d0908; border: 2px solid #3c2a20; border-radius: 8px; padding: 18px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.6);">
 
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-                <h4 style="font-family: var(--font-title); color: #fff; font-size: 1.1rem; display: flex; align-items: center; gap: 6px; margin: 0;">
-                  <i data-lucide="eye" style="color: var(--dst-flame); width: 18px; height: 18px;"></i> Live Preview
+            <div
+              style="background: #0d0908; border: 2px solid #3c2a20; border-radius: 8px; padding: 18px; text-align: center; box-shadow: 0 4px 25px rgba(0,0,0,0.7);">
+
+              <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                <h4
+                  style="font-family: var(--font-title); color: #fff; font-size: 1.15rem; display: flex; align-items: center; gap: 6px; margin: 0;">
+                  <i data-lucide="eye" style="color: var(--dst-flame); width: 20px; height: 20px;"></i> Live Preview
                 </h4>
 
                 <div style="display: flex; gap: 12px; align-items: center;">
-                  <label class="dst-toggle-label" style="display: flex; align-items: center; gap: 5px; cursor: pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
+                  <label class="dst-toggle-label"
+                    style="display: flex; align-items: center; gap: 5px; cursor: pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
                     <span>Solo</span>
-                    <div class="dst-switch" >
+                    <div class="dst-switch">
                       <input type="checkbox" id="obs-solo-toggle" onchange="handleWidgetModeChange('solo')">
                       <span class="dst-slider"></span>
                     </div>
                   </label>
 
-                  <label class="dst-toggle-label" style="display: flex; align-items: center; gap: 5px; cursor: pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
+                  <label class="dst-toggle-label"
+                    style="display: flex; align-items: center; gap: 5px; cursor: pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
                     <span>Carousel</span>
-                    <div class="dst-switch" >
+                    <div class="dst-switch">
                       <input type="checkbox" id="obs-carousel-toggle" onchange="handleWidgetModeChange('carousel')">
                       <span class="dst-slider"></span>
                     </div>
                   </label>
 
-                  <label class="dst-toggle-label" style="display: flex; align-items: center; gap: 5px; cursor: pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
+                  <label class="dst-toggle-label"
+                    style="display: flex; align-items: center; gap: 5px; cursor: pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
                     <span>Hide Head</span>
-                    <div class="dst-switch" >
+                    <div class="dst-switch">
                       <input type="checkbox" id="obs-hide-head" onchange="updateObsUrlBuilder()">
                       <span class="dst-slider"></span>
                     </div>
@@ -1628,9 +1662,9 @@
                 </div>
               </div>
 
-              <!-- PREVIEW VIEWPORT (Now taking advantage of 1.25fr column space) -->
+              <!-- PREVIEW VIEWPORT (Maximized via 1.8fr width allocation) -->
               <div id="preview-viewport"
-                style="position: relative; width: 100%; aspect-ratio: 2/1; margin: 0 auto; background: radial-gradient(circle, #18110e 0%, #080605 100%); border: 2px solid #2c1f18; border-radius: 8px; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);">
+                style="position: relative; width: 100%; aspect-ratio: 2/1; margin: 0 auto; background: radial-gradient(circle, #18110e 0%, #080605 100%); border: 2px solid #2c1f18; border-radius: 8px; overflow: hidden; box-shadow: inset 0 0 25px rgba(0,0,0,0.9);">
                 <div id="obs-scale-container"
                   style="position: absolute; top: 0; left: 0; width: 1024px; height: 512px; transform-origin: top left;">
                   <iframe id="obs-preview-frame" src=""
@@ -1640,7 +1674,8 @@
             </div>
 
             <div>
-              <label style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+              <label
+                style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
                 Generated OBS URL <span style="color: #9c8472; font-size: 0.85rem;">(Click to copy or drag)</span>:
               </label>
               <input type="text" id="obs-result-url" readonly onclick="copyObsGeneratedUrl()" draggable="true"
@@ -1650,7 +1685,8 @@
             </div>
 
             <div style="display: flex; gap: 10px; justify-content: flex-end;">
-              <a id="obs-preview-btn" href="#" target="_blank" class="dst-btn" style="font-size: 1rem; padding: 8px 16px;">
+              <a id="obs-preview-btn" href="#" target="_blank" class="dst-btn"
+                style="font-size: 1rem; padding: 8px 16px;">
                 <i data-lucide="external-link" style="width: 16px;"></i> Full Preview
               </a>
               <button class="dst-btn" style="font-size: 1rem; padding: 8px 16px;" onclick="copyObsGeneratedUrl()">
@@ -1912,11 +1948,11 @@
       updateObsUrlBuilder();
     }
 
-function syncColorToText(type) {
+    function syncColorToText(type) {
       // 'type' can be '1', '2', '3', 'border', 'fill'
       const colorPicker = document.getElementById(`obs-color${type}`) || document.getElementById(`obs-${type}-color`);
       const textBox = document.getElementById(`obs-glow${type}`) || document.getElementById(`obs-${type}-hex`);
-      
+
       if (colorPicker && textBox) {
         textBox.value = colorPicker.value.replace('#', '').toUpperCase();
         updateObsUrlBuilder();
@@ -1983,6 +2019,9 @@ function syncColorToText(type) {
       localStorage.setItem('dst-obs-nofill', noFill); // ADDED
       localStorage.setItem('dst-obs-border', borderHex);
       localStorage.setItem('dst-obs-fill', fillHex);
+      localStorage.setItem('dst-obs-hattype', hatType); // ADDED
+      localStorage.setItem('dst-obs-haturl', hatUrl);   // ADDED
+
 
       let url = `https://clifffordw.github.io/ClifffWidgets/Drops/Streamers/drop_universal.html?`;
       const params = [];
@@ -2054,22 +2093,19 @@ function syncColorToText(type) {
       const savedAvatar = localStorage.getItem('dst-obs-avatar');
       const savedSolo = localStorage.getItem('dst-obs-solo') === 'true';
       const savedCarousel = localStorage.getItem('dst-obs-carousel') === 'true';
-      const savedHideHead = localStorage.getItem('dst-obs-hidehead') === 'true'; // Added
+      const savedHideHead = localStorage.getItem('dst-obs-hidehead') === 'true';
       const savedSpeed = localStorage.getItem('dst-obs-speed');
       const savedG1 = localStorage.getItem('dst-obs-g1');
       const savedG2 = localStorage.getItem('dst-obs-g2');
       const savedG3 = localStorage.getItem('dst-obs-g3');
       const savedBorder = localStorage.getItem('dst-obs-border');
       const savedFill = localStorage.getItem('dst-obs-fill');
-      const savedHat = localStorage.getItem('dst-obs-hat');
-
 
       const savedNoBorder = localStorage.getItem('dst-obs-noborder') === 'true';
-      const savedNoFill = localStorage.getItem('dst-obs-nofill') === 'true'; // ADDED
+      const savedNoFill = localStorage.getItem('dst-obs-nofill') === 'true';
 
-
-      const savedHatType = localStorage.getItem('dst-obs-hattype');
-      const savedHatUrl = localStorage.getItem('dst-obs-haturl');
+      const savedHatType = localStorage.getItem('dst-obs-hattype'); // ADDED
+      const savedHatUrl = localStorage.getItem('dst-obs-haturl');   // ADDED
 
       if (document.getElementById('obs-no-border')) {
         document.getElementById('obs-no-border').checked = savedNoBorder;
@@ -2077,30 +2113,27 @@ function syncColorToText(type) {
       }
 
       if (document.getElementById('obs-no-fill')) {
-        document.getElementById('obs-no-fill').checked = savedNoFill; // ADDED
-        toggleFillDisable(); // ADDED
+        document.getElementById('obs-no-fill').checked = savedNoFill;
+        toggleFillDisable();
       }
 
       if (savedBorder !== null && document.getElementById('obs-border-hex')) document.getElementById('obs-border-hex').value = savedBorder;
       if (savedFill !== null && document.getElementById('obs-fill-hex')) document.getElementById('obs-fill-hex').value = savedFill;
+      
+      // RESTORE HAT STATE
       if (savedHatType !== null && document.getElementById('obs-seasonal-hat')) {
         document.getElementById('obs-seasonal-hat').value = savedHatType;
         handleHatSelectionChange();
       }
-      if (savedHatUrl !== null && document.getElementById('obs-hat-url')) document.getElementById('obs-hat-url').value = savedHatUrl;
-
-
-      if (savedBorder !== null && document.getElementById('obs-border-hex')) document.getElementById('obs-border-hex').value = savedBorder;
-      if (savedFill !== null && document.getElementById('obs-fill-hex')) document.getElementById('obs-fill-hex').value = savedFill;
-      if (savedHat !== null && document.getElementById('obs-seasonal-hat')) document.getElementById('obs-seasonal-hat').value = savedHat;
-
-
+      if (savedHatUrl !== null && document.getElementById('obs-hat-url')) {
+        document.getElementById('obs-hat-url').value = savedHatUrl;
+      }
 
       if (savedTwitch !== null && document.getElementById('obs-twitch')) document.getElementById('obs-twitch').value = savedTwitch;
       if (savedAvatar !== null && document.getElementById('obs-avatar')) document.getElementById('obs-avatar').value = savedAvatar;
       if (document.getElementById('obs-solo-toggle')) document.getElementById('obs-solo-toggle').checked = savedSolo;
       if (document.getElementById('obs-carousel-toggle')) document.getElementById('obs-carousel-toggle').checked = savedCarousel;
-      if (document.getElementById('obs-hide-head')) document.getElementById('obs-hide-head').checked = savedHideHead; // Added
+      if (document.getElementById('obs-hide-head')) document.getElementById('obs-hide-head').checked = savedHideHead;
       if (savedSpeed !== null && document.getElementById('obs-speed')) document.getElementById('obs-speed').value = savedSpeed;
       if (savedG1 !== null && document.getElementById('obs-glow1')) document.getElementById('obs-glow1').value = savedG1;
       if (savedG2 !== null && document.getElementById('obs-glow2')) document.getElementById('obs-glow2').value = savedG2;
@@ -2119,12 +2152,12 @@ function syncColorToText(type) {
     }
 
     function initWidgetListeners() {
-      // Listen to text and color inputs
       const fields = [
         'obs-twitch', 'obs-avatar', 'obs-speed',
         'obs-glow1', 'obs-glow2', 'obs-glow3',
         'obs-color1', 'obs-color2', 'obs-color3',
-        'obs-border-hex', 'obs-fill-hex', 'obs-hat-url'
+        'obs-border-hex', 'obs-fill-hex', 'obs-hat-url',
+        'obs-seasonal-hat' // ADDED
       ];
 
       fields.forEach(id => {

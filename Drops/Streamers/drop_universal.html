@@ -416,8 +416,9 @@
     if (g2) root.style.setProperty('--glow2', '#' + g2.replace(/^#/, ''));
     if (g3) root.style.setProperty('--glow3', '#' + g3.replace(/^#/, ''));
 
-    /* ─── 2. BORDER & FILL CONFIGURATION ─────────────────────────── */
+/* ─── 2. BORDER & FILL CONFIGURATION ─────────────────────────── */
     const noBorder = urlParams.get('noborder') === '1';
+    const noFill = urlParams.get('nofill') === '1'; // ADDED
     const borderHex = urlParams.get('border');
     const fillHex = urlParams.get('fill');
     const streamerHeadEl = document.querySelector('.streamer-head');
@@ -425,10 +426,13 @@
     if (streamerHeadEl) {
       if (noBorder) {
         streamerHeadEl.style.border = 'none';
-        streamerHeadEl.style.background = 'none';
-        streamerHeadEl.style.boxShadow = 'none';
       } else {
         if (borderHex) streamerHeadEl.style.border = `3px solid #${borderHex}`;
+      }
+
+      if (noFill) {
+        streamerHeadEl.style.background = 'none'; // ADDED
+      } else {
         if (fillHex) streamerHeadEl.style.background = `#${fillHex}`;
       }
     }
@@ -439,7 +443,7 @@
     /* ─── 4. STREAMER AVATAR RESOLUTION (Strict Empty Check) ─────── */
     const avatarUrl = urlParams.get('avatar');
     const twitchUser = urlParams.get('twitch');
-    const resolvedAvatarSrc = avatarUrl ? avatarUrl.trim() : (twitchUser ? `https://decapi.me/twitch/avatar/${encodeURIComponent(twitchUser.trim())}` : '');
+    const resolvedAvatarSrc = avatarUrl /* ? avatarUrl.trim() : (twitchUser ? `https://decapi.me/twitch/avatar/${encodeURIComponent(twitchUser.trim())}` : ''); */
     const wrapEl = document.getElementById('streamer-wrap');
 
     if (!hideHead && resolvedAvatarSrc && streamerHeadEl && resolvedAvatarSrc !== '') {

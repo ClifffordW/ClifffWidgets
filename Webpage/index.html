@@ -42,37 +42,37 @@
       src: url(https://clifffordw.github.io/ClifffWidgets/Fonts/HammerheadBold.ttf);
     }
 
-/* --- CUSTOM DST COLOR PICKER STYLING --- */
-input[type="color"] {
-  -webkit-appearance: none;
-  appearance: none;
-  border: 2px solid #3d2c22;
-  border-radius: 6px;
-  background: #15100e;
-  cursor: pointer;
-  padding: 2px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
+    /* --- CUSTOM DST COLOR PICKER STYLING --- */
+    input[type="color"] {
+      -webkit-appearance: none;
+      appearance: none;
+      border: 2px solid #3d2c22;
+      border-radius: 6px;
+      background: #15100e;
+      cursor: pointer;
+      padding: 2px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
 
-input[type="color"]:hover {
-  border-color: var(--dst-flame);
-  box-shadow: 0 0 8px rgba(231, 108, 30, 0.3);
-}
+    input[type="color"]:hover {
+      border-color: var(--dst-flame);
+      box-shadow: 0 0 8px rgba(231, 108, 30, 0.3);
+    }
 
-/* Remove default browser swatch border/padding quirks */
-input[type="color"]::-webkit-color-swatch-wrapper {
-  padding: 0;
-}
+    /* Remove default browser swatch border/padding quirks */
+    input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
 
-input[type="color"]::-webkit-color-swatch {
-  border: 1px solid #281d17;
-  border-radius: 4px;
-}
+    input[type="color"]::-webkit-color-swatch {
+      border: 1px solid #281d17;
+      border-radius: 4px;
+    }
 
-input[type="color"]::-moz-color-swatch {
-  border: 1px solid #281d17;
-  border-radius: 4px;
-}
+    input[type="color"]::-moz-color-swatch {
+      border: 1px solid #281d17;
+      border-radius: 4px;
+    }
 
     :root {
       --dst-black: #120e0c;
@@ -1631,10 +1631,10 @@ input[type="color"]::-moz-color-swatch {
                   <br> </br>
                 </div>
 
-                  <label
-                    style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
-                    Head Border Color
-                  </label>
+                <label
+                  style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
+                  Head Border Color
+                </label>
                 <div id="border-picker-wrapper" style="display: flex; gap: 8px; align-items: center;">
 
                   <input type="color" id="obs-border-color" value="#443429" oninput="syncColorToText('border')"
@@ -1997,15 +1997,16 @@ input[type="color"]::-moz-color-swatch {
       updateObsUrlBuilder();
     }
 
-    function syncColorToText(type) {
-      const colorPicker = document.getElementById(`obs-${type}-color`);
-      const textBox = document.getElementById(`obs-${type}-hex`);
+function syncColorToText(type) {
+      // 'type' can be '1', '2', '3', 'border', 'fill'
+      const colorPicker = document.getElementById(`obs-color${type}`) || document.getElementById(`obs-${type}-color`);
+      const textBox = document.getElementById(`obs-glow${type}`) || document.getElementById(`obs-${type}-hex`);
+      
       if (colorPicker && textBox) {
         textBox.value = colorPicker.value.replace('#', '').toUpperCase();
         updateObsUrlBuilder();
       }
     }
-
     function syncTextToColor(type) {
       const colorPicker = document.getElementById(`obs-${type}-color`);
       const textBox = document.getElementById(`obs-${type}-hex`);
@@ -2034,9 +2035,12 @@ input[type="color"]::-moz-color-swatch {
       const hideHead = document.getElementById('obs-hide-head')?.checked || false;
       const speed = (document.getElementById('obs-speed')?.value || '4.5').trim();
 
+
+
       const borderHex = (document.getElementById('obs-border-hex')?.value || '').replace(/#/g, '').trim().toUpperCase();
       const fillHex = (document.getElementById('obs-fill-hex')?.value || '').replace(/#/g, '').trim().toUpperCase();
       const noBorder = document.getElementById('obs-no-border')?.checked || false;
+      const noFill = document.getElementById('obs-no-fill')?.checked || false; // ADDED
 
       const hatType = (document.getElementById('obs-seasonal-hat')?.value || '').trim();
       const hatUrl = (document.getElementById('obs-hat-url')?.value || '').trim();
@@ -2061,6 +2065,7 @@ input[type="color"]::-moz-color-swatch {
       localStorage.setItem('dst-obs-g2', g2);
       localStorage.setItem('dst-obs-g3', g3);
       localStorage.setItem('dst-obs-noborder', noBorder);
+      localStorage.setItem('dst-obs-nofill', noFill); // ADDED
       localStorage.setItem('dst-obs-border', borderHex);
       localStorage.setItem('dst-obs-fill', fillHex);
 
@@ -2072,23 +2077,28 @@ input[type="color"]::-moz-color-swatch {
         if (speed) params.push(`speed=${encodeURIComponent(speed)}`);
       }
       if (hideHead) params.push(`nohead=1`);
-      if (twitch) params.push(`twitch=${encodeURIComponent(twitch)}`);
-      if (avatar) params.push(`avatar=${encodeURIComponent(avatar)}`);
-      if (g1) params.push(`glow=${encodeURIComponent(g1)}`);
-      if (g2) params.push(`glow2=${encodeURIComponent(g2)}`);
-      if (g3) params.push(`glow3=${encodeURIComponent(g3)}`);
-      
+      if (twitch !== '') params.push(`twitch=${encodeURIComponent(twitch)}`);
+      if (avatar !== '') params.push(`avatar=${encodeURIComponent(avatar)}`);
+      if (g1 !== '') params.push(`glow=${encodeURIComponent(g1)}`);
+      if (g2 !== '') params.push(`glow2=${encodeURIComponent(g2)}`);
+      if (g3 !== '') params.push(`glow3=${encodeURIComponent(g3)}`);
+
       if (noBorder) {
         params.push(`noborder=1`);
-      } else if (borderHex) {
+      } else if (borderHex !== '') {
         params.push(`border=${encodeURIComponent(borderHex)}`);
       }
-      if (fillHex) params.push(`fill=${encodeURIComponent(fillHex)}`);
 
-      if (hatType) {
+      if (noFill) {
+        params.push(`nofill=1`); // ADDED
+      } else if (fillHex !== '') {
+        params.push(`fill=${encodeURIComponent(fillHex)}`);
+      }
+
+      if (hatType !== '') {
         params.push(`hat=${encodeURIComponent(hatType)}`);
-        if (hatUrl) params.push(`haturl=${encodeURIComponent(hatUrl)}`);
-        if (hatPos) params.push(`hatpos=${encodeURIComponent(hatPos)}`);
+        if (hatUrl !== '') params.push(`haturl=${encodeURIComponent(hatUrl)}`);
+        if (hatPos !== '') params.push(`hatpos=${encodeURIComponent(hatPos)}`);
       }
 
       url += params.join('&');
@@ -2140,7 +2150,7 @@ input[type="color"]::-moz-color-swatch {
 
 
       const savedNoBorder = localStorage.getItem('dst-obs-noborder') === 'true';
-      const savedNoFill = localStorage.getItem('dst-obs-nofill') === 'true';
+      const savedNoFill = localStorage.getItem('dst-obs-nofill') === 'true'; // ADDED
 
 
       const savedHatType = localStorage.getItem('dst-obs-hattype');
@@ -2152,8 +2162,8 @@ input[type="color"]::-moz-color-swatch {
       }
 
       if (document.getElementById('obs-no-fill')) {
-        document.getElementById('obs-no-fill').checked = savedNoFill;
-        toggleFillDisable();
+        document.getElementById('obs-no-fill').checked = savedNoFill; // ADDED
+        toggleFillDisable(); // ADDED
       }
 
       if (savedBorder !== null && document.getElementById('obs-border-hex')) document.getElementById('obs-border-hex').value = savedBorder;
@@ -2194,9 +2204,20 @@ input[type="color"]::-moz-color-swatch {
     }
 
     function initWidgetListeners() {
-      ['obs-twitch', 'obs-avatar', 'obs-glow1', 'obs-glow2', 'obs-glow3'].forEach(id => {
+      // Listen to text and color inputs
+      const fields = [
+        'obs-twitch', 'obs-avatar', 'obs-speed',
+        'obs-glow1', 'obs-glow2', 'obs-glow3',
+        'obs-color1', 'obs-color2', 'obs-color3',
+        'obs-border-hex', 'obs-fill-hex', 'obs-hat-url'
+      ];
+
+      fields.forEach(id => {
         const el = document.getElementById(id);
-        if (el) el.oninput = updateObsUrlBuilder;
+        if (el) {
+          el.addEventListener('input', updateObsUrlBuilder);
+          el.addEventListener('change', updateObsUrlBuilder);
+        }
       });
       updateObsUrlBuilder();
     }

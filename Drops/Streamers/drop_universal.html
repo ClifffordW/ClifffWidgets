@@ -228,6 +228,11 @@
       background: var(--fill);
     }
 
+
+
+
+    
+
     /* ─── SEASONAL HAT (Absolute Pinning on Avatar Crown) ────────── */
     .partyhat {
       position: absolute;
@@ -404,6 +409,9 @@
   </div>
 
  <script>
+
+
+
     // ─── 1. INITIALIZE URL PARAMETERS FIRST ───────────────────────
     const urlParams = new URLSearchParams(window.location.search);
     const root = document.documentElement;
@@ -422,6 +430,13 @@
     const borderHex = urlParams.get('border');
     const fillHex = urlParams.get('fill');
     const streamerHeadEl = document.querySelector('.streamer-head');
+
+
+
+
+
+
+    
 
     if (streamerHeadEl) {
       if (noBorder) {
@@ -453,14 +468,43 @@
       if (wrapEl) wrapEl.style.display = 'none';
     }
 
-    /* ─── 5. SEASONAL HAT & POSITIONING ──────────────────────────── */
+   /* ─── 5. SEASONAL HAT & POSITIONING ──────────────────────────── */
+/* ─── SEASONAL HAT POSITIONING & OFFSETS ──────────────────────────── */
     const hatType = urlParams.get('hat');
     const hatUrl = urlParams.get('haturl');
-    let hatPos = urlParams.get('hatpos') || 'avatar';
+    const hatPos = urlParams.get('hatpos') || 'avatar';
+    const hatX = parseInt(urlParams.get('hatx') || '0', 10);
+    const hatY = parseInt(urlParams.get('haty') || '0', 10);
 
-    const isSoloOrCarousel = urlParams.has('solo') || urlParams.has('carousel') || urlParams.has('cycle');
-    if (isSoloOrCarousel) {
-      hatPos = 'avatar';
+    if (hatType) {
+      const resolvedHatSrc = hatUrl || defaultHatUrls[hatType] || '';
+      const ph = document.getElementById('partyhat');
+
+      if (resolvedHatSrc && ph) {
+        ph.src = resolvedHatSrc;
+        ph.style.display = 'block';
+
+        let targetEl = document.getElementById('streamer-wrap');
+        if (hatPos === 'flair') {
+          targetEl = document.querySelector('.slot--flair');
+        } else if (hatPos === 'portrait') {
+          targetEl = document.querySelector('.slot--portrait');
+        } else if (hatPos === 'item') {
+          targetEl = document.querySelector('.slot--item');
+        }
+
+        if (targetEl) {
+          targetEl.appendChild(ph);
+          ph.style.position = 'absolute';
+          ph.style.top = '-25px';
+          ph.style.left = '50%';
+          ph.style.right = 'auto';
+          
+          // Apply base anchor rotation + custom X/Y pixel translation offsets
+          ph.style.transform = `translate(calc(-50% + ${hatX}px), ${hatY}px) rotate(15deg)`;
+          ph.style.zIndex = '20';
+        }
+      }
     }
 
     const defaultHatUrls = {
@@ -469,7 +513,7 @@
       birthday: "https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/birthday_hat.png"
     };
 
-    if (hatType && !hideHead && resolvedAvatarSrc) {
+    if (hatType) {
       const resolvedHatSrc = hatUrl || defaultHatUrls[hatType] || '';
       const ph = document.getElementById('partyhat');
 
@@ -477,27 +521,24 @@
         ph.src = resolvedHatSrc;
         ph.style.display = 'block';
 
-        if (hatPos === 'drop') {
-          const itemSlot = document.querySelector('.slot--item') || document.querySelector('.drops');
-          if (itemSlot) {
-            itemSlot.appendChild(ph);
-            ph.style.position = 'absolute';
-            ph.style.top = '-25px';
-            ph.style.left = '50%';
-            ph.style.right = 'auto';
-            ph.style.transform = 'translateX(-50%) rotate(15deg)';
-            ph.style.display = 'block';
-          }
-        } else if (hatPos === 'top-left') {
-          const dropsContainer = document.getElementById('drops');
-          if (dropsContainer) {
-            dropsContainer.appendChild(ph);
-            ph.style.position = 'absolute';
-            ph.style.top = '10px';
-            ph.style.left = '10px';
-            ph.style.right = 'auto';
-            ph.style.transform = 'rotate(-15deg)';
-          }
+        // Determine target element based on chosen position
+        let targetEl = document.getElementById('streamer-wrap'); // default avatar
+        if (hatPos === 'flair') {
+          targetEl = document.querySelector('.slot--flair');
+        } else if (hatPos === 'portrait') {
+          targetEl = document.querySelector('.slot--portrait');
+        } else if (hatPos === 'item') {
+          targetEl = document.querySelector('.slot--item');
+        }
+
+        if (targetEl) {
+          targetEl.appendChild(ph);
+          ph.style.position = 'absolute';
+          ph.style.top = '-25px';
+          ph.style.left = '50%';
+          ph.style.right = 'auto';
+          ph.style.transform = 'translateX(-50%) rotate(15deg)';
+          ph.style.zIndex = '20';
         }
       }
     }

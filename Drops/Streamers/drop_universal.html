@@ -536,12 +536,10 @@
 
 
 
-    const p = new URLSearchParams(location.search);
+   // ─── 1. INITIALIZE URL PARAMETERS ─────────────────────────────
+    const urlParams = new URLSearchParams(window.location.search);
     const root = document.documentElement;
-    const hex = k => { const v = p.get(k); return v ? '#' + v.replace(/^#/, '') : null; };
-
-
-
+    const hex = k => { const v = urlParams.get(k); return v ? '#' + v.replace(/^#/, '') : null; };
 
     /* Custom Color Overrides */
     if (hex('glow')) { root.style.setProperty('--glow1', hex('glow')); root.style.setProperty('--amber', hex('glow')); }
@@ -550,108 +548,102 @@
     if (hex('ember')) root.style.setProperty('--ember', hex('ember'));
 
     /* Streamer Avatar */
-    const avatar = p.get('avatar');
+    const avatar = urlParams.get('avatar');
     if (avatar) {
       document.getElementById('streamer-head').src = avatar;
       document.getElementById('streamer-wrap').style.display = 'block';
     }
 
-    /* Seasonal Hat */
-    const hat = p.get('hat');
-    if (hat) {
-      const ph = document.getElementById('partyhat');
-      ph.src = hat;
-      ph.style.display = 'block';
-    }
-
-    /* Solo Mode Setup */
-    const isSolo = p.has('solo');
-    if (isSolo) {
-      document.body.classList.add('solo');
-      document.getElementById('drops').setAttribute('data-solo', '');
-    }
-
-    /* ── CAROUSEL / CYCLE MODE ────────────────────────────────────── */
-    const isCarousel = p.has('carousel') || p.has('cycle');
-    if (isCarousel) {
-      document.body.classList.add('carousel', 'solo'); // Uses 1024x1024 canvas
-    }
-
-    // Parse URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const hideHead = urlParams.get('nohead') === '1'; // or whatever parameter name you chose
-
-    // Target your streamer head element and hide it if true
+    /* ─── 2. HIDE STREAMER HEAD TOGGLE ───────────────────────────── */
+    const hideHead = urlParams.get('nohead') === '1';
     if (hideHead) {
-      const streamerHeadEl = document.querySelector('.streamer-head'); // Replace with your actual CSS selector for the head element
+      const streamerHeadEl = document.querySelector('.streamer-head');
       if (streamerHeadEl) {
         streamerHeadEl.style.display = 'none';
       }
     }
 
-
-    // Read parameters
-    const hatType = urlParams.get('hat');
-    const hatUrl = urlParams.get('haturl');
-    const hatPos = urlParams.get('hatpos') || 'avatar';
-
-
-    const defaultHatUrls = {
-      xmas: "https://dontstarve.wiki.gg/images/Winter_Hat_Dropped.png?72e0b5",
-      halloween: "https://cdn-items.klei.com/dst/512x512/tophat_witch_pyre_cf2ed86a1a4d83b3.png",
-      birthday: "https://dontstarve.wiki.gg/images/thumb/Balloon_Hat_Dropped.png/300px-Balloon_Hat_Dropped.png?1d91e1"
-    };
-
-    const resolvedHatSrc = hatUrl || defaultHatUrls[hatType] || '';
-
-    if (hatType && hatElement) {
-      // Determine source image based on type or custom url
-      const resolvedHatSrc = hatUrl || (hatType === 'xmas' ? 'https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/xmas_hat.png' : hatType === 'halloween' ? 'https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/halloween_hat.png' : 'https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/birthday_hat.png'); hatElement.style.backgroundImage = `url(${resolvedHatSrc})`;
-
-      // Reposition based on user choice & current widget mode (Full, Solo, Carousel)
-      if (hatPos === 'avatar') {
-        // Attach dynamically to the streamer head container
-        streamerHeadContainer.appendChild(hatElement);
-        hatElement.className = 'obs-hat-overlay avatar-mode';
-      } else if (hatPos === 'drop') {
-        // Attach to the top of the drop item frame
-        dropBoxContainer.appendChild(hatElement);
-        hatElement.className = 'obs-hat-overlay drop-mode';
-      } else {
-        // Absolute top-left of the widget container
-        widgetRoot.appendChild(hatElement);
-        hatElement.className = 'obs-hat-overlay absolute-mode';
-      }
-    }
-
-
-
-    // Parse parameters
+    /* ─── 3. BORDER & FILL CONFIGURATION ─────────────────────────── */
     const noBorder = urlParams.get('noborder') === '1';
     const borderHex = urlParams.get('border');
     const fillHex = urlParams.get('fill');
-
-    const streamerHeadEl = document.querySelector('.streamer-head'); // Replace with your actual element selector
+    const streamerHeadEl = document.querySelector('.streamer-head');
 
     if (streamerHeadEl) {
       if (noBorder) {
-        // Completely remove the border and background fill
         streamerHeadEl.style.border = 'none';
         streamerHeadEl.style.background = 'transparent';
         streamerHeadEl.style.boxShadow = 'none';
       } else {
-        // Apply custom border and fill if provided
-        if (borderHex) {
-          streamerHeadEl.style.border = `3px solid #${borderHex}`;
-        }
-        if (fillHex) {
-          streamerHeadEl.style.background = `#${fillHex}`;
+        if (borderHex) streamerHeadEl.style.border = `3px solid #${borderHex}`;
+        if (fillHex) streamerHeadEl.style.background = `#${fillHex}`;
+      }
+    }
+
+    /* ─── 4. SEASONAL HAT & POSITIONING ──────────────────────────── */
+    const hatType = urlParams.get('hat');
+    const hatUrl = urlParams.get('haturl');
+    const hatPos = urlParams.get('hatpos') || 'avatar';
+
+    const defaultHatUrls = {
+      xmas: "https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/xmas_hat.png",
+      halloween: "https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/halloween_hat.png",
+      birthday: "https://clifffordw.github.io/ClifffWidgets/Webpage/Assets/Hats/birthday_hat.png"
+    };
+
+    if (hatType) {
+      const resolvedHatSrc = hatUrl || defaultHatUrls[hatType] || '';
+      const ph = document.getElementById('partyhat');
+      
+      if (resolvedHatSrc && ph) {
+        ph.src = resolvedHatSrc;
+        ph.style.display = 'block';
+
+        // Dynamic Position Handling across widget layouts
+        if (hatPos === 'drop') {
+          // Move hat onto the drop box item slot
+          const itemSlot = document.querySelector('.slot--item') || document.querySelector('.drops');
+          if (itemSlot) {
+            itemSlot.appendChild(ph);
+            ph.style.position = 'absolute';
+            ph.style.bottom = '85%';
+            ph.style.left = '50%';
+            ph.style.transform = 'translateX(-50%) rotate(15deg)';
+          }
+        } else if (hatPos === 'top-left') {
+          // Absolute top-left of the widget container
+          const dropsContainer = document.getElementById('drops');
+          if (dropsContainer) {
+            dropsContainer.appendChild(ph);
+            ph.style.position = 'absolute';
+            ph.style.top = '10px';
+            ph.style.left = '10px';
+            ph.style.bottom = 'auto';
+            ph.style.transform = 'rotate(-15deg)';
+          }
+        } else {
+          // Default: Attached to streamer head container
+          const streamerWrap = document.getElementById('streamer-wrap');
+          if (streamerWrap) {
+            streamerWrap.appendChild(ph);
+          }
         }
       }
     }
 
+    /* ─── 5. SOLO & CAROUSEL MODES ───────────────────────────────── */
+    const isSolo = urlParams.has('solo');
+    if (isSolo) {
+      document.body.classList.add('solo');
+      document.getElementById('drops').setAttribute('data-solo', '');
+    }
 
-    /* ── FETCH KLEI CAMPAIGN DATA & SETUP SLOTS/CAROUSEL ─────────── */
+    const isCarousel = urlParams.has('carousel') || urlParams.has('cycle');
+    if (isCarousel) {
+      document.body.classList.add('carousel', 'solo');
+    }
+
+    /* ─── 6. FETCH KLEI CAMPAIGN DATA & SETUP SLOTS/CAROUSEL ─────────── */
     fetch('https://cdn.forums.klei.com/drops/current_campaign.json')
       .then(r => r.json())
       .then(data => {
@@ -668,8 +660,6 @@
         if (portrait) document.querySelector('.bg-portrait').src = portrait;
         if (item) document.querySelector('.bg-item').src = item;
 
-        // If Carousel mode is enabled, cycle through the 3 slots smoothly with fade-out/fade-in
-        // If Carousel mode is enabled, cycle through the 3 slots smoothly with spin-in/spin-out
         if (isCarousel) {
           const slots = [
             document.querySelector('.slot--flair'),
@@ -677,9 +667,8 @@
             document.querySelector('.slot--item')
           ].filter(s => s && s.querySelector('img')?.src);
 
-          // Read custom speed from URL (e.g. ?speed=5 or ?interval=6), defaulting to 4.5 seconds
-          const speedParam = parseFloat(p.get('speed') || p.get('interval') || '4.5');
-          const switchInterval = Math.max(1.5, speedParam) * 1000; // Minimum 1.5s to allow animations to finish
+          const speedParam = parseFloat(urlParams.get('speed') || urlParams.get('interval') || '4.5');
+          const switchInterval = Math.max(1.5, speedParam) * 1000;
 
           let currentIndex = 0;
           if (slots.length > 0) {
@@ -691,15 +680,12 @@
                 currentSlot.classList.remove('active-carousel-item');
                 currentSlot.classList.add('exiting-carousel-item');
 
-                // Clean up exiting class after spin-out completes (800ms)
                 setTimeout(() => {
                   currentSlot.classList.remove('exiting-carousel-item');
                 }, 800);
 
                 currentIndex = (currentIndex + 1) % slots.length;
-
-                const nextSlot = slots[currentIndex];
-                nextSlot.classList.add('active-carousel-item');
+                slots[currentIndex].classList.add('active-carousel-item');
               }, switchInterval);
             }
           }

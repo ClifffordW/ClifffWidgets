@@ -18,6 +18,7 @@
   <meta property="og:url" content="https://clifffordw.github.io/ClifffWidgets/Webpage/index.html" />
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#d46019" />
+  <link rel="manifest" href="https://clifffordw.github.io/ClifffWidgets/Webpage/manifest.json">
 
   <!-- Twitter / Discord Large Card Previews -->
   <meta name="twitter:card" content="summary_large_image" />
@@ -966,7 +967,7 @@
       border-color: #e74c3c;
     }
 
-    
+
 
     .dst-slider {
       position: absolute;
@@ -1029,17 +1030,17 @@
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .dst-switch input:checked + .dst-slider {
+    .dst-switch input:checked+.dst-slider {
       background-color: #2b170e;
       border-color: var(--dst-flame);
       box-shadow: inset 0 0 8px rgba(231, 108, 30, 0.4), 0 0 6px rgba(231, 108, 30, 0.3);
     }
 
-    .dst-switch input:checked + .dst-slider:before {
+    .dst-switch input:checked+.dst-slider:before {
       transform: translateX(24px);
       background: radial-gradient(circle, var(--dst-flame-bright) 20%, var(--dst-flame) 80%);
       border-color: #5a200b;
-      box-shadow: 0 0 10px var(--dst-flame-bright), 0 2px 4px rgba(0,0,0,0.8);
+      box-shadow: 0 0 10px var(--dst-flame-bright), 0 2px 4px rgba(0, 0, 0, 0.8);
     }
 
     .amb-card-body {
@@ -1578,6 +1579,53 @@
                   style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
               </div>
             </div>
+
+            <!-- Custom Streamer Head Styles & Seasonal Hats -->
+            <div
+              style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-top: 14px;">
+              <div>
+                <label
+                  style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
+                  Head Border Color
+                </label>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  <input type="color" id="obs-border-color" value="#443429" oninput="syncColorToText('border')"
+                    style="width: 48px; height: 46px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
+                  <input type="text" id="obs-border-hex" class="search-input-box" value="443429"
+                    oninput="syncTextToColor('border'); updateObsUrlBuilder();"
+                    style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
+                  Head Fill Color
+                </label>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  <input type="color" id="obs-fill-color" value="#1c1613" oninput="syncColorToText('fill')"
+                    style="width: 48px; height: 46px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
+                  <input type="text" id="obs-fill-hex" class="search-input-box" value="1C1613"
+                    oninput="syncTextToColor('fill'); updateObsUrlBuilder();"
+                    style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
+                  Seasonal Hat Accessory
+                </label>
+                <select id="obs-seasonal-hat" class="search-input-box" onchange="updateObsUrlBuilder()"
+                  style="padding: 11px 14px; font-size: 1.1rem; cursor: pointer;">
+                  <option value="">None (Standard)</option>
+                  <option value="xmas">🎄 Winter / Santa Hat</option>
+                  <option value="halloween">🎃 Halloween / Witch Hat</option>
+                  <option value="birthday">🎂 Anniversary Party Hat</option>
+                </select>
+              </div>
+            </div>
+
           </div>
 
           <div>
@@ -1790,18 +1838,18 @@
       updateObsUrlBuilder();
     }
 
-    function syncColorToText(num) {
-      const colorPicker = document.getElementById(`obs-color${num}`);
-      const textBox = document.getElementById(`obs-glow${num}`);
+    function syncColorToText(type) {
+      const colorPicker = document.getElementById(`obs-${type}-color`);
+      const textBox = document.getElementById(`obs-${type}-hex`);
       if (colorPicker && textBox) {
         textBox.value = colorPicker.value.replace('#', '').toUpperCase();
         updateObsUrlBuilder();
       }
     }
 
-    function syncTextToColor(num) {
-      const colorPicker = document.getElementById(`obs-color${num}`);
-      const textBox = document.getElementById(`obs-glow${num}`);
+    function syncTextToColor(type) {
+      const colorPicker = document.getElementById(`obs-${type}-color`);
+      const textBox = document.getElementById(`obs-${type}-hex`);
       if (colorPicker && textBox) {
         let val = textBox.value.replace(/#/g, '').trim().toUpperCase();
         if (/^[0-9A-F]{6}$/i.test(val)) {
@@ -1826,6 +1874,22 @@
       const isCarousel = document.getElementById('obs-carousel-toggle')?.checked || false;
       const hideHead = document.getElementById('obs-hide-head')?.checked || false; // Added
       const speed = (document.getElementById('obs-speed')?.value || '4.5').trim();
+
+      const borderHex = (document.getElementById('obs-border-hex')?.value || '').replace(/#/g, '').trim().toUpperCase();
+      const fillHex = (document.getElementById('obs-fill-hex')?.value || '').replace(/#/g, '').trim().toUpperCase();
+      const seasonalHat = (document.getElementById('obs-seasonal-hat')?.value || '').trim();
+
+      // Save to localStorage
+      localStorage.setItem('dst-obs-border', borderHex);
+      localStorage.setItem('dst-obs-fill', fillHex);
+      localStorage.setItem('dst-obs-hat', seasonalHat);
+
+      // In your params array builder, add:
+      if (borderHex) params.push(`border=${encodeURIComponent(borderHex)}`);
+      if (fillHex) params.push(`fill=${encodeURIComponent(fillHex)}`);
+      if (seasonalHat) params.push(`hat=${encodeURIComponent(seasonalHat)}`);
+
+
 
       const g1 = (document.getElementById('obs-glow1')?.value || '').replace(/#/g, '').trim().toUpperCase();
       const g2 = (document.getElementById('obs-glow2')?.value || '').replace(/#/g, '').trim().toUpperCase();
@@ -1913,6 +1977,15 @@
       const savedG1 = localStorage.getItem('dst-obs-g1');
       const savedG2 = localStorage.getItem('dst-obs-g2');
       const savedG3 = localStorage.getItem('dst-obs-g3');
+      const savedBorder = localStorage.getItem('dst-obs-border');
+      const savedFill = localStorage.getItem('dst-obs-fill');
+      const savedHat = localStorage.getItem('dst-obs-hat');
+
+      if (savedBorder !== null && document.getElementById('obs-border-hex')) document.getElementById('obs-border-hex').value = savedBorder;
+      if (savedFill !== null && document.getElementById('obs-fill-hex')) document.getElementById('obs-fill-hex').value = savedFill;
+      if (savedHat !== null && document.getElementById('obs-seasonal-hat')) document.getElementById('obs-seasonal-hat').value = savedHat;
+
+
 
       if (savedTwitch !== null && document.getElementById('obs-twitch')) document.getElementById('obs-twitch').value = savedTwitch;
       if (savedAvatar !== null && document.getElementById('obs-avatar')) document.getElementById('obs-avatar').value = savedAvatar;
@@ -2233,18 +2306,30 @@
       if ("Notification" in window && Notification.permission === "granted") {
         try {
           if ("serviceWorker" in navigator) {
-            const reg = await navigator.serviceWorker.getRegistration();
+            // .ready waits until the service worker is fully active and controlling the page
+            const reg = await navigator.serviceWorker.ready;
             if (reg && reg.showNotification) {
-              reg.showNotification(title, {
+              await reg.showNotification(title, {
                 body: body,
-                icon: iconUrl || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg",
-                badge: "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
+                icon: iconUrl || "./drop_logo.svg",
+                badge: "./drop_logo.svg",
+                vibrate: [200, 100, 200], // Essential for mobile haptic popups
+                tag: "dst-drop-alert",
+                renotify: true
               });
               return;
             }
           }
-          new Notification(title, { body: body, icon: iconUrl || "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" });
-        } catch (e) { }
+          // Fallback if service worker isn't available
+          new Notification(title, {
+            body: body,
+            icon: iconUrl || "./drop_logo.svg"
+          });
+        } catch (e) {
+          console.error("Mobile notification dispatch error:", e);
+        }
+      } else {
+        console.warn("Notifications not permitted or unsupported.");
       }
     }
 

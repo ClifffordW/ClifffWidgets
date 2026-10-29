@@ -123,6 +123,7 @@
       .drops,
       .dst-toggle-label,
       .dst-slider,
+      .search-input-box,
       input[type="checkbox"],
       input[type="text"],
       input[type="color"] {
@@ -1466,11 +1467,12 @@
   <main>
 
     <!-- AMBASSADOR WIDGET TAB -->
+    <!-- AMBASSADOR WIDGET TAB -->
     <section id="widget">
       <h1 class="dst-heading">Ambassador OBS Widget</h1>
 
       <div class="dst-parchment-card"
-        style="max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
+        style="max-width: 1380px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; overflow: visible; padding-bottom: 40px;">
 
         <div>
           <h3
@@ -1478,273 +1480,186 @@
             <i data-lucide="cast" style="color: var(--dst-flame);"></i> Stream Overlay Generator
           </h3>
           <p style="font-size: 1.1rem; color: var(--dst-paper-muted); line-height: 1.4;">
-            Configure your dynamic drop widget for OBS. Customize your Twitch username, avatar, and glow hex values
-            (without <code>#</code>).
+            Configure your dynamic drop widget for OBS. Customize your Twitch username, avatar, and glow hex values.
           </p>
         </div>
 
-        <div
-          style="background: #0d0908; border: 2px solid #3c2a20; border-radius: 8px; padding: 16px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+        <!-- 2-COLUMN SPLIT CONTAINER (Preview gets 1.25fr vs 1fr) -->
+        <div style="display: grid; grid-template-columns: 1fr 1.25fr; gap: 30px; align-items: start;">
 
-          <div
-            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
-            <h4
-              style="font-family: var(--font-title); color: #fff; font-size: 1.05rem; display: flex; align-items: center; gap: 6px; margin: 0;">
-              <i data-lucide="eye" style="color: var(--dst-flame); width: 16px; height: 16px;"></i> Live OBS Preview
-            </h4>
-
-            <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
-              <label class="dst-toggle-label"
-                style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1.1rem; color: var(--dst-paper);">
-                <span>Solo Mode</span>
-                <div class="dst-switch">
-                  <input type="checkbox" id="obs-solo-toggle" onchange="handleWidgetModeChange('solo')">
-                  <span class="dst-slider"></span>
-                </div>
-              </label>
-
-              <label class="dst-toggle-label"
-                style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1.1rem; color: var(--dst-paper);">
-                <span>Carousel Mode</span>
-                <div class="dst-switch">
-                  <input type="checkbox" id="obs-carousel-toggle" onchange="handleWidgetModeChange('carousel')">
-                  <span class="dst-slider"></span>
-                </div>
-              </label>
-              <label class="dst-toggle-label"
-                style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1.1rem; color: var(--dst-paper);">
-                <span>Hide Streamer Avatar</span>
-                <div class="dst-switch">
-                  <input type="checkbox" id="obs-hide-head" onchange="updateObsUrlBuilder()">
-                  <span class="dst-slider"></span>
-                </div>
-              </label>
-
-            </div>
-          </div>
-
-          <div id="preview-viewport"
-            style="position: relative; width: 100%; aspect-ratio: 2/1; margin: 0 auto; background: radial-gradient(circle, #18110e 0%, #080605 100%); border: 1px solid #2c1f18; border-radius: 6px; overflow: hidden;">
-            <div id="obs-scale-container"
-              style="position: absolute; top: 0; left: 0; width: 1024px; height: 512px; transform-origin: top left;">
-              <iframe id="obs-preview-frame" src=""
-                style="width: 1024px; height: 512px; border: none; background: transparent;"></iframe>
-            </div>
-          </div>
-
-          <span id="obs-res-notice"
-            style="font-size: 1.05rem; color: #bdae99; margin-top: 10px; display: block; font-family: var(--font-hand); letter-spacing: 0.3px;">
-            Recommended OBS Browser Source Resolution: <b style="color: var(--dst-flame);">1024 × 512 (Full Mode)</b>
-          </span>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 16px;">
-          <div>
-            <label
-              style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
-              Twitch Username (lowercase)
-            </label>
-            <input type="text" id="obs-twitch" class="search-input-box" placeholder="e.g. clifffordw"
-              oninput="updateObsUrlBuilder()" style="padding: 12px 16px; font-size: 1.2rem;" />
-          </div>
-
-          <div>
-            <label
-              style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
-              Avatar Image URL
-            </label>
-            <input type="text" id="obs-avatar" class="search-input-box" placeholder="https://static-cdn.jtvnw.net/..."
-              oninput="updateObsUrlBuilder()" style="padding: 12px 16px; font-size: 1.2rem;" />
-          </div>
-
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+          <!-- LEFT COLUMN: COMPACT SETTINGS -->
+          <div style="display: flex; flex-direction: column; gap: 14px;">
             <div>
               <label
-                style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
-                Carousel Swap Speed (Seconds)
+                style="font-family: var(--font-mono); font-size: 1rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+                Twitch Username
+              </label>
+              <input type="text" id="obs-twitch" class="search-input-box" placeholder="e.g. clifffordw"
+                style="padding: 10px 14px; font-size: 1.1rem;" />
+            </div>
+
+            <div>
+              <label
+                style="font-family: var(--font-mono); font-size: 1rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+                Avatar Image URL
+              </label>
+              <input type="text" id="obs-avatar" class="search-input-box" placeholder="https://static-cdn.jtvnw.net/..."
+                style="padding: 10px 14px; font-size: 1.1rem;" />
+            </div>
+
+            <div>
+              <label
+                style="font-family: var(--font-mono); font-size: 1rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+                Carousel Swap Speed (Sec)
               </label>
               <input type="number" id="obs-speed" class="search-input-box" value="4.5" min="1.5" max="30" step="0.5"
-                oninput="updateObsUrlBuilder()" style="padding: 10px 14px; font-size: 1.2rem;" />
+                style="padding: 10px 14px; font-size: 1.1rem;" />
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+              <div>
+                <label style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">Glow 1</label>
+                <div style="display: flex; gap: 4px; align-items: center;">
+                  <input type="color" id="obs-color1" value="#90EE90" oninput="syncColorToText('1')" style="width: 70px; height: 50px;" />
+                  <input type="text" id="obs-glow1" class="search-input-box" value="90EE90" oninput="syncTextToColor('1'); updateObsUrlBuilder();" style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
+                </div>
+              </div>
+
+              <div>
+                <label style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">Glow 2</label>
+                <div style="display: flex; gap: 4px; align-items: center;">
+                  <input type="color" id="obs-color2" value="#64F89D" oninput="syncColorToText('2')" style="width: 70px; height: 50px;" />
+                  <input type="text" id="obs-glow2" class="search-input-box" value="64F89D" oninput="syncTextToColor('2'); updateObsUrlBuilder();" style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
+                </div>
+              </div>
+
+              <div>
+                <label style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">Glow 3</label>
+                <div style="display: flex; gap: 4px; align-items: center;">
+                  <input type="color" id="obs-color3" value="#AFFF60" oninput="syncColorToText('3')" style="width: 70px; height: 50px;" />
+                  <input type="text" id="obs-glow3" class="search-input-box" value="AFFF60" oninput="syncTextToColor('3'); updateObsUrlBuilder();" style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
+                </div>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px;">
+              <div>
+                <label class="dst-toggle-label" style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1rem; color: var(--dst-paper); margin-bottom: 4px;">
+                  <span>Disable Border</span>
+                  <div class="dst-switch" >
+                    <input type="checkbox" id="obs-no-border" onchange="toggleBorderDisable()">
+                    <span class="dst-slider"></span>
+                  </div>
+                </label>
+                <div id="border-picker-wrapper" style="display: flex; gap: 6px; align-items: center;">
+                  <input type="color" id="obs-border-color" value="#443429" oninput="syncColorToText('border')" style="width: 50px; height: 46px;" />
+                  <input type="text" id="obs-border-hex" class="search-input-box" value="443429" oninput="syncTextToColor('border'); updateObsUrlBuilder();" style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
+                </div>
+              </div>
+
+              <div>
+                <label class="dst-toggle-label" style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1rem; color: var(--dst-paper); margin-bottom: 4px;">
+                  <span>Disable Fill</span>
+                  <div class="dst-switch" >
+                    <input type="checkbox" id="obs-no-fill" onchange="toggleFillDisable()">
+                    <span class="dst-slider"></span>
+                  </div>
+                </label>
+                <div id="fill-picker-wrapper" style="display: flex; gap: 6px; align-items: center;">
+                  <input type="color" id="obs-fill-color" value="#1c1613" oninput="syncColorToText('fill')" style="width: 50px; height: 46px;" />
+                  <input type="text" id="obs-fill-hex" class="search-input-box" value="1C1613" oninput="syncTextToColor('fill'); updateObsUrlBuilder();" style="padding: 6px 8px; font-size: 0.95rem; text-transform: uppercase;" />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label style="font-family: var(--font-mono); font-size: 1rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+                Seasonal Hat Accessory
+              </label>
+              <select id="obs-seasonal-hat" class="search-input-box" onchange="handleHatSelectionChange()" style="padding: 10px 12px; font-size: 1rem; cursor: pointer;">
+                <option value="">None (Standard)</option>
+                <option value="xmas">🎄 Winter / Santa Hat</option>
+                <option value="halloween">🎃 Halloween / Witch Hat</option>
+                <option value="birthday">🎂 Anniversary Party Hat</option>
+                <option value="custom">✨ Custom Hat URL...</option>
+              </select>
+            </div>
+
+            <div id="hat-url-container" style="display: none; background: #140d0a; border: 1px dashed var(--dst-border-highlight); padding: 10px; border-radius: 6px;">
+              <label id="hat-url-label" style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--dst-paper-muted); display: block; margin-bottom: 4px;">Hat Image URL</label>
+              <input type="text" id="obs-hat-url" class="search-input-box" placeholder="https://..." style="width: 100%; padding: 8px 12px; font-size: 0.95rem;" />
             </div>
           </div>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px;">
-            <div>
-              <label
-                style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
-                Glow 1 (hex)
-              </label>
-              <div style="display: flex; gap: 8px; align-items: center;">
-                <input type="color" id="obs-color1" value="#90ee90" oninput="syncColorToText('1')"
-                  style="width: 55px; height: 48px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
-                <input type="text" id="obs-glow1" class="search-input-box" value="90EE90"
-                  oninput="syncTextToColor('1'); updateObsUrlBuilder();"
-                  style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
-              </div>
-            </div>
+          <!-- RIGHT COLUMN: EXPANDED PROPORTIONAL PREVIEW -->
+          <div style="display: flex; flex-direction: column; gap: 16px; position: sticky; top: 20px;">
+            
+            <div style="background: #0d0908; border: 2px solid #3c2a20; border-radius: 8px; padding: 18px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.6);">
 
-            <div>
-              <label
-                style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
-                Glow 2 (hex)
-              </label>
-              <div style="display: flex; gap: 8px; align-items: center;">
-                <input type="color" id="obs-color2" value="#64F89D" oninput="syncColorToText('2')"
-                  style="width: 55px; height: 48px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
-                <input type="text" id="obs-glow2" class="search-input-box" value="64F89D"
-                  oninput="syncTextToColor('2'); updateObsUrlBuilder();"
-                  style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
-              </div>
-            </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                <h4 style="font-family: var(--font-title); color: #fff; font-size: 1.1rem; display: flex; align-items: center; gap: 6px; margin: 0;">
+                  <i data-lucide="eye" style="color: var(--dst-flame); width: 18px; height: 18px;"></i> Live Preview
+                </h4>
 
-            <div>
-              <label
-                style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
-                Glow 3 (hex)
-              </label>
-              <div style="display: flex; gap: 8px; align-items: center;">
-                <input type="color" id="obs-color3" value="#AFFF60" oninput="syncColorToText('3')"
-                  style="width: 55px; height: 48px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
-                <input type="text" id="obs-glow3" class="search-input-box" value="AFFF60"
-                  oninput="syncTextToColor('3'); updateObsUrlBuilder();"
-                  style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
-              </div>
-            </div>
-
-            <!-- Custom Streamer Head Styles & Seasonal Hats -->
-            <div
-              style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 14px;">
-
-              <!-- Border Controls -->
-              <div>
-
-
-                <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
-                  <label class="dst-toggle-label"
-                    style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1.1rem; color: var(--dst-paper);">
-                    <span>Disable Border</span>
-                    <div class="dst-switch">
-                      <input type="checkbox" id="obs-no-border" onchange="toggleBorderDisable()">
+                <div style="display: flex; gap: 12px; align-items: center;">
+                  <label class="dst-toggle-label" style="display: flex; align-items: center; gap: 5px; cursor: pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
+                    <span>Solo</span>
+                    <div class="dst-switch" >
+                      <input type="checkbox" id="obs-solo-toggle" onchange="handleWidgetModeChange('solo')">
                       <span class="dst-slider"></span>
                     </div>
                   </label>
-                  <br> </br>
-                </div>
 
-                <label
-                  style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
-                  Head Border Color
-                </label>
-                <div id="border-picker-wrapper" style="display: flex; gap: 8px; align-items: center;">
-
-                  <input type="color" id="obs-border-color" value="#443429" oninput="syncColorToText('border')"
-                    style="width: 55px; height: 48px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
-                  <input type="text" id="obs-border-hex" class="search-input-box" value="443429"
-                    oninput="syncTextToColor('border'); updateObsUrlBuilder();"
-                    style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
-                </div>
-              </div>
-
-              <!-- Fill Color -->
-
-
-              <div>
-
-                <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
-                  <label class="dst-toggle-label"
-                    style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-family: var(--font-hand); font-size: 1.1rem; color: var(--dst-paper);">
-                    <span>Disable Fill</span>
-                    <div class="dst-switch">
-                      <input type="checkbox" id="obs-no-fill" onchange="toggleFillDisable()">
+                  <label class="dst-toggle-label" style="display: flex; align-items: center; gap: 5px; cursor: pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
+                    <span>Carousel</span>
+                    <div class="dst-switch" >
+                      <input type="checkbox" id="obs-carousel-toggle" onchange="handleWidgetModeChange('carousel')">
                       <span class="dst-slider"></span>
                     </div>
                   </label>
-                  <br> </br>
-                </div>
-                <label
-                  style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
-                  Head Fill Color
-                </label>
-                <div id="fill-picker-wrapper" style="display: flex; gap: 8px; align-items: center;">
-                  <input type="color" id="obs-fill-color" value="#1c1613" oninput="syncColorToText('fill')"
-                    style="width: 55px; height: 48px; background: #15100e; border: 2px solid #3d2c22; border-radius: 6px; cursor: pointer; padding: 2px;" />
-                  <input type="text" id="obs-fill-hex" class="search-input-box" value="1C1613"
-                    oninput="syncTextToColor('fill'); updateObsUrlBuilder();"
-                    style="padding: 10px 12px; font-size: 1.1rem; text-transform: uppercase;" />
-                </div>
-              </div>
 
-              <!-- Seasonal Hat Selector -->
-              <div>
-                <label
-                  style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
-                  Seasonal Hat Accessory
-                </label>
-                <select id="obs-seasonal-hat" class="search-input-box" onchange="handleHatSelectionChange()"
-                  style="padding: 11px 14px; font-size: 1.1rem; cursor: pointer;">
-                  <option value="">None (Standard)</option>
-                  <option value="xmas">🎄 Winter / Santa Hat</option>
-                  <option value="halloween">🎃 Halloween / Witch Hat</option>
-                  <option value="birthday">🎂 Anniversary Party Hat</option>
-                  <option value="custom">✨ Custom Hat URL...</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Dynamic Hat Image URL Configuration Box (Appears when a hat is selected) -->
-            <!-- Dynamic Hat Image URL Configuration Box (Spans full width so links aren't cramped) -->
-            <!-- Dynamic Hat Image URL Configuration Box -->
-            <div id="hat-url-container"
-              style="display: none; grid-column: 1 / -1; margin-top: 4px; background: #140d0a; border: 1px dashed var(--dst-border-highlight); padding: 14px; border-radius: 6px;">
-              <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px; align-items: end;">
-                <div>
-                  <label id="hat-url-label"
-                    style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--dst-paper-muted); display: block; margin-bottom: 6px;">
-                    Hat Image URL
+                  <label class="dst-toggle-label" style="display: flex; align-items: center; gap: 5px; cursor: pointer; font-family: var(--font-hand); font-size: 1.05rem; color: var(--dst-paper);">
+                    <span>Hide Head</span>
+                    <div class="dst-switch" >
+                      <input type="checkbox" id="obs-hide-head" onchange="updateObsUrlBuilder()">
+                      <span class="dst-slider"></span>
+                    </div>
                   </label>
-                  <input type="text" id="obs-hat-url" class="search-input-box" placeholder="https://..."
-                    oninput="updateObsUrlBuilder()"
-                    style="width: 100%; box-sizing: border-box; padding: 10px 14px; font-size: 1.05rem;" />
                 </div>
-                <div>
-                  <!--                   <label
-                    style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--dst-paper-muted); display: block; margin-bottom: 6px;">
-                    Hat Position
-                  </label> -->
-                  <!--                   <select id="obs-hat-pos" class="search-input-box" onchange="updateObsUrlBuilder()"
-                    style="width: 100%; padding: 10px 12px; font-size: 1.05rem; cursor: pointer;">
-                    <option value="avatar">On Streamer Head</option>
-                    <option value="drop">On Drop Box Top</option>
-                    <option value="top-left">Widget Top-Left</option>
-                  </select> -->
+              </div>
+
+              <!-- PREVIEW VIEWPORT (Now taking advantage of 1.25fr column space) -->
+              <div id="preview-viewport"
+                style="position: relative; width: 100%; aspect-ratio: 2/1; margin: 0 auto; background: radial-gradient(circle, #18110e 0%, #080605 100%); border: 2px solid #2c1f18; border-radius: 8px; overflow: hidden; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);">
+                <div id="obs-scale-container"
+                  style="position: absolute; top: 0; left: 0; width: 1024px; height: 512px; transform-origin: top left;">
+                  <iframe id="obs-preview-frame" src=""
+                    style="width: 1024px; height: 512px; border: none; background: transparent;"></iframe>
                 </div>
               </div>
             </div>
 
+            <div>
+              <label style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--dst-paper); display: block; margin-bottom: 4px;">
+                Generated OBS URL <span style="color: #9c8472; font-size: 0.85rem;">(Click to copy or drag)</span>:
+              </label>
+              <input type="text" id="obs-result-url" readonly onclick="copyObsGeneratedUrl()" draggable="true"
+                ondragstart="handleObsDragStart(event)" class="search-input-box"
+                title="Click to copy | Drag & drop directly into OBS"
+                style="padding: 10px 12px; font-size: 0.95rem; color: #a4e67a; background: #120e0c; cursor: grab;" />
+            </div>
+
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+              <a id="obs-preview-btn" href="#" target="_blank" class="dst-btn" style="font-size: 1rem; padding: 8px 16px;">
+                <i data-lucide="external-link" style="width: 16px;"></i> Full Preview
+              </a>
+              <button class="dst-btn" style="font-size: 1rem; padding: 8px 16px;" onclick="copyObsGeneratedUrl()">
+                <i data-lucide="copy" style="width: 16px;"></i> Copy Link
+              </button>
+            </div>
+
           </div>
 
-          <div>
-            <label
-              style="font-family: var(--font-mono); font-size: 1.05rem; color: var(--dst-paper); display: block; margin-bottom: 6px;">
-              Generated OBS Browser Source URL <span style="color: #9c8472; font-size: 0.95rem;">(Click to copy or
-                drag
-                & drop into OBS)</span>:
-            </label>
-            <input type="text" id="obs-result-url" readonly onclick="copyObsGeneratedUrl()" draggable="true"
-              ondragstart="handleObsDragStart(event)" class="search-input-box"
-              title="Click to copy | Drag & drop directly into OBS"
-              style="padding: 12px 14px; font-size: 1.05rem; color: #a4e67a; background: #120e0c; cursor: grab;" />
-          </div>
-        </div>
-
-        <div
-          style="display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; border-top: 1px dashed #3a2b22; padding-top: 15px;">
-          <a id="obs-preview-btn" href="#" target="_blank" class="dst-btn" style="font-size: 1.05rem;">
-            <i data-lucide="external-link" style="width: 16px;"></i> Open Full Preview
-          </a>
-          <button class="dst-btn" style="font-size: 1.05rem;" onclick="copyObsGeneratedUrl()">
-            <i data-lucide="copy" style="width: 16px;"></i> Copy Link
-          </button>
         </div>
 
       </div>

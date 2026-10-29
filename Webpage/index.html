@@ -1958,24 +1958,29 @@
                 <!-- HAT X & Y OFFSET CONTROLS -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px;">
                   <div>
-                    <div
-                      style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
+                    <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
                       <span>Offset X</span>
                       <span id="hat-x-val" style="color: var(--dst-flame); font-weight: bold;">0px</span>
                     </div>
-                    <input type="range" id="obs-hat-x" min="-60" max="60" value="0" step="1"
-                      oninput="updateHatOffsets()" />
+                    <input type="range" id="obs-hat-x" min="-60" max="60" value="0" step="1" oninput="updateHatOffsets()" />
                   </div>
 
                   <div>
-                    <div
-                      style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
+                    <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
                       <span>Offset Y</span>
                       <span id="hat-y-val" style="color: var(--dst-flame); font-weight: bold;">0px</span>
                     </div>
-                    <input type="range" id="obs-hat-y" min="-60" max="60" value="0" step="1"
-                      oninput="updateHatOffsets()" />
+                    <input type="range" id="obs-hat-y" min="-60" max="60" value="0" step="1" oninput="updateHatOffsets()" />
                   </div>
+                </div>
+
+                <!-- HAT SCALE CONTROL -->
+                <div style="margin-top: 8px;">
+                  <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.85rem; color: var(--dst-paper-muted); margin-bottom: 2px;">
+                    <span>Hat Scale</span>
+                    <span id="hat-scale-val" style="color: var(--dst-flame); font-weight: bold;">100%</span>
+                  </div>
+                  <input type="range" id="obs-hat-scale" min="50" max="200" value="100" step="5" oninput="updateHatOffsets()" />
                 </div>
 
               </div>
@@ -2238,15 +2243,18 @@
 
   <script>
 
-    function updateHatOffsets() {
+function updateHatOffsets() {
       const xVal = document.getElementById('obs-hat-x')?.value || 0;
       const yVal = document.getElementById('obs-hat-y')?.value || 0;
+      const scaleVal = document.getElementById('obs-hat-scale')?.value || 100;
 
       const xText = document.getElementById('hat-x-val');
       const yText = document.getElementById('hat-y-val');
+      const scaleText = document.getElementById('hat-scale-val');
 
       if (xText) xText.innerText = `${xVal}px`;
       if (yText) yText.innerText = `${yVal}px`;
+      if (scaleText) scaleText.innerText = `${scaleVal}%`;
 
       updateObsUrlBuilder();
     }
@@ -2444,10 +2452,13 @@
 
       const hatX = document.getElementById('obs-hat-x')?.value || '0';
       const hatY = document.getElementById('obs-hat-y')?.value || '0';
+      const hatScale = document.getElementById('obs-hat-scale')?.value || '100';
 
-      // Save to localStorage
       localStorage.setItem('dst-obs-hatx', hatX);
       localStorage.setItem('dst-obs-haty', hatY);
+      localStorage.setItem('dst-obs-hatscale', hatScale);
+
+
 
 
 
@@ -2532,13 +2543,15 @@
         params.push(`fill=${encodeURIComponent(fillHex)}`);
       }
 
+      // In your params push block:
       if (hatType !== '') {
         params.push(`hat=${encodeURIComponent(hatType)}`);
         if (hatUrl !== '') params.push(`haturl=${encodeURIComponent(hatUrl)}`);
         if (hatPos !== '') params.push(`hatpos=${encodeURIComponent(hatPos)}`);
         if (hatX !== '0') params.push(`hatx=${encodeURIComponent(hatX)}`);
         if (hatY !== '0') params.push(`haty=${encodeURIComponent(hatY)}`);
-      }
+        if (hatScale !== '100') params.push(`hatscale=${encodeURIComponent(hatScale)}`);
+      } 
 
       url += params.join('&');
 
@@ -2593,10 +2606,13 @@
       const savedHatUrl = localStorage.getItem('dst-obs-haturl');   // ADDED
       const savedHatX = localStorage.getItem('dst-obs-hatx') || '0';
       const savedHatY = localStorage.getItem('dst-obs-haty') || '0';
+      const savedHatScale = localStorage.getItem('dst-obs-hatscale') || '100';
 
       if (document.getElementById('obs-hat-x')) document.getElementById('obs-hat-x').value = savedHatX;
       if (document.getElementById('obs-hat-y')) document.getElementById('obs-hat-y').value = savedHatY;
+      if (document.getElementById('obs-hat-scale')) document.getElementById('obs-hat-scale').value = savedHatScale;
       updateHatOffsets();
+
 
 
       if (document.getElementById('obs-no-border')) {

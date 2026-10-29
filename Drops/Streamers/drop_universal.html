@@ -7,7 +7,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap');
 
-/* ─── SHARED HAT ANIMATION & GLOW ────────────────────────────── */
+    /* ─── SHARED HAT ANIMATION & GLOW ────────────────────────────── */
     .partyhat.is-animated {
       animation:
         float-streamer 4.5s ease-in-out infinite,
@@ -60,7 +60,6 @@
       opacity: 0.28;
     }
 
-
     /* ─── CAROUSEL / CYCLE MODE (1024 × 1024) ─────────────────────── */
     body.carousel .drops {
       width: 1024px;
@@ -79,7 +78,6 @@
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
 
-    /* Seamless Carousel Entry Animation */
     body.carousel .slot.active-carousel-item {
       display: flex;
       opacity: 1;
@@ -88,14 +86,12 @@
       animation: gift-carousel-spin-in 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     }
 
-    /* Seamless Carousel Exit Animation */
     body.carousel .slot.exiting-carousel-item {
       display: flex;
       z-index: 4;
       animation: gift-carousel-spin-out 0.7s cubic-bezier(0.5, 0, 0.75, 1) forwards;
     }
 
-    /* ── SPIN-IN & SPIN-OUT KEYFRAMES ───────────────────────────── */
     @keyframes gift-carousel-spin-in {
       0% {
         opacity: 0;
@@ -122,17 +118,9 @@
       }
     }
 
-    body.carousel .slot--flair .bg-flair {
-      width: 520px;
-    }
-
-    body.carousel .slot--portrait .bg-portrait {
-      width: 580px;
-    }
-
-    body.carousel .slot--item .bg-item {
-      width: 640px;
-    }
+    body.carousel .slot--flair .bg-flair { width: 520px; }
+    body.carousel .slot--portrait .bg-portrait { width: 580px; }
+    body.carousel .slot--item .bg-item { width: 640px; }
 
     body.carousel .streamer-wrap {
       bottom: auto;
@@ -145,15 +133,9 @@
       height: 110px;
     }
 
-    body.carousel .partyhat {
-      width: 68px;
-      top: 20px;
-      left: calc(50% + 28px);
-    }
-
     /* ══════════════════════════════════════════════════════════════
-   FULL MODE — 1024 × 512 Layout Cluster
-   ══════════════════════════════════════════════════════════════ */
+       FULL MODE — 1024 × 512 Layout Cluster
+       ══════════════════════════════════════════════════════════════ */
     .drops {
       position: absolute;
       bottom: 45px;
@@ -175,29 +157,13 @@
       align-items: flex-end;
     }
 
-    .slot--flair {
-      z-index: 1;
-    }
+    .slot--flair { z-index: 1; }
+    .slot--portrait { z-index: 2; }
+    .slot--item { z-index: 3; }
 
-    .slot--portrait {
-      z-index: 2;
-    }
-
-    .slot--item {
-      z-index: 3;
-    }
-
-    .slot--flair .bg-flair {
-      width: 280px;
-    }
-
-    .slot--portrait .bg-portrait {
-      width: 320px;
-    }
-
-    .slot--item .bg-item {
-      width: 350px;
-    }
+    .slot--flair .bg-flair { width: 280px; }
+    .slot--portrait .bg-portrait { width: 320px; }
+    .slot--item .bg-item { width: 350px; }
 
     .bg-flair,
     .bg-portrait,
@@ -206,7 +172,7 @@
       height: auto;
     }
 
-    /* ─── STREAMER AVATAR WRAPPER (Unified Glow & Float) ─────────── */
+    /* ─── STREAMER AVATAR WRAPPER ────────────────────────────────── */
     .streamer-wrap {
       position: absolute;
       bottom: 210px;
@@ -235,41 +201,23 @@
       background: var(--fill);
     }
 
-
-
-
-    
-
-    /* ─── SEASONAL HAT (Absolute Pinning on Avatar Crown) ────────── */
+    /* ─── SEASONAL HAT ───────────────────────────────────────────── */
     .partyhat {
       position: absolute;
       top: -25px;
-      right: 20px;
+      left: 50%;
       width: 46px;
       height: auto;
-      z-index: 11;
-      transform: rotate(20deg);
+      z-index: 20;
+      transform: translate(-50%, 0) rotate(15deg);
       filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.9));
       display: none;
       pointer-events: none;
     }
 
-    /* Solo / Carousel Mode Scaling for the Hat */
-    body.solo .partyhat {
-      width: 60px;
-      top: -25px;
-      left: 25px;
-    }
-
-    body.carousel .partyhat {
-      width: 60px;
-      top: -25px;
-      left: 25px;
-    }
-
     /* ══════════════════════════════════════════════════════════════
-   SOLO MODE — 1024 × 1024 Layout Cluster
-   ══════════════════════════════════════════════════════════════ */
+       SOLO MODE — 1024 × 1024 Layout Cluster
+       ══════════════════════════════════════════════════════════════ */
     body.solo .drops {
       width: 1024px;
       height: 1024px;
@@ -288,26 +236,14 @@
       z-index: 1;
     }
 
-    body.solo .slot--item .bg-item {
-      width: 640px;
-    }
-
-    body.solo .streamer-head {
-      width: 110px;
-      height: 110px;
-    }
+    body.solo .slot--item .bg-item { width: 640px; }
+    body.solo .streamer-head { width: 110px; height: 110px; }
 
     /* ─── KEYFRAMES & ANIMATIONS ─────────────────────────────────── */
     @keyframes glow-pulse {
-      0% {
-        filter: drop-shadow(0 0 0.6rem var(--glow1));
-      }
-      50% {
-        filter: drop-shadow(0 0 1.5rem var(--glow2));
-      }
-      100% {
-        filter: drop-shadow(0 0 0.6rem var(--glow1));
-      }
+      0% { filter: drop-shadow(0 0 0.6rem var(--glow1)); }
+      50% { filter: drop-shadow(0 0 1.5rem var(--glow2)); }
+      100% { filter: drop-shadow(0 0 0.6rem var(--glow1)); }
     }
 
     @keyframes float-flair {
@@ -360,12 +296,11 @@
     }
 
     @keyframes gift-spin-streamer {
-      0% { opacity: 0; transform: scale(0) rotate(-180deg) translateY(40px) ; filter: drop-shadow(0 0 5rem var(--glow1)); }
+      0% { opacity: 0; transform: scale(0) rotate(-180deg) translateY(40px); filter: drop-shadow(0 0 5rem var(--glow1)); }
       70% { opacity: 1; transform: scale(1.15) rotate(10deg) translateY(-5px); filter: drop-shadow(0 0 3rem var(--glow3)); }
-      100% { opacity: 1; transform: scale(1) rotate(-3deg) translateY(0); filter: drop-shadow(0 0 0.6rem var(--glow1));}
+      100% { opacity: 1; transform: scale(1) rotate(-3deg) translateY(0); filter: drop-shadow(0 0 0.6rem var(--glow1)); }
     }
 
-    /* ─── ANIMATION BINDINGS ─────────────────────────────────────── */
     .bg-flair {
       animation:
         gift-spin-flair 1.1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s both,
@@ -399,7 +334,7 @@
 <body>
 
   <div class="drops" id="drops">
-          <img class="partyhat" id="partyhat" src="" alt="Party Hat">
+    <img class="partyhat" id="partyhat" src="" alt="Party Hat">
 
     <div class="streamer-wrap" id="streamer-wrap">
       <img class="streamer-head" id="streamer-head" src="" alt="Streamer Avatar">
@@ -416,15 +351,10 @@
     </div>
   </div>
 
- <script>
-
-
-
-    // ─── 1. INITIALIZE URL PARAMETERS FIRST ───────────────────────
+  <script>
     const urlParams = new URLSearchParams(window.location.search);
     const root = document.documentElement;
 
-    // Apply custom glow colors from URL parameters if present
     const g1 = urlParams.get('glow');
     const g2 = urlParams.get('glow2');
     const g3 = urlParams.get('glow3');
@@ -432,51 +362,38 @@
     if (g2) root.style.setProperty('--glow2', '#' + g2.replace(/^#/, ''));
     if (g3) root.style.setProperty('--glow3', '#' + g3.replace(/^#/, ''));
 
-/* ─── 2. BORDER & FILL CONFIGURATION ─────────────────────────── */
     const noBorder = urlParams.get('noborder') === '1';
-    const noFill = urlParams.get('nofill') === '1'; // ADDED
+    const noFill = urlParams.get('nofill') === '1';
     const borderHex = urlParams.get('border');
     const fillHex = urlParams.get('fill');
     const streamerHeadEl = document.querySelector('.streamer-head');
 
-
-
-
-
-
-    
-
     if (streamerHeadEl) {
       if (noBorder) {
         streamerHeadEl.style.border = 'none';
-      } else {
-        if (borderHex) streamerHeadEl.style.border = `3px solid #${borderHex}`;
+      } else if (borderHex) {
+        streamerHeadEl.style.border = `3px solid #${borderHex}`;
       }
 
       if (noFill) {
-        streamerHeadEl.style.background = 'none'; // ADDED
-      } else {
-        if (fillHex) streamerHeadEl.style.background = `#${fillHex}`;
+        streamerHeadEl.style.background = 'none';
+      } else if (fillHex) {
+        streamerHeadEl.style.background = `#${fillHex}`;
       }
     }
 
-    /* ─── 3. HIDE STREAMER HEAD TOGGLE ───────────────────────────── */
     const hideHead = urlParams.get('nohead') === '1';
-
-    /* ─── 4. STREAMER AVATAR RESOLUTION (Strict Empty Check) ─────── */
     const avatarUrl = urlParams.get('avatar');
-    const twitchUser = urlParams.get('twitch');
-    const resolvedAvatarSrc = avatarUrl /* ? avatarUrl.trim() : (twitchUser ? `https://decapi.me/twitch/avatar/${encodeURIComponent(twitchUser.trim())}` : ''); */
     const wrapEl = document.getElementById('streamer-wrap');
 
-    if (!hideHead && resolvedAvatarSrc && streamerHeadEl && resolvedAvatarSrc !== '') {
-      streamerHeadEl.src = resolvedAvatarSrc;
+    if (!hideHead && avatarUrl && avatarUrl.trim() !== '' && streamerHeadEl) {
+      streamerHeadEl.src = avatarUrl.trim();
       if (wrapEl) wrapEl.style.display = 'block';
     } else {
       if (wrapEl) wrapEl.style.display = 'none';
     }
 
- /* ─── 5. SEASONAL HAT & POSITIONING ──────────────────────────── */
+    /* ─── SEASONAL HAT & POSITIONING ──────────────────────────── */
     const hatType = urlParams.get('hat');
     const hatUrl = urlParams.get('haturl');
     const hatPos = urlParams.get('hatpos') || 'avatar';
@@ -515,7 +432,6 @@
           ph.style.left = '50%';
           ph.style.right = 'auto';
           
-          // Combine translate offsets, scaling, and rotation cleanly in one transform rule
           ph.style.setProperty('--hat-offset-x', `${hatX}px`);
           ph.style.setProperty('--hat-offset-y', `${hatY}px`);
           ph.style.setProperty('--hat-scale', hatScaleVal);
@@ -524,7 +440,7 @@
         }
       }
     }
-    /* ─── 6. SOLO & CAROUSEL MODES ───────────────────────────────── */
+
     const isSolo = urlParams.has('solo');
     if (isSolo) {
       document.body.classList.add('solo');
@@ -537,7 +453,6 @@
       document.body.classList.add('carousel', 'solo');
     }
 
-    /* ─── 7. FETCH KLEI CAMPAIGN DATA & SETUP SLOTS/CAROUSEL ─────────── */
     fetch('https://cdn.forums.klei.com/drops/current_campaign.json')
       .then(r => r.json())
       .then(data => {

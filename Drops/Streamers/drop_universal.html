@@ -453,8 +453,12 @@
       }
     }
 
+    const phWrap = document.getElementById('partyhat-wrap');
+
     const isSolo = urlParams.has('solo');
+
     if (isSolo) {
+      phWrap.style.display = 'none'
       document.body.classList.add('solo');
       const dropsEl = document.getElementById('drops');
       if (dropsEl) dropsEl.setAttribute('data-solo', '');
@@ -462,6 +466,7 @@
 
     const isCarousel = urlParams.has('carousel') || urlParams.has('cycle');
     if (isCarousel) {
+      phWrap.style.display = 'none'
       document.body.classList.add('carousel', 'solo');
     }
 

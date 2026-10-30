@@ -536,6 +536,16 @@
     const avatarUrl = urlParams.get('avatar');
     const wrapEl = document.getElementById('streamer-wrap');
 
+    const avX = parseInt(urlParams.get('avx') || '0', 10);
+    const avY = parseInt(urlParams.get('avy') || '0', 10);
+    const avScale = parseInt(urlParams.get('avscale') || '100', 10) / 100;
+
+    if (wrapEl) {
+      wrapEl.style.setProperty('--av-offset-x', `${avX}px`);
+      wrapEl.style.setProperty('--av-offset-y', `${avY}px`);
+      wrapEl.style.setProperty('--av-scale', avScale);
+    }
+
     if (!hideHead && avatarUrl && avatarUrl.trim() !== '' && streamerHeadEl) {
       streamerHeadEl.src = avatarUrl.trim();
       if (wrapEl) wrapEl.style.display = 'block';

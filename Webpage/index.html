@@ -3657,8 +3657,81 @@ input[type="range"]::-moz-range-thumb:active {
         transform: translateY(0);
       }
     }
+.streamer-wrap {
+      position: absolute;
+      bottom: 210px;
+      left: 21%;
+      /* Injects custom offsets and scale safely into base position */
+      transform: translate(calc(-50% + var(--av-offset-x, 0px)), var(--av-offset-y, 0px)) scale(var(--av-scale, 1));
+      transform-origin: center center;
+      z-index: 10;
+      display: none;
+      animation:
+        gift-spin-streamer 1.0s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.7s both,
+        float-streamer 4.5s ease-in-out 1.7s infinite,
+        glow-pulse 6.0s ease-in-out 1.7s infinite;
+    }
 
+    .streamer-wrap.solo {
+      bottom: auto;
+      top: 340px;
+      left: 175px;
+      transform: translate(var(--av-offset-x, 0px), var(--av-offset-y, 0px)) scale(var(--av-scale, 1));
+    }
     
+/* ─── CONNECTED DST TOGGLE CARDS WITH ICONS ──────────────── */
+    .wg-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: #140d0a;
+      border: 1px solid #3c2a1e;
+      border-radius: var(--sketch-radius-soft);
+      padding: 8px 12px;
+      margin: 6px 0;
+      cursor: var(--cursor-link) 0 11, pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    .wg-toggle:hover {
+      background: #1d1410;
+      border-color: var(--dst-border-highlight);
+      box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.8), 0 0 8px rgba(231, 108, 30, 0.15);
+    }
+
+    /* Left Icon + Text Group */
+    .wg-toggle-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-hand);
+      font-size: 1.05rem;
+      color: var(--dst-paper);
+      user-select: none;
+    }
+
+    .wg-toggle-label i,
+    .wg-toggle-label svg {
+      width: 18px;
+      height: 18px;
+      color: var(--dst-flame);
+      flex-shrink: 0;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .wg-toggle:hover .wg-toggle-label i,
+    .wg-toggle:hover .wg-toggle-label svg {
+      color: var(--dst-flame-bright);
+      transform: scale(1.1);
+    }
+
+
+
+
+
+
   </style>
 </head>
 
@@ -3940,18 +4013,24 @@ input[type="range"]::-moz-range-thumb:active {
 
             <div class="wg-panel">
 
-<!-- Auto-Update Toggle (Enabled by default, uncheck to opt out) -->
+<!-- Auto-Update Toggle with Refresh Icon -->
               <label class="dst-toggle-label wg-toggle" title="Periodically re-fetches Klei records in OBS to automatically catch mid-stream campaign updates">
-                <span>Auto-Update Mid-Stream</span>
+                <div class="wg-toggle-label">
+                  <i data-lucide="refresh-cw"></i>
+                  <span>Auto-Update Mid-Stream</span>
+                </div>
                 <div class="dst-switch">
                   <input type="checkbox" id="obs-auto-update" checked onchange="updateObsUrlBuilder()">
                   <span class="dst-slider"></span>
                 </div>
               </label>
 
-              <!-- Opt-in "Drops Over" Badge Toggle -->
+              <!-- Drops Over Toggle with Extinguished Flame Icon -->
               <label class="dst-toggle-label wg-toggle" title="Display an 'Embers Extinguished' badge in OBS when no drop is running instead of staying blank/hidden">
-                <span>Show "Drops Over" Badge</span>
+                <div class="wg-toggle-label">
+                  <i data-lucide="grid-2x2-x"></i>
+                  <span>Show "Drops Over" Badge</span>
+                </div>
                 <div class="dst-switch">
                   <input type="checkbox" id="obs-show-ended" onchange="updateObsUrlBuilder()">
                   <span class="dst-slider"></span>
@@ -4036,9 +4115,52 @@ input[type="range"]::-moz-range-thumb:active {
                 <input type="text" id="obs-avatar" class="search-input-box"
                   placeholder="https://static-cdn.jtvnw.net/..." style="padding: 10px 14px; font-size: 1.1rem;" />
               </div>
+<!-- Avatar Position & Scale Adjustments -->
+              <div id="avatar-adjust-container" style="margin-top: 10px; background: #140d0a; border: 1px dashed var(--dst-border-highlight); padding: 12px; border-radius: 6px;">
+                <div class="wg-sub-head" style="margin-bottom: 6px;">
+                  <label class="wg-label wg-label-sm" style="margin: 0;">Avatar Transform</label>
+                  <button type="button" class="wg-reset" onclick="resetAvatarTransform()" title="Reset avatar offsets and scale">
+                    <i data-lucide="rotate-ccw"></i> Reset
+                  </button>
+                </div>
 
-              <label class="dst-toggle-label wg-toggle" title="Hides the streamer head if needed">
-                <span>Hide Head</span>
+                <div class="wg-grid-3 wg-sliders">
+                  <div class="wg-slider">
+                    <div class="wg-slider-top"><span>Offset X</span><b id="avatar-x-val">0px</b></div>
+                    <div class="wg-slider-row">
+                      <i data-lucide="arrow-left"></i>
+                      <input type="range" id="obs-avatar-x" min="-150" max="150" value="0" step="1" oninput="updateAvatarOffsetsOnly()" onchange="updateObsUrlBuilder()" />
+                      <i data-lucide="arrow-right"></i>
+                    </div>
+                  </div>
+
+                  <div class="wg-slider">
+                    <div class="wg-slider-top"><span>Offset Y</span><b id="avatar-y-val">0px</b></div>
+                    <div class="wg-slider-row">
+                      <i data-lucide="arrow-up"></i>
+                      <input type="range" id="obs-avatar-y" min="-150" max="150" value="0" step="1" oninput="updateAvatarOffsetsOnly()" onchange="updateObsUrlBuilder()" />
+                      <i data-lucide="arrow-down"></i>
+                    </div>
+                  </div>
+
+                  <div class="wg-slider">
+                    <div class="wg-slider-top"><span>Scale</span><b id="avatar-scale-val">100%</b></div>
+                    <div class="wg-slider-row">
+                      <i data-lucide="minimize-2"></i>
+                      <input type="range" id="obs-avatar-scale" min="50" max="250" value="100" step="5" oninput="updateAvatarOffsetsOnly()" onchange="updateObsUrlBuilder()" />
+                      <i data-lucide="maximize-2"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+<!-- Hide Head with User-X Icon -->
+              <label class="dst-toggle-label wg-toggle" title="Hides the streamer avatar head in the widget">
+                <div class="wg-toggle-label">
+                  <i data-lucide="user-x"></i>
+                  <span>Hide Head</span>
+                </div>
                 <div class="dst-switch">
                   <input type="checkbox" id="obs-hide-head" onchange="updateObsUrlBuilder()">
                   <span class="dst-slider"></span>
@@ -4079,10 +4201,13 @@ input[type="range"]::-moz-range-thumb:active {
                 </div>
               </div>
 
-              <div class="wg-grid-2">
+<div class="wg-grid-2">
                 <div>
                   <label class="dst-toggle-label wg-toggle">
-                    <span>Border</span>
+                    <div class="wg-toggle-label">
+                      <i data-lucide="square"></i>
+                      <span>Border</span>
+                    </div>
                     <div class="dst-switch">
                       <input type="checkbox" id="obs-no-border" onchange="toggleBorderDisable()">
                       <span class="dst-slider"></span>
@@ -4094,10 +4219,13 @@ input[type="range"]::-moz-range-thumb:active {
                       oninput="syncTextToColor('border'); updateObsUrlBuilder();" />
                   </div>
                 </div>
+
                 <div>
                   <label class="dst-toggle-label wg-toggle">
-                    
-                    <span>Fill</span>
+                    <div class="wg-toggle-label">
+                      <i data-lucide="paint-bucket"></i>
+                      <span>Fill</span>
+                    </div>
                     <div class="dst-switch">
                       <input type="checkbox" id="obs-no-fill" onchange="toggleFillDisable()">
                       <span class="dst-slider"></span>
@@ -4576,7 +4704,7 @@ input[type="range"]::-moz-range-thumb:active {
       check('obs-show-ended', false);
       testEndedPreviewActive = false;
 
-
+      resetAvatarTransform();
       set('obs-twitch', ''); set('obs-avatar', ''); set('obs-speed', '4.5');
       set('obs-glow1', '90EE90'); set('obs-color1', '#90EE90');
       set('obs-glow2', '64F89D'); set('obs-color2', '#64F89D');
@@ -4883,6 +5011,13 @@ function syncEndedPreviewAvailability() {
       const showEnded = document.getElementById('obs-show-ended')?.checked || false;
 
 
+  // Inside updateObsUrlBuilder():
+      updateAvatarOffsetsOnly();
+
+    const avX = document.getElementById('obs-avatar-x')?.value || '0';
+    const avY = document.getElementById('obs-avatar-y')?.value || '0';
+    const avScale = document.getElementById('obs-avatar-scale')?.value || '100';
+
 
 
 
@@ -5006,6 +5141,10 @@ function syncEndedPreviewAvailability() {
       localStorage.setItem('dst-obs-autoupdate', autoUpdate);
 
 
+    localStorage.setItem('dst-obs-avatar-x', avX);
+    localStorage.setItem('dst-obs-avatar-y', avY);
+    localStorage.setItem('dst-obs-avatar-scale', avScale);
+
 
 
 
@@ -5052,6 +5191,10 @@ function syncEndedPreviewAvailability() {
         if (hatScale !== '100') params.push(`hatscale=${encodeURIComponent(hatScale)}`);
         if (hatRot !== '15') params.push(`hatrot=${encodeURIComponent(hatRot)}`); // <-- ADDED THIS LINE
       }
+
+      if (avX !== '0') params.push(`avx=${encodeURIComponent(avX)}`);
+      if (avY !== '0') params.push(`avy=${encodeURIComponent(avY)}`);
+      if (avScale !== '100') params.push(`avscale=${encodeURIComponent(avScale)}`);
 
       if (testEndedPreviewActive) params.push('testended=1');
 
@@ -5103,6 +5246,10 @@ function syncEndedPreviewAvailability() {
     if (document.getElementById('obs-show-ended')) {
       document.getElementById('obs-show-ended').checked = savedEnded;
     }
+
+    const savedAvX = localStorage.getItem('dst-obs-avatar-x') || '0';
+    const savedAvY = localStorage.getItem('dst-obs-avatar-y') || '0';
+    const savedAvScale = localStorage.getItem('dst-obs-avatar-scale') || '100';
 
 
 
@@ -5170,7 +5317,9 @@ function syncEndedPreviewAvailability() {
           }
         });
       }
-
+    if (document.getElementById('obs-avatar-x')) document.getElementById('obs-avatar-x').value = savedAvX;
+    if (document.getElementById('obs-avatar-y')) document.getElementById('obs-avatar-y').value = savedAvY;
+    if (document.getElementById('obs-avatar-scale')) document.getElementById('obs-avatar-scale').value = savedAvScale;
 
       // 5. Assign remaining text/toggle fields
       if (savedTwitch !== null && document.getElementById('obs-twitch')) document.getElementById('obs-twitch').value = savedTwitch;
@@ -5971,6 +6120,10 @@ function openDiscordModal() {
         au: c('obs-auto-update'),
         se: c('obs-show-ended'),
 
+   ax: v('obs-avatar-x'),
+    ay: v('obs-avatar-y'),
+    as: v('obs-avatar-scale'),
+
         tw: v('obs-twitch'), av: v('obs-avatar'), sp: v('obs-speed'),
         g1: v('obs-glow1'), g2: v('obs-glow2'), g3: v('obs-glow3'), bc: v('obs-border-hex'), fc: v('obs-fill-hex'),
         nb: c('obs-no-border'), nf: c('obs-no-fill'), hh: c('obs-hide-head'),
@@ -5995,7 +6148,10 @@ function openDiscordModal() {
       
       chk('obs-auto-update', o.au !== false);
       chk('obs-show-ended', o.se);
-
+   set('obs-avatar-x', o.ax || 0);
+    set('obs-avatar-y', o.ay || 0);
+    set('obs-avatar-scale', o.as || 100);
+    updateAvatarOffsetsOnly();
 
       const ht = hatMetadata[o.ht] ? o.ht : '';
       selectHatOption(ht, hatMetadata[ht].label, hatMetadata[ht].icon);
@@ -6863,21 +7019,34 @@ function updateUpdatesNotifButtonUI() {
     }
 
 
+function updateAvatarOffsetsOnly() {
+      const x = document.getElementById('obs-avatar-x')?.value || 0;
+      const y = document.getElementById('obs-avatar-y')?.value || 0;
+      const scale = document.getElementById('obs-avatar-scale')?.value || 100;
+
+      const xTxt = document.getElementById('avatar-x-val');
+      const yTxt = document.getElementById('avatar-y-val');
+      const scaleTxt = document.getElementById('avatar-scale-val');
+
+      if (xTxt) xTxt.innerText = `${x}px`;
+      if (yTxt) yTxt.innerText = `${y}px`;
+      if (scaleTxt) scaleTxt.innerText = `${scale}%`;
+    }
+
+    function resetAvatarTransform() {
+      const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+      set('obs-avatar-x', 0);
+      set('obs-avatar-y', 0);
+      set('obs-avatar-scale', 100);
+      updateAvatarOffsetsOnly();
+      updateObsUrlBuilder();
+    }
 
 
-    // Inside updateObsUrlBuilder():
-    const autoUpdate = document.getElementById('obs-auto-update')?.checked !== false; // default true
-    const showEnded = document.getElementById('obs-show-ended')?.checked || false;
 
-    localStorage.setItem('dst-obs-autoupdate', autoUpdate);
-    localStorage.setItem('dst-obs-showended', showEnded);
 
-    // If opted out of auto-updates, tell the widget not to poll
-    if (!autoUpdate) params.push('autopoll=0');
-    if (showEnded) params.push('showended=1');
 
-    // Force ended badge in iframe preview when testing
-    if (testEndedPreviewActive) params.push('testended=1');
+
 
 
 

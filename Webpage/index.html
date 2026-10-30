@@ -1475,11 +1475,7 @@
       margin-top: 2px;
     }
 
-    #download-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 25px;
-    }
+
 
     .asset-card {
       background: rgba(26, 19, 16, 0.9);
@@ -4241,22 +4237,211 @@
     .yt-thumb:hover .yt-play { transform: translate(-50%, -50%) scale(1.1); }
     .yt-fallback { display: inline-block; margin: -4px 0 14px; font-family: var(--font-hand); font-size: 1rem; color: var(--dst-flame-bright); }
 
-    /* ═══ ASSETS PAGE: tighter cards, less dead space ═══ */
-    #download-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
-    #download-grid .asset-card { padding: 10px 10px 12px; gap: 8px; }
-    #download-grid .asset-preview-stage { height: 104px; margin-top: 20px; }
-    #download-grid .asset-preview-stage img { max-height: 84px; }
-    #download-grid .asset-card-tag { top: 6px; left: 6px; }
-    #download-grid .asset-card-format { top: 6px; right: 6px; }
-    #download-grid .asset-info h4 { font-size: 1rem !important; }
-    #download-grid .asset-info p { font-size: 0.9rem !important; }
-    #download-grid .asset-actions .dst-btn { padding: 5px 8px; font-size: 0.9rem; }
-    .asset-header-card { margin-bottom: 16px; padding: 10px 14px; }
-    @media (max-width: 600px) {
-      #download-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      #download-grid .asset-preview-stage { height: 90px; }
-      #download-grid .asset-actions { flex-direction: column; gap: 6px; }
+
+    /* ═══ HEADER v3: row 1 = brand + actions, row 2 = tabs ═══ */
+    @media (min-width: 901px) {
+      aside { flex-wrap: wrap; align-items: center; row-gap: 10px; padding: 12px 28px 10px; }
+      .brand { order: 1; margin: 0; }
+      .sidebar-footer { order: 2; margin-left: auto; }
+      aside::before {
+        content: ""; order: 3; flex: 0 0 100%; height: 1px; margin: 2px 0 0;
+        background: repeating-linear-gradient(90deg, #3a2b22 0 8px, transparent 8px 14px);
+      }
+      aside > .dst-tab, aside > a.dst-tab, aside > .nav-group-label { order: 4; }
+      aside a.dst-tab:first-of-type { margin-left: 10px; }
+
+      /* there is room again, so show full labels */
+      .brand-sub { display: block; }
+      .notif-button span { display: inline; }
+      .notif-button { padding: 8px 14px; }
+      .sidebar-footer { gap: 10px; }
+     
     }
+    @media (max-width: 900px) { aside::before { display: none; } }
+
+    /* ═══ ASSETS PAGE: roomy, centred cards ═══ */
+    #download-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); justify-content: center; gap: 22px; }
+    #download-grid .asset-card { padding: 16px; gap: 12px; }
+    #download-grid .asset-preview-stage { height: 190px; margin-top: 24px; }
+    #download-grid .asset-preview-stage img { max-height: 160px; max-width: 88%; }
+    #download-grid .asset-info h4 { font-size: 1.25rem !important; }
+    #download-grid .asset-info p { font-size: 1.05rem !important; }
+    #download-grid .asset-actions .dst-btn { padding: 9px 12px; font-size: 1rem; }
+    .asset-header-card { margin-bottom: 22px; padding: 12px 18px; }
+    @media (max-width: 600px) {
+      #download-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      #download-grid .asset-card { padding: 12px 10px; }
+      #download-grid .asset-preview-stage { height: 120px; margin-top: 22px; }
+      #download-grid .asset-preview-stage img { max-height: 98px; }
+      #download-grid .asset-info h4 { font-size: 1.05rem !important; }
+      #download-grid .asset-info p { font-size: 0.9rem !important; }
+      #download-grid .asset-actions .dst-btn { padding: 7px 6px; font-size: 0.9rem; }
+    }
+
+@media (max-width: 900px) {
+  .updates-toolbar { flex-direction: column; align-items: stretch; gap: 10px; }
+  .updates-actions-bar { display: flex; gap: 8px; width: 100%; }
+  .updates-actions-bar .tool-btn,
+  .updates-actions-bar .dst-btn {
+    flex: 1;
+    justify-content: center;
+    white-space: nowrap;      /* stops "Steam News" wrapping onto two lines */
+    padding: 8px 10px;
+    font-size: 1rem;
+    height: auto;
+    min-height: 0;
+  }
+}
+@media (min-width: 901px) {
+  .sidebar-footer { order: 4; margin-left: 10px; }
+}
+.updates-actions-bar .notif-button { width: auto; white-space: nowrap; padding: 8px 14px; }
+.updates-actions-bar .notif-button span { display: inline; }   /* your mobile rules hide button text */
+
+@media (max-width: 900px) {
+  .updates-actions-bar { flex-wrap: wrap; }
+  .updates-actions-bar .notif-button { flex: 1 1 100%; justify-content: center; }
+}
+
+/* ═══════════════════════ DST UI KIT ═══════════════════════ */
+:root {
+  --ui-frame: var(--dst-flame);            /* frame colour for controls */
+  --ui-frame-on: var(--dst-green);         /* checked checkbox frame and tick */
+  --ui-gold: #d9b45a;                      /* slider knob and end caps */
+  --ui-mark: #f3e6c4;                      /* tick colour */
+  --ui-h: 40px;                            /* standard control height */
+  --ui-inset: inset 0 0 6px #000, 0 0 0 1px #000;
+  --ui-focus: 0 0 0 3px rgba(231, 108, 30, 0.35);
+}
+
+/* ── 1. CHECKBOX ───────────────────────────────────────── */
+.dst-switch { position: relative; display: inline-block; width: 28px; height: 28px; flex-shrink: 0; }
+.dst-switch input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; z-index: 2; }
+.dst-slider {
+  position: absolute; inset: 0; background: #0b0806;
+  border: 3px solid var(--ui-frame); border-radius: 6px; box-shadow: var(--ui-inset);
+  transition: border-color .15s, box-shadow .15s, filter .15s, transform .1s;
+}
+.dst-slider::after {          /* side notches */
+  content: ""; position: absolute; left: -6px; right: -6px; top: 50%; height: 10px; transform: translateY(-50%);
+  border-left: 3px solid var(--ui-frame); border-right: 3px solid var(--ui-frame); border-radius: 2px;
+  pointer-events: none; transition: border-color .15s;
+}
+.dst-slider::before {         /* tick */
+  content: ""; position: absolute; left: 50%; top: 50%; bottom: auto; width: 6px; height: 12px;
+  background: none; border: solid var(--ui-mark); border-width: 0 3px 3px 0; border-radius: 0; box-shadow: none;
+  transform: translate(-50%, -62%) rotate(45deg) scale(0);
+  transition: transform .14s cubic-bezier(.3, 1.6, .5, 1);
+}
+.dst-switch input:checked + .dst-slider { background: #0b0806; border-color: var(--ui-frame-on); box-shadow: var(--ui-inset), 0 0 8px rgba(123, 216, 143, .3); }
+.dst-switch input:checked + .dst-slider::after { border-color: var(--ui-frame-on); }
+.dst-switch input:checked + .dst-slider::before { transform: translate(-50%, -62%) rotate(45deg) scale(1); }
+.dst-switch:hover .dst-slider { filter: brightness(1.2); }
+.dst-switch:active .dst-slider { transform: scale(.92); }
+.dst-switch input:focus-visible + .dst-slider { outline: 2px solid var(--dst-flame-bright); outline-offset: 4px; }
+.dst-switch input:disabled + .dst-slider { opacity: .4; filter: grayscale(1); }
+.dst-toggle-label, .dst-toggle-label.wg-toggle {
+  display: inline-flex; align-items: center; justify-content: flex-start; gap: 12px; width: fit-content;
+}
+.dst-toggle-label .dst-switch { order: -1; }
+
+/* ── 2. SLIDER (tick track, gold diamond knob, end caps) ── */
+input[type="range"] {
+  -webkit-appearance: none; appearance: none; width: 100%; height: 22px; margin: 4px 0; padding: 0;
+  background:
+    linear-gradient(var(--ui-gold), var(--ui-gold)) left center / 4px 16px no-repeat,
+    linear-gradient(var(--ui-gold), var(--ui-gold)) right center / 4px 16px no-repeat,
+    linear-gradient(#5a5a5a, #5a5a5a) center / calc(100% - 12px) 5px no-repeat,
+    repeating-linear-gradient(90deg, #7a7a7a 0 3px, transparent 3px 10%) center / calc(100% - 12px) 13px no-repeat;
+  border: none; border-radius: 0; box-shadow: none; outline: none;
+}
+input[type="range"]:hover { border: none; box-shadow: none; }
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 20px; height: 20px; border: none; border-radius: 0; box-shadow: none;
+  background: linear-gradient(135deg, #f3d98a 0%, var(--ui-gold) 50%, #a8832f 100%);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); transition: transform .12s;
+}
+input[type="range"]::-moz-range-track { background: transparent; border: none; }
+input[type="range"]::-moz-range-thumb {
+  width: 20px; height: 20px; border: none; border-radius: 0; box-shadow: none;
+  background: linear-gradient(135deg, #f3d98a 0%, var(--ui-gold) 50%, #a8832f 100%);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+input[type="range"]:active::-webkit-slider-thumb { transform: scale(.95); background: linear-gradient(135deg, #fff3c4, #f3d98a 55%, var(--ui-gold)); }
+input[type="range"]:focus-visible { outline: 2px solid var(--dst-flame-bright); outline-offset: 3px; }
+
+/* ── 3. COLOUR PICKER BUTTON (framed swatch) ──────────── */
+/* input[type="color"], .wg-color input[type="color"] {
+  -webkit-appearance: none; appearance: none; width: var(--ui-h); height: var(--ui-h); padding: 3px;
+  background: #0b0806; border: 3px solid var(--ui-frame); border-radius: 6px; box-shadow: var(--ui-inset);
+  transition: filter .15s, box-shadow .15s, transform .1s;
+} */
+input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+input[type="color"]::-webkit-color-swatch { border: 2px solid #000; border-radius: 3px; }
+input[type="color"]::-moz-color-swatch { border: 2px solid #000; border-radius: 3px; }
+input[type="color"]:hover { filter: brightness(1.2); box-shadow: var(--ui-inset), 0 0 10px rgba(231, 108, 30, .45); border-color: var(--ui-frame); }
+input[type="color"]:active { transform: scale(.94); }
+input[type="color"]:focus-visible { outline: 2px solid var(--dst-flame-bright); outline-offset: 3px; }
+
+/* ── 4. TEXT / NUMBER / SEARCH INPUTS ─────────────────── */
+.search-input-box, input[type="text"], input[type="number"] { transition: border-color .15s, box-shadow .15s; }
+.search-input-box::placeholder, input[type="text"]::placeholder { color: #8a7566; opacity: 1; }
+.search-input-box:focus, input[type="text"]:focus, input[type="number"]:focus {
+  border-color: var(--dst-flame); box-shadow: inset 0 2px 6px rgba(0, 0, 0, .8), var(--ui-focus); outline: none;
+}
+
+/* ── 5. DROPDOWNS ─────────────────────────────────────── */
+.custom-dropdown-trigger { min-height: var(--ui-h); }
+.custom-dropdown-trigger:focus-visible { outline: 2px solid var(--dst-flame-bright); outline-offset: 3px; }
+.custom-dst-dropdown.open .custom-dropdown-trigger { border-color: var(--dst-flame); box-shadow: var(--ui-focus); }
+.dst-dropdown-arrow { transition: transform .2s ease; }
+.custom-dst-dropdown.open .dst-dropdown-arrow { transform: rotate(180deg); }
+.custom-dropdown-item { position: relative; }
+.custom-dropdown-item:hover { box-shadow: inset 3px 0 0 var(--dst-flame); }
+.custom-dropdown-item.active { color: #fff; box-shadow: inset 3px 0 0 var(--dst-flame-bright); background: #2d1e16; }
+.custom-dropdown-item.active::after { content: "✓"; margin-left: auto; color: var(--dst-flame-bright); font-weight: bold; }
+.custom-dropdown-menu { scrollbar-width: thin; scrollbar-color: var(--dst-border-highlight) #120e0c; }
+
+/* ── 6. BUTTONS (one height, one behaviour) ───────────── */
+.dst-btn, .tool-btn, .notif-button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: var(--ui-h); line-height: 1; transition: background .15s, border-color .15s, color .15s, transform .1s, box-shadow .15s;
+}
+.dst-btn:active, .tool-btn:active, .notif-button:active { transform: translateY(1px) scale(.98); }
+.dst-btn:focus-visible, .tool-btn:focus-visible, .notif-button:focus-visible,
+.platform-pill:focus-visible, .hat-pos-pill:focus-visible, .branch-toggle-btn:focus-visible {
+  outline: 2px solid var(--dst-flame-bright); outline-offset: 3px;
+}
+.dst-btn svg, .tool-btn svg, .notif-button svg { flex-shrink: 0; }
+
+/* ── 7. PILLS / FILTER BUTTONS ────────────────────────── */
+.platform-pill, .hat-pos-pill, .branch-toggle-btn { transition: background .15s, border-color .15s, color .15s, box-shadow .15s; }
+.platform-pill.active, .hat-pos-pill.active, .branch-toggle-btn.active { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), 0 0 10px rgba(231, 108, 30, .35); }
+
+/* ── 8. ACTION CLUSTER (Notifications + Sound) ────────── */
+.sidebar-footer { display: flex; align-items: center; gap: 8px; }
+.sidebar-footer .notif-button { width: auto; padding: 0 14px; white-space: nowrap; }
+.notif-button.active { box-shadow: inset 0 0 8px rgba(79, 128, 47, .35), 0 0 8px rgba(79, 128, 47, .25); }
+
+/* ── TOUCH: bigger targets ────────────────────────────── */
+@media (pointer: coarse) {
+  :root { --ui-h: 44px; }
+  .dst-switch { width: 32px; height: 32px; }
+  input[type="range"] { height: 28px; }
+  input[type="range"]::-webkit-slider-thumb { width: 24px; height: 24px; }
+  input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dst-slider, .dst-slider::before, .dst-slider::after, .dst-dropdown-arrow, .dst-btn, .tool-btn, .notif-button { transition: none; }
+}
+
+
+
+
+
+
+
 </style>
 </head>
 
@@ -4483,7 +4668,14 @@
 
         <input type="text" id="updates-search" class="search-input-box updates-search-input"
           placeholder="Filter PC updates by patch number, title, or keyword..." oninput="filterGameUpdates()">
+<!-- <button type="button" id="updates-notif-btn" class="notif-button" onclick="toggleUpdatesNotif()">
+  <i data-lucide="bell"></i>
+  <span id="updates-notif-text">Enable Update Alerts</span>
+</button>
+ -->
       </div>
+
+
 
       <div id="updates-status" style="font-family: var(--font-hand); font-size: 1.15rem; color: var(--dst-flame); margin-bottom: 18px; text-align: center;">
         Fetching recent PC patch notes from Steam...
@@ -6852,6 +7044,16 @@
 
     init();
 
+  updateUpdatesNotifUI();
+
+/*   setTimeout(() => {
+    if (localStorage.getItem('dst-updates-notif-enabled') === 'true') fetchGameUpdates();
+  }, 4000);
+  setInterval(() => {
+    if (!document.hidden && localStorage.getItem('dst-updates-notif-enabled') === 'true') fetchGameUpdates(true);
+  }, 30 * 60 * 1000); */
+
+
     let currentAssetCategory = 'all';
     let assetCheckerboardActive = false;
 
@@ -7231,6 +7433,7 @@ if (ytid) {
           if (!items.length) throw new Error('No PC updates in feed');
           rawGameUpdates = items;
           lastUpdatesFetch = Date.now();
+            checkNewUpdateAlerts(items);
           try { localStorage.setItem(cacheKey, JSON.stringify({ t: Date.now(), items })); } catch (e) { }
           filterGameUpdates();
           return;
@@ -7334,6 +7537,64 @@ if (ytid) {
     function closePatchModal() {
       document.getElementById('patch-modal').classList.remove('active');
     }
+
+function updateUpdatesNotifUI() {
+  const on = localStorage.getItem('dst-updates-notif-enabled') === 'true';
+  document.getElementById('updates-notif-btn')?.classList.toggle('active', on);
+  const t = document.getElementById('updates-notif-text');
+  if (t) t.innerText = on ? 'Update Alerts Active' : 'Enable Update Alerts';
+}
+
+async function toggleUpdatesNotif() {
+  const key = 'dst-updates-notif-enabled';
+
+  if (localStorage.getItem(key) === 'true') {
+    localStorage.setItem(key, 'false');
+    showInAppToast('Update Alerts Off', 'You will no longer be notified about new game updates.', 'bell-off');
+    updateUpdatesNotifUI();
+    return;
+  }
+
+  if (!('Notification' in window)) {
+    showInAppToast('Unsupported', 'Your browser does not support web notifications.', 'bell-off');
+    return;
+  }
+
+  const perm = Notification.permission === 'granted' ? 'granted' : await Notification.requestPermission();
+  if (perm === 'granted') {
+    localStorage.setItem(key, 'true');
+    localStorage.removeItem('dst-last-update-seen');   // so the first check stays silent
+    showInAppToast('Update Alerts On', "We'll let you know when a new DST update is posted.", 'bell-ring');
+    fetchGameUpdates(true);                            // records the latest update as the starting point
+  } else {
+    localStorage.setItem(key, 'false');
+    showInAppToast('Permission Denied', 'Enable notifications in browser settings.', 'bell-off');
+  }
+  updateUpdatesNotifUI();
+}
+
+function checkNewUpdateAlerts(items) {
+  if (!items || !items.length) return;
+  const sorted = items.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
+  const id = u => u.url || (u.title + u.date);
+  const seenKey = 'dst-last-update-seen';
+  const seen = localStorage.getItem(seenKey);
+  localStorage.setItem(seenKey, id(sorted[0]));
+
+  if (!seen) return;
+  if (localStorage.getItem('dst-updates-notif-enabled') !== 'true') return;   // its own switch
+
+  const idx = sorted.findIndex(u => id(u) === seen);
+  const fresh = idx === -1 ? sorted.slice(0, 1) : sorted.slice(0, idx);
+  fresh.slice(0, 2).forEach(u =>
+    triggerSafeNotification(`New DST update (${u.tagLabel})`, u.title,
+      'https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg'));
+}
+
+
+
+
+
 
   </script>
 </body>

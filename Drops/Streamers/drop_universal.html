@@ -541,6 +541,8 @@
     const hatScaleVal = parseInt(urlParams.get('hatscale') || '100', 10) / 100;
     const hatRot = parseInt(urlParams.get('hatrot') || '15', 10); // Added rotation parameter reader
     const showEndedBadge = urlParams.get('showended') === '1';
+    const enableAutoPoll = urlParams.get('autopoll') !== '0'; // true unless opted out with autopoll=0
+    const forceTestEnded = urlParams.get('testended') === '1'; // preview test mode
 
 
     const defaultHatUrls = {

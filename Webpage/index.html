@@ -6244,7 +6244,7 @@ function openDiscordModal() {
         const b64 = raw.replace(/-/g, '+').replace(/_/g, '/');
         applyWidgetSnapshot(JSON.parse(decodeURIComponent(escape(atob(b64)))));
         nav('widget');
-        showInAppToast('Shared setup loaded', 'Tweak it or save it as your own preset.');
+        showInAppToast('Shared setup loaded', 'Tweak it or save it as your own preset.', 'users-round-collaboration');
       } catch (e) { console.warn('Bad share link', e); }
       history.replaceState(null, '', location.pathname + location.hash);
     }

@@ -4826,6 +4826,51 @@ function toggleDropdownWithCollision(dropdownEl, e) {
       }
     }
 
+
+    let testEndedPreviewActive = false;
+
+function syncEndedPreviewAvailability() {
+      const showEnded = document.getElementById('obs-show-ended')?.checked || false;
+      const testBtn = document.getElementById('wg-test-ended-btn');
+
+      if (!testBtn) return;
+
+      // If the toggle is unticked, disable and turn off test mode
+      if (!showEnded) {
+        testBtn.disabled = true;
+        testBtn.style.opacity = '0.35';
+        testBtn.style.cursor = 'not-allowed';
+        testBtn.style.pointerEvents = 'none';
+
+        if (testEndedPreviewActive) {
+          testEndedPreviewActive = false;
+          testBtn.classList.remove('active');
+          const text = document.getElementById('wg-test-ended-text');
+          if (text) text.innerText = 'Test Ended State';
+        }
+      } else {
+        testBtn.disabled = false;
+        testBtn.style.opacity = '1';
+        testBtn.style.cursor = 'pointer';
+        testBtn.style.pointerEvents = 'auto';
+      }
+    }
+
+    function toggleTestEndedPreview() {
+      const showEnded = document.getElementById('obs-show-ended')?.checked || false;
+      if (!showEnded) return; // Guard clause
+
+      testEndedPreviewActive = !testEndedPreviewActive;
+      const btn = document.getElementById('wg-test-ended-btn');
+      const text = document.getElementById('wg-test-ended-text');
+
+      if (btn) btn.classList.toggle('active', testEndedPreviewActive);
+      if (text) text.innerText = testEndedPreviewActive ? 'Showing Ended' : 'Test Ended State';
+
+      updateObsUrlBuilder();
+    }
+
+
     function updateObsUrlBuilder() {
       const twitch = (document.getElementById('obs-twitch')?.value || '').toLowerCase().trim();
       const avatar = (document.getElementById('obs-avatar')?.value || '').trim();
@@ -4834,10 +4879,18 @@ function toggleDropdownWithCollision(dropdownEl, e) {
       const hideHead = document.getElementById('obs-hide-head')?.checked || false;
       const speed = (document.getElementById('obs-speed')?.value || '4.5').trim();
 
+      const autoUpdate = document.getElementById('obs-auto-update')?.checked !== false; // default true
       const showEnded = document.getElementById('obs-show-ended')?.checked || false;
 
 
+
+
+
+      // Force ended badge in iframe preview when testing
+
       updateHatOffsetsOnly();
+      syncEndedPreviewAvailability(); // Keep preview button in sync with toggle
+
 
       const borderHex = (document.getElementById('obs-border-hex')?.value || '').replace(/#/g, '').trim().toUpperCase();
       const fillHex = (document.getElementById('obs-fill-hex')?.value || '').replace(/#/g, '').trim().toUpperCase();
@@ -4915,6 +4968,8 @@ function toggleDropdownWithCollision(dropdownEl, e) {
         warnEl.hidden = !msg;
       }
 
+      
+
       const g1 = (document.getElementById('obs-glow1')?.value || '').replace(/#/g, '').trim().toUpperCase();
       const g2 = (document.getElementById('obs-glow2')?.value || '').replace(/#/g, '').trim().toUpperCase();
       const g3 = (document.getElementById('obs-glow3')?.value || '').replace(/#/g, '').trim().toUpperCase();
@@ -4948,6 +5003,7 @@ function toggleDropdownWithCollision(dropdownEl, e) {
       localStorage.setItem('dst-obs-hatrot', hatRot); // Added rotation storage
 
       localStorage.setItem('dst-obs-showended', showEnded);
+      localStorage.setItem('dst-obs-autoupdate', autoUpdate);
 
 
 
@@ -4980,7 +5036,11 @@ function toggleDropdownWithCollision(dropdownEl, e) {
       }
 
             // In your params array push block:
+
+      // If opted out of auto-updates, tell the widget not to poll
+      if (!autoUpdate) params.push('autopoll=0');
       if (showEnded) params.push('showended=1');
+
       // In your params push block:
       // In your params push block:
       if (hatType !== '') {
@@ -4993,6 +5053,7 @@ function toggleDropdownWithCollision(dropdownEl, e) {
         if (hatRot !== '15') params.push(`hatrot=${encodeURIComponent(hatRot)}`); // <-- ADDED THIS LINE
       }
 
+      if (testEndedPreviewActive) params.push('testended=1');
 
 
       url += params.join('&');
@@ -5109,6 +5170,7 @@ function toggleDropdownWithCollision(dropdownEl, e) {
           }
         });
       }
+
 
       // 5. Assign remaining text/toggle fields
       if (savedTwitch !== null && document.getElementById('obs-twitch')) document.getElementById('obs-twitch').value = savedTwitch;
@@ -5695,6 +5757,8 @@ function openDiscordModal() {
       renderWgPresets();
       applySharedWidgetFromUrl();
       updateUpdatesNotifButtonUI();
+      syncEndedPreviewAvailability(); // Keep preview button in sync with toggle
+
 
       try {
         const [cRes, aRes] = await Promise.all([
@@ -6799,16 +6863,7 @@ function updateUpdatesNotifButtonUI() {
     }
 
 
-let testEndedPreviewActive = false;
 
-    function toggleTestEndedPreview() {
-      testEndedPreviewActive = !testEndedPreviewActive;
-      const btn = document.getElementById('wg-test-ended-btn');
-      const text = document.getElementById('wg-test-ended-text');
-      if (btn) btn.classList.toggle('active', testEndedPreviewActive);
-      if (text) text.innerText = testEndedPreviewActive ? 'Showing Ended' : 'Test Ended State';
-      updateObsUrlBuilder();
-    }
 
     // Inside updateObsUrlBuilder():
     const autoUpdate = document.getElementById('obs-auto-update')?.checked !== false; // default true

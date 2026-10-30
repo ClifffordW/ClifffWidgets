@@ -276,11 +276,13 @@
     }
 
     /* ─── STREAMER AVATAR WRAPPER ────────────────────────────────── */
-    .streamer-wrap {
+.streamer-wrap {
       position: absolute;
       bottom: 210px;
       left: 21%;
-      transform: translateX(-50%);
+      /* Injects custom offsets and scale safely into base position */
+      transform: translate(calc(-50% + var(--av-offset-x, 0px)), var(--av-offset-y, 0px)) scale(var(--av-scale, 1));
+      transform-origin: center center;
       z-index: 10;
       display: none;
       animation:
@@ -293,6 +295,7 @@
       bottom: auto;
       top: 340px;
       left: 175px;
+      transform: translate(var(--av-offset-x, 0px), var(--av-offset-y, 0px)) scale(var(--av-scale, 1));
     }
 
     .streamer-head {

@@ -3939,6 +3939,25 @@ input[type="range"]::-moz-range-thumb:active {
           <div class="wg-settings">
 
             <div class="wg-panel">
+
+<!-- Auto-Update Toggle (Enabled by default, uncheck to opt out) -->
+              <label class="dst-toggle-label wg-toggle" title="Periodically re-fetches Klei records in OBS to automatically catch mid-stream campaign updates">
+                <span>Auto-Update Mid-Stream</span>
+                <div class="dst-switch">
+                  <input type="checkbox" id="obs-auto-update" checked onchange="updateObsUrlBuilder()">
+                  <span class="dst-slider"></span>
+                </div>
+              </label>
+
+              <!-- Opt-in "Drops Over" Badge Toggle -->
+              <label class="dst-toggle-label wg-toggle" title="Display an 'Embers Extinguished' badge in OBS when no drop is running instead of staying blank/hidden">
+                <span>Show "Drops Over" Badge</span>
+                <div class="dst-switch">
+                  <input type="checkbox" id="obs-show-ended" onchange="updateObsUrlBuilder()">
+                  <span class="dst-slider"></span>
+                </div>
+              </label>
+
               <div class="wg-panel-head"><i data-lucide="bookmark"></i>
                 <h4>Presets &amp; Sharing</h4>
               </div>
@@ -4235,6 +4254,11 @@ input[type="range"]::-moz-range-thumb:active {
 
             <div class="wg-preview-card">
               <div class="wg-preview-head">
+
+                <!-- Live Preview ended state tester -->
+                <button type="button" id="wg-test-ended-btn" class="tool-btn" onclick="toggleTestEndedPreview()" title="Preview how the widget looks when drops are extinguished">
+                  <i data-lucide="eye"></i><span id="wg-test-ended-text">Test Ended State</span>
+                </button>
                 <h4><i data-lucide="eye"></i> Live Preview</h4>
                 <div class="wg-res" title="Recommended OBS Browser Source size">
                   <i data-lucide="monitor"></i>
@@ -4548,6 +4572,11 @@ input[type="range"]::-moz-range-thumb:active {
       const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
       const check = (id, v) => { const el = document.getElementById(id); if (el) el.checked = v; };
 
+      check('obs-auto-update', true);
+      check('obs-show-ended', false);
+      testEndedPreviewActive = false;
+
+
       set('obs-twitch', ''); set('obs-avatar', ''); set('obs-speed', '4.5');
       set('obs-glow1', '90EE90'); set('obs-color1', '#90EE90');
       set('obs-glow2', '64F89D'); set('obs-color2', '#64F89D');
@@ -4805,6 +4834,7 @@ function toggleDropdownWithCollision(dropdownEl, e) {
       const hideHead = document.getElementById('obs-hide-head')?.checked || false;
       const speed = (document.getElementById('obs-speed')?.value || '4.5').trim();
 
+      const showEnded = document.getElementById('obs-show-ended')?.checked || false;
 
 
       updateHatOffsetsOnly();
@@ -4917,6 +4947,8 @@ function toggleDropdownWithCollision(dropdownEl, e) {
       localStorage.setItem('dst-obs-hatscale', hatScale);
       localStorage.setItem('dst-obs-hatrot', hatRot); // Added rotation storage
 
+      localStorage.setItem('dst-obs-showended', showEnded);
+
 
 
 
@@ -4947,6 +4979,8 @@ function toggleDropdownWithCollision(dropdownEl, e) {
         params.push(`fill=${encodeURIComponent(fillHex)}`);
       }
 
+            // In your params array push block:
+      if (showEnded) params.push('showended=1');
       // In your params push block:
       // In your params push block:
       if (hatType !== '') {
@@ -4998,6 +5032,19 @@ function toggleDropdownWithCollision(dropdownEl, e) {
     }
 
     function initWidgetState() {
+
+// Inside initWidgetState():
+    const savedAuto = localStorage.getItem('dst-obs-autoupdate');
+    if (document.getElementById('obs-auto-update')) {
+      document.getElementById('obs-auto-update').checked = savedAuto !== 'false'; // default true
+    }
+    const savedEnded = localStorage.getItem('dst-obs-showended') === 'true';
+    if (document.getElementById('obs-show-ended')) {
+      document.getElementById('obs-show-ended').checked = savedEnded;
+    }
+
+
+
       const savedTwitch = localStorage.getItem('dst-obs-twitch');
       const savedAvatar = localStorage.getItem('dst-obs-avatar');
       const savedSolo = localStorage.getItem('dst-obs-solo') === 'true';
@@ -5851,7 +5898,15 @@ function openDiscordModal() {
     function getWidgetSnapshot() {
       const v = id => document.getElementById(id)?.value ?? '';
       const c = id => !!document.getElementById(id)?.checked;
+
+
+  
+
       return {
+        
+        au: c('obs-auto-update'),
+        se: c('obs-show-ended'),
+
         tw: v('obs-twitch'), av: v('obs-avatar'), sp: v('obs-speed'),
         g1: v('obs-glow1'), g2: v('obs-glow2'), g3: v('obs-glow3'), bc: v('obs-border-hex'), fc: v('obs-fill-hex'),
         nb: c('obs-no-border'), nf: c('obs-no-fill'), hh: c('obs-hide-head'),
@@ -5873,6 +5928,10 @@ function openDiscordModal() {
       set('obs-twitch', o.tw); set('obs-avatar', o.av); set('obs-speed', o.sp);
       chk('obs-no-border', o.nb); chk('obs-no-fill', o.nf); chk('obs-hide-head', o.hh);
       toggleBorderDisable(); toggleFillDisable();
+      
+      chk('obs-auto-update', o.au !== false);
+      chk('obs-show-ended', o.se);
+
 
       const ht = hatMetadata[o.ht] ? o.ht : '';
       selectHatOption(ht, hatMetadata[ht].label, hatMetadata[ht].icon);
@@ -6740,7 +6799,30 @@ function updateUpdatesNotifButtonUI() {
     }
 
 
+let testEndedPreviewActive = false;
 
+    function toggleTestEndedPreview() {
+      testEndedPreviewActive = !testEndedPreviewActive;
+      const btn = document.getElementById('wg-test-ended-btn');
+      const text = document.getElementById('wg-test-ended-text');
+      if (btn) btn.classList.toggle('active', testEndedPreviewActive);
+      if (text) text.innerText = testEndedPreviewActive ? 'Showing Ended' : 'Test Ended State';
+      updateObsUrlBuilder();
+    }
+
+    // Inside updateObsUrlBuilder():
+    const autoUpdate = document.getElementById('obs-auto-update')?.checked !== false; // default true
+    const showEnded = document.getElementById('obs-show-ended')?.checked || false;
+
+    localStorage.setItem('dst-obs-autoupdate', autoUpdate);
+    localStorage.setItem('dst-obs-showended', showEnded);
+
+    // If opted out of auto-updates, tell the widget not to poll
+    if (!autoUpdate) params.push('autopoll=0');
+    if (showEnded) params.push('showended=1');
+
+    // Force ended badge in iframe preview when testing
+    if (testEndedPreviewActive) params.push('testended=1');
 
 
 

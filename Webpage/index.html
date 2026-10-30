@@ -1884,7 +1884,7 @@
 
     .wg-grid-3 {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
 
@@ -4014,6 +4014,12 @@ input[type="range"]::-moz-range-thumb:active {
             <div class="wg-panel">
 
 <!-- Auto-Update Toggle with Refresh Icon -->
+
+
+
+              <div class="wg-panel-head"><i data-lucide="settings-2"></i>
+                <h4>General</h4>
+              </div>
               <label class="dst-toggle-label wg-toggle" title="Periodically re-fetches Klei records in OBS to automatically catch mid-stream campaign updates">
                 <div class="wg-toggle-label">
                   <i data-lucide="refresh-cw"></i>
@@ -4025,8 +4031,10 @@ input[type="range"]::-moz-range-thumb:active {
                 </div>
               </label>
 
+              
+              
               <!-- Drops Over Toggle with Extinguished Flame Icon -->
-              <label class="dst-toggle-label wg-toggle" title="Display an 'Embers Extinguished' badge in OBS when no drop is running instead of staying blank/hidden">
+              <label class="dst-toggle-label wg-toggle" title="Display an badge in OBS when no drop is running instead of staying blank/hidden">
                 <div class="wg-toggle-label">
                   <i data-lucide="grid-2x2-x"></i>
                   <span>Show "Drops Over" Badge</span>
@@ -4104,11 +4112,11 @@ input[type="range"]::-moz-range-thumb:active {
                 <h4>Streamer</h4>
               </div>
 
-              <div>
+<!--               <div>
                 <label class="wg-label" for="obs-twitch">Twitch Username</label>
                 <input type="text" id="obs-twitch" class="search-input-box" placeholder="e.g. clifffordw"
                   style="padding: 10px 14px; font-size: 1.1rem;" />
-              </div>
+              </div> -->
 
               <div>
                 <label class="wg-label" for="obs-avatar">Avatar Image URL</label>
@@ -4124,12 +4132,14 @@ input[type="range"]::-moz-range-thumb:active {
                   </button>
                 </div>
 
+
+                
                 <div class="wg-grid-3 wg-sliders">
                   <div class="wg-slider">
                     <div class="wg-slider-top"><span>Offset X</span><b id="avatar-x-val">0px</b></div>
                     <div class="wg-slider-row">
                       <i data-lucide="arrow-left"></i>
-                      <input type="range" id="obs-avatar-x" min="-150" max="150" value="0" step="1" oninput="updateAvatarOffsetsOnly()" onchange="updateObsUrlBuilder()" />
+                      <input type="range" id="obs-avatar-x" min="-300" max="300" value="0" step="1" oninput="updateAvatarOffsetsOnly()" onchange="updateObsUrlBuilder()" />
                       <i data-lucide="arrow-right"></i>
                     </div>
                   </div>
@@ -4138,7 +4148,7 @@ input[type="range"]::-moz-range-thumb:active {
                     <div class="wg-slider-top"><span>Offset Y</span><b id="avatar-y-val">0px</b></div>
                     <div class="wg-slider-row">
                       <i data-lucide="arrow-up"></i>
-                      <input type="range" id="obs-avatar-y" min="-150" max="150" value="0" step="1" oninput="updateAvatarOffsetsOnly()" onchange="updateObsUrlBuilder()" />
+                      <input type="range" id="obs-avatar-y" min="-300" max="300" value="0" step="1" oninput="updateAvatarOffsetsOnly()" onchange="updateObsUrlBuilder()" />
                       <i data-lucide="arrow-down"></i>
                     </div>
                   </div>
@@ -4147,10 +4157,18 @@ input[type="range"]::-moz-range-thumb:active {
                     <div class="wg-slider-top"><span>Scale</span><b id="avatar-scale-val">100%</b></div>
                     <div class="wg-slider-row">
                       <i data-lucide="minimize-2"></i>
-                      <input type="range" id="obs-avatar-scale" min="50" max="250" value="100" step="5" oninput="updateAvatarOffsetsOnly()" onchange="updateObsUrlBuilder()" />
+                      <input type="range" id="obs-avatar-scale" min="0" max="200" value="100" step="5" oninput="updateAvatarOffsetsOnly()" onchange="updateObsUrlBuilder()" />
                       <i data-lucide="maximize-2"></i>
                     </div>
                   </div>
+                    <div class="wg-slider">
+                      <div class="wg-slider-top"><span>Rotation</span><b id="avatar-rot-val">0°</b></div>
+                      <div class="wg-slider-row"><i data-lucide="rotate-ccw"></i>
+                        <input type="range" id="obs-avatar-rot" min="-180" max="180" value="0" step="5" oninput="updateAvatarOffsetsOnly()" onchange="updateObsUrlBuilder()" />
+                        <i data-lucide="rotate-cw"></i>
+                      </div>
+                    </div>
+
                 </div>
               </div>
 
@@ -4357,14 +4375,14 @@ input[type="range"]::-moz-range-thumb:active {
                     <div class="wg-slider">
                       <div class="wg-slider-top"><span>Scale</span><b id="hat-scale-val">100%</b></div>
                       <div class="wg-slider-row"><i data-lucide="minimize-2"></i>
-                        <input type="range" id="obs-hat-scale" min="50" max="400" value="100" step="5" />
+                        <input type="range" id="obs-hat-scale" min="0" max="200" value="100" step="5" />
                         <i data-lucide="maximize-2"></i>
                       </div>
                     </div>
                     <div class="wg-slider">
-                      <div class="wg-slider-top"><span>Rotation</span><b id="hat-rot-val">15°</b></div>
+                      <div class="wg-slider-top"><span>Rotation</span><b id="hat-rot-val">0°</b></div>
                       <div class="wg-slider-row"><i data-lucide="rotate-ccw"></i>
-                        <input type="range" id="obs-hat-rot" min="-180" max="180" value="15" step="5" />
+                        <input type="range" id="obs-hat-rot" min="-180" max="180" value="0" step="5" />
                         <i data-lucide="rotate-cw"></i>
                       </div>
                     </div>
@@ -4436,7 +4454,7 @@ input[type="range"]::-moz-range-thumb:active {
       <div class="campfire-banner">
         <div class="campfire-status">
           <i data-lucide="flame" style="color: var(--dst-flame-bright);"></i>
-          <span id="timer-status-text">EMBERS GLOWING</span>
+          <span id="timer-status-text">DROPS BLAZIN!</span>
         </div>
         <div id="timer" class="campfire-countdown">CALCULATING...</div>
         <div id="timer-date" class="campfire-date" onclick="toggleTimerTimezone()"
@@ -4714,8 +4732,8 @@ input[type="range"]::-moz-range-thumb:active {
       check('obs-no-border', false); check('obs-no-fill', false); check('obs-hide-head', false);
       toggleBorderDisable(); toggleFillDisable();
 
-      set('obs-hat-url', ''); set('obs-hat-pos', 'avatar');
-      set('obs-hat-x', 0); set('obs-hat-y', 0); set('obs-hat-scale', 100); set('obs-hat-rot', 15);
+      set('obs-hat-url', ''); set('obs-hat-pos', 'avatar'); set('obs-avatar-rot', 0);
+      set('obs-hat-x', 0); set('obs-hat-y', 0); set('obs-hat-scale', 100); set('obs-hat-rot', 0);
       selectHatOption('', 'None (Standard)', 'circle-slash');
 
       setWidgetMode('default');
@@ -4730,7 +4748,7 @@ input[type="range"]::-moz-range-thumb:active {
 
 
     function resetHatTransform() {
-      const defaults = { 'obs-hat-x': 0, 'obs-hat-y': 0, 'obs-hat-scale': 100, 'obs-hat-rot': 15 };
+      const defaults = { 'obs-hat-x': 0, 'obs-hat-y': 0, 'obs-hat-scale': 100, 'obs-hat-rot': 0 };
       Object.entries(defaults).forEach(([id, v]) => { const el = document.getElementById(id); if (el) el.value = v; });
       updateObsUrlBuilder();
     }
@@ -5011,16 +5029,21 @@ function syncEndedPreviewAvailability() {
       const showEnded = document.getElementById('obs-show-ended')?.checked || false;
 
 
-  // Inside updateObsUrlBuilder():
-      updateAvatarOffsetsOnly();
+
 
     const avX = document.getElementById('obs-avatar-x')?.value || '0';
     const avY = document.getElementById('obs-avatar-y')?.value || '0';
     const avScale = document.getElementById('obs-avatar-scale')?.value || '100';
+    const avRot = document.getElementById('obs-avatar-rot')?.value || '0';
 
 
 
 
+
+
+
+  // Inside updateObsUrlBuilder():
+      updateAvatarOffsetsOnly();
       // Force ended badge in iframe preview when testing
 
       updateHatOffsetsOnly();
@@ -5041,7 +5064,7 @@ function syncEndedPreviewAvailability() {
       const hatX = document.getElementById('obs-hat-x')?.value || '0';
       const hatY = document.getElementById('obs-hat-y')?.value || '0';
       const hatScale = document.getElementById('obs-hat-scale')?.value || '100';
-      const hatRot = document.getElementById('obs-hat-rot')?.value || '15'; // Added rotation variable
+      const hatRot = document.getElementById('obs-hat-rot')?.value || '0'; // Added rotation variable
 
 
 
@@ -5144,12 +5167,14 @@ function syncEndedPreviewAvailability() {
     localStorage.setItem('dst-obs-avatar-x', avX);
     localStorage.setItem('dst-obs-avatar-y', avY);
     localStorage.setItem('dst-obs-avatar-scale', avScale);
-
+    localStorage.setItem('dst-obs-avatar-rot', avRot); // Added
 
 
 
       let url = `https://clifffordw.github.io/ClifffWidgets/Drops/Streamers/drop_universal.html?`;
-      const params = [];
+
+/*       let url = `../Drops/Streamers/drop_universal.html?`;
+ */      const params = [];
       if (isSolo) params.push(`solo=1`);
       if (isCarousel) {
         params.push(`carousel=1`);
@@ -5192,9 +5217,11 @@ function syncEndedPreviewAvailability() {
         if (hatRot !== '15') params.push(`hatrot=${encodeURIComponent(hatRot)}`); // <-- ADDED THIS LINE
       }
 
-      if (avX !== '0') params.push(`avx=${encodeURIComponent(avX)}`);
-      if (avY !== '0') params.push(`avy=${encodeURIComponent(avY)}`);
-      if (avScale !== '100') params.push(`avscale=${encodeURIComponent(avScale)}`);
+    // In your params push block:
+    if (avX !== '0') params.push(`avx=${encodeURIComponent(avX)}`);
+    if (avY !== '0') params.push(`avy=${encodeURIComponent(avY)}`);
+    if (avScale !== '100') params.push(`avscale=${encodeURIComponent(avScale)}`);
+    if (avRot !== '0') params.push(`avrot=${encodeURIComponent(avRot)}`); // Added
 
       if (testEndedPreviewActive) params.push('testended=1');
 
@@ -5250,6 +5277,7 @@ function syncEndedPreviewAvailability() {
     const savedAvX = localStorage.getItem('dst-obs-avatar-x') || '0';
     const savedAvY = localStorage.getItem('dst-obs-avatar-y') || '0';
     const savedAvScale = localStorage.getItem('dst-obs-avatar-scale') || '100';
+    const savedAvRot = localStorage.getItem('dst-obs-avatar-rot') || '0';
 
 
 
@@ -5320,6 +5348,7 @@ function syncEndedPreviewAvailability() {
     if (document.getElementById('obs-avatar-x')) document.getElementById('obs-avatar-x').value = savedAvX;
     if (document.getElementById('obs-avatar-y')) document.getElementById('obs-avatar-y').value = savedAvY;
     if (document.getElementById('obs-avatar-scale')) document.getElementById('obs-avatar-scale').value = savedAvScale;
+    if (document.getElementById('obs-avatar-rot')) document.getElementById('obs-avatar-rot').value = savedAvRot;
 
       // 5. Assign remaining text/toggle fields
       if (savedTwitch !== null && document.getElementById('obs-twitch')) document.getElementById('obs-twitch').value = savedTwitch;
@@ -5350,7 +5379,7 @@ function syncEndedPreviewAvailability() {
       const xVal = document.getElementById('obs-hat-x')?.value || 0;
       const yVal = document.getElementById('obs-hat-y')?.value || 0;
       const scaleVal = document.getElementById('obs-hat-scale')?.value || 100;
-      const rotVal = document.getElementById('obs-hat-rot')?.value || 15;
+      const rotVal = document.getElementById('obs-hat-rot')?.value || 0;
 
       const xText = document.getElementById('hat-x-val');
       const yText = document.getElementById('hat-y-val');
@@ -6123,6 +6152,7 @@ function openDiscordModal() {
    ax: v('obs-avatar-x'),
     ay: v('obs-avatar-y'),
     as: v('obs-avatar-scale'),
+    ar: v('obs-avatar-rot'),
 
         tw: v('obs-twitch'), av: v('obs-avatar'), sp: v('obs-speed'),
         g1: v('obs-glow1'), g2: v('obs-glow2'), g3: v('obs-glow3'), bc: v('obs-border-hex'), fc: v('obs-fill-hex'),
@@ -6151,6 +6181,8 @@ function openDiscordModal() {
    set('obs-avatar-x', o.ax || 0);
     set('obs-avatar-y', o.ay || 0);
     set('obs-avatar-scale', o.as || 100);
+        set('obs-avatar-rot', o.ar || 0);
+
     updateAvatarOffsetsOnly();
 
       const ht = hatMetadata[o.ht] ? o.ht : '';
@@ -7023,14 +7055,17 @@ function updateAvatarOffsetsOnly() {
       const x = document.getElementById('obs-avatar-x')?.value || 0;
       const y = document.getElementById('obs-avatar-y')?.value || 0;
       const scale = document.getElementById('obs-avatar-scale')?.value || 100;
+      const rot = document.getElementById('obs-avatar-rot')?.value || 0;
 
       const xTxt = document.getElementById('avatar-x-val');
       const yTxt = document.getElementById('avatar-y-val');
       const scaleTxt = document.getElementById('avatar-scale-val');
+      const rotTxt = document.getElementById('avatar-rot-val');
 
       if (xTxt) xTxt.innerText = `${x}px`;
       if (yTxt) yTxt.innerText = `${y}px`;
       if (scaleTxt) scaleTxt.innerText = `${scale}%`;
+      if (rotTxt) rotTxt.innerText = `${rot}°`;
     }
 
     function resetAvatarTransform() {
@@ -7038,6 +7073,7 @@ function updateAvatarOffsetsOnly() {
       set('obs-avatar-x', 0);
       set('obs-avatar-y', 0);
       set('obs-avatar-scale', 100);
+      set('obs-avatar-rot', 0); // Added
       updateAvatarOffsetsOnly();
       updateObsUrlBuilder();
     }

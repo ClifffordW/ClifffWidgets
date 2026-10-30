@@ -276,27 +276,7 @@
     }
 
     /* ─── STREAMER AVATAR WRAPPER ────────────────────────────────── */
-.streamer-wrap {
-      position: absolute;
-      bottom: 210px;
-      left: 21%;
-      /* Injects custom offsets and scale safely into base position */
-      transform: translate(calc(-50% + var(--av-offset-x, 0px)), var(--av-offset-y, 0px)) scale(var(--av-scale, 1));
-      transform-origin: center center;
-      z-index: 10;
-      display: none;
-      animation:
-        gift-spin-streamer 1.0s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.7s both,
-        float-streamer 4.5s ease-in-out 1.7s infinite,
-        glow-pulse 6.0s ease-in-out 1.7s infinite;
-    }
 
-    .streamer-wrap.solo {
-      bottom: auto;
-      top: 340px;
-      left: 175px;
-      transform: translate(var(--av-offset-x, 0px), var(--av-offset-y, 0px)) scale(var(--av-scale, 1));
-    }
 
     .streamer-head {
       width: 84px;
@@ -361,9 +341,32 @@
       50% { transform: perspective(1200px) rotateY(4deg) rotateX(8deg) translateY(-20px); }
     }
 
+/* Scale is preserved through the float and spin keyframes */
     @keyframes float-streamer {
-      0%, 100% { transform: translateY(0px) rotate(-3deg); }
-      50% { transform: translateY(-8px) rotate(2deg); }
+      0%, 100% {
+        transform: scale(var(--av-scale, 1)) translateY(0px) rotate(calc(-3deg + var(--av-rot, 0deg)));
+      }
+      50% {
+        transform: scale(var(--av-scale, 1)) translateY(-8px) rotate(calc(2deg + var(--av-rot, 0deg)));
+      }
+    }
+
+    @keyframes gift-spin-streamer {
+      0% {
+        opacity: 0;
+        transform: scale(0) rotate(-180deg) translateY(40px);
+        filter: drop-shadow(0 0 5rem var(--glow1));
+      }
+      70% {
+        opacity: 1;
+        transform: scale(calc(1.15 * var(--av-scale, 1))) rotate(calc(10deg + var(--av-rot, 0deg))) translateY(-5px);
+        filter: drop-shadow(0 0 3rem var(--glow3));
+      }
+      100% {
+        opacity: 1;
+        transform: scale(var(--av-scale, 1)) rotate(calc(-3deg + var(--av-rot, 0deg))) translateY(0);
+        filter: drop-shadow(0 0 0.6rem var(--glow1));
+      }
     }
 
     @keyframes gift-spin-flair {
@@ -390,11 +393,7 @@
       100% { opacity: 1; transform: perspective(1200px) rotateY(-6deg) rotateX(3deg) scale(1) translateY(0); filter: drop-shadow(0 0 0.6rem var(--glow1)); }
     }
 
-    @keyframes gift-spin-streamer {
-      0% { opacity: 0; transform: scale(0) rotate(-180deg) translateY(40px); filter: drop-shadow(0 0 5rem var(--glow1)); }
-      70% { opacity: 1; transform: scale(1.15) rotate(10deg) translateY(-5px); filter: drop-shadow(0 0 3rem var(--glow3)); }
-      100% { opacity: 1; transform: scale(1) rotate(-3deg) translateY(0); filter: drop-shadow(0 0 0.6rem var(--glow1)); }
-    }
+
 
     .bg-flair {
       animation:
@@ -461,6 +460,36 @@
         float-solo 5.0s ease-in-out 1.3s infinite,
         glow-pulse 6.0s ease-in-out 1.3s infinite;
     }
+
+
+/* ─── STREAMER AVATAR WRAPPER ────────────────────────────────── */
+    .streamer-wrap {
+      position: absolute;
+      /* Offsets applied to layout position so animation cannot override them */
+      bottom: calc(210px - var(--av-offset-y, 0px));
+      left: calc(21% + var(--av-offset-x, 0px));
+      transform-origin: center center;
+      z-index: 10;
+      display: none;
+      animation:
+        gift-spin-streamer 1.0s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.7s both,
+        float-streamer 4.5s ease-in-out 1.7s infinite,
+        glow-pulse 6.0s ease-in-out 1.7s infinite;
+    }
+
+    .streamer-wrap.solo {
+      bottom: auto;
+      top: calc(340px + var(--av-offset-y, 0px));
+      left: calc(175px + var(--av-offset-x, 0px));
+    }
+
+    body.carousel .streamer-wrap {
+      bottom: auto;
+      top: calc(320px + var(--av-offset-y, 0px));
+      left: calc(175px + var(--av-offset-x, 0px));
+    }
+
+
   </style>
 </head>
 
@@ -483,9 +512,11 @@
       <img class="partyhat" id="partyhat" src="" alt="Party Hat">
     </div>
 
+<div class="streamer-pos" id="streamer-pos">
     <div class="streamer-wrap" id="streamer-wrap">
       <img class="streamer-head" id="streamer-head" src="" alt="Streamer Avatar">
     </div>
+  </div>
 
 <div class="slot slot--flair">
       <div class="asset-inner flair-inner">
@@ -539,14 +570,16 @@
     const avatarUrl = urlParams.get('avatar');
     const wrapEl = document.getElementById('streamer-wrap');
 
-    const avX = parseInt(urlParams.get('avx') || '0', 10);
+const avX = parseInt(urlParams.get('avx') || '0', 10);
     const avY = parseInt(urlParams.get('avy') || '0', 10);
     const avScale = parseInt(urlParams.get('avscale') || '100', 10) / 100;
+    const avRot = parseInt(urlParams.get('avrot') || '0', 10); // REMOVED '/ 100'
 
     if (wrapEl) {
       wrapEl.style.setProperty('--av-offset-x', `${avX}px`);
       wrapEl.style.setProperty('--av-offset-y', `${avY}px`);
       wrapEl.style.setProperty('--av-scale', avScale);
+      wrapEl.style.setProperty('--av-rot', `${avRot}deg`); // Added 'deg' unit
     }
 
     if (!hideHead && avatarUrl && avatarUrl.trim() !== '' && streamerHeadEl) {

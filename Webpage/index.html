@@ -3628,6 +3628,36 @@ input[type="range"]::-moz-range-thumb:active {
     }
 
 
+/* ─── DROPDOWN UPWARD FLIP (AUTO COLLISION) ───────────────── */
+    .custom-dst-dropdown.open-up .custom-dropdown-menu {
+      top: auto;
+      bottom: calc(100% + 6px);
+      box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.9);
+      animation: dstAppearUp 0.2s ease-out;
+    }
+
+    /* Invert chevron rotation when opening upwards */
+    .custom-dst-dropdown.open-up .dst-dropdown-arrow {
+      transform: rotate(180deg);
+    }
+
+    /* Ensure long menus don't spill outside small viewports */
+    .custom-dropdown-menu {
+      max-height: 260px;
+      overflow-y: auto;
+    }
+
+    @keyframes dstAppearUp {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     
   </style>
 </head>
@@ -3741,7 +3771,7 @@ input[type="range"]::-moz-range-thumb:active {
 
     <div class="dst-tab active" onclick="nav('drops', this)">
       <div class="tab-content">
-        <i data-lucide="flame"></i>
+        <i data-lucide="gift"></i>
         <span>Active Drop</span>
       </div>
       <span id="side-drop-status" class="dst-badge">CHECKING</span>
@@ -3757,14 +3787,14 @@ input[type="range"]::-moz-range-thumb:active {
 
     <div class="dst-tab" onclick="nav('download', this)">
       <div class="tab-content">
-        <i data-lucide="download"></i>
+        <i data-lucide="images"></i>
         <span>Assets</span>
       </div>
     </div>
 
     <div class="dst-tab" onclick="nav('widget', this)">
       <div class="tab-content">
-        <i data-lucide="cast"></i>
+        <i data-lucide="paintbrush"></i>
         <span>OBS Widget</span>
       </div>
     </div>
@@ -3789,7 +3819,7 @@ input[type="range"]::-moz-range-thumb:active {
 <!-- Replace the external <a> link with this in-app tab -->
     <div class="dst-tab" onclick="nav('updates', this)">
       <div class="tab-content">
-        <i data-lucide="scroll"></i>
+        <i data-lucide="gamepad-2"></i>
         <span>Game Updates</span>
       </div>
       <span id="side-updates-badge" class="dst-badge">KLEI</span>
@@ -3898,7 +3928,7 @@ input[type="range"]::-moz-range-thumb:active {
       <div class="dst-parchment-card wg-card">
 
         <div class="wg-intro">
-          <h3><i data-lucide="cast"></i> Stream Overlay Generator</h3>
+          <h3><i data-lucide="paintbrush"></i> Stream Overlay Creator</h3>
           <p>Configure your drop widget for OBS: pick a layout, add your Twitch details, tune the glow, and drop the
             generated link straight into a Browser Source.</p>
         </div>
@@ -4557,12 +4587,39 @@ input[type="range"]::-moz-range-thumb:active {
       'custom': { label: 'Custom Hat URL...', icon: 'wrench' }
     };
 
-    function toggleHatDropdown(e) {
+function toggleDropdownWithCollision(dropdownEl, e) {
       if (e) e.stopPropagation();
-      const dropdown = document.getElementById('custom-hat-dropdown');
-      if (dropdown) {
-        dropdown.classList.toggle('open');
+      if (!dropdownEl) return;
+
+      const isOpen = dropdownEl.classList.contains('open');
+
+      if (!isOpen) {
+        // Measure viewport clearance below the trigger
+        const trigger = dropdownEl.querySelector('.custom-dropdown-trigger');
+        const rect = trigger ? trigger.getBoundingClientRect() : dropdownEl.getBoundingClientRect();
+        const spaceBelow = window.innerHeight - rect.bottom;
+        const menuHeight = 240; // Approximate menu height with all options
+
+        // If there's not enough space below (less than 240px) but plenty above, flip it up!
+        if (spaceBelow < menuHeight && rect.top > spaceBelow) {
+          dropdownEl.classList.add('open-up');
+        } else {
+          dropdownEl.classList.remove('open-up');
+        }
+        dropdownEl.classList.add('open');
+      } else {
+        dropdownEl.classList.remove('open', 'open-up');
       }
+    }
+
+    function toggleHatDropdown(e) {
+      const dropdown = document.getElementById('custom-hat-dropdown');
+      toggleDropdownWithCollision(dropdown, e);
+    }
+
+    function toggleWgPresetDropdown(e) {
+      const dropdown = document.getElementById('wg-preset-dropdown');
+      toggleDropdownWithCollision(dropdown, e);
     }
 
     function selectHatOption(value, label, iconName) {

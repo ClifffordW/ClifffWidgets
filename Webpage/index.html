@@ -473,7 +473,10 @@
       input[type="color"],
       .dst-slider,
       .dst-toggle-label,
-      #timer-date {
+      #timer-date,
+      .search-input-box,
+      .box:focus,
+      #wg-preset-select {
         cursor: var(--cursor-link) 0 16, pointer !important;
       }
 
@@ -1565,8 +1568,6 @@
       max-width: 520px;
       width: 100%;
       background: #1c1512;
-      border: 3px solid var(--dst-flame);
-      border-radius: var(--sketch-radius);
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), inset 0 0 25px rgba(0, 0, 0, 0.7);
       padding: 28px;
       position: relative;
@@ -1697,6 +1698,36 @@
       line-height: 1.2;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
     @media (max-width: 900px) {
       aside {
         display: none;
@@ -1724,6 +1755,11 @@
         gap: 8px;
         text-align: center;
       }
+
+
+
+
+      
     }
 
     /* ═══════════════════════════════════════════════════════════
@@ -2667,6 +2703,932 @@
       .dst-btn svg, .notif-button svg, .tool-btn svg, .wg-icon-btn svg, .wg-reset svg, .wg-seg-btn svg,
       .dst-tab svg, .inv-slot svg { animation: none !important; }
     }
+
+
+    /* ═══ DST-STYLE CHECKBOX (gold frame, notched sides, check mark) ═══ */
+.dst-switch { width: 28px; height: 28px; flex-shrink: 0; }
+
+.dst-slider {
+  background: #0b0806;
+  background-image: none;
+  border: 3px solid var(--dst-flame);
+  border-radius: 6px;
+  box-shadow: inset 0 0 6px #000, 0 0 0 1px #000;
+  transition: box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+/* the little notches on the left and right sides of the frame */
+.dst-slider::after {
+  content: "";
+  position: absolute;
+  left: -6px; right: -6px; top: 50%;
+  height: 10px;
+  transform: translateY(-50%);
+  border-left: 3px solid var(--dst-flame);
+  border-right: 3px solid var(--dst-flame);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* the check mark (hidden until checked) */
+.dst-slider:before {
+  content: "";
+  position: absolute;
+  left: 50%; top: 50%; bottom: auto;
+  width: 6px; height: 12px;
+  background: none;
+  border: solid var(--dst-flame);
+  border-width: 0 3px 3px 0;
+  border-radius: 0;
+  box-shadow: none;
+  transform: translate(-50%, -60%) rotate(45deg) scale(0);
+  transition: transform 0.12s ease;
+}
+
+.dst-switch input:checked + .dst-slider::after {
+  border-left-color: var(--dst-green); /* keeps or changes left */
+  border-right-color: var(--dst-green);  /* changes right to green */
+}
+
+.dst-switch input:checked + .dst-slider {
+  background-color: #0b0806;
+  border-color: var(--dst-green);
+  box-shadow: inset 0 0 6px #000, 0 0 0 1px #000, 0 0 8px rgba(232, 195, 106, 0.35);
+}
+.dst-switch input:checked + .dst-slider:before {
+  background: none;
+  border-color: var(--dst-green);
+  box-shadow: none;
+  transform: translate(-50%, -60%) rotate(45deg) scale(1);
+}
+.dst-switch:hover .dst-slider { filter: brightness(1.2); }
+
+
+/* ═══ DST-STYLE SLIDER (tick-mark track, gold diamond knob) ═══ */
+input[type="range"] {
+  height: 20px;
+  margin: 4px 0;
+  background:
+    linear-gradient(#5a5a5a, #5a5a5a) center / 100% 5px no-repeat,
+    repeating-linear-gradient(90deg, #7a7a7a 0 3px, transparent 3px 10%) center / 100% 14px no-repeat;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+input[type="range"]:hover { border: none; box-shadow: none; }
+
+input[type="range"]::-webkit-slider-thumb {
+  width: 20px; height: 20px;
+  border: none; border-radius: 0; box-shadow: none;
+  background: linear-gradient(135deg, #f3d98a 0%, #d9b45a 50%, #a8832f 100%);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);   /* diamond */
+}
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.12); box-shadow: none; }
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(0.95);
+  background: linear-gradient(135deg, #fff3c4 0%, #f3d98a 55%, #d9b45a 100%);
+}
+
+input[type="range"]::-moz-range-track { background: transparent; border: none; box-shadow: none; }
+input[type="range"]::-moz-range-thumb {
+  width: 20px; height: 20px;
+  border: none; border-radius: 0; box-shadow: none;
+  background: linear-gradient(135deg, #f3d98a 0%, #d9b45a 50%, #a8832f 100%);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+input[type="range"]::-moz-range-thumb:active {
+  transform: scale(0.95);
+  background: linear-gradient(135deg, #fff3c4 0%, #f3d98a 55%, #d9b45a 100%);
+}
+
+/* the arrow icons beside the widget sliders act as the gold end caps */
+.wg-slider-row svg, .wg-slider-row i { color: #c9a24e; }
+
+/* --- ENHANCED DST MODAL SYSTEM --- */
+    .dst-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 7, 5, 0.88);
+      backdrop-filter: blur(6px);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: modalOverlayFade 0.2s ease-out forwards;
+    }
+
+    .dst-modal.active {
+      display: flex;
+    }
+
+    @keyframes modalOverlayFade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+
+
+    @keyframes modalBoxPop {
+      from { opacity: 0; transform: scale(0.92) translateY(12px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* ─── INCONSISTENT HAND-DRAWN SKETCHED MODAL BOX ───────────── */
+    .modal-box {
+      max-width: 540px;
+      width: 100%;
+      background: #1c1512;
+      /* Signature DST 4-corner uneven sketch curve */
+      border-radius: var(--sketch-radius, 255px 15px 225px 15px / 15px 225px 15px 255px);
+      border: 3px solid var(--dst-flame);
+      /* Hand-drawn double layered offset sketch effect */
+      box-shadow: 
+        0 15px 45px rgba(0, 0, 0, 0.95),
+        0 0 18px rgba(231, 108, 30, 0.35),
+        inset 0 0 25px rgba(0, 0, 0, 0.8),
+        0 0 0 2px #0d0805,
+        0 0 0 5px #4a362b;
+      padding: 30px 24px 24px;
+      position: relative;
+      animation: modalBoxPop 0.28s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+    }
+
+    /* Hand-drawn corner line accents */
+    .modal-box::before,
+    .modal-box::after {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      pointer-events: none;
+    }
+
+    .modal-box::before {
+      top: 7px;
+      left: 7px;
+      border-right: none;
+      border-bottom: none;
+    }
+
+    .modal-box::after {
+      bottom: 7px;
+      right: 7px;
+      border-left: none;
+      border-top: none;
+    }
+
+    .modal-box.modal-danger {
+      border-color: var(--dst-crimson);
+      box-shadow: 
+        0 15px 45px rgba(0, 0, 0, 0.95),
+        0 0 20px rgba(166, 43, 32, 0.4),
+        inset 0 0 25px rgba(0, 0, 0, 0.8),
+        0 0 0 2px #0d0805,
+        0 0 0 5px #5a1e17;
+    }
+
+    .modal-box.modal-danger::before,
+    .modal-box.modal-danger::after {
+      border-color: #ff6e61;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      font-size: 1.6rem;
+      line-height: 1;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      color: var(--dst-paper-muted);
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid #3c2a20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: var(--cursor-link) 0 11, pointer;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover {
+      color: #fff;
+      border-color: var(--dst-crimson);
+      background: rgba(166, 43, 32, 0.4);
+      transform: rotate(90deg);
+    }
+
+    .dst-btn.btn-danger {
+      background: rgba(166, 43, 32, 0.35);
+      border-color: var(--dst-crimson);
+      color: #ffb4ac;
+    }
+    .dst-btn.btn-danger:hover {
+      background: var(--dst-crimson);
+      border-color: #ff6e61;
+      color: #fff;
+    }
+
+    /* --- TOAST ICON HOLDER (Supports Images or SVG Lucide Icons) --- */
+    .toast-icon-slot {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .toast-icon-slot img {
+      width: 80%;
+      height: 80%;
+      object-fit: contain;
+    }
+
+    .toast-icon-slot svg {
+      width: 24px;
+      height: 24px;
+      color: var(--dst-flame-bright);
+    }
+
+/* ─── DST INCONSISTENT HAND-DRAWN SKETCH TOAST ────────────── */
+    #dst-toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-160%);
+      background: #181210;
+      /* Asymmetrical hand-drawn organic border curve */
+      border-radius: var(--sketch-radius-soft, 80px 8px 90px 10px / 10px 90px 8px 80px);
+      border: 3px solid var(--dst-flame, #ff8e3c);
+      /* Inconsistent scratched double-line offset border effect */
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.95),
+        0 0 15px rgba(231, 108, 30, 0.35),
+        inset 0 0 14px rgba(0, 0, 0, 0.8),
+        0 0 0 2px #0d0805,
+        0 0 0 4px #4a362b;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 10001;
+      max-width: 90vw;
+      width: 430px;
+      transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      pointer-events: auto;
+      cursor: var(--cursor-link) 0 11, pointer;
+      position: fixed;
+    }
+
+    /* Hand-drawn corner scratch lines */
+    #dst-toast::before,
+    #dst-toast::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      pointer-events: none;
+      opacity: 0.85;
+    }
+
+    #dst-toast::before {
+      top: 5px;
+      left: 5px;
+      border-right: none;
+      border-bottom: none;
+      border-radius: 4px 0 0 0;
+    }
+
+    #dst-toast::after {
+      bottom: 5px;
+      right: 5px;
+      border-left: none;
+      border-top: none;
+      border-radius: 0 0 4px 0;
+    }
+
+    #dst-toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Inconsistent sketched icon frame */
+    .toast-icon-slot {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .toast-icon-slot img {
+      width: 80%;
+      height: 80%;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+    }
+
+    .toast-icon-slot svg {
+      width: 33px;
+      height: 33px;
+      stroke: var(--dst-flame-bright, #ff8e3c);
+    }
+
+    
+/* ─── ASSETS MEDIA KIT OVERHAUL ───────────────────────────── */
+    .asset-header-card {
+      margin-bottom: 24px;
+      padding: 14px 20px;
+    }
+
+    .asset-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .asset-toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .asset-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 22px;
+    }
+
+    .asset-card {
+      background: #181210;
+      border: 3px solid var(--dst-border);
+      border-radius: var(--sketch-radius-soft);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75), 0 0 0 2px #0c0806, 0 0 0 4px #36261c;
+      padding: 18px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+      position: relative;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .asset-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--dst-flame);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.9), 0 0 15px rgba(231, 108, 30, 0.35);
+    }
+
+    .asset-card-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      background: #100b09;
+      border: 1px solid #483428;
+      border-radius: 4px;
+      color: var(--dst-flame-bright);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      z-index: 2;
+    }
+
+    .asset-card-format {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      background: #100b09;
+      border: 1px solid #3c2a20;
+      border-radius: 4px;
+      color: var(--dst-paper-muted);
+      z-index: 2;
+    }
+
+    .asset-preview-stage {
+      width: 100%;
+      height: 140px;
+      background: radial-gradient(circle, #241914 0%, #120d0b 80%);
+      border: 1px dashed #3a2b22;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      margin-top: 18px;
+      transition: background 0.2s ease;
+    }
+
+    /* Checkerboard alpha transparency mode */
+    .asset-preview-stage.checkerboard {
+      background-color: #1a1513;
+      background-image: 
+        linear-gradient(45deg, #120e0c 25%, transparent 25%), 
+        linear-gradient(-45deg, #120e0c 25%, transparent 25%), 
+        linear-gradient(45deg, transparent 75%, #120e0c 75%), 
+        linear-gradient(-45deg, transparent 75%, #120e0c 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    }
+
+    .asset-preview-stage img {
+      max-height: 110px;
+      max-width: 85%;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.85));
+      transition: transform 0.25s ease;
+    }
+
+    .asset-preview-stage:hover img {
+      transform: scale(1.1) rotate(-1deg);
+    }
+
+    .asset-info {
+      width: 100%;
+    }
+
+    .asset-info h4 {
+      font-family: var(--font-title);
+      font-size: 1.15rem;
+      color: #fff;
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .asset-info p {
+      font-family: var(--font-hand);
+      font-size: 0.95rem;
+      color: var(--dst-paper-muted);
+    }
+
+    .asset-actions {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .asset-actions .dst-btn {
+      flex: 1;
+      padding: 7px 10px;
+      font-size: 0.95rem;
+    }
+
+
+/* ─── GAME UPDATES TAB STYLING ────────────────────────────── */
+    .update-card {
+      background: #181210;
+      border: 3px solid var(--dst-border);
+      border-radius: var(--sketch-radius-soft);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7), 0 0 0 2px #0c0806, 0 0 0 4px #36261c;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+    }
+
+    .update-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--dst-flame);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.85), 0 0 12px rgba(231, 108, 30, 0.3);
+    }
+
+    .update-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .update-title {
+      font-family: var(--font-title);
+      font-size: 1.25rem;
+      color: #fff;
+      line-height: 1.25;
+      text-decoration: none;
+    }
+
+    .update-title:hover {
+      color: var(--dst-flame-bright);
+    }
+
+    .update-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .update-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 4px 9px;
+      border-radius: 4px;
+      background: #2b1f1a;
+      border: 1px solid #483427;
+      color: var(--dst-flame-bright);
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    .update-badge.badge-stable{
+
+      background-color: #18fb081f;
+      color: rgb(0, 197, 0);
+
+    }
+
+    .update-badge.badge-beta{
+
+      background-color: #fba2081f;
+      color: rgb(255, 153, 0);
+
+    }
+
+
+    .update-date {
+      font-family: var(--font-hand);
+      font-size: 1rem;
+      color: var(--dst-paper-muted);
+    }
+
+    .update-snippet {
+      font-family: var(--font-hand);
+      font-size: 1.05rem;
+      color: var(--dst-paper);
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+
+
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin: 4px 0 6px;
+    }
+
+    .update-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+
+/* ─── PATCH NOTES MODAL & CONTENT POLISH ──────────────────── */
+    .patch-modal-box {
+      max-width: 900px;         /* Much wider view */
+      width: 92vw;
+      max-height: 88vh;         /* Taller content stage */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .patch-notes-body {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;       /* Eliminates the horizontal scrollbar */
+      padding-right: 12px;
+      font-family: var(--font-hand);
+      font-size: 1.15rem;
+      line-height: 1.55;
+      color: var(--dst-paper);
+      word-break: break-word;
+    }
+
+    /* Fix oversized Klei / Steam update images */
+    .patch-notes-body img {
+      max-width: 100% !important;
+      height: auto !important;
+      display: block;
+      margin: 14px auto;
+      border: 2px solid var(--dst-border);
+      border-radius: var(--sketch-radius-soft);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Fix blue links -> DST Crimson themed with hover glow */
+    .patch-notes-body a {
+      color: var(--dst-crimson) !important;
+      text-decoration: underline;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 3px;
+      transition: color 0.15s ease, text-shadow 0.15s ease;
+      cursor: var(--cursor-link) 0 11, pointer !important;
+    }
+
+    .patch-notes-body a:hover {
+      color: var(--dst-flame-bright) !important;
+      text-shadow: 0 0 8px rgba(255, 142, 60, 0.4);
+    }
+
+    .patch-notes-body ul, .patch-notes-body ol {
+      margin-left: 24px;
+      margin-bottom: 12px;
+    }
+
+    .patch-notes-body li {
+      margin-bottom: 4px;
+    }
+
+    .patch-notes-body h1, .patch-notes-body h2, .patch-notes-body h3, .patch-notes-body h4 {
+      font-family: var(--font-title);
+      color: var(--dst-flame-bright);
+      margin: 14px 0 6px;
+    }
+/* Active State for Updates Enrollment Button */
+    .tool-btn.notif-active {
+      background: rgba(79, 128, 47, 0.25);
+      border-color: var(--dst-green);
+      color: #bbf49b;
+    }
+
+    .tool-btn.notif-active svg {
+      stroke: #bbf49b;
+    }
+
+
+/* ─── PATCH NOTES MODAL & RICH CONTENT ────────────────────── */
+    .patch-modal-box {
+      max-width: 900px;
+      width: 92vw;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .patch-notes-body {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-right: 14px;
+      font-family: var(--font-hand);
+      font-size: 1.15rem;
+      line-height: 1.55;
+      color: var(--dst-paper);
+      word-break: break-word;
+    }
+
+    .patch-notes-body p {
+      margin-bottom: 10px;
+    }
+
+    /* Section Headings ("Bug Fixes", "Highlights", etc.) */
+    .patch-notes-body h1, .patch-notes-body h2, .patch-notes-body h3, .patch-notes-body h4 {
+      font-family: var(--font-title);
+      color: var(--dst-flame-bright);
+      margin: 18px 0 8px 0;
+      letter-spacing: 0.5px;
+    }
+
+    /* Klei Ember Bulleted List Styling ("Lil Dots") */
+    .patch-notes-body ul {
+      list-style: none !important;
+      margin: 8px 0 16px 4px !important;
+      padding-left: 14px !important;
+    }
+
+    .patch-notes-body ul li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 6px;
+      line-height: 1.45;
+    }
+
+    .patch-notes-body ul li::before {
+      content: "✦";
+      position: absolute;
+      left: 0;
+      top: -1px;
+      color: var(--dst-flame-bright);
+      font-size: 0.8rem;
+    }
+
+    /* Fix blue links -> DST Crimson themed with hover glow */
+    .patch-notes-body a {
+      color: var(--dst-crimson) !important;
+      text-decoration: underline;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 3px;
+      transition: color 0.15s ease, text-shadow 0.15s ease;
+      cursor: var(--cursor-link) 0 11, pointer !important;
+    }
+
+    .patch-notes-body a:hover {
+      color: var(--dst-flame-bright) !important;
+      text-shadow: 0 0 8px rgba(255, 142, 60, 0.4);
+    }
+
+    .patch-notes-body img {
+      max-width: 100% !important;
+      height: auto !important;
+      display: block;
+      margin: 14px auto;
+      border: 2px solid var(--dst-border);
+      border-radius: var(--sketch-radius-soft);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+    }
+
+/* ─── UPDATES TOOLBAR & RESPONSIVE MOBILE FIXES ────────────── */
+    .updates-controls-card {
+      margin-bottom: 24px;
+      padding: 16px 20px;
+    }
+
+    .updates-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* 3-column equal grid for the 3 branch pills */
+    .updates-branch-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      flex: 1 1 280px;
+    }
+
+    .updates-branch-bar .platform-pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 6px;
+      font-size: 1rem;
+      white-space: nowrap;
+      text-align: center;
+      width: 100%;
+    }
+
+    .updates-branch-bar .platform-pill i,
+    .updates-branch-bar .platform-pill svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Action buttons bar */
+    .updates-actions-bar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: nowrap;
+    }
+
+    .updates-actions-bar .tool-btn {
+      padding: 7px 12px;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    .updates-forum-btn {
+      padding: 7px 14px;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    .updates-search-input {
+      margin-top: 12px;
+      padding: 10px 16px;
+      font-size: 1.05rem;
+      width: 100%;
+    }
+
+
+/* ─── 2-WAY COMPACT BRANCH TOGGLE & WINDOW BOUNDS ─────────── */
+    .updates-controls-card {
+      margin-bottom: 24px;
+      padding: 14px 18px;
+      overflow: hidden; /* Prevents anything spilling outside */
+    }
+
+    .updates-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    /* Segmented DST switch (Release vs Beta) */
+    .updates-branch-toggle {
+      display: inline-flex;
+      background: #120e0c;
+      border: 2px solid #3c281e;
+      border-radius: var(--sketch-radius-soft);
+      padding: 3px;
+      gap: 3px;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.7);
+    }
+
+    .branch-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: var(--sketch-radius);
+      color: var(--dst-paper-muted);
+      font-family: var(--font-hand);
+      font-size: 1rem;
+      cursor: var(--cursor-link) 0 11, pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .branch-toggle-btn i, .branch-toggle-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .branch-toggle-btn.active {
+      background: var(--dst-flame);
+      color: #fff;
+      border-color: #ff9d5c;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(231, 108, 30, 0.4);
+    }
+
+    /* Action buttons */
+    .updates-actions-bar {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .updates-actions-bar .tool-btn,
+    .updates-actions-bar .updates-forum-btn {
+      padding: 6px 10px;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    .updates-search-input {
+      margin-top: 10px;
+      padding: 9px 14px;
+      font-size: 1.05rem;
+      width: 100%;
+    }
+
+    /* Strict Mobile Fit (<= 680px) */
+    @media (max-width: 680px) {
+      .updates-controls-card {
+        padding: 12px;
+      }
+
+      .updates-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+
+      /* Release / Beta splits 50-50 across screen */
+      .updates-branch-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+      }
+
+      /* 3 action buttons evenly split on second row */
+      .updates-actions-bar {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 1fr;
+        width: 100%;
+        gap: 6px;
+      }
+
+      .updates-actions-bar .tool-btn,
+      .updates-actions-bar .updates-forum-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 7px 4px;
+        font-size: 0.9rem;
+      }
+    }
+
+
+    
   </style>
 </head>
 
@@ -2674,8 +3636,11 @@
 
 <body>
 
+<!-- ENHANCED TOAST NOTIFICATION -->
   <div id="dst-toast" onclick="this.classList.remove('show')">
-    <img id="toast-img" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt="Drop">
+    <div id="toast-icon-slot" class="toast-icon-slot">
+      <img id="toast-img" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt="Drop">
+    </div>
     <div class="toast-content">
       <h4 id="toast-title">Klei Drop Alert</h4>
       <p id="toast-body">A campaign update has occurred.</p>
@@ -2714,6 +3679,52 @@
       </div>
     </div>
   </div>
+
+<!-- THEMATIC CONFIRMATION MODAL -->
+  <div id="confirm-modal" class="dst-modal" onclick="if(event.target===this) closeConfirmModal()">
+    <div class="modal-box modal-danger">
+      <button class="modal-close" onclick="closeConfirmModal()">&times;</button>
+      <h3 style="font-family: var(--font-title); color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+        <i data-lucide="triangle-alert" style="color: var(--dst-crimson);"></i>
+        <span id="confirm-modal-title">Confirm Action</span>
+      </h3>
+      <p id="confirm-modal-msg" style="font-size: 1.1rem; color: var(--dst-paper-muted); margin-bottom: 22px; line-height: 1.35;">
+        Are you sure you want to proceed?
+      </p>
+      <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button type="button" class="dst-btn" onclick="closeConfirmModal()">Cancel</button>
+        <button type="button" id="confirm-modal-ok-btn" class="dst-btn btn-danger">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+<!-- FULL PATCH NOTES POPUP MODAL -->
+  <div id="patch-modal" class="dst-modal" onclick="if(event.target===this) closePatchModal()">
+    <div class="modal-box patch-modal-box">
+      <button class="modal-close" onclick="closePatchModal()">&times;</button>
+      
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+        <span id="patch-modal-badge" class="update-badge">RELEASE</span>
+        <span id="patch-modal-date" class="update-date"></span>
+      </div>
+
+      <h3 id="patch-modal-title" style="font-family: var(--font-title); color: #fff; font-size: 1.35rem; line-height: 1.25; margin-bottom: 16px;">
+        Patch Title
+      </h3>
+
+      <!-- Scrollable Full Patch Content Area -->
+      <div id="patch-modal-content" class="patch-notes-body"></div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 14px; border-top: 1px dashed #3a2b22; flex-wrap: wrap; gap: 10px;">
+        <a id="patch-modal-link" href="#" target="_blank" rel="noopener noreferrer" class="dst-btn" style="font-size: 1rem; padding: 8px 16px;">
+          <i data-lucide="external-link" style="width: 15px;"></i> View on Steam Announcements
+        </a>
+        <button type="button" class="dst-btn" onclick="closePatchModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+
 
   <!-- DESKTOP COMPENDIUM SIDEBAR -->
   <aside>
@@ -2767,14 +3778,23 @@
 
     <div class="nav-group-label">Other Links</div>
 
-    <a href="https://forums.kleientertainment.com/game-updates/dst/" target="_blank" class="dst-tab"
+<!--     <a href="https://forums.kleientertainment.com/game-updates/dst/" target="_blank" class="dst-tab"
       title="Game Updates">
       <div class="tab-content">
         <i data-lucide="scroll"></i>
         <span>Game Updates</span>
       </div>
       <i data-lucide="external-link" style="width: 14px; opacity: 0.5;"></i>
-    </a>
+    </a> -->
+<!-- Replace the external <a> link with this in-app tab -->
+    <div class="dst-tab" onclick="nav('updates', this)">
+      <div class="tab-content">
+        <i data-lucide="scroll"></i>
+        <span>Game Updates</span>
+      </div>
+      <span id="side-updates-badge" class="dst-badge">KLEI</span>
+    </div>
+
 
     <a href="https://dstserverlist.appspot.com/" target="_blank" class="dst-tab" title="Server List">
       <div class="tab-content">
@@ -2801,9 +3821,9 @@
 
 
 
-      <div
-        style="font-family: var(--font-mono); font-size: 0.75rem; color: #a08c7a; margin-top: 10px; text-align: center;">
-        All possible thanks to Klei.
+<div style="font-family: var(--font-hand); font-size: 0.85rem; color: #a08c7a; margin-top: 10px; text-align: center; line-height: 1.3;">
+        Fan-made tracker. Not an official site by Klei.<br>
+        All drops &amp; ambassador data courtesy of <strong style="color: var(--dst-paper);">Klei Entertainment</strong>.
       </div>
     </div>
   </aside>
@@ -2815,6 +3835,61 @@
       <span>Couldn't reach Klei's servers. Check your connection and try again.</span>
       <button type="button" class="dst-btn" onclick="location.reload()">Retry</button>
     </div>
+
+
+
+
+<!-- GAME UPDATES TAB -->
+    <!-- GAME UPDATES TAB -->
+    <section id="updates">
+      
+      <h1 class="dst-heading">Don't Starve Together Updates (Testing) </h1>
+
+      <div class="dst-parchment-card updates-controls-card">
+        <div class="updates-toolbar">
+          <!-- 1. Compact 2-way Branch Switch (Release vs Beta) -->
+          <div class="updates-branch-toggle" role="group" aria-label="Branch selector">
+            <button type="button" id="branch-btn-stable" class="branch-toggle-btn active" onclick="switchUpdatesBranch('stable')">
+              <i data-lucide="shield-check"></i><span>Release</span>
+            </button>
+            <button type="button" id="branch-btn-beta" class="branch-toggle-btn" onclick="switchUpdatesBranch('beta')">
+              <i data-lucide="flask-conical"></i><span>Beta</span>
+            </button>
+          </div>
+
+          <!-- 2. Utility Action Buttons (contained & sized) -->
+          <div class="updates-actions-bar">
+            <button type="button" id="updates-notif-btn" class="tool-btn" onclick="toggleUpdatesNotification()" title="Get notified when a new DST update drops">
+              <i data-lucide="bell"></i><span id="updates-notif-text">Alerts</span>
+            </button>
+            <button type="button" class="tool-btn" onclick="fetchGameUpdates(true)" title="Check for newest patches">
+              <i data-lucide="refresh-cw"></i><span>Refresh</span>
+            </button>
+            <a href="https://forums.kleientertainment.com/game-updates/dst/" target="_blank" rel="noopener noreferrer" class="dst-btn updates-forum-btn">
+              <i data-lucide="external-link" style="width: 14px;"></i><span>Forums</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 3. Search Bar -->
+        <input type="text" id="updates-search" class="search-input-box updates-search-input"
+          placeholder="Filter updates by patch number, title, or keyword..." oninput="filterGameUpdates()">
+      </div>
+
+      <div id="updates-status" style="font-family: var(--font-hand); font-size: 1.15rem; color: var(--dst-flame); margin-bottom: 18px; text-align: center;">
+        Fetching recent patch notes from Klei...
+      </div>
+
+      <div id="updates-list" style="display: flex; flex-direction: column; gap: 16px;"></div>
+    </section>
+
+
+
+
+
+
+
+
 
     <!-- AMBASSADOR WIDGET TAB -->
     <section id="widget">
@@ -2838,7 +3913,17 @@
                 <h4>Presets &amp; Sharing</h4>
               </div>
               <div class="wg-preset-row">
-                <select id="wg-preset-select" class="search-input-box"></select>
+              <div id="wg-preset-dropdown" class="custom-dst-dropdown" style="flex: 1; min-width: 0;">
+                <input type="hidden" id="wg-preset-select" value="">
+                <div class="custom-dropdown-trigger" onclick="toggleWgPresetDropdown(event)">
+                  <span id="wg-preset-label" class="dropdown-selected-label">
+                    <i data-lucide="bookmark" class="dst-svg-icon"></i><span>No saved presets yet</span>
+                  </span>
+                  <i data-lucide="chevron-down" class="dst-dropdown-arrow"></i>
+                </div>
+                <div id="wg-preset-options" class="custom-dropdown-menu"></div>
+              </div>
+
                 <button type="button" class="dst-btn" onclick="loadWgPreset()">Load</button>
                 <button type="button" class="wg-icon-btn" onclick="deleteWgPreset()" title="Delete selected preset"><i data-lucide="trash-2"></i></button>
               </div>
@@ -2962,6 +4047,7 @@
                 </div>
                 <div>
                   <label class="dst-toggle-label wg-toggle">
+                    
                     <span>Fill</span>
                     <div class="dst-switch">
                       <input type="checkbox" id="obs-no-fill" onchange="toggleFillDisable()">
@@ -3013,8 +4099,8 @@
                     <i data-lucide="party-popper" class="dst-svg-icon"></i><span>Anniversary Party Hat</span>
                   </div>
                   <div class="custom-dropdown-item"
-                    onclick="selectHatOption('custom', 'Custom Hat URL...', 'sparkles')">
-                    <i data-lucide="sparkles" class="dst-svg-icon"></i><span>Custom Hat URL...</span>
+                    onclick="selectHatOption('custom', 'Custom Hat URL...', 'wrench')">
+                    <i data-lucide="wrench" class="dst-svg-icon"></i><span>Custom Hat URL...</span>
                   </div>
                 </div>
               </div>
@@ -3112,6 +4198,8 @@
 
           </div>
 
+
+          
           <!-- ═════════ RIGHT: PREVIEW + OUTPUT ═════════ -->
           <div class="wg-preview">
 
@@ -3274,9 +4362,30 @@
     </section>
 
     <!-- ASSETS TAB -->
+<!-- ASSETS TAB -->
     <section id="download">
-      <h1 class="dst-heading">Campaign Assets</h1>
-      <div id="download-grid"></div>
+      <h1 class="dst-heading">Campaign Assets &amp; Media Kit</h1>
+
+      <div class="dst-parchment-card asset-header-card">
+        <div class="asset-toolbar">
+          <div class="platform-filter-bar" id="asset-category-filters" style="margin-bottom: 0;">
+            <button class="platform-pill active" onclick="filterAssetCategory('all', this)">All Assets</button>
+            <button class="platform-pill" onclick="filterAssetCategory('campaign', this)">Current Drop</button>
+            <button class="platform-pill" onclick="filterAssetCategory('kit', this)">Streamer Kit &amp; Hats</button>
+          </div>
+
+          <div class="asset-toolbar-actions">
+            <button type="button" id="asset-transparency-toggle" class="tool-btn" onclick="toggleAssetTransparency()" title="Toggle transparency checkerboard">
+              <i data-lucide="grid"></i><span>Checkerboard BG</span>
+            </button>
+<!--             <button type="button" class="dst-btn" onclick="downloadAllAssets()" style="padding: 8px 16px; font-size: 1rem;">
+              <i data-lucide="download" style="width: 16px;"></i><span>Download All</span>
+            </button> -->
+          </div>
+        </div>
+      </div>
+
+      <div id="download-grid" class="asset-grid"></div>
     </section>
 
     <!-- INFO / COMPENDIUM TAB -->
@@ -3316,6 +4425,22 @@
           </li>
         </ul>
       </div>
+
+<!-- OFFICIAL KLEI & COMMUNITY DISCLAIMER -->
+      <div class="dst-parchment-card" style="margin-top: 25px;">
+        <h3 style="font-family: var(--font-title); color: #fff; margin-bottom: 10px; font-size: 1.25rem; display: flex; align-items: center; gap: 8px;">
+          <i data-lucide="shield-alert" style="color: var(--dst-flame-bright);"></i>
+          Community &amp; Klei Disclaimer
+        </h3>
+        <p style="color: var(--dst-paper-muted); font-size: 1.05rem; line-height: 1.45;">
+          <strong>Starving For Drops</strong> is an independent, fan-crafted compendium and stream overlay generator.
+          This site is not affiliated with, endorsed by, or an official website of <strong>Klei Entertainment</strong>.
+        </p>
+        <p style="color: var(--dst-paper-muted); font-size: 1.05rem; line-height: 1.45; margin-top: 10px;">
+          All <em>Don't Starve Together</em> campaign skins, character artworks, items, logos, promotional feeds, and ambassador broadcast rosters are the intellectual property and copyright of <strong>Klei Entertainment</strong>. Huge gratitude to Klei for fostering a welcoming community!
+        </p>
+      </div>
+
     </section>
   </main>
 
@@ -3332,6 +4457,10 @@
       <span id="mobile-live-badge" class="inv-badge" style="display: none;">0</span>
     </div>
 
+        <div class="inv-slot" onclick="nav('updates', this)">
+      <i data-lucide="scroll"></i>
+      <span>Updates</span>
+    </div>
     <div class="inv-slot" onclick="nav('info', this)">
       <i data-lucide="book-open"></i>
       <span>Info</span>
@@ -3425,7 +4554,7 @@
       'xmas': { label: 'Winter / Santa Hat', icon: 'snowflake' },
       'halloween': { label: 'Halloween / Witch Hat', icon: 'ghost' },
       'birthday': { label: 'Anniversary Party Hat', icon: 'party-popper' },
-      'custom': { label: 'Custom Hat URL...', icon: 'sparkles' }
+      'custom': { label: 'Custom Hat URL...', icon: 'wrench' }
     };
 
     function toggleHatDropdown(e) {
@@ -3503,9 +4632,9 @@
     }
 
     const defaultHatUrls = {
-      xmas: "https://dontstarve.wiki.gg/images/Winter_Hat_Dropped.png?72e0b5",
+      xmas: "https://dontstarve.wiki.gg/images/Winter_Hat_Dropped.png",
       halloween: "https://cdn-items.klei.com/dst/512x512/tophat_witch_pyre_cf2ed86a1a4d83b3.png",
-      birthday: "https://dontstarve.wiki.gg/images/thumb/Balloon_Hat_Dropped.png/300px-Balloon_Hat_Dropped.png?1d91e1"
+      birthday: "https://dontstarve.wiki.gg/images/thumb/Balloon_Hat_Dropped.png/300px-Balloon_Hat_Dropped.png"
     };
 
     function handleHatSelectionChange() {
@@ -4151,6 +5280,8 @@
       const targetSection = document.getElementById(id);
       if (targetSection) targetSection.classList.add('active');
 
+
+
       document.querySelectorAll('.dst-tab, .inv-slot').forEach(item => {
         if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(`'${id}'`)) {
           item.classList.add('active');
@@ -4159,6 +5290,8 @@
         }
       });
       localStorage.setItem('dst-last-visited-tab', id);
+
+      if (id === 'updates') fetchGameUpdates();
 
       if (id === 'live') refreshAmbassadors();
       // FIX: Force scale recalculation when opening the widget tab so it doesn't load cramped/collapsed
@@ -4170,6 +5303,26 @@
     let lastTab = localStorage.getItem('dst-last-visited-tab') || 'drops';
     // The phone dock only has Drops / Live / Info, so don't reopen a tab it can't reach
     if (window.matchMedia('(max-width: 900px)').matches && ['widget', 'download'].includes(lastTab)) lastTab = 'drops';
+    // Place this ABOVE nav(lastTab) so it is initialized in time
+    var rawGameUpdates = [];
+    var currentBranchFilter = 'stable';
+    var lastUpdatesFetch = 0;
+
+
+
+    function switchUpdatesBranch(branch) {
+      currentBranchFilter = branch;
+
+      const stableBtn = document.getElementById('branch-btn-stable');
+      const betaBtn = document.getElementById('branch-btn-beta');
+
+      if (stableBtn) stableBtn.classList.toggle('active', branch === 'stable');
+      if (betaBtn) betaBtn.classList.toggle('active', branch === 'beta');
+
+      filterGameUpdates();
+    }
+
+    
     nav(lastTab);
 
     function applyAmbassadorFilters() {
@@ -4255,20 +5408,7 @@
       lucide.createIcons();
     }
 
-    function showInAppToast(title, body, iconUrl) {
-      const toast = document.getElementById('dst-toast');
-      const tTitle = document.getElementById('toast-title');
-      const tBody = document.getElementById('toast-body');
-      const tImg = document.getElementById('toast-img');
 
-      if (toast) {
-        if (tTitle) tTitle.innerText = title;
-        if (tBody) tBody.innerText = body;
-        if (tImg && iconUrl) tImg.src = iconUrl;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 6000);
-      }
-    }
 
     async function triggerSafeNotification(title, body, iconUrl) {
       playDstChime();
@@ -4384,12 +5524,26 @@
       }
     }
 
-    function openDiscordModal() {
+function openDiscordModal() {
       if (!currentDstCampaign) return;
       const modal = document.getElementById('discord-modal');
       const box = document.getElementById('discord-copy-box');
-      const endStr = new Date(currentDstCampaign.campaignEnd * 1000).toUTCString();
-      const payload = `>>> 🎁 **Don't Starve Together — Twitch Drop Active!**\n**Item:** ${currentDstCampaign.englishName}\n**Status:** Live until ${endStr}\n**Watch Live Ambassadors:** https://clifffordw.github.io/ClifffWidgets/Webpage/index.html`;
+
+      const endSec = Number(currentDstCampaign.campaignEnd);
+      const name = currentDstCampaign.englishName || "Don't Starve Together Drop";
+      const gifUrl = currentDstCampaign.gif || "";
+
+      let payload = `>>> 🎁 **Don't Starve Together — Twitch Drop Active!**\n` +
+        `**Item:** \`${name}\`\n` +
+        `**Milestones:** 30m Flair • 90m Portrait • 180m Item Skin\n` +
+        `**Concludes:** <t:${endSec}:F> (<t:${endSec}:R>)\n\n` +
+        `🔥 **Track Drops & Watch Live Ambassadors:**\n` +
+        `<https://clifffordw.github.io/ClifffWidgets/Webpage/index.html>`;
+
+      if (gifUrl) {
+        payload += `\n\n${gifUrl}`;
+      }
+
       if (box) box.value = payload;
       if (modal) modal.classList.add('active');
     }
@@ -4436,6 +5590,7 @@
       applyViewMode();
       renderWgPresets();
       applySharedWidgetFromUrl();
+      updateUpdatesNotifButtonUI();
 
       try {
         const [cRes, aRes] = await Promise.all([
@@ -4518,28 +5673,7 @@
         updateTimer();
         setInterval(updateTimer, 1000);
 
-        const assetsToRender = [
-          { name: "ANIMATION", url: dst.gif },
-          { name: "ITEM SKIN", url: dst.item },
-          { name: "PORTRAIT FRAME", url: dst.portrait },
-          { name: "PROFILE ICON", url: dst.icon }
-        ];
-
-        document.getElementById('download-grid').innerHTML = assetsToRender.map(asset => {
-          const ext = asset.url.split('.').pop().toUpperCase();
-          return `
-            <div class="asset-card">
-              <img title="Drag me into your folder/desktop!" src="${asset.url}" alt="${asset.name}" loading="lazy">
-              <div>
-                <h4>${asset.name}</h4>
-                <p>Format: ${ext}</p>
-              </div>
-              <button onclick="forceDownload('${asset.url}', '${asset.name}')" class="dst-btn" style="font-size: 1.05rem; width: 100%;">
-                <i data-lucide="download" style="width: 16px;"></i> Download
-              </button>
-            </div>
-          `;
-        }).join('');
+        renderAssets()
 
         rawAmbassadors = await aRes.json();
         markAmbUpdated();
@@ -4693,16 +5827,65 @@
 
     function getWgPresets() { try { return JSON.parse(localStorage.getItem('dst-wg-presets') || '{}'); } catch (e) { return {}; } }
 
-    function renderWgPresets(selectName) {
-      const sel = document.getElementById('wg-preset-select'); if (!sel) return;
-      const names = Object.keys(getWgPresets());
-      if (!names.length) {
-        const o = document.createElement('option'); o.textContent = 'No saved presets yet'; o.disabled = true;
-        sel.replaceChildren(o); return;
-      }
-      sel.replaceChildren(...names.map(n => { const o = document.createElement('option'); o.value = o.textContent = n; return o; }));
-      if (selectName) sel.value = selectName;
+    function toggleWgPresetDropdown(e) {
+  if (e) e.stopPropagation();
+  document.getElementById('wg-preset-dropdown')?.classList.toggle('open');
+}
+
+  function selectWgPreset(name) {
+    const hidden = document.getElementById('wg-preset-select');
+    const label = document.getElementById('wg-preset-label');
+    if (hidden) hidden.value = name;
+    if (label) {
+      label.innerHTML = '<i data-lucide="bookmark" class="dst-svg-icon"></i><span></span>';
+      label.querySelector('span').textContent = name;   // textContent keeps preset names safe
     }
+    document.querySelectorAll('#wg-preset-options .custom-dropdown-item').forEach(el => {
+      el.classList.toggle('active', el.dataset.name === name);
+    });
+    document.getElementById('wg-preset-dropdown')?.classList.remove('open');
+    lucide.createIcons();
+  }
+
+  function renderWgPresets(selectName) {
+    const menu = document.getElementById('wg-preset-options');
+    const hidden = document.getElementById('wg-preset-select');
+    const label = document.getElementById('wg-preset-label');
+    if (!menu || !hidden) return;
+
+    const names = Object.keys(getWgPresets());
+    menu.replaceChildren();
+
+    if (!names.length) {
+      hidden.value = '';
+      if (label) label.innerHTML = '<i data-lucide="bookmark" class="dst-svg-icon"></i><span>No saved presets yet</span>';
+      lucide.createIcons();
+      return;
+    }
+
+    names.forEach(n => {
+      const item = document.createElement('div');
+      item.className = 'custom-dropdown-item';
+      item.dataset.name = n;
+      const ic = document.createElement('i');
+      ic.setAttribute('data-lucide', 'bookmark');
+      ic.className = 'dst-svg-icon';
+      const sp = document.createElement('span');
+      sp.textContent = n;
+      item.append(ic, sp);
+      item.onclick = () => selectWgPreset(n);
+      menu.append(item);
+    });
+
+    selectWgPreset(names.includes(selectName) ? selectName
+      : names.includes(hidden.value) ? hidden.value : names[0]);
+  }
+
+  // close when clicking elsewhere
+  document.addEventListener('click', (e) => {
+    const dd = document.getElementById('wg-preset-dropdown');
+    if (dd && !dd.contains(e.target)) dd.classList.remove('open');
+  });
 
     function saveWgPreset() {
       const input = document.getElementById('wg-preset-name');
@@ -4724,14 +5907,147 @@
       showInAppToast('Preset loaded', `"${sel.value}" applied to the widget.`);
     }
 
+
+// Flexible Toast supporting image URLs OR Lucide icon names
+    function showInAppToast(title, body, iconOrUrl = 'sparkles') {
+      const toast = document.getElementById('dst-toast');
+      const tTitle = document.getElementById('toast-title');
+      const tBody = document.getElementById('toast-body');
+      const slot = document.getElementById('toast-icon-slot');
+
+      if (tTitle) tTitle.innerText = title;
+      if (tBody) tBody.innerText = body;
+
+      if (slot) {
+        if (typeof iconOrUrl === 'string' && (iconOrUrl.startsWith('http://') || iconOrUrl.startsWith('https://') || iconOrUrl.startsWith('./'))) {
+          slot.innerHTML = `<img src="${iconOrUrl}" alt="Icon" onerror="this.src='https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg'">`;
+        } else {
+          slot.innerHTML = `<i data-lucide="${iconOrUrl}"></i>`;
+          lucide.createIcons();
+        }
+      }
+
+      if (toast) {
+        toast.classList.add('show');
+        clearTimeout(toast._hideTimer);
+        toast._hideTimer = setTimeout(() => toast.classList.remove('show'), 5500);
+      }
+    }
+
+    // Modal Confirmation Dialog replacing window.confirm()
+    let confirmModalAction = null;
+    function openDstConfirmModal(title, msg, confirmText = 'Confirm', onConfirm = null) {
+      const modal = document.getElementById('confirm-modal');
+      const titleEl = document.getElementById('confirm-modal-title');
+      const msgEl = document.getElementById('confirm-modal-msg');
+      const btn = document.getElementById('confirm-modal-ok-btn');
+
+      if (titleEl) titleEl.innerText = title;
+      if (msgEl) msgEl.innerText = msg;
+      if (btn) btn.innerText = confirmText;
+
+      confirmModalAction = onConfirm;
+      if (btn) {
+        btn.onclick = () => {
+          if (confirmModalAction) confirmModalAction();
+          closeConfirmModal();
+        };
+      }
+      if (modal) modal.classList.add('active');
+    }
+
+    function closeConfirmModal() {
+      const modal = document.getElementById('confirm-modal');
+      if (modal) modal.classList.remove('active');
+      confirmModalAction = null;
+    }
+
+    // Close modals on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeConfirmModal();
+        closeDiscordModal();
+      }
+    });
+
+    // Delete Preset using the styled popup & icon toast
     function deleteWgPreset() {
       const sel = document.getElementById('wg-preset-select');
-      const name = sel && sel.value; const all = getWgPresets();
-      if (!name || !all[name] || !confirm(`Delete preset "${name}"?`)) return;
-      delete all[name];
-      localStorage.setItem('dst-wg-presets', JSON.stringify(all));
-      renderWgPresets();
+      const name = sel && sel.value;
+      const all = getWgPresets();
+      if (!name || !all[name]) {
+        showInAppToast('No Preset Selected', 'Choose a preset to delete first.', 'alert-circle');
+        return;
+      }
+
+      openDstConfirmModal(
+        'Delete Preset',
+        `Are you sure you want to discard "${name}" from your saved presets?`,
+        'Delete',
+        () => {
+          delete all[name];
+          localStorage.setItem('dst-wg-presets', JSON.stringify(all));
+          renderWgPresets();
+          showInAppToast('Preset Deleted', `"${name}" was discarded.`, 'trash-2');
+        }
+      );
     }
+
+    // Contextual icon toasts for other actions
+    function copyDiscordPayload() {
+      const box = document.getElementById('discord-copy-box');
+      if (box) {
+        box.select();
+        navigator.clipboard.writeText(box.value);
+        showInAppToast("Markdown Copied!", "Discord markdown copied to clipboard.", "clipboard-check");
+        closeDiscordModal();
+      }
+    }
+
+    function saveWgPreset() {
+      const input = document.getElementById('wg-preset-name');
+      const name = (input.value || '').trim().slice(0, 30);
+      if (!name) { showInAppToast('Name needed', 'Type a name for this setup first.', 'edit-3'); return; }
+      const all = getWgPresets();
+      all[name] = getWidgetSnapshot();
+      localStorage.setItem('dst-wg-presets', JSON.stringify(all));
+      input.value = '';
+      renderWgPresets(name);
+      showInAppToast('Preset saved', `"${name}" is ready to load any time.`, 'bookmark-check');
+    }
+
+    function loadWgPreset() {
+      const sel = document.getElementById('wg-preset-select');
+      const p = getWgPresets()[sel && sel.value];
+      if (!p) return;
+      applyWidgetSnapshot(p);
+      showInAppToast('Preset loaded', `"${sel.value}" applied to the widget.`, 'hard-drive-download');
+    }
+
+    async function toggleDropNotifications() {
+      if (!("Notification" in window)) {
+        showInAppToast("Unsupported", "Your browser does not support web notifications.", "bell-off");
+        return;
+      }
+
+      const currentState = localStorage.getItem('dst-drops-notif-enabled') === 'true';
+      if (!currentState) {
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+          localStorage.setItem('dst-drops-notif-enabled', 'true');
+          triggerSafeNotification("DST Drop Alerts Enabled!", "You will receive alerts when drops arrive or conclude.", "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg");
+          showInAppToast("Alerts Enabled!", "Drop notifications are active.", "bell-ring");
+        } else {
+          localStorage.setItem('dst-drops-notif-enabled', 'false');
+          showInAppToast("Permission Denied", "Enable notifications in browser settings.", "bell-off");
+        }
+      } else {
+        localStorage.setItem('dst-drops-notif-enabled', 'false');
+        showInAppToast("Alerts Silenced", "Drop notifications turned off.", "bell-off");
+      }
+      updateNotifButtonUI();
+    }
+
 
     async function shareWgLink() {
       const enc = btoa(unescape(encodeURIComponent(JSON.stringify(getWidgetSnapshot()))))
@@ -4801,6 +6117,577 @@
 
 
     init();
+
+
+
+
+let currentAssetCategory = 'all';
+    let assetCheckerboardActive = false;
+
+    function getAvailableAssets() {
+      const dst = currentDstCampaign;
+      const list = [];
+
+      if (dst) {
+        list.push(
+          { name: dst.englishName || "Main Skin", cat: "campaign", sub: "Item Skin", url: dst.item || dst.gif },
+          { name: "Drop Animation", cat: "campaign", sub: "Curio Showcase", url: dst.gif },
+          { name: "Portrait Frame", cat: "campaign", sub: "Character Border", url: dst.portrait || dst.gif },
+          { name: "Profile Flair", cat: "campaign", sub: "Twitch / Klei Icon", url: dst.icon || dst.gif }
+        );
+      }
+
+      list.push(
+/*         { name: "Drop Logo Flame", cat: "kit", sub: "Vector SVG Emblem", url: "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" },
+ */      );
+
+      return list;
+    }
+
+    function renderAssets() {
+      const grid = document.getElementById('download-grid');
+      if (!grid) return;
+
+      const assets = getAvailableAssets().filter(a => currentAssetCategory === 'all' || a.cat === currentAssetCategory);
+
+      grid.innerHTML = assets.map(a => {
+        const ext = a.url.split('.').pop().split('?')[0].toUpperCase();
+        const tag = a.cat === 'campaign' ? 'Drop' : 'Kit';
+
+        return `
+          <div class="asset-card">
+            <span class="asset-card-tag">${tag}</span>
+            <span class="asset-card-format">${ext}</span>
+
+            <div class="asset-preview-stage ${assetCheckerboardActive ? 'checkerboard' : ''}">
+              <img src="${a.url}" alt="${a.name}" loading="lazy" draggable="true" title="Drag to desktop or folder!">
+            </div>
+
+            <div class="asset-info">
+              <h4 title="${a.name}">${a.name}</h4>
+              <p>${a.sub}</p>
+            </div>
+
+            <div class="asset-actions">
+              <button type="button" class="dst-btn" onclick="forceDownload('${a.url}', '${a.name}')" title="Download to device">
+                <i data-lucide="download" style="width: 14px;"></i> Save
+              </button>
+              <button type="button" class="dst-btn" onclick="copyAssetUrl('${a.url}')" title="Copy raw image URL for OBS or Discord">
+                <i data-lucide="link" style="width: 14px;"></i> Copy
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function filterAssetCategory(cat, btn) {
+      currentAssetCategory = cat;
+      document.querySelectorAll('#asset-category-filters .platform-pill').forEach(p => p.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderAssets();
+    }
+
+    function toggleAssetTransparency() {
+      assetCheckerboardActive = !assetCheckerboardActive;
+      const btn = document.getElementById('asset-transparency-toggle');
+      if (btn) btn.classList.toggle('active', assetCheckerboardActive);
+      renderAssets();
+    }
+
+    async function copyAssetUrl(url) {
+      try {
+        await navigator.clipboard.writeText(url);
+        showInAppToast("Link Copied!", "Direct asset URL copied to clipboard.", "link");
+      } catch (err) {
+        window.prompt("Copy asset URL:", url);
+      }
+    }
+
+    async function downloadAllAssets() {
+      const assets = getAvailableAssets().filter(a => currentAssetCategory === 'all' || a.cat === currentAssetCategory);
+      showInAppToast("Downloading Assets", `Saving ${assets.length} items to your downloads folder...`, "download");
+
+      for (let i = 0; i < assets.length; i++) {
+        await forceDownload(assets[i].url, assets[i].name);
+        await new Promise(r => setTimeout(r, 450));
+      }
+    }
+
+
+
+
+    
+
+    function setUpdatesBranch(branch, btn) {
+      currentBranchFilter = branch;
+      document.querySelectorAll('#updates-branch-filters .platform-pill').forEach(p => p.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      filterGameUpdates();
+    }
+
+    function filterGameUpdates() {
+      const q = (document.getElementById('updates-search')?.value || '').toLowerCase().trim();
+      const statusEl = document.getElementById('updates-status');
+
+      let filtered = rawGameUpdates.filter(u => {
+        if (currentBranchFilter !== 'all' && u.branch !== currentBranchFilter) return false;
+        if (!q) return true;
+        return u.title.toLowerCase().includes(q) || (u.desc && u.desc.toLowerCase().includes(q));
+      });
+
+      if (statusEl) {
+        statusEl.innerText = `Showing ${filtered.length} of ${rawGameUpdates.length} DST updates (${currentBranchFilter.toUpperCase()})`;
+      }
+
+      renderGameUpdates(filtered);
+    }
+
+
+    async function fetchGameUpdates(force = false) {
+      if (!force && rawGameUpdates.length > 0 && (Date.now() - lastUpdatesFetch < 180000)) {
+        return;
+      }
+
+      const statusEl = document.getElementById('updates-status');
+      const listEl = document.getElementById('updates-list');
+      if (statusEl) statusEl.innerText = "Consulting Klei Records for latest updates...";
+
+      try {
+        let items = [];
+
+        // 1. PRIMARY: Official Klei Forums DST Updates RSS Feed
+        try {
+          const kleiRss = "https://forums.kleientertainment.com/rss/6-dont-starve-together-updates.xml/?member_id=860787&key=7cc65346643acc0b8fc9eaecacf0920d";
+          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(kleiRss)}`, { signal: AbortSignal.timeout(8000) });
+          if (res.ok) {
+            const data = await res.json();
+            if (data.items && data.items.length) {
+              items = data.items.map(it => {
+                const cats = Array.isArray(it.categories) ? it.categories.join(' ').toLowerCase() : '';
+                const isBeta = cats.includes('test') || cats.includes('beta') ||
+                               /\b(test|beta|preview)\b/i.test(it.title) ||
+                               it.title.trim().startsWith('[Test]');
+                
+                // Do NOT strip tags here so HTML markup and lists are preserved
+                const rawPayload = it.content || it.description || '';
+                const cleanSummary = rawPayload
+                  .replace(/<\/?[^>]+(>|$)/g, " ")
+                  .replace(/\s+/g, " ")
+                  .replace(/^(Changes|Highlights|Bug Fixes|Notes)\s+/i, "") // Removes redundant mashed heading prefix
+                  .trim();
+                return {
+                  title: it.title,
+                  url: it.link,
+                  date: it.pubDate,
+                  desc: cleanSummary,
+                  html: formatPatchContent(rawPayload),
+                  branch: isBeta ? 'beta' : 'stable',
+                  tagLabel: isBeta ? 'TEST / BETA' : 'RELEASE'
+                };
+              });
+            }
+          }
+        } catch (e) {
+          console.warn("Klei direct RSS feed fetch failed, falling back to Steam mirror...", e);
+        }
+
+        // 2. FALLBACK: Steam Announcements
+        if (!items.length) {
+          const steamRss = "https://store.steampowered.com/feeds/news/app/322330/";
+          const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(steamRss)}`, { signal: AbortSignal.timeout(8000) });
+          if (res.ok) {
+            const data = await res.json();
+            if (data.items && data.items.length) {
+              items = data.items.map(it => {
+                const isBeta = /\b(test|beta|preview|public test)\b/i.test(it.title);
+                const rawPayload = it.description || '';
+                const cleanSummary = rawPayload.replace(/<\/?[^>]+(>|$)/g, " ").replace(/\s+/g, " ").trim();
+                return {
+                  title: it.title,
+                  url: it.link,
+                  date: it.pubDate,
+                  desc: cleanSummary,
+                  html: formatPatchContent(rawPayload),
+                  branch: isBeta ? 'beta' : 'stable',
+                  tagLabel: isBeta ? 'TEST / BETA' : 'RELEASE'
+                };
+              });
+            }
+          }
+        }
+
+        if (!items.length) throw new Error("No feed items returned");
+
+        const latestStable = items.find(u => u.branch === 'stable');
+        const latestBeta = items.find(u => u.branch === 'beta');
+
+        const picked = [];
+        if (latestStable) picked.push(latestStable);
+        if (latestBeta) picked.push(latestBeta);
+
+        rawGameUpdates = picked;
+        lastUpdatesFetch = Date.now();
+        checkNewUpdateAlerts(picked);
+        filterGameUpdates();
+
+      } catch (err) {
+        console.warn("Could not fetch DST updates:", err);
+        if (statusEl) statusEl.innerText = "";
+        if (listEl) {
+          listEl.innerHTML = `
+            <div class="amb-error">
+              <i data-lucide="cloud-off" style="width:40px;height:40px;stroke:var(--dst-flame);margin:0 auto 10px;"></i>
+              <p style="font-size:1.25rem;color:#fff;">Could not load updates feed</p>
+              <p>You can view them directly on Klei's website.</p>
+              <a href="https://forums.kleientertainment.com/game-updates/dst/" target="_blank" class="dst-btn" style="margin-top:14px;">
+                Open Klei Forums
+              </a>
+            </div>
+          `;
+          lucide.createIcons();
+        }
+      }
+    }
+
+    function setUpdatesBranch(branch, btn) {
+      currentBranchFilter = branch;
+      document.querySelectorAll('#updates-branch-filters .platform-pill').forEach(p => p.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      filterGameUpdates();
+    }
+
+    function filterGameUpdates() {
+      const q = (document.getElementById('updates-search')?.value || '').toLowerCase().trim();
+      const statusEl = document.getElementById('updates-status');
+
+      let filtered = rawGameUpdates.filter(u => {
+        if (currentBranchFilter !== 'all' && u.branch !== currentBranchFilter) return false;
+        if (!q) return true;
+        return u.title.toLowerCase().includes(q) || (u.desc && u.desc.toLowerCase().includes(q));
+      });
+
+      if (statusEl) {
+        if (currentBranchFilter === 'beta' && !filtered.length) {
+          statusEl.innerText = "No active beta/test branch post in recent news.";
+        } else {
+          statusEl.innerText = `Displaying latest DST patch update (${currentBranchFilter.toUpperCase()})`;
+        }
+      }
+
+      renderGameUpdates(filtered);
+    }
+
+    function renderGameUpdates(list) {
+      const listEl = document.getElementById('updates-list');
+      if (!listEl) return;
+
+      if (!list.length) {
+        listEl.innerHTML = `
+          <div class="amb-error">
+            <i data-lucide="flask-conical" style="width:40px;height:40px;stroke:var(--dst-flame);margin:0 auto 10px;"></i>
+            <p style="font-size:1.2rem;color:#fff;">No recent ${currentBranchFilter.toUpperCase()} update found</p>
+            <p style="font-size:1rem;color:var(--dst-paper-muted);">Check the forums for legacy or upcoming test cycles.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      listEl.innerHTML = list.map((item) => {
+        const idx = rawGameUpdates.indexOf(item);
+        const dateStr = item.date ? new Date(item.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : 'Recent';
+        const badgeClass = item.branch === 'beta' ? 'badge-beta' : 'badge-stable';
+
+        return `
+          <div class="update-card">
+            <div class="update-header">
+              <span class="update-title" style="cursor: pointer;" onclick="openPatchModal(${idx})">${item.title}</span>
+              <div class="update-meta">
+                <span class="update-badge ${badgeClass}">LATEST ${item.tagLabel}</span>
+                <span class="update-date">${dateStr}</span>
+              </div>
+            </div>
+            <p class="update-snippet">${item.desc || 'Click below to read the complete patch notes.'}</p>
+            <div class="update-actions">
+              <button type="button" class="dst-btn" style="padding: 6px 14px; font-size: 0.95rem;" onclick="openPatchModal(${idx})">
+                <i data-lucide="file-text" style="width: 14px;"></i> View Full Notes
+              </button>
+              <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="dst-btn" style="padding: 6px 14px; font-size: 0.95rem;">
+                <i data-lucide="external-link" style="width: 14px;"></i> Forums
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+    
+
+    function openPatchModal(index) {
+      const item = rawGameUpdates[index];
+      if (!item) return;
+
+      const modal = document.getElementById('patch-modal');
+      const titleEl = document.getElementById('patch-modal-title');
+      const badgeEl = document.getElementById('patch-modal-badge');
+      const dateEl = document.getElementById('patch-modal-date');
+      const contentEl = document.getElementById('patch-modal-content');
+      const linkEl = document.getElementById('patch-modal-link');
+
+      // 1. Check if the update content references a specific Klei forum thread
+      const embeddedForumLink = extractKleiForumLink(item.html || item.desc);
+      const effectiveUrl = embeddedForumLink || item.url;
+
+      if (titleEl) titleEl.innerText = item.title;
+      if (badgeEl) {
+        badgeEl.innerText = item.tagLabel;
+        badgeEl.className = `update-badge ${item.branch === 'beta' ? 'badge-beta' : 'badge-stable'}`;
+      }
+      if (dateEl) {
+        dateEl.innerText = item.date ? new Date(item.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+      }
+
+      // 2. Build the modal body with smart formatting + forum banner if available
+      let modalBodyHtml = '';
+      if (embeddedForumLink) {
+        modalBodyHtml += `
+          <div class="patch-callout-card">
+            <div class="patch-callout-info">
+              <i data-lucide="scroll"></i>
+              <div>
+                <h4>Official Klei Forum Thread</h4>
+                <p>Detailed changelog &amp; developer notes are available on the forums.</p>
+              </div>
+            </div>
+            <a href="${embeddedForumLink}" target="_blank" rel="noopener noreferrer" class="dst-btn" style="padding: 6px 14px; font-size: 0.95rem;">
+              <i data-lucide="external-link" style="width: 14px;"></i> Open Thread
+            </a>
+          </div>
+        `;
+      }
+
+      modalBodyHtml += formatPatchContent(item.html || item.desc);
+      if (contentEl) contentEl.innerHTML = modalBodyHtml;
+
+      // 3. Update bottom external button
+      if (linkEl) {
+        linkEl.href = effectiveUrl;
+        const isForum = effectiveUrl.includes('kleientertainment.com') || effectiveUrl.includes('kleiforums.com');
+        linkEl.innerHTML = `<i data-lucide="external-link" style="width: 15px;"></i> ${isForum ? 'View on Klei Forums' : 'View Full Announcement'}`;
+      }
+
+      lucide.createIcons();
+      if (modal) modal.classList.add('active');
+    }
+
+    function closePatchModal() {
+      const modal = document.getElementById('patch-modal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    // Hook modal into Escape key listener
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closePatchModal();
+      }
+    });
+
+// Automatically extracts any embedded Klei Forum link from the update text
+    function extractKleiForumLink(content) {
+      if (!content) return null;
+      const match = content.match(/https?:\/\/(?:forums\.kleientertainment|kleiforums)\.com\/(?:game-updates\/dst|topic|forums)\/[^\s"'>)]+/i);
+      return match ? match[0] : null;
+    }
+
+    // Turns raw line breaks, bullets, and section names into styled HTML
+    // Turns raw Klei forum changelog lines into formatted bullet lists
+    function formatPatchContent(raw) {
+      if (!raw) return '<p>No patch details available.</p>';
+      let text = String(raw).trim();
+
+      // 1. Resolve Steam Clan Image placeholders
+      text = text.replace(/\{STEAM_CLAN_IMAGE\}/g, 'https://clan.fastly.steamstatic.com/images/');
+      text = text.replace(/\{STEAM_CLAN_LOC_IMAGE\}/g, 'https://clan.fastly.steamstatic.com/images/');
+
+      // 2. Remove broken Steam widget containers
+      text = text.replace(/<div class="bb_clan_app_container"[\s\S]*?<\/div>/gi, '');
+      text = text.replace(/\[clan_app.*?\][\s\S]*?\[\/clan_app\]/gi, '');
+
+      // 3. YouTube Embeds
+      text = text.replace(/\[previewyoutube=([a-zA-Z0-9_-]+);?[^\]]*\]\[\/previewyoutube\]/gi, (_, id) => `
+        <div class="patch-video-wrapper">
+          <iframe src="https://www.youtube-nocookie.com/embed/${id}" allowfullscreen loading="lazy"></iframe>
+        </div>
+      `);
+      text = text.replace(/\[youtube\]([a-zA-Z0-9_-]+)\[\/youtube\]/gi, (_, id) => `
+        <div class="patch-video-wrapper">
+          <iframe src="https://www.youtube-nocookie.com/embed/${id}" allowfullscreen loading="lazy"></iframe>
+        </div>
+      `);
+
+      // 4. Steam Store Links -> Steam Cards
+      text = text.replace(/(?:<a[^>]+href=")?(https:\/\/store\.steampowered\.com\/app\/(\d+)(?:\/([a-zA-Z0-9_-]+))?\/?)(?:"[^>]*>.*?<\/a>)?/gi, (match, url, appId, slug) => {
+        const title = slug ? slug.replace(/_/g, ' ') : `Steam App #${appId}`;
+        return `
+          <a href="${url}" target="_blank" rel="noopener noreferrer" class="patch-steam-card">
+            <div class="patch-steam-card-left">
+              <i data-lucide="gamepad-2"></i>
+              <div>
+                <div class="patch-steam-card-title">${title}</div>
+                <div class="patch-steam-card-sub">Steam Store &amp; DLC Link</div>
+              </div>
+            </div>
+            <span class="dst-btn" style="padding: 4px 10px; font-size: 0.85rem; pointer-events: none;">Open Store</span>
+          </a>
+        `;
+      });
+
+      // 5. Convert BBCode to HTML
+      text = text.replace(/\[h1\]([\s\S]*?)\[\/h1\]/gi, '<h1>$1</h1>');
+      text = text.replace(/\[h2\]([\s\S]*?)\[\/h2\]/gi, '<h2>$1</h2>');
+      text = text.replace(/\[h3\]([\s\S]*?)\[\/h3\]/gi, '<h3>$1</h3>');
+      text = text.replace(/\[b\]([\s\S]*?)\[\/b\]/gi, '<strong>$1</strong>');
+      text = text.replace(/\[i\]([\s\S]*?)\[\/i\]/gi, '<em>$1</em>');
+      text = text.replace(/\[quote\]([\s\S]*?)\[\/quote\]/gi, '<blockquote>$1</blockquote>');
+      text = text.replace(/\[hr\]/gi, '<hr>');
+      text = text.replace(/\[img\](.*?)\[\/img\]/gi, '<img src="$1" alt="Update Image" loading="lazy">');
+      text = text.replace(/\[url=(https?:\/\/[^\]]+)\]([\s\S]*?)\[\/url\]/gi, '<a href="$1" target="_blank" rel="noopener noreferrer">$2</a>');
+
+      // 6. If the content has raw HTML list markup (<ul>, <li>), return it sanitized directly
+      if (/<(ul|ol|li)/i.test(text)) {
+        const doc = new DOMParser().parseFromString(text, 'text/html');
+        doc.querySelectorAll('script, style').forEach(el => el.remove());
+        return doc.body.innerHTML;
+      }
+
+      // 7. Intelligent Klei Changelog Line Parser
+      // Matches both explicit bullets (- , * , • ) AND Klei changelog lines ("Added ...", "Fixed ...", "Changed ...")
+      const lines = text.split(/<\/?(?:p|br|div)[^>]*>|\r?\n/i);
+      let html = '';
+      let inList = false;
+
+      for (let rawLine of lines) {
+        let line = rawLine.replace(/&nbsp;/g, ' ').trim();
+        if (!line) {
+          if (inList) { html += '</ul>'; inList = false; }
+          continue;
+        }
+
+        // Check for section headers (e.g., "Bug Fixes", "Changes", "Highlights")
+        if (/^(Bug Fixes|Changes|Highlights|Features|Known Issues|Notes):?$/i.test(line) ||
+           (/^[A-Z][A-Za-z0-9\s/&'!-]{2,30}:?$/.test(line) && !line.includes('http') && line.length < 35 && !line.startsWith('Added') && !line.startsWith('Fixed'))) {
+          if (inList) { html += '</ul>'; inList = false; }
+          html += `<h4>${line.replace(/:$/, '')}</h4>`;
+          continue;
+        }
+
+        // Check if line is a bullet OR a Klei patch entry
+        const isExplicitBullet = /^[-*•●▪]\s*(.+)$/.test(line);
+        const isKleiActionLine = /^(Added|Fixed|Changed|Updated|Removed|Adjusted|Reverted|Disabled|Enabled|Improved|Addressed)\b/i.test(line);
+
+        if (isExplicitBullet || isKleiActionLine) {
+          if (!inList) { html += '<ul>'; inList = true; }
+          const itemText = isExplicitBullet ? line.replace(/^[-*•●▪]\s*/, '') : line;
+          html += `<li>${itemText}</li>`;
+          continue;
+        }
+
+        if (inList) { html += '</ul>'; inList = false; }
+
+        if (/^<(h[1-6]|div|blockquote|hr|iframe|a)/i.test(line)) {
+          html += line;
+        } else {
+          html += `<p>${line}</p>`;
+        }
+      }
+
+      if (inList) html += '</ul>';
+
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      doc.querySelectorAll('script, style').forEach(el => el.remove());
+      return doc.body.innerHTML;
+    }
+
+
+
+
+function updateUpdatesNotifButtonUI() {
+      const isEnabled = localStorage.getItem('dst-updates-notif-enabled') === 'true';
+      const btn = document.getElementById('updates-notif-btn');
+      const text = document.getElementById('updates-notif-text');
+      if (btn && text) {
+        btn.classList.toggle('notif-active', isEnabled);
+        text.innerText = isEnabled ? 'Update Alerts Active' : 'Notify on Updates';
+        const icon = btn.querySelector('svg, i');
+        if (icon) icon.setAttribute('data-lucide', isEnabled ? 'bell-ring' : 'bell');
+        lucide.createIcons();
+      }
+    }
+
+    async function toggleUpdatesNotification() {
+      if (!("Notification" in window)) {
+        showInAppToast("Unsupported", "Your browser does not support web notifications.", "bell-off");
+        return;
+      }
+
+      const currentState = localStorage.getItem('dst-updates-notif-enabled') === 'true';
+      if (!currentState) {
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+          localStorage.setItem('dst-updates-notif-enabled', 'true');
+          
+          // Seed the current newest update so we only alert on future patches
+          if (rawGameUpdates.length > 0) {
+            localStorage.setItem('dst-last-notified-update', rawGameUpdates[0].url || rawGameUpdates[0].title);
+          }
+          
+          showInAppToast("Enrolled in Updates!", "You'll be alerted when a new DST patch is released.", "bell-ring");
+        } else {
+          localStorage.setItem('dst-updates-notif-enabled', 'false');
+          showInAppToast("Permission Denied", "Enable notifications in browser settings.", "bell-off");
+        }
+      } else {
+        localStorage.setItem('dst-updates-notif-enabled', 'false');
+        showInAppToast("Alerts Silenced", "Update notifications turned off.", "bell-off");
+      }
+      updateUpdatesNotifButtonUI();
+    }
+
+    function checkNewUpdateAlerts(items) {
+      if (localStorage.getItem('dst-updates-notif-enabled') !== 'true') return;
+      if (!items || !items.length) return;
+
+      const newest = items[0];
+      const updateId = newest.url || newest.title;
+      const lastSeenId = localStorage.getItem('dst-last-notified-update');
+
+      // First time enrollment baseline
+      if (!lastSeenId) {
+        localStorage.setItem('dst-last-notified-update', updateId);
+        return;
+      }
+
+      // If a brand new patch post has appeared
+      if (lastSeenId !== updateId) {
+        localStorage.setItem('dst-last-notified-update', updateId);
+        triggerSafeNotification(
+          `New DST ${newest.tagLabel}: ${newest.title}`,
+          newest.desc || "A new Don't Starve Together patch has arrived! Click to view notes.",
+          "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg"
+        );
+      }
+    }
+
+
+
+
+
+
+
   </script>
 </body>
 

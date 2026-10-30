@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Starving For Drops | Don't Starve Together Compendium</title>
 
@@ -28,9 +29,6 @@
 
   <link rel="shortcut icon" type="image/x-icon" href="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg">
 
-
-
-
   <!-- Klei / DST Gothic Hand-Drawn Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,8 +36,6 @@
     href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Patrick+Hand&family=Special+Elite&display=swap"
     rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
-
-
 
   <style>
     .wg-reset-btn.confirm {
@@ -53,8 +49,6 @@
       src: url(https://clifffordw.github.io/ClifffWidgets/Fonts/HammerheadBold.ttf);
       font-display: swap;
     }
-
-
 
     /* ─── CUSTOM NUMBER INPUT SPINNERS (HIGH CONTRAST) ───────────── */
     input[type="number"] {
@@ -81,18 +75,14 @@
       transition: background-color 0.2s ease;
     }
 
-
     @media (hover: hover) and (pointer: fine) {
       /* This automatically finds every element with a title="" attribute and fixes the cursor */
-
-
 
       html:has(input[type="range"]:active),
       html:has(input[type="range"]:active) * {
         cursor: var(--cursor-grabbing) 0 11, grabbing !important;
       }
     }
-
 
     .pill-icon-portrait,
     .pill-icon-item,
@@ -101,12 +91,10 @@
       -webkit-user-drag: none;
     }
 
-
     input[type="number"]::-webkit-inner-spin-button:hover,
     input[type="number"]::-webkit-outer-spin-button:hover {
       background-color: #422613;
     }
-
 
     /* ─── CUSTOM THEMED SCROLLBAR (WIDER & HIGHER CONTRAST) ──────── */
     ::-webkit-scrollbar {
@@ -202,7 +190,6 @@
       cursor: var(--cursor-grabbing) grabbing;
       transform: scale(0.95);
     }
-
 
     /* --- HAT POSITION PILLS --- */
     .hat-pos-pill {
@@ -407,7 +394,6 @@
     /* --- COMPENDIUM CURSOR MATRIX --- */
     @media (hover: hover) and (pointer: fine) {
 
-
       body,
       button,
 
@@ -417,9 +403,6 @@
       .drops {
         cursor: var(--cursor-pointer) 0 16, pointer !important;
       }
-
-
-
 
       /* WebKit thumb */
       input[type="range"]::-webkit-slider-thumb {
@@ -443,8 +426,6 @@
         cursor: var(--cursor-help) 0 16, help !important;
       } */
 
-
-
       [draggable="true"],
       .draggable-item,
       .asset-card img {
@@ -456,7 +437,6 @@
       img:active:not(img.thumb-img, .profile-portrait) {
         cursor: var(--cursor-grabbing) 0 16, grabbing !important;
       }
-
 
       /* Standard Clickables (Buttons, Links, Tabs) */
       button,
@@ -497,15 +477,9 @@
 
     }
 
-
-
-
     /* Custom image when hovering */
 
-
-
     :root {
-
 
       --cursor-pointer: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAMDklEQVR4AdRZCVTN2xr/ztFkiIxlTqbM4zMPRc8qs65lLpbhleF6chfy1sPFsrh3IcOTaRlCIZcW1+w9GQqZHleGPFQIKSRDik7v99vvHqtb5zjnr95d61q+/tPe3/5+37z30csf/N/vBmD9+vVdTp8+PbK49WURQHR09JYrV65sWrVqVeWiLJ6dnf1L9erVN16+fPlgUXnll8MigGfPnq2rVavW2AEDBjw4depUUP7JWu6nTp2aCV4hJUuW7NO+fftLmzdvLpJCjGtbBDB8+PC4+/fvr3d0dCzTuHHjZXfv3r2zf/9+byMDLdd3797pypUrJ7BE7ebNm+/WMtfcWL25D/nfX7x48a8vXrxI5jsI0LBz585Hrl+/vlerK9ja2qbr9XpJSkqSGjVqeJ49e/Z78iwKWQUA5s9OTk6eh8V1Dx48yH7+/Lmhdu3avnCruwcPHvS0VoDXr1+//fDhQ97Ro0clJSVFatasOWfTpk0NrZ1vapxVADjRy8sr7OHDh9ddXFxsFy5cqN+yZUtO2bJlndq2bfvPI0eOrNq4cWMdjvsSpaamxtjY2EjdunUlODhY7Ozs9J06ddrxpTmWvlkNgIwSEhIC3r9/r/f395dly5bZjR8/XjIzM/UdO3b81tvb++ratWurc5w5ysnJuQ8L5FaqVElu3rwpSAri5OTUds+ePX3NzbH0XhMABnRaWlqEs7Oz+Pj45CElSmBgoFy7du0NrdGnT59jFkDYZ2RkPEYQi8FgkNDQUMnLyxMkB6vdUAr80wSAc588efIDrCC9evXKhfbk8ePHMm3aNPtbt269c3R0bOLp6bmN40wRYimzRIkSThRep9NJYmKiHD9+XDAvyAJwU+zUO80ARowY8QvcJrxatWo23bp1E2iejOyWLl1K7QrcoweEGsSXpig3NzcLtUBZAElB9u3bJ4gLnaur61e5kWYAFApuNAuVNQeBLaVLl1YES9hEREQIipVUrFjxH0ix9hxbkLKystIrV64ssIR8+vRJEFfKjSpUqDCu4Fhrnr8KwOjRo1MQjIuqVq0qqKqC4FRCHDp0SK5evUrBqrm5uc01JQDc7x6FhwIEPAQpWdWF8uXLtzI13tI7vaUB5r7fu3fvBwie0a9fP+VGOp1Ogdi2bRszk6DgBW/fvt1kjkc9ELqPg4ODkE6ePCmlSpWyQSruam49c++/GgACMhsAZsHnBYErb968UYKnp6dLdHQ0BdTDVaIKLoyYsUNVV26HOiCICRXMqNICizaFAizWk/w8vxoAmfTo0WPDq1evMjw8PPioXAI+LihsSjAI26hgjof7lGUW4jgSJ6LXUtZD0+iBFDv/3Llz8dY2e0UCwMURiCHwX2nVqhW1rgShNVauXKkCFZV7NscZyd7eviaIcSKMA4JBhRedTrmgI76lwxpN3N3dY60BUWQASUlJ2+kGqMRMh0pO+nd8fLzKMEiRnZAq/6w+4A+0bnPjxg0lMMd9/PhR3r59K7Ckmo9Cl4hAF7yvX69evUIuCBa/+V9kAP7+/omoCwnNmjVTFjByh2UkMjJSPaJy+/GGqRXFrxrGqxiAphUQKoAZiVUZFsllbJw5c4YFrnN4eHgbzjVHRQZAxjqdbg8XbdSo0WeBCODRo0fCooVgt+M4dLDcUurpYtQ+rMOGTgiE3yG8wELv+P7SpUsqMaBjHc1v5kgDAHMsRODDF6i9du3aKQAUiIDQblCLgvYjlLMRK9MIDPsLJTiswfSpXAdpVMUFwKo9A4DIhQsX+G4455qjYgGAJu8Q3MCAnkatQyFhFSEgVOanI0eOPLNjx44/Iec3YwN4+/Zt5W7UNN4Jso+UKVOGNSERvp+FTKW+Y9PEelIJBwJ1FWMTf4oFAPliu5iCjKMsADCq10F7QPe4xe9whT4sYChuSuN0IXShbMtlyZIlKntB8Mz69ev34je6U3JysjCgAa4eeZiiYgNQpUqVn1u0aKGyCcCoooYOVQDqIhcGmMBjx44J+iglLPYQMmvWLEGxy0CchCKI50NgW1gxiPO4YyMQFj1YyoU8TFGxAYBgj7G41Knzv0JKDe7atUvg795r1qxphGLlvHXrVtU3QdMyduxYQcqMxpFNQ4x9mZqa6oed2nfwfbsVK1YoRcD9eABAwJ9MCc93xQYAGntOhvRnXqk9CC1Ihy137twZh9aDuV0gqDRo0ICV+me0ID1QAKcgAfwdh15u06dPF8SLMHsxjuhiaNvZ8Ck3JN+CVAgAcnVZHJt0KzjQ0vPLly8TOQatgApAmJ2PghZbh5bZkamTLyAsNS8DBw40wL0monsNDAoK4jjBgYH4+flJVFSUHD58WBYsWEDAaQD/b841RYUAoDnzRiBp7s2hsQQGLwKO2lVEYekuvDIrGSkuLo6uNADjQ0NCQirTWogFmTt3rqC7zYMbhQPMmPj4+KGoBx1NCW58VwgAFiyJPD4iLCzsixt0IwPjdeLEiSlIgXmurq7KAgaDQV35nYJTSBLvjYTxAssJ+h4ZM2YM/d2A/cGQ7t27jxo6dGgYdn+RAQEB98nDHBUCwIEoQjZNmjRZzXsthOyTzZYCmmXgKSIQIw8jAD5DUSrl8nuFChWkTZs2zFyBvXv3/onfrSWTAMjcxcVlEPr6adYy4ji6CirpZ83zmUKTqHWOIfE9ie+Nz1jTgL3Ebj5roUIAwETlbeRkVshlJ06c+MZahhSIe2RqlfeICzWVFiEANHWCQzHBzktpnO85Fj0SO9KcUaNGZaoJGv4UAjB58uTbaG3fowVmD6NHg/aTtZZA5imBdKoCmMJRy/RzXinThg0bVPZp2rRpLDY6gqtyMxwYs6A5MANynBYqBICTsdE41bVrVxk3bpywd0c+DsFJ2mmkxCb8boogkC+aNVtkjc8uxHHUPInpFf09z0RnIL66oEj9Z9iwYRyiuk5sZATJw2zPowaa+GMSAMr30datWwtNO2nSJImJiREEWrcOHTrgNuZv0FShIxMINZXaj42NFfizIroRiW5itAIOAx79KkeYh4eHsgBqgeqPkIKr/frN6otJACg8YcjFOegy1baPhYbnoOgkndzc3Bb5+Pg8Q4u8GEC/J8EFIpDHuy9fvlydeVJgSkDhKTivcEvVmOF3AT+ewjk4OFRlc8fvSThuR1vBFrsS52khkwBQ+bBpytzcs2dPcUVeZzCiZ+ERoiDNCXobJ5giGCV/Hg605iF9Dp89e7YcOHCABUqlRwpGQeg+vIdCZO/evfT1fuDZDnPao13OM44hSMSQDZ+1kEkAZHD+/Pm5aGWzqH0+29nZKbdA06bKPkDyfFR4OkegLP8UlNoncQ6FIgAIJjitk759+7KviYC2nzg7O7eFAnR0N45l0OMsqQzvtZBZABAwDe6xBH4v/fv3V1qlMCQuyisXotDcTTXCdpJAfH19mWmEm3z4tNoXEBCqqtqdwT1jEbBlUYGTsYbwfJW80E5zU1OKPLWQWQBk0qVLlwXQ1g2cPgt+EvosDAGg9ZVg/EiBHj8PrqDcB74t3JwsXrxYbVTgZjJz5kyyUodfUMgR8sNO7ShOpoNwGhHLI3aCR/1h0rBXgzX8+SIA8sH2zx8uYFi0aBF7FWF7u3r1asFpAS3zCWCi0DIHwL97ov/vQII7dbhz585f4IIZDP4ZM2aIu7s760OMi4uLO6ymx3M49rzzMebpnDlz2HUKALbkmlrIIoAhQ4ZcQ5YYgDxuWLdunVDL7HfQ10ciZbq2bNnym0GDBm2YMGHCySlTpsSRAgIC4uAaG1EAOyD7xOKbih+k2VcQvAWzFaxTEnO/RX0ZDYsY9wiaGkgCtQiAg7y8vA5im+dpi18Z4a8paHW9sOhQnlLzuzlCIUyAq3WBAqLYIyHzvMfYkTzMZUsBfj6ImRNoWyKxZ2ac/X8AYFHBL5JnsHBdnFu2wnHJv/jOWkL9+A5BagCIBphTytvbm8Iy5X7Es4DnhKdPn75Fqs3msxayygJGhsgamaA047O1V7hQIorWbgRtKOKlOZq204wpbObDyQM8MzMyMhYinvioiTQB0MS5wGAE9Y/c9NCtEEMecK3DSL/GtoLp9Ee4WkiBaRYffzcATAb5pcGv9L4I5N+44uDBg1flH2PN/X8BAAD///0zuYIAAAAGSURBVAMA4Fkorm9DHywAAAAASUVORK5CYII=");
       --cursor-link: url("data:image/png;base64,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");
@@ -578,8 +552,6 @@
       color: var(--dst-paper) !important;
 
     }
-
-
 
     .asset-card h4 {
       font-size: 1.25rem !important;
@@ -1048,7 +1020,6 @@
       position: relative;
       box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 5px 5px 0 #090605;
 
-
     }
 
     .milestone-icon-slot img {
@@ -1103,8 +1074,6 @@
       background: rgba(45, 30, 22, 0.85);
       transform: translateX(4px);
     }
-
-
 
     .milestone-icon-slot {
       width: 58px;
@@ -1303,7 +1272,6 @@
       background: #0d0908;
       border-bottom: 2px solid #3c2a20;
 
-
     }
 
     .thumb-img {
@@ -1388,8 +1356,6 @@
       background: rgba(94, 32, 25, 0.815);
       border-color: #e74c3c;
     }
-
-
 
     .dst-slider {
       position: absolute;
@@ -1698,36 +1664,6 @@
       line-height: 1.2;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @media (max-width: 900px) {
       aside {
         display: none;
@@ -1755,10 +1691,6 @@
         gap: 8px;
         text-align: center;
       }
-
-
-
-
 
     }
 
@@ -2546,7 +2478,6 @@
       }
     }
 
-
     @media (max-width: 900px) {
       .platform-filter-bar {
         display: grid;
@@ -2753,8 +2684,6 @@
       font-size: 1.1rem;
       color: var(--dst-paper-muted);
     }
-
-
 
     .wg-preset-row {
       display: flex;
@@ -3041,7 +2970,6 @@
       }
     }
 
-
     /* ═══ DST-STYLE CHECKBOX (gold frame, notched sides, check mark) ═══ */
     .dst-switch {
       width: 28px;
@@ -3114,7 +3042,6 @@
     .dst-switch:hover .dst-slider {
       filter: brightness(1.2);
     }
-
 
     /* ═══ DST-STYLE SLIDER (tick-mark track, gold diamond knob) ═══ */
     input[type="range"] {
@@ -3208,8 +3135,6 @@
         opacity: 1;
       }
     }
-
-
 
     @keyframes modalBoxPop {
       from {
@@ -3430,7 +3355,6 @@
       stroke: var(--dst-flame-bright, #ff8e3c);
     }
 
-
     /* ─── ASSETS MEDIA KIT OVERHAUL ───────────────────────────── */
     .asset-header-card {
       margin-bottom: 24px;
@@ -3579,7 +3503,6 @@
       font-size: 0.95rem;
     }
 
-
     /* ─── GAME UPDATES TAB STYLING ────────────────────────────── */
     .update-card {
       background: #181210;
@@ -3652,7 +3575,6 @@
 
     }
 
-
     .update-date {
       font-family: var(--font-hand);
       font-size: 1rem;
@@ -3668,7 +3590,6 @@
       -webkit-line-clamp: 3;
       line-clamp: 3;
 
-
       -webkit-box-orient: vertical;
       overflow: hidden;
       margin: 4px 0 6px;
@@ -3679,7 +3600,6 @@
       gap: 10px;
       margin-top: 6px;
     }
-
 
     /* ─── PATCH NOTES MODAL & RICH CONTENT ────────────────────── */
     .patch-modal-box {
@@ -3870,7 +3790,6 @@
       width: 100%;
     }
 
-
     /* ─── 2-WAY COMPACT BRANCH TOGGLE & WINDOW BOUNDS ─────────── */
     .updates-controls-card {
       margin-bottom: 24px;
@@ -3987,7 +3906,6 @@
       }
     }
 
-
     /* ─── DROPDOWN UPWARD FLIP (AUTO COLLISION) ───────────────── */
     .custom-dst-dropdown.open-up .custom-dropdown-menu {
       top: auto;
@@ -4088,7 +4006,6 @@
       color: var(--dst-flame-bright);
       transform: scale(1.1);
     }
-
 
     /* ─── UPDATE CARD STYLES ─── */
     .update-card {
@@ -4286,16 +4203,67 @@
       transform: translateY(-1px);
     }  
 
+    /* ═══ POPUP POLISH (toasts + dialogs) ═══ */
+    .dst-modal.active { animation: dstFade 0.2s ease; }
+    .dst-modal.active .modal-box, .dst-modal.active .patch-modal-box { animation: dstPop 0.3s cubic-bezier(0.2, 1.2, 0.4, 1); }
+    @keyframes dstFade { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes dstPop { from { opacity: 0; transform: translateY(16px) scale(0.94); } to { opacity: 1; transform: none; } }
 
-  </style>
+    .confirm-box { max-width: 460px; }
+    .confirm-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; padding-right: 28px; }
+    .confirm-head h3 { font-family: var(--font-title); color: #fff; font-size: 1.3rem; margin: 0; }
+    .confirm-icon { width: 46px; height: 46px; flex-shrink: 0; display: grid; place-items: center; background: #120c0a; border: 3px solid var(--dst-crimson); border-radius: 8px; box-shadow: inset 0 0 8px #000, 0 0 12px rgba(166, 43, 32, 0.45); }
+    .confirm-icon svg { width: 24px; height: 24px; stroke: #ff6e61; animation: iconPop 0.45s cubic-bezier(0.2, 1.6, 0.4, 1) 0.1s both; }
+    #confirm-modal-msg { font-size: 1.1rem; color: var(--dst-paper-muted); line-height: 1.4; margin-bottom: 22px; }
+    .confirm-actions { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+    .confirm-actions .dst-btn:focus-visible { outline: 2px solid var(--dst-flame-bright); outline-offset: 2px; }
+
+    #dst-toast { --toast-accent: var(--dst-flame-bright, #ff8e3c); border-color: var(--toast-accent); }
+    #dst-toast[data-tone="success"] { --toast-accent: #7bd88f; }
+    #dst-toast[data-tone="danger"] { --toast-accent: #ff6e61; }
+    #dst-toast .toast-icon-slot svg { stroke: var(--toast-accent); }
+    #dst-toast.show .toast-icon-slot svg { animation: iconPop 0.45s cubic-bezier(0.2, 1.6, 0.4, 1) 0.15s both; }
+    .toast-bar { position: absolute; left: 14px; right: 14px; bottom: 5px; height: 3px; border-radius: 2px; background: var(--toast-accent); opacity: 0.75; transform-origin: left; transform: scaleX(0); }
+    #dst-toast.show .toast-bar { animation: toastBar 5.5s linear forwards; }
+    @keyframes toastBar { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+    @keyframes iconPop { from { transform: scale(0.3) rotate(-25deg); opacity: 0; } to { transform: none; opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) {
+      .dst-modal.active, .dst-modal.active .modal-box, .dst-modal.active .patch-modal-box,
+      #dst-toast.show .toast-bar, #dst-toast .toast-icon-slot svg, .confirm-icon svg { animation: none !important; }
+    }
+
+    /* ═══ YOUTUBE FACADE ═══ */
+    .yt-facade .yt-thumb { position: absolute; inset: 0; display: block; background: #000; cursor: pointer; }
+    .yt-facade .yt-thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; transition: opacity 0.2s ease, transform 0.3s ease; }
+    .yt-facade .yt-thumb:hover img { opacity: 1; transform: scale(1.03); }
+    .yt-play { position: absolute; left: 50%; top: 50%; width: 68px; height: 48px; transform: translate(-50%, -50%); display: grid; place-items: center; background: rgba(231, 108, 30, 0.94); border: 2px solid #ffb27a; border-radius: 12px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7); transition: transform 0.2s ease; }
+    .yt-play::before { content: ""; margin-left: 4px; border-left: 18px solid #fff; border-top: 11px solid transparent; border-bottom: 11px solid transparent; }
+    .yt-thumb:hover .yt-play { transform: translate(-50%, -50%) scale(1.1); }
+    .yt-fallback { display: inline-block; margin: -4px 0 14px; font-family: var(--font-hand); font-size: 1rem; color: var(--dst-flame-bright); }
+
+    /* ═══ ASSETS PAGE: tighter cards, less dead space ═══ */
+    #download-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
+    #download-grid .asset-card { padding: 10px 10px 12px; gap: 8px; }
+    #download-grid .asset-preview-stage { height: 104px; margin-top: 20px; }
+    #download-grid .asset-preview-stage img { max-height: 84px; }
+    #download-grid .asset-card-tag { top: 6px; left: 6px; }
+    #download-grid .asset-card-format { top: 6px; right: 6px; }
+    #download-grid .asset-info h4 { font-size: 1rem !important; }
+    #download-grid .asset-info p { font-size: 0.9rem !important; }
+    #download-grid .asset-actions .dst-btn { padding: 5px 8px; font-size: 0.9rem; }
+    .asset-header-card { margin-bottom: 16px; padding: 10px 14px; }
+    @media (max-width: 600px) {
+      #download-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      #download-grid .asset-preview-stage { height: 90px; }
+      #download-grid .asset-actions { flex-direction: column; gap: 6px; }
+    }
+</style>
 </head>
-
-
 
 <body>
 
   <!-- ENHANCED TOAST NOTIFICATION -->
-  <div id="dst-toast" onclick="this.classList.remove('show')">
+  <div id="dst-toast" role="status" aria-live="polite" onclick="this.classList.remove('show')">
     <div id="toast-icon-slot" class="toast-icon-slot">
       <img id="toast-img" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt="Drop">
     </div>
@@ -4303,6 +4271,7 @@
       <h4 id="toast-title">Klei Drop Alert</h4>
       <p id="toast-body">A campaign update has occurred.</p>
     </div>
+    <div class="toast-bar"></div>
   </div>
 
   <div class="bg-vignette"></div>
@@ -4320,7 +4289,7 @@
   </div>
 
   <!-- DISCORD SHARE MODAL -->
-  <div id="discord-modal" class="dst-modal">
+  <div id="discord-modal" class="dst-modal" onclick="if(event.target===this) closeDiscordModal()">
     <div class="modal-box">
       <button class="modal-close" onclick="closeDiscordModal()">&times;</button>
       <h3
@@ -4339,20 +4308,19 @@
   </div>
 
   <!-- THEMATIC CONFIRMATION MODAL -->
-  <div id="confirm-modal" class="dst-modal" onclick="if(event.target===this) closeConfirmModal()">
-    <div class="modal-box modal-danger">
-      <button class="modal-close" onclick="closeConfirmModal()">&times;</button>
-      <h3
-        style="font-family: var(--font-title); color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-        <i data-lucide="triangle-alert" style="color: var(--dst-crimson);"></i>
-        <span id="confirm-modal-title">Confirm Action</span>
-      </h3>
-      <p id="confirm-modal-msg"
-        style="font-size: 1.1rem; color: var(--dst-paper-muted); margin-bottom: 22px; line-height: 1.35;">
-        Are you sure you want to proceed?
-      </p>
-      <div style="display: flex; gap: 10px; justify-content: flex-end;">
-        <button type="button" class="dst-btn" onclick="closeConfirmModal()">Cancel</button>
+  <div id="confirm-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title"
+    onclick="if(event.target===this) closeConfirmModal()">
+    <div class="modal-box modal-danger confirm-box">
+      <button class="modal-close" onclick="closeConfirmModal()" aria-label="Close">&times;</button>
+      <div class="confirm-head">
+        <div class="confirm-icon" id="confirm-modal-icon"><i data-lucide="triangle-alert"></i></div>
+        <h3 id="confirm-modal-title">Confirm Action</h3>
+      </div>
+      <p id="confirm-modal-msg">Are you sure you want to proceed?</p>
+      <div class="confirm-actions">
+        <button type="button" id="confirm-modal-cancel-btn" class="dst-btn" onclick="closeConfirmModal()">
+          <i data-lucide="x" style="width:16px;"></i> Cancel
+        </button>
         <button type="button" id="confirm-modal-ok-btn" class="dst-btn btn-danger">Confirm</button>
       </div>
     </div>
@@ -4379,8 +4347,6 @@
       </div>
     </div>
   </div>
-
-
 
   <!-- DESKTOP COMPENDIUM SIDEBAR -->
   <aside>
@@ -4451,7 +4417,6 @@
       <span id="side-updates-badge" class="dst-badge">KLEI</span>
     </div>
 
-
     <a href="https://dstserverlist.appspot.com/" target="_blank" class="dst-tab" title="Server List">
       <div class="tab-content">
         <i data-lucide="server"></i>
@@ -4475,8 +4440,6 @@
         <span id="sound-toggle-text">Sound On</span>
       </button>
 
-
-
       <div
         style="font-family: var(--font-hand); font-size: 0.85rem; color: #a08c7a; margin-top: 10px; text-align: center; line-height: 1.3;">
         Fan-made tracker. Not an official site by Klei.<br>
@@ -4493,70 +4456,31 @@
       <span>Couldn't reach Klei's servers. Check your connection and try again.</span>
       <button type="button" class="dst-btn" onclick="location.reload()">Retry</button>
     </div>
-
-
-
-
     <!-- GAME UPDATES TAB -->
-    <!-- GAME UPDATES TAB -->
-   <!-- GAME UPDATES TAB -->
     <section id="updates">
       <h1 class="dst-heading">Don't Starve Together PC Updates</h1>
 
       <div class="dst-parchment-card updates-controls-card">
-<div class="updates-toolbar">
-        <div class="updates-branch-toggle" role="group">
-          <button type="button" id="branch-btn-stable" class="branch-toggle-btn active" onclick="switchUpdatesBranch('stable')">
-            <i data-lucide="shield-check"></i><span>Release</span>
-          </button>
-          <button type="button" id="branch-btn-beta" class="branch-toggle-btn" onclick="switchUpdatesBranch('beta')">
-            <i data-lucide="flask-conical"></i><span>Beta</span>
-          </button>
+        <div class="updates-toolbar">
+          <div class="updates-branch-toggle" role="group" aria-label="Update branch">
+            <button type="button" id="branch-btn-stable" class="branch-toggle-btn active" onclick="switchUpdatesBranch('stable')">
+              <i data-lucide="shield-check"></i><span>Release</span>
+            </button>
+            <button type="button" id="branch-btn-beta" class="branch-toggle-btn" onclick="switchUpdatesBranch('beta')">
+              <i data-lucide="flask-conical"></i><span>Beta</span>
+            </button>
+          </div>
+
+          <div class="updates-actions-bar">
+            <button type="button" class="tool-btn" onclick="fetchGameUpdates(true)">
+              <i data-lucide="refresh-cw"></i><span>Refresh</span>
+            </button>
+            <a href="https://store.steampowered.com/news/app/322330" target="_blank" rel="noopener noreferrer" class="dst-btn">
+              <i data-lucide="external-link" style="width:14px;"></i><span>Steam News</span>
+            </a>
+          </div>
         </div>
 
-        <div class="updates-actions-bar">
-          <button type="button" class="tool-btn" onclick="fetchGameUpdates(true)">
-            <i data-lucide="refresh-cw"></i><span>Refresh</span>
-          </button>
-          <a href="https://store.steampowered.com/news/app/322330" target="_blank" rel="noopener noreferrer" class="dst-btn">
-            <i data-lucide="external-link" style="width:14px;"></i><span>Steam News</span>
-          </a>
-        </div>
-      </div>
-
-      <input type="text" id="updates-search" class="search-input-box"
-        placeholder="Filter PC updates by patch number, title, or keyword..." oninput="filterGameUpdates()">
-    </div>
-
-    <div id="updates-status" style="font-size: 1.15rem; color: var(--dst-flame); margin-bottom: 18px; text-align: center;">
-      Fetching recent PC patch notes from Steam...
-    </div>
-
-    <div id="updates-list"></div>
-  </div>
-
-  <!-- POPUP MODAL -->
-  <div id="patch-modal" class="dst-modal" onclick="if(event.target===this) closePatchModal()">
-    <div class="patch-modal-box">
-      <button class="modal-close" onclick="closePatchModal()">&times;</button>
-
-      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-        <span id="patch-modal-badge" class="update-badge">RELEASE</span>
-        <span id="patch-modal-date" class="update-date"></span>
-      </div>
-
-      <h3 id="patch-modal-title" style="font-family: var(--font-title); color: #fff; font-size: 1.35rem; margin-bottom: 16px;"></h3>
-      <div id="patch-modal-content" class="patch-notes-body"></div>
-
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 14px; border-top: 1px dashed #3a2b22;">
-        <a id="patch-modal-link" href="#" target="_blank" rel="noopener noreferrer" class="dst-btn">
-          <i data-lucide="external-link" style="width: 15px;"></i> View on Steam
-        </a>
-        <button type="button" class="dst-btn" onclick="closePatchModal()">Close</button>
-      </div>
-    </div>
-
-        <!-- 3. Search Bar -->
         <input type="text" id="updates-search" class="search-input-box updates-search-input"
           placeholder="Filter PC updates by patch number, title, or keyword..." oninput="filterGameUpdates()">
       </div>
@@ -4567,14 +4491,6 @@
 
       <div id="updates-list" style="display: flex; flex-direction: column; gap: 16px;"></div>
     </section>
-
-
-
-
-
-
-
-
 
     <!-- AMBASSADOR WIDGET TAB -->
     <section id="widget">
@@ -4597,8 +4513,6 @@
 
               <!-- Auto-Update Toggle with Refresh Icon -->
 
-
-
               <div class="wg-panel-head"><i data-lucide="settings-2"></i>
                 <h4>General</h4>
               </div>
@@ -4613,8 +4527,6 @@
                   <span class="dst-slider"></span>
                 </div>
               </label>
-
-
 
               <!-- Drops Over Toggle with Extinguished Flame Icon -->
               <label class="dst-toggle-label wg-toggle"
@@ -4721,8 +4633,6 @@
                   </button>
                 </div>
 
-
-
                 <div class="wg-grid-3 wg-sliders">
                   <div class="wg-slider">
                     <div class="wg-slider-top"><span>Offset X</span><b id="avatar-x-val">0px</b></div>
@@ -4764,7 +4674,6 @@
 
                 </div>
               </div>
-
 
               <!-- Hide Head with User-X Icon -->
               <label class="dst-toggle-label wg-toggle" title="Hides the streamer avatar head in the widget">
@@ -4985,8 +4894,6 @@
 
           </div>
 
-
-
           <!-- ═════════ RIGHT: PREVIEW + OUTPUT ═════════ -->
           <div class="wg-preview">
 
@@ -5052,7 +4959,6 @@
         <div id="timer" class="campfire-countdown">CALCULATING...</div>
         <div id="timer-date" class="campfire-date" onclick="toggleTimerTimezone()"
           title="Click to toggle Local / UTC time">Consulting Klei Records...</div>
-
 
       </div>
 
@@ -5268,7 +5174,6 @@
 
   <script>
 
-
     // Select all elements that have a "title" attribute
     const elementsWithTitle = document.querySelectorAll('[title]');
 
@@ -5276,9 +5181,6 @@
     elementsWithTitle.forEach(element => {
       element.style.cursor = 'var(--cursor-help) 0 16, help';
     });
-
-
-
 
     function setHatPosition(pos, btn) {
       // Solo / Carousel only allow the hat on Avatar
@@ -5289,8 +5191,6 @@
       if (posInput) posInput.value = pos;
       updateObsUrlBuilder();
     }
-
-
 
     let obsResetTimer = null;
     function resetObsWidgetSettings() {
@@ -5339,12 +5239,6 @@
       showInAppToast("Widget Reset", "Your OBS widget settings are back to defaults.",
         "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg");
     }
-
-
-
-
-
-
 
     function resetHatTransform() {
       const defaults = { 'obs-hat-x': 0, 'obs-hat-y': 0, 'obs-hat-scale': 100, 'obs-hat-rot': 0 };
@@ -5432,7 +5326,6 @@
         dropdown.classList.remove('open');
       }
     });
-
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -5560,8 +5453,6 @@
       }
     }
 
-
-
     function handleObsDragStart(e) {
       const box = document.getElementById('obs-result-url');
       if (box && box.value) {
@@ -5570,7 +5461,6 @@
         e.effectAllowed = 'copy';
       }
     }
-
 
     let testEndedPreviewActive = false;
 
@@ -5615,7 +5505,6 @@
       updateObsUrlBuilder();
     }
 
-
     function updateObsUrlBuilder() {
       const twitch = (document.getElementById('obs-twitch')?.value || '').toLowerCase().trim();
       const avatar = (document.getElementById('obs-avatar')?.value || '').trim();
@@ -5627,19 +5516,10 @@
       const autoUpdate = document.getElementById('obs-auto-update')?.checked !== false; // default true
       const showEnded = document.getElementById('obs-show-ended')?.checked || false;
 
-
-
-
       const avX = document.getElementById('obs-avatar-x')?.value || '0';
       const avY = document.getElementById('obs-avatar-y')?.value || '0';
       const avScale = document.getElementById('obs-avatar-scale')?.value || '100';
       const avRot = document.getElementById('obs-avatar-rot')?.value || '0';
-
-
-
-
-
-
 
       // Inside updateObsUrlBuilder():
       updateAvatarOffsetsOnly();
@@ -5647,7 +5527,6 @@
 
       updateHatOffsetsOnly();
       syncEndedPreviewAvailability(); // Keep preview button in sync with toggle
-
 
       const borderHex = (document.getElementById('obs-border-hex')?.value || '').replace(/#/g, '').trim().toUpperCase();
       const fillHex = (document.getElementById('obs-fill-hex')?.value || '').replace(/#/g, '').trim().toUpperCase();
@@ -5664,16 +5543,6 @@
       const hatY = document.getElementById('obs-hat-y')?.value || '0';
       const hatScale = document.getElementById('obs-hat-scale')?.value || '100';
       const hatRot = document.getElementById('obs-hat-rot')?.value || '0'; // Added rotation variable
-
-
-
-
-
-
-
-
-
-
 
       // ── HAT PLACEMENT RULES ──────────────────────────────────────
       // Default mode : hat may sit on Avatar, Flair, Portrait or Item.
@@ -5725,8 +5594,6 @@
         warnEl.hidden = !msg;
       }
 
-
-
       const g1 = (document.getElementById('obs-glow1')?.value || '').replace(/#/g, '').trim().toUpperCase();
       const g2 = (document.getElementById('obs-glow2')?.value || '').replace(/#/g, '').trim().toUpperCase();
       const g3 = (document.getElementById('obs-glow3')?.value || '').replace(/#/g, '').trim().toUpperCase();
@@ -5762,13 +5629,10 @@
       localStorage.setItem('dst-obs-showended', showEnded);
       localStorage.setItem('dst-obs-autoupdate', autoUpdate);
 
-
       localStorage.setItem('dst-obs-avatar-x', avX);
       localStorage.setItem('dst-obs-avatar-y', avY);
       localStorage.setItem('dst-obs-avatar-scale', avScale);
       localStorage.setItem('dst-obs-avatar-rot', avRot); // Added
-
-
 
       let url = `https://clifffordw.github.io/ClifffWidgets/Drops/Streamers/drop_universal.html?`;
 
@@ -5824,15 +5688,11 @@
 
       if (testEndedPreviewActive) params.push('testended=1');
 
-
       url += params.join('&');
 
       const resultBox = document.getElementById('obs-result-url');
       const previewBtn = document.getElementById('obs-preview-btn');
       const previewFrame = document.getElementById('obs-preview-frame');
-
-
-
 
       if (resultBox) resultBox.value = url;
       if (previewBtn) previewBtn.href = url;
@@ -5877,8 +5737,6 @@
       const savedAvY = localStorage.getItem('dst-obs-avatar-y') || '0';
       const savedAvScale = localStorage.getItem('dst-obs-avatar-scale') || '100';
       const savedAvRot = localStorage.getItem('dst-obs-avatar-rot') || '0';
-
-
 
       const savedTwitch = localStorage.getItem('dst-obs-twitch');
       const savedAvatar = localStorage.getItem('dst-obs-avatar');
@@ -5997,7 +5855,6 @@
       updateObsUrlBuilder();
     }
 
-
     function initWidgetListeners() {
       const fields = [
         'obs-twitch', 'obs-avatar', 'obs-speed',
@@ -6014,7 +5871,6 @@
           el.addEventListener('change', updateObsUrlBuilder);
         }
       });
-
 
       // Attach smooth range slider handlers
       const rangeSliders = ['obs-hat-x', 'obs-hat-y', 'obs-hat-scale', 'obs-hat-rot'];
@@ -6093,7 +5949,6 @@
       audio.preload = 'auto';
     });
 
-
     let soundEnabled = localStorage.getItem('dst-sound-enabled') !== 'false';
 
     function updateSoundButtonUI() {
@@ -6109,8 +5964,6 @@
       updateSoundButtonUI();
       if (soundEnabled) playCustomSound(dstSounds.clickUp);
     }
-
-
 
     function playCustomSound(audio) {
       if (!audio || !soundEnabled) return;
@@ -6223,8 +6076,6 @@
       const targetSection = document.getElementById(id);
       if (targetSection) targetSection.classList.add('active');
 
-
-
       document.querySelectorAll('.dst-tab, .inv-slot').forEach(item => {
         if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(`'${id}'`)) {
           item.classList.add('active');
@@ -6250,21 +6101,6 @@
     var rawGameUpdates = [];
     var currentBranchFilter = 'stable';
     var lastUpdatesFetch = 0;
-
-
-
-    function switchUpdatesBranch(branch) {
-      currentBranchFilter = branch;
-
-      const stableBtn = document.getElementById('branch-btn-stable');
-      const betaBtn = document.getElementById('branch-btn-beta');
-
-      if (stableBtn) stableBtn.classList.toggle('active', branch === 'stable');
-      if (betaBtn) betaBtn.classList.toggle('active', branch === 'beta');
-
-      filterGameUpdates();
-    }
-
 
     nav(lastTab);
 
@@ -6351,8 +6187,6 @@
       lucide.createIcons();
     }
 
-
-
     async function triggerSafeNotification(title, body, iconUrl) {
       playDstChime();
       showInAppToast(title, body, iconUrl);
@@ -6403,28 +6237,6 @@
         }
       }
       if (mIcon) mIcon.style.stroke = isEnabled ? 'var(--dst-flame-bright)' : 'currentColor';
-    }
-
-    async function toggleDropNotifications() {
-      if (!("Notification" in window)) {
-        alert("Your device/browser does not support web notifications.");
-        return;
-      }
-
-      const currentState = localStorage.getItem('dst-drops-notif-enabled') === 'true';
-      if (!currentState) {
-        const permission = await Notification.requestPermission();
-        if (permission === 'granted') {
-          localStorage.setItem('dst-drops-notif-enabled', 'true');
-          triggerSafeNotification("DST Drop Alerts Enabled!", "You will receive alerts when new drops arrive or conclude.", "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg");
-        } else {
-          alert("Notification permission denied. Please allow notifications in your browser settings.");
-          localStorage.setItem('dst-drops-notif-enabled', 'false');
-        }
-      } else {
-        localStorage.setItem('dst-drops-notif-enabled', 'false');
-      }
-      updateNotifButtonUI();
     }
 
     function checkDropStatusAlerts(dst) {
@@ -6496,16 +6308,6 @@
       if (modal) modal.classList.remove('active');
     }
 
-    function copyDiscordPayload() {
-      const box = document.getElementById('discord-copy-box');
-      if (box) {
-        box.select();
-        navigator.clipboard.writeText(box.value);
-        showInAppToast("Discord Markdown!", "Copied Discord Markdown to clipboard!", "https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg");
-        closeDiscordModal();
-      }
-    }
-
     async function forceDownload(url, fileName) {
       try {
         const response = await fetch(url);
@@ -6535,7 +6337,6 @@
       applySharedWidgetFromUrl();
       syncEndedPreviewAvailability(); // Keep preview button in sync with toggle
 
-
       try {
         const [cRes, aRes] = await Promise.all([
           fetch("https://cdn.forums.klei.com/drops/current_campaign.json"),
@@ -6550,7 +6351,6 @@
         document.getElementById('c-name').innerText = dst.englishName;
         document.getElementById('c-gif').src = dst.gif;
 
-
         // POPULATE HAT PLACEMENT PILL ASSETS FROM KLEI
         const flairImg = dst.icon || dst.gif;
         const portraitImg = dst.portrait || dst.gif;
@@ -6559,7 +6359,6 @@
         if (document.getElementById('pill-icon-flair')) document.getElementById('pill-icon-flair').src = flairImg;
         if (document.getElementById('pill-icon-portrait')) document.getElementById('pill-icon-portrait').src = portraitImg;
         if (document.getElementById('pill-icon-item')) document.getElementById('pill-icon-item').src = itemImg;
-
 
         const rewards = [
           { t: 30, n: "Profile Flair", d: "Exclusive Icon Reward", img: dst.icon || dst.gif },
@@ -6649,9 +6448,6 @@
       }
     }
 
-
-
-
     // ═════════ NEW FEATURES ═════════
     // ── Live tab: updated label, refresh, compact view, error state ──
     function markAmbUpdated() { lastAmbOk = Date.now(); ambStale = false; updateAmbLabel(); }
@@ -6739,9 +6535,6 @@
       const v = id => document.getElementById(id)?.value ?? '';
       const c = id => !!document.getElementById(id)?.checked;
 
-
-
-
       return {
 
         au: c('obs-auto-update'),
@@ -6792,11 +6585,6 @@
     }
 
     function getWgPresets() { try { return JSON.parse(localStorage.getItem('dst-wg-presets') || '{}'); } catch (e) { return {}; } }
-
-    function toggleWgPresetDropdown(e) {
-      if (e) e.stopPropagation();
-      document.getElementById('wg-preset-dropdown')?.classList.toggle('open');
-    }
 
     function selectWgPreset(name) {
       const hidden = document.getElementById('wg-preset-select');
@@ -6853,27 +6641,6 @@
       if (dd && !dd.contains(e.target)) dd.classList.remove('open');
     });
 
-    function saveWgPreset() {
-      const input = document.getElementById('wg-preset-name');
-      const name = (input.value || '').trim().slice(0, 30);
-      if (!name) { showInAppToast('Name needed', 'Type a name for this setup first.'); return; }
-      const all = getWgPresets();
-      all[name] = getWidgetSnapshot();
-      localStorage.setItem('dst-wg-presets', JSON.stringify(all));
-      input.value = '';
-      renderWgPresets(name);
-      showInAppToast('Preset saved', `"${name}" is ready to load any time.`);
-    }
-
-    function loadWgPreset() {
-      const sel = document.getElementById('wg-preset-select');
-      const p = getWgPresets()[sel && sel.value];
-      if (!p) return;
-      applyWidgetSnapshot(p);
-      showInAppToast('bookmark', `"${sel.value}" applied to the widget.`);
-    }
-
-
     // Flexible Toast supporting image URLs OR Lucide icon names
     function showInAppToast(title, body, iconOrUrl = 'sparkles') {
       const toast = document.getElementById('dst-toast');
@@ -6894,6 +6661,12 @@
       }
 
       if (toast) {
+        const danger = ['trash-2', 'bell-off', 'alert-circle', 'circle-x', 'x-circle', 'triangle-alert'];
+        const success = ['clipboard-check', 'bookmark-check', 'bookmark-plus', 'bell-ring', 'check', 'circle-check', 'link', 'download', 'users-round-collaboration'];
+        toast.dataset.tone = danger.includes(iconOrUrl) ? 'danger' : success.includes(iconOrUrl) ? 'success' : 'flame';
+
+        toast.classList.remove('show');
+        void toast.offsetWidth;                 // restart the entrance + progress bar
         toast.classList.add('show');
         clearTimeout(toast._hideTimer);
         toast._hideTimer = setTimeout(() => toast.classList.remove('show'), 5500);
@@ -6902,24 +6675,28 @@
 
     // Modal Confirmation Dialog replacing window.confirm()
     let confirmModalAction = null;
-    function openDstConfirmModal(title, msg, confirmText = 'Confirm', onConfirm = null) {
+    function openDstConfirmModal(title, msg, confirmText = 'Confirm', onConfirm = null, icon = 'triangle-alert') {
       const modal = document.getElementById('confirm-modal');
       const titleEl = document.getElementById('confirm-modal-title');
       const msgEl = document.getElementById('confirm-modal-msg');
+      const iconEl = document.getElementById('confirm-modal-icon');
       const btn = document.getElementById('confirm-modal-ok-btn');
 
       if (titleEl) titleEl.innerText = title;
       if (msgEl) msgEl.innerText = msg;
       if (btn) btn.innerText = confirmText;
+      if (iconEl) { iconEl.innerHTML = `<i data-lucide="${icon}"></i>`; lucide.createIcons(); }
 
       confirmModalAction = onConfirm;
       if (btn) {
         btn.onclick = () => {
-          if (confirmModalAction) confirmModalAction();
+          const action = confirmModalAction;
           closeConfirmModal();
+          if (action) action();
         };
       }
       if (modal) modal.classList.add('active');
+      document.getElementById('confirm-modal-cancel-btn')?.focus();   // safest default
     }
 
     function closeConfirmModal() {
@@ -6928,12 +6705,9 @@
       confirmModalAction = null;
     }
 
-    // Close modals on Escape key
+    // Close any open dialog with Escape
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeConfirmModal();
-        closeDiscordModal();
-      }
+      if (e.key === 'Escape') { closeConfirmModal(); closeDiscordModal(); closePatchModal(); }
     });
 
     // Delete Preset using the styled popup & icon toast
@@ -6955,7 +6729,8 @@
           localStorage.setItem('dst-wg-presets', JSON.stringify(all));
           renderWgPresets();
           showInAppToast('Preset Deleted', `"${name}" was discarded.`, 'trash-2');
-        }
+        },
+        'trash-2'
       );
     }
 
@@ -7013,7 +6788,6 @@
       }
       updateNotifButtonUI();
     }
-
 
     async function shareWgLink() {
       const enc = btoa(unescape(encodeURIComponent(JSON.stringify(getWidgetSnapshot()))))
@@ -7076,16 +6850,7 @@
       if (!document.hidden) refreshAmbassadors();
     });
 
-
-
-
-
-
-
     init();
-
-
-
 
     let currentAssetCategory = 'all';
     let assetCheckerboardActive = false;
@@ -7182,404 +6947,6 @@
       }
     }
 
-
-
-
-// ─── BETAVS RELEASE DETECTION ─────────────────────────────
-function detectIsBeta(item, rawPayload) {
-  const title = (item.title || '');
-  const cats = Array.isArray(item.categories) ? item.categories.join(' ').toLowerCase() : String(item.categories || '').toLowerCase();
-
-  // 1. Explicit categories
-  if (cats.includes('test') || cats.includes('beta') || cats.includes('preview')) return true;
-
-  // 2. Title keywords
-  if (/\b(test|beta|preview)\b/i.test(title)) return true;
-  if (/\[(test|beta)\]/i.test(title)) return true;
-
-  // 3. Klei Forum attributes: title="A beta is available for this version" or <span class="...ipsBadge...">Test</span>
-  if (/title=["'][^"']*?\b(beta|test)\b[^"']*?["']/i.test(rawPayload)) return true;
-  if (/class=["'][^"']*?ipsBadge[^"']*?["'][^>]*>\s*(test|beta)\b/i.test(rawPayload)) return true;
-  if (/ipsBadge_negative/i.test(rawPayload) && /\b(test|beta)\b/i.test(rawPayload)) return true;
-
-  // 4. Intro text check (before the first section heading)
-  const intro = rawPayload.split(/<strong>\s*(Changes|Bug Fixes|Other Additions|Highlights)/i)[0];
-  if (/\b(in beta now|another beta|beta branch|opt-in to the beta|opt in to the beta|public test|beta preview)\b/i.test(intro)) return true;
-
-  return false;
-}
-
-// ─── CLEAN CARD SUMMARY EXTRACTOR ─────────────────────────
-function extractCleanSummary(raw) {
-  if (!raw) return 'Click below to read the complete patch notes.';
-
-  const doc = new DOMParser().parseFromString(raw, 'text/html');
-  doc.querySelectorAll('.ipsType_pageTitle, script, style').forEach(el => el.remove());
-
-  // Collect the introductory text up until the first section heading
-  const paragraphs = Array.from(doc.querySelectorAll('p'));
-  let intro = '';
-
-  for (const p of paragraphs) {
-    const t = p.textContent.replace(/\u00a0/g, ' ').trim();
-    if (/^(changes|bug fixes|other additions|notes for modders|highlights):?$/i.test(t)) break;
-    if (t.length > 15) {
-      intro += (intro ? ' ' : '') + t;
-      if (intro.length > 200) break;
-    }
-  }
-
-  if (intro) return intro;
-
-  // Fallback if no clean paragraphs exist
-  return doc.body.textContent
-    .replace(/\u00a0/g, ' ')
-    .replace(/\s+/g, ' ')
-    .replace(/^(Update Information|Changes|Highlights|Bug Fixes|Other Additions|Notes):?\s*/i, '')
-    .trim();
-}
-
-// ─── RICH PATCH CONTENT FORMATTER ──────────────────────────
-function formatPatchContent(raw) {
-  if (!raw) return '<p>No patch details available.</p>';
-  let text = String(raw).trim();
-
-  // 1. Resolve Steam Clan placeholders & embeds
-  text = text.replace(/\{STEAM_CLAN_IMAGE\}/g, 'https://clan.fastly.steamstatic.com/images/');
-  text = text.replace(/\{STEAM_CLAN_LOC_IMAGE\}/g, 'https://clan.fastly.steamstatic.com/images/');
-  text = text.replace(/<div class="bb_clan_app_container"[\s\S]*?<\/div>/gi, '');
-  text = text.replace(/\[clan_app.*?\][\s\S]*?\[\/clan_app\]/gi, '');
-
-  text = text.replace(/\[(?:preview)?youtube=([a-zA-Z0-9_-]+);?[^\]]*\](?:\[\/(?:preview)?youtube\])?/gi, (_, id) => `
-    <div class="patch-video-wrapper">
-      <iframe src="https://www.youtube-nocookie.com/embed/${id}" allowfullscreen loading="lazy"></iframe>
-    </div>
-  `);
-
-  // 2. Steam BBCode conversion
-  text = text.replace(/\[h[1-6]\]([\s\S]*?)\[\/h[1-6]\]/gi, '<h4>$1</h4>');
-  text = text.replace(/\[b\]([\s\S]*?)\[\/b\]/gi, '<strong>$1</strong>');
-  text = text.replace(/\[i\]([\s\S]*?)\[\/i\]/gi, '<em>$1</em>');
-  text = text.replace(/\[quote\]([\s\S]*?)\[\/quote\]/gi, '<blockquote>$1</blockquote>');
-  text = text.replace(/\[hr\]/gi, '<hr>');
-  text = text.replace(/\[img\](.*?)\[\/img\]/gi, '<img src="$1" alt="Update Image" loading="lazy">');
-  text = text.replace(/\[url=(https?:\/\/[^\]]+)\]([\s\S]*?)\[\/url\]/gi, '<a href="$1" target="_blank" rel="noopener noreferrer">$2</a>');
-  text = text.replace(/\[list\]([\s\S]*?)\[\/list\]/gi, '<ul>$1</ul>');
-  text = text.replace(/\[\*\](.*?)(\n|\[\*\]|$)/gi, '<li>$1</li>$2');
-
-  // 3. Parse into DOM tree
-  const doc = new DOMParser().parseFromString(text, 'text/html');
-
-  // Remove scripts, styles, lightboxed metadata
-  doc.querySelectorAll('script, style, noscript').forEach(el => el.remove());
-
-  // Remove boilerplate "Update Information:" headings
-  doc.querySelectorAll('.ipsType_pageTitle, h1, h2, h3').forEach(el => {
-    if (/update information/i.test(el.textContent.trim())) {
-      el.remove();
-    }
-  });
-
-  // 4. Transform Klei paragraph headers into styled <h4>
-  const headerWords = /^(changes|bug fixes|other additions|notes for modders|modding notes|highlights|features|known issues|notes|gameplay|art( & animation| and animation)?|sound|audio|general):?$/i;
-
-  doc.querySelectorAll('p, div').forEach(el => {
-    const rawTxt = el.textContent.replace(/\u00a0/g, ' ').trim();
-    if (!rawTxt) return;
-
-    const boldChild = el.querySelector('strong, b');
-    const isBoldHeader = boldChild && boldChild.textContent.replace(/\u00a0/g, ' ').trim() === rawTxt;
-
-    if (headerWords.test(rawTxt) || (isBoldHeader && rawTxt.length < 40 && !rawTxt.includes('.'))) {
-      const h4 = doc.createElement('h4');
-      h4.textContent = rawTxt.replace(/:$/, '');
-      el.replaceWith(h4);
-    }
-  });
-
-  // Standardize any remaining h1-h3 to h4
-  doc.querySelectorAll('h1, h2, h3').forEach(el => {
-    const h4 = doc.createElement('h4');
-    h4.innerHTML = el.innerHTML;
-    el.replaceWith(h4);
-  });
-
-  // 5. Unwrap <p> tags inside <li> to eliminate extra line gaps
-  doc.querySelectorAll('li > p').forEach(p => {
-    p.replaceWith(...p.childNodes);
-  });
-
-  // 6. Plaintext bullet fallback (only runs if the post had no <ul>/<li>)
-  if (!doc.querySelector('ul, ol')) {
-    const paragraphs = Array.from(doc.body.children);
-    paragraphs.forEach(el => {
-      if (el.tagName === 'P') {
-        const lines = el.innerHTML.split(/<br\s*\/?>|\r?\n/i);
-        let inList = false;
-        let listHtml = '';
-        let hasListItems = false;
-
-        for (let line of lines) {
-          const cleanLine = line.replace(/&nbsp;/g, ' ').trim();
-          const isExplicitBullet = /^[-*•●▪✦]\s*(.+)$/.test(cleanLine);
-          const isActionBullet = /^(Added|Fixed|Changed|Updated|Removed|Adjusted|Reverted|Disabled|Enabled|Improved|Addressed)\b/i.test(cleanLine);
-
-          if (isExplicitBullet || isActionBullet) {
-            hasListItems = true;
-            if (!inList) { listHtml += '<ul>'; inList = true; }
-            const itemContent = isExplicitBullet ? cleanLine.replace(/^[-*•●▪✦]\s*/, '') : cleanLine;
-            listHtml += `<li>${itemContent}</li>`;
-          } else {
-            if (inList) { listHtml += '</ul>'; inList = false; }
-            if (cleanLine) listHtml += `<p>${cleanLine}</p>`;
-          }
-        }
-        if (inList) listHtml += '</ul>';
-        if (hasListItems) {
-          const temp = doc.createElement('div');
-          temp.innerHTML = listHtml;
-          el.replaceWith(...temp.childNodes);
-        }
-      }
-    });
-  }
-
-  // 7. Remove empty spacer elements
-  doc.querySelectorAll('p, div, span').forEach(el => {
-    if (el.querySelector('img, iframe, ul, ol, video')) return;
-    const clean = el.textContent.replace(/\u00a0/g, ' ').trim();
-    if (!clean && (!el.children.length || el.querySelectorAll('br').length === el.children.length)) {
-      el.remove();
-    }
-  });
-
-  // 8. Secure external links
-  doc.querySelectorAll('a').forEach(a => {
-    a.setAttribute('target', '_blank');
-    a.setAttribute('rel', 'noopener noreferrer');
-  });
-
-  return doc.body.innerHTML;
-}
-
-// ─── FETCH & RENDER UPDATES ────────────────────────────────
-async function fetchGameUpdates(force = false) {
-  if (!force && rawGameUpdates.length > 0 && (Date.now() - lastUpdatesFetch < 180000)) {
-    return;
-  }
-
-  const statusEl = document.getElementById('updates-status');
-  const listEl = document.getElementById('updates-list');
-  if (statusEl) statusEl.innerText = "Consulting Klei Records for latest updates...";
-
-  try {
-    let items = [];
-
-    // 1. PRIMARY: Klei Forums DST Updates RSS Feed
-    try {
-      const kleiRss = "https://forums.kleientertainment.com/rss/6-dont-starve-together-updates.xml/?member_id=860787&key=7cc65346643acc0b8fc9eaecacf0920d";
-      const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(kleiRss)}`, { signal: AbortSignal.timeout(8000) });
-      if (res.ok) {
-        const data = await res.json();
-        if (data.items && data.items.length) {
-          items = data.items.map(it => {
-            const rawPayload = it.content || it.description || '';
-            const isBeta = detectIsBeta(it, rawPayload);
-            const cleanTitle = (it.title || 'DST Update').replace(/<\/?[^>]+(>|$)/g, '').replace(/\s+/g, ' ').trim();
-
-            return {
-              title: cleanTitle,
-              url: it.link,
-              date: it.pubDate,
-              desc: extractCleanSummary(rawPayload),
-              html: formatPatchContent(rawPayload),
-              branch: isBeta ? 'beta' : 'stable',
-              tagLabel: isBeta ? 'TEST / BETA' : 'RELEASE'
-            };
-          });
-        }
-      }
-    } catch (e) {
-      console.warn("Klei direct RSS feed fetch failed, falling back to Steam mirror...", e);
-    }
-
-    // 2. FALLBACK: Steam News RSS
-    if (!items.length) {
-      const steamRss = "https://store.steampowered.com/feeds/news/app/322330/";
-      const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(steamRss)}`, { signal: AbortSignal.timeout(8000) });
-      if (res.ok) {
-        const data = await res.json();
-        if (data.items && data.items.length) {
-          items = data.items.map(it => {
-            const rawPayload = it.description || '';
-            const isBeta = detectIsBeta(it, rawPayload);
-            const cleanTitle = (it.title || 'DST Update').replace(/<\/?[^>]+(>|$)/g, '').replace(/\s+/g, ' ').trim();
-
-            return {
-              title: cleanTitle,
-              url: it.link,
-              date: it.pubDate,
-              desc: extractCleanSummary(rawPayload),
-              html: formatPatchContent(rawPayload),
-              branch: isBeta ? 'beta' : 'stable',
-              tagLabel: isBeta ? 'TEST / BETA' : 'RELEASE'
-            };
-          });
-        }
-      }
-    }
-
-    if (!items.length) throw new Error("No feed items returned");
-
-    rawGameUpdates = items;
-    lastUpdatesFetch = Date.now();
-    checkNewUpdateAlerts(items);
-    filterGameUpdates();
-
-  } catch (err) {
-    console.warn("Could not fetch DST updates:", err);
-    if (statusEl) statusEl.innerText = "";
-    if (listEl) {
-      listEl.innerHTML = `
-        <div class="amb-error">
-          <i data-lucide="cloud-off" style="width:40px;height:40px;stroke:var(--dst-flame);margin:0 auto 10px;"></i>
-          <p style="font-size:1.25rem;color:#fff;">Could not load updates feed</p>
-          <p>You can view them directly on Klei's website.</p>
-          <a href="https://forums.kleientertainment.com/game-updates/dst/" target="_blank" class="dst-btn" style="margin-top:14px;">
-            Open Klei Forums
-          </a>
-        </div>
-      `;
-      lucide.createIcons();
-    }
-  }
-}
-
-function filterGameUpdates() {
-  const q = (document.getElementById('updates-search')?.value || '').toLowerCase().trim();
-  const statusEl = document.getElementById('updates-status');
-
-  let filtered = rawGameUpdates.filter(u => {
-    if (currentBranchFilter !== 'all' && u.branch !== currentBranchFilter) return false;
-    if (!q) return true;
-    return u.title.toLowerCase().includes(q) || (u.desc && u.desc.toLowerCase().includes(q));
-  });
-
-  if (statusEl) {
-    if (!filtered.length) {
-      statusEl.innerText = `No ${currentBranchFilter.toUpperCase()} updates match your search.`;
-    } else {
-      statusEl.innerText = `Displaying ${filtered.length} DST update${filtered.length === 1 ? '' : 's'} (${currentBranchFilter.toUpperCase()})`;
-    }
-  }
-
-  renderGameUpdates(filtered);
-}
-
-function renderGameUpdates(list) {
-  const listEl = document.getElementById('updates-list');
-  if (!listEl) return;
-
-  if (!list.length) {
-    listEl.innerHTML = `
-      <div class="amb-error">
-        <i data-lucide="flask-conical" style="width:40px;height:40px;stroke:var(--dst-flame);margin:0 auto 10px;"></i>
-        <p style="font-size:1.2rem;color:#fff;">No recent ${currentBranchFilter.toUpperCase()} update found</p>
-        <p style="font-size:1rem;color:var(--dst-paper-muted);">Check the forums for legacy or upcoming test cycles.</p>
-      </div>
-    `;
-    lucide.createIcons();
-    return;
-  }
-
-  const firstStable = rawGameUpdates.find(u => u.branch === 'stable');
-  const firstBeta = rawGameUpdates.find(u => u.branch === 'beta');
-
-  listEl.innerHTML = list.map((item) => {
-    const idx = rawGameUpdates.indexOf(item);
-    const dateStr = item.date ? new Date(item.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : 'Recent';
-    const badgeClass = item.branch === 'beta' ? 'badge-beta' : 'badge-stable';
-    const isLatest = (item === firstStable || item === firstBeta);
-
-    return `
-      <div class="update-card">
-        <div class="update-header">
-          <span class="update-title" style="cursor: pointer;" onclick="openPatchModal(${idx})">${item.title}</span>
-          <div class="update-meta">
-            <span class="update-badge ${badgeClass}">${isLatest ? 'LATEST ' : ''}${item.tagLabel}</span>
-            <span class="update-date">${dateStr}</span>
-          </div>
-        </div>
-        <p class="update-snippet">${item.desc || 'Click below to read the complete patch notes.'}</p>
-        <div class="update-actions">
-          <button type="button" class="dst-btn" style="padding: 6px 14px; font-size: 0.95rem;" onclick="openPatchModal(${idx})">
-            <i data-lucide="file-text" style="width: 14px;"></i> View Full Notes
-          </button>
-          <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="dst-btn" style="padding: 6px 14px; font-size: 0.95rem;">
-            <i data-lucide="external-link" style="width: 14px;"></i> Forums
-          </a>
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  lucide.createIcons();
-}
-
-function openPatchModal(index) {
-  const item = rawGameUpdates[index];
-  if (!item) return;
-
-  const modal = document.getElementById('patch-modal');
-  const titleEl = document.getElementById('patch-modal-title');
-  const badgeEl = document.getElementById('patch-modal-badge');
-  const dateEl = document.getElementById('patch-modal-date');
-  const contentEl = document.getElementById('patch-modal-content');
-  const linkEl = document.getElementById('patch-modal-link');
-
-  if (titleEl) titleEl.innerText = item.title;
-  if (badgeEl) {
-    badgeEl.innerText = item.tagLabel;
-    badgeEl.className = `update-badge ${item.branch === 'beta' ? 'badge-beta' : 'badge-stable'}`;
-  }
-  if (dateEl) {
-    dateEl.innerText = item.date ? new Date(item.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) : '';
-  }
-
-  if (contentEl) contentEl.innerHTML = item.html;
-
-  if (linkEl) {
-    linkEl.href = item.url;
-    const isForum = item.url.includes('kleientertainment.com') || item.url.includes('kleiforums.com');
-    linkEl.innerHTML = `<i data-lucide="external-link" style="width: 15px;"></i> ${isForum ? 'View on Klei Forums' : 'View Full Announcement'}`;
-  }
-
-  lucide.createIcons();
-  if (modal) modal.classList.add('active');
-}
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     function updateAvatarOffsetsOnly() {
       const x = document.getElementById('obs-avatar-x')?.value || 0;
       const y = document.getElementById('obs-avatar-y')?.value || 0;
@@ -7606,11 +6973,6 @@ function openPatchModal(index) {
       updateAvatarOffsetsOnly();
       updateObsUrlBuilder();
     }
-
-
-   var rawGameUpdates = [];
-    var currentBranchFilter = 'stable';
-    var lastUpdatesFetch = 0;
 
     function switchUpdatesBranch(branch) {
       currentBranchFilter = branch;
@@ -7670,16 +7032,7 @@ function openPatchModal(index) {
       text = text.replace(/\\+\[/g, '[').replace(/\\+\]/g, ']');
 
 // ─── YOUTUBE BBCODE CONVERSION (CLEAN & COMPATIBLE) ───
-  text = text.replace(/\[(?:preview)?youtube=([a-zA-Z0-9_-]+);?[^\]]*\](?:\[\/(?:preview)?youtube\])?/gi, (_, id) => `
-    <div class="patch-video-wrapper">
-      <iframe src="https://www.youtube.com/embed/${id}" 
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen 
-        loading="lazy"></iframe>
-    </div>
-  `);
+  text = text.replace(/\[(?:preview)?youtube=([a-zA-Z0-9_-]+);?[^\]]*\](?:\[\/(?:preview)?youtube\])?/gi, (_, id) => ytFacadeHTML(id));
 
       text = text.replace(/([^\s"'>])(https?:\/\/)/gi, '$1 $2');
       text = text.replace(/(https?:\/\/[^\s<"']+)([\[\]()])/gi, '$1 $2');
@@ -7711,14 +7064,8 @@ function openPatchModal(index) {
         }
 if (ytid) {
       const wrapper = doc.createElement('div');
-      wrapper.className = 'patch-video-wrapper';
-      wrapper.innerHTML = `
-        <iframe src="https://www.youtube.com/embed/${ytid}" 
-          title="YouTube video player"
-          frameborder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowfullscreen 
-          loading="lazy"></iframe>`;
+      wrapper.className = 'yt-facade-host';
+      wrapper.innerHTML = ytFacadeHTML(ytid);
       container.replaceWith(wrapper);
     } else {
       el.remove();
@@ -7781,51 +7128,136 @@ if (ytid) {
       return doc.body.innerHTML;
     }
 
+    // ─── YOUTUBE: thumbnail first, load the player only on click ───
+    // (embeds now need a referrer, and a dead embed would otherwise show an error box)
+    function ytFacadeHTML(id) {
+      id = String(id || '').replace(/[^A-Za-z0-9_-]/g, '');
+      if (!id) return '';
+      const watch = `https://www.youtube.com/watch?v=${id}`;
+      return `<div class="patch-video-wrapper yt-facade" data-yt="${id}">
+          <a class="yt-thumb" href="${watch}" target="_blank" rel="noopener noreferrer" aria-label="Play video">
+            <img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" alt="Video thumbnail" loading="lazy">
+            <span class="yt-play"></span>
+          </a>
+        </div>
+        <a class="yt-fallback" href="${watch}" target="_blank" rel="noopener noreferrer">Video not playing? Watch it on YouTube &#8599;</a>`;
+    }
+
+    document.addEventListener('click', (e) => {
+      const thumb = e.target.closest && e.target.closest('.yt-facade .yt-thumb');
+      if (!thumb) return;
+      e.preventDefault();
+      const host = thumb.closest('.yt-facade');
+      const id = host && host.dataset.yt;
+      if (!id) return;
+      host.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&playsinline=1"
+        title="YouTube video player" frameborder="0" referrerpolicy="strict-origin-when-cross-origin"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    });
+
+    // ─── GAME UPDATES: several sources raced, saved copy as a safety net ───
+    function parseSteamRssXml(xmlText) {
+      const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
+      if (doc.querySelector('parsererror')) return [];
+      return Array.from(doc.querySelectorAll('item')).map(it => {
+        const g = tag => (it.getElementsByTagName(tag)[0]?.textContent || '').trim();
+        return {
+          title: g('title'), link: g('link'), pubDate: g('pubDate'),
+          content: g('content:encoded') || g('description'), description: g('description'),
+          categories: Array.from(it.getElementsByTagName('category')).map(c => c.textContent)
+        };
+      });
+    }
+
+    function fetchUpdateSources() {
+      const rss = 'https://store.steampowered.com/feeds/news/app/322330/?l=english';
+      const get = async (url, ms = 9000) => {
+        const c = new AbortController();                       // works on older Android/Safari too
+        const t = setTimeout(() => c.abort(), ms);
+        try {
+          const r = await fetch(url, { signal: c.signal });
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r;
+        } finally { clearTimeout(t); }
+      };
+      const viaXml = (proxy) => async () => {
+        const items = parseSteamRssXml(await (await get(proxy + encodeURIComponent(rss))).text());
+        if (!items.length) throw new Error('empty feed');
+        return items;
+      };
+      const viaRss2json = async () => {
+        const d = await (await get('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(rss))).json();
+        if (!d.items || !d.items.length) throw new Error('empty feed');
+        return d.items;
+      };
+      // first source to answer wins
+      return Promise.any([viaXml('https://api.allorigins.win/raw?url=')(), viaXml('https://corsproxy.io/?url=')(), viaRss2json()]);
+    }
+
+    function buildUpdateItems(raw) {
+      return raw
+        .filter(it => !isConsoleUpdate(it, it.content || it.description || ''))
+        .map(it => {
+          const rawPayload = it.content || it.description || '';
+          const isBeta = detectIsBeta(it, rawPayload);
+          const cleanTitle = (it.title || 'DST PC Update').replace(/<\/?[^>]+(>|$)/g, '').replace(/\s+/g, ' ').trim();
+          return {
+            title: cleanTitle, url: it.link, date: it.pubDate,
+            desc: extractCleanSummary(rawPayload), html: formatPatchContent(rawPayload),
+            branch: isBeta ? 'beta' : 'stable', tagLabel: isBeta ? 'TEST / BETA' : 'RELEASE'
+          };
+        });
+    }
+
     async function fetchGameUpdates(force = false) {
       if (!force && rawGameUpdates.length > 0 && (Date.now() - lastUpdatesFetch < 180000)) return;
       const statusEl = document.getElementById('updates-status');
       const listEl = document.getElementById('updates-list');
-      if (statusEl) statusEl.innerText = "Consulting Steam records for latest PC updates...";
+      const cacheKey = 'dst-updates-cache-v1';
 
-      try {
-        let items = [];
-        const steamRss = "https://store.steampowered.com/feeds/news/app/322330/?l=english";
-        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(steamRss)}`, { signal: AbortSignal.timeout(8000) });
-        if (res.ok) {
-          const data = await res.json();
-          if (data.items && data.items.length) {
-            items = data.items
-              .filter(it => !isConsoleUpdate(it, it.content || it.description || ''))
-              .map(it => {
-                const rawPayload = it.content || it.description || '';
-                const isBeta = detectIsBeta(it, rawPayload);
-                const cleanTitle = (it.title || 'DST PC Update').replace(/<\/?[^>]+(>|$)/g, '').replace(/\s+/g, ' ').trim();
-                return {
-                  title: cleanTitle,
-                  url: it.link,
-                  date: it.pubDate,
-                  desc: extractCleanSummary(rawPayload),
-                  html: formatPatchContent(rawPayload),
-                  branch: isBeta ? 'beta' : 'stable',
-                  tagLabel: isBeta ? 'TEST / BETA' : 'RELEASE'
-                };
-              });
-          }
-        }
+      // show the last saved copy instantly while we refresh
+      if (!rawGameUpdates.length) {
+        try {
+          const c = JSON.parse(localStorage.getItem(cacheKey) || 'null');
+          if (c && Array.isArray(c.items) && c.items.length) { rawGameUpdates = c.items; filterGameUpdates(); }
+        } catch (e) { }
+      }
+      if (statusEl) statusEl.innerText = rawGameUpdates.length ? 'Refreshing updates...' : 'Consulting Steam records for latest PC updates...';
 
-        if (!items.length) throw new Error("No PC feed items returned");
-        rawGameUpdates = items;
-        lastUpdatesFetch = Date.now();
-        filterGameUpdates();
-      } catch (err) {
-        if (statusEl) statusEl.innerText = "";
-        if (listEl) {
-          listEl.innerHTML = `
-            <div style="text-align:center; padding:40px 20px;">
-              <p style="font-size:1.25rem;color:#fff;">Could not load Steam PC updates feed</p>
-              <a href="https://store.steampowered.com/news/app/322330" target="_blank" class="dst-btn" style="margin-top:14px;">Open Steam News</a>
-            </div>`;
+      let lastErr;
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          const items = buildUpdateItems(await fetchUpdateSources());
+          if (!items.length) throw new Error('No PC updates in feed');
+          rawGameUpdates = items;
+          lastUpdatesFetch = Date.now();
+          try { localStorage.setItem(cacheKey, JSON.stringify({ t: Date.now(), items })); } catch (e) { }
+          filterGameUpdates();
+          return;
+        } catch (err) {
+          lastErr = err;
+          if (attempt === 0) await new Promise(r => setTimeout(r, 1200));
         }
+      }
+
+      console.warn('Could not fetch DST updates:', lastErr);
+      if (rawGameUpdates.length) {                       // keep showing the saved copy
+        if (statusEl) statusEl.innerText = "Couldn't refresh right now. Showing your last saved updates.";
+        return;
+      }
+      if (statusEl) statusEl.innerText = '';
+      if (listEl) {
+        listEl.innerHTML = `
+          <div class="amb-error">
+            <i data-lucide="cloud-off" style="width:44px;height:44px;stroke:var(--dst-flame);margin:0 auto 10px;"></i>
+            <p style="font-size:1.3rem;color:#fff;">Couldn't load the PC updates feed</p>
+            <p>The feed services may be busy. Try again in a moment.</p>
+            <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px;">
+              <button type="button" class="dst-btn" onclick="fetchGameUpdates(true)">Try again</button>
+              <a href="https://store.steampowered.com/news/app/322330" target="_blank" rel="noopener noreferrer" class="dst-btn">Open Steam News</a>
+            </div>
+          </div>`;
+        lucide.createIcons();
       }
     }
 
@@ -7902,14 +7334,6 @@ if (ytid) {
     function closePatchModal() {
       document.getElementById('patch-modal').classList.remove('active');
     }
-
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closePatchModal(); });
-
-
-
-
-
-
 
   </script>
 </body>

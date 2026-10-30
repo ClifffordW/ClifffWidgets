@@ -1101,16 +1101,7 @@
       transform: translateX(4px);
     }
 
-    .milestone-node.claimed {
-      opacity: 0.6;
-      border-color: var(--dst-green);
-      background: rgba(79, 128, 47, 0.1);
-    }
 
-    .milestone-node.claimed h4 {
-      text-decoration: line-through;
-      color: #a4e67a;
-    }
 
     .milestone-icon-slot {
       width: 58px;
@@ -2599,6 +2590,83 @@
         display: none;
       }
     }
+
+    /* ═══ NEW FEATURES (compact list, toolbar, errors, checklist, presets) ═══ */
+    .notif-button[hidden], .load-error[hidden] { display: none !important; }
+    .live-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+    .amb-updated { font-family: var(--font-hand); font-size: 1rem; color: #b09c8a; }
+    .amb-updated.stale { color: #e8a29a; }
+    .live-toolbar-btns { display: flex; gap: 8px; }
+    .tool-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: #1a120e; border: 1px solid #3c281e; border-radius: var(--sketch-radius); color: var(--dst-paper); font-family: var(--font-hand); font-size: 1rem; cursor: pointer; }
+    .tool-btn svg, .tool-btn i { width: 16px; height: 16px; }
+    .tool-btn:hover { border-color: var(--dst-flame); color: #fff; }
+    .tool-btn.spin svg, .tool-btn.spin i { animation: tbspin 0.8s linear infinite; }
+    @keyframes tbspin { to { transform: rotate(360deg); } }
+
+    .amb-grid.compact { grid-template-columns: 1fr; gap: 10px; }
+    .amb-grid.compact .amb-card { flex-direction: row; align-items: center; }
+    .amb-grid.compact .thumb-wrapper { display: none; }
+    .amb-grid.compact .amb-card-body { flex: 1; min-width: 0; border-top: 0; background: none; padding: 10px 96px 10px 14px; }
+    .amb-grid.compact .amb-card-container:hover { transform: none; }
+    .amb-grid.compact .streamer-name::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: #e74c3c; box-shadow: 0 0 6px #e74c3c; }
+
+    .load-error { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; padding: 14px 18px; border: 2px solid var(--dst-crimson); background: rgba(166, 43, 32, 0.15); border-radius: 8px; font-family: var(--font-hand); font-size: 1.15rem; color: #fff; }
+    .amb-error { grid-column: 1 / -1; text-align: center; padding: 40px 20px; font-family: var(--font-hand); font-size: 1.1rem; color: var(--dst-paper-muted); }
+
+
+
+    .wg-preset-row { display: flex; gap: 8px; }
+    .wg-preset-row .search-input-box { flex: 1; min-width: 0; padding: 8px 10px; font-size: 1rem; }
+    .wg-preset-row .dst-btn { padding: 8px 14px; font-size: 1rem; }
+    .wg-icon-btn { display: grid; place-items: center; width: 40px; flex-shrink: 0; background: #1a120e; border: 1px solid #3c281e; border-radius: var(--sketch-radius); color: var(--dst-paper-muted); cursor: pointer; }
+    .wg-icon-btn:hover { color: #fff; border-color: var(--dst-crimson); }
+    .wg-icon-btn svg { width: 16px; height: 16px; }
+
+    @media (max-width: 900px) {
+      .brand { min-width: 0; flex: 1; }
+      .brand-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .sidebar-footer .notif-button span { display: none; }
+      .sidebar-footer .notif-button { padding: 7px 8px; }
+      .amb-grid.compact .amb-card-body { padding-right: 88px; }
+    }
+
+    /* ═══ ICON ANIMATIONS (hover on desktop, press on touch; theme colours untouched) ═══ */
+    .dst-btn svg, .notif-button svg, .tool-btn svg, .wg-icon-btn svg, .wg-reset svg, .wg-seg-btn svg,
+    .dst-tab svg, .inv-slot svg { transform-box: fill-box; transform-origin: center; }
+
+    @keyframes ic-ring { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(20deg); } 40% { transform: rotate(-16deg); } 60% { transform: rotate(10deg); } 80% { transform: rotate(-6deg); } }
+    @keyframes ic-bounce-down { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+    @keyframes ic-nudge { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(2px, -2px); } }
+    @keyframes ic-wiggle { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-12deg); } 75% { transform: rotate(12deg); } }
+    @keyframes ic-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+    @keyframes ic-spin { to { transform: rotate(360deg); } }
+    @keyframes ic-spin-back { to { transform: rotate(-360deg); } }
+    @keyframes ic-shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-2px); } 75% { transform: translateX(2px); } }
+    @keyframes ic-flicker { 0%, 100% { transform: scale(1) rotate(0); filter: brightness(1); } 30% { transform: scale(1.12) rotate(-4deg); filter: brightness(1.3); } 60% { transform: scale(0.96) rotate(3deg); } }
+
+    @media (hover: hover) {
+      .notif-button:hover svg.lucide-bell { transform-origin: 50% 10%; animation: ic-ring 0.7s ease; }
+      .notif-button:hover svg.lucide-volume-2, .notif-button:hover svg.lucide-volume-x { animation: ic-pulse 0.6s ease; }
+      .notif-button:hover svg.lucide-download, .dst-btn:hover svg.lucide-download { animation: ic-bounce-down 0.6s ease infinite; }
+      .tool-btn:hover svg.lucide-refresh-cw, .dst-btn:hover svg.lucide-refresh-cw { animation: ic-spin 0.8s linear; }
+      .tool-btn:hover svg.lucide-list { animation: ic-pulse 0.6s ease; }
+      .dst-btn:hover svg.lucide-copy { animation: ic-wiggle 0.5s ease; }
+      .dst-btn:hover svg.lucide-external-link { animation: ic-nudge 0.6s ease infinite; }
+      .dst-btn:hover svg.lucide-share-2, .dst-btn:hover svg.lucide-link { animation: ic-wiggle 0.5s ease; }
+      .dst-btn:hover svg.lucide-rotate-ccw, .wg-reset:hover svg.lucide-rotate-ccw { animation: ic-spin-back 0.7s ease; }
+      .wg-icon-btn:hover svg.lucide-trash-2 { animation: ic-shake 0.4s ease 2; }
+      .dst-tab:hover svg { animation: ic-wiggle 0.5s ease; }
+      .wg-seg-btn:hover svg { animation: ic-pulse 0.6s ease; }
+    }
+    /* touch feedback */
+    .dst-btn:active svg, .tool-btn:active svg, .notif-button:active svg { animation: ic-pulse 0.3s ease; }
+    .inv-slot.active svg.lucide-flame, .dst-tab.active svg.lucide-flame { animation: ic-flicker 1.8s ease-in-out infinite; }
+    .inv-slot.active svg:not(.lucide-flame) { animation: ic-pulse 0.4s ease 1; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .dst-btn svg, .notif-button svg, .tool-btn svg, .wg-icon-btn svg, .wg-reset svg, .wg-seg-btn svg,
+      .dst-tab svg, .inv-slot svg { animation: none !important; }
+    }
   </style>
 </head>
 
@@ -2717,6 +2785,9 @@
     </a>
 
     <div class="sidebar-footer">
+      <button id="install-btn" class="notif-button" onclick="installApp()" hidden title="Install this page as an app">
+        <i data-lucide="download"></i><span>Install</span>
+      </button>
       <button id="notif-toggle-btn" class="notif-button" onclick="toggleDropNotifications()">
         <i data-lucide="bell"></i>
         <span id="notif-toggle-text">Enable Drop Alerts</span>
@@ -2739,6 +2810,11 @@
 
   <!-- MAIN SCROLLABLE CONTENT -->
   <main>
+    <div id="load-error" class="load-error" hidden>
+      <i data-lucide="cloud-off"></i>
+      <span>Couldn't reach Klei's servers. Check your connection and try again.</span>
+      <button type="button" class="dst-btn" onclick="location.reload()">Retry</button>
+    </div>
 
     <!-- AMBASSADOR WIDGET TAB -->
     <section id="widget">
@@ -2756,6 +2832,23 @@
 
           <!-- ═════════ LEFT: SETTINGS ═════════ -->
           <div class="wg-settings">
+
+            <div class="wg-panel">
+              <div class="wg-panel-head"><i data-lucide="bookmark"></i>
+                <h4>Presets &amp; Sharing</h4>
+              </div>
+              <div class="wg-preset-row">
+                <select id="wg-preset-select" class="search-input-box"></select>
+                <button type="button" class="dst-btn" onclick="loadWgPreset()">Load</button>
+                <button type="button" class="wg-icon-btn" onclick="deleteWgPreset()" title="Delete selected preset"><i data-lucide="trash-2"></i></button>
+              </div>
+              <div class="wg-preset-row">
+                <input type="text" id="wg-preset-name" class="search-input-box" maxlength="30" placeholder="Name this setup, e.g. Winter hat">
+                <button type="button" class="dst-btn" onclick="saveWgPreset()">Save</button>
+              </div>
+              <button type="button" class="dst-btn" onclick="shareWgLink()"><i data-lucide="link" style="width: 16px;"></i> Copy share link</button>
+              <p class="wg-hint wg-hint-tight">A share link rebuilds your whole setup for anyone who opens it.</p>
+            </div>
 
             <!-- 1 · LAYOUT MODE -->
             <div class="wg-panel">
@@ -3106,8 +3199,7 @@
             style="font-family: var(--font-title); color: #fff; margin-bottom: 18px; font-size: 1.25rem; display: flex; align-items: center; gap: 10px;">
             <i data-lucide="hourglass" style="color: var(--dst-flame-bright);"></i>
             Drop Milestones <span
-              style="font-size: 0.85rem; font-family: var(--font-hand); color: var(--dst-paper-muted); margin-left: auto;">(Check
-              off as claimed)</span>
+              style="font-size: 0.85rem; font-family: var(--font-hand); color: var(--dst-paper-muted); margin-left: auto;"></span>
           </h3>
 
           <div id="reward-rows" class="milestone-tree"></div>
@@ -3159,6 +3251,18 @@
         </div>
         <input type="text" id="amb-search" class="search-input-box"
           placeholder="Search streamer by name or stream title..." oninput="applyAmbassadorFilters()">
+      </div>
+
+      <div class="live-toolbar">
+        <span id="amb-updated" class="amb-updated">Loading list...</span>
+        <div class="live-toolbar-btns">
+          <button type="button" id="amb-refresh-btn" class="tool-btn" onclick="manualRefreshAmb()" title="Refresh the list now">
+            <i data-lucide="refresh-cw"></i><span>Refresh</span>
+          </button>
+          <button type="button" id="amb-view-btn" class="tool-btn" onclick="toggleCompactView()" title="Switch between cards and a compact list">
+            <i data-lucide="list"></i><span id="amb-view-text">Compact</span>
+          </button>
+        </div>
       </div>
 
       <div id="amb-count-indicator"
@@ -3976,6 +4080,8 @@
     }
 
     let rawAmbassadors = [];
+    let lastAmbOk = 0, ambStale = false, prevLiveNames = null, deferredInstall = null;
+    let lastAmbFetch = Date.now();
     let currentDstCampaign = null;
     let sessionAlertedLive = false;
     let sessionAlertedEnded = false;
@@ -4054,6 +4160,7 @@
       });
       localStorage.setItem('dst-last-visited-tab', id);
 
+      if (id === 'live') refreshAmbassadors();
       // FIX: Force scale recalculation when opening the widget tab so it doesn't load cramped/collapsed
       if (id === 'widget') {
         setTimeout(updateObsUrlBuilder, 50);
@@ -4104,7 +4211,7 @@
         listEl.innerHTML = `
           <div style="grid-column: 1/-1; text-align: center; padding: 40px 20px; font-family: var(--font-hand); color: var(--dst-paper-muted);">
             <i data-lucide="ghost" style="width: 44px; height: 44px; stroke: var(--dst-flame); margin: 0 auto 10px;"></i>
-            <p style="font-size: 1.3rem; color: #fff;">No survivors found in this realm!</p>
+            <p style="font-size: 1.3rem; color: #fff;">No live ambassadors found!</p>
             <p style="font-size: 1.1rem;">Try clearing or changing your filters.</p>
           </div>
         `;
@@ -4113,7 +4220,8 @@
       }
 
       listEl.innerHTML = filtered.map(a => {
-        const thumbUrl = (a.ThumbnailURL || '').replace('440x248', '640x360');
+        const thumbUrl = (a.ThumbnailURL || '').replace('440x248', '640x360')
+          + ((a.ThumbnailURL || '').includes('?') ? '&' : '?') + 't=' + Math.floor(Date.now() / 60000);
         const profileUrl = a.ProfileIcon || 'https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg';
         const isFav = favs.includes(a.Name);
         const isBlacklisted = blacks.includes(a.Name);
@@ -4246,6 +4354,17 @@
       const isEnded = now >= endTimestamp;
       const dropId = (dst.englishName || 'DST-Drop') + '-' + dst.campaignEnd;
 
+      // Ending-soon reminders (1h and 24h); only the closest applicable one fires
+      const left = endTimestamp - now;
+      if (isLive) {
+        const tiers = [[3600000, '1h', '1 hour'], [86400000, '24h', '24 hours']];
+        const hit = tiers.find(t => left <= t[0]);
+        if (hit && !localStorage.getItem('dst-alerted-' + hit[1] + '-' + dropId)) {
+          tiers.filter(t => t[0] >= hit[0]).forEach(t => { try { localStorage.setItem('dst-alerted-' + t[1] + '-' + dropId, 'true'); } catch (e) { } });
+          triggerSafeNotification(`⏳ Drop ends in under ${hit[2]}`, `Claim your "${dst.englishName}" rewards before the fire goes out!`, dst.icon || dst.gif);
+        }
+      }
+
       if (isLive) {
         const alreadySaved = localStorage.getItem('dst-alerted-live-' + dropId);
         if (!alreadySaved && !sessionAlertedLive) {
@@ -4313,7 +4432,10 @@
       updateBlacklistCountBadge();
       initWidgetState();
       initWidgetListeners();
-      updateSoundButtonUI();;
+      updateSoundButtonUI();
+      applyViewMode();
+      renderWgPresets();
+      applySharedWidgetFromUrl();
 
       try {
         const [cRes, aRes] = await Promise.all([
@@ -4420,6 +4542,8 @@
         }).join('');
 
         rawAmbassadors = await aRes.json();
+        markAmbUpdated();
+        checkFavoriteGoLive(rawAmbassadors);
         const liveCount = rawAmbassadors.length;
 
         const sideBadge = document.getElementById('side-live-badge');
@@ -4442,8 +4566,239 @@
         console.error("Compendium synchronization failed", e);
         const loadEl = document.getElementById('loading-screen');
         if (loadEl) loadEl.style.visibility = 'hidden';
+        const errEl = document.getElementById('load-error'); if (errEl) errEl.hidden = false;
+        ambFetchFailed();
       }
     }
+
+
+
+
+    // ═════════ NEW FEATURES ═════════
+    // ── Live tab: updated label, refresh, compact view, error state ──
+    function markAmbUpdated() { lastAmbOk = Date.now(); ambStale = false; updateAmbLabel(); }
+
+    function updateAmbLabel() {
+      const el = document.getElementById('amb-updated');
+      if (!el) return;
+      if (!lastAmbOk) { el.innerText = 'Loading list...'; return; }
+      const s = Math.floor((Date.now() - lastAmbOk) / 1000);
+      let t = s < 10 ? 'Updated just now' : s < 60 ? `Updated ${s}s ago` : `Updated ${Math.floor(s / 60)} min ago`;
+      if (ambStale) t += ' · update failed, showing last list';
+      el.innerText = t;
+      el.classList.toggle('stale', ambStale);
+    }
+    setInterval(updateAmbLabel, 5000);
+
+    function ambFetchFailed() {
+      ambStale = true;
+      updateAmbLabel();
+      if (rawAmbassadors.length) return;
+      const list = document.getElementById('amb-list');
+      const count = document.getElementById('amb-count-indicator');
+      if (count) count.innerText = '';
+      if (list) list.innerHTML = `
+        <div class="amb-error">
+          <i data-lucide="cloud-off" style="width:44px;height:44px;stroke:var(--dst-flame);margin:0 auto 10px;"></i>
+          <p style="font-size:1.3rem;color:#fff;">Couldn't reach Klei right now</p>
+          <p>Check your connection, then try again.</p>
+          <button type="button" class="dst-btn" style="margin-top:14px;" onclick="manualRefreshAmb()">Try again</button>
+        </div>`;
+      lucide.createIcons();
+    }
+
+    async function manualRefreshAmb() {
+      const b = document.getElementById('amb-refresh-btn');
+      if (b) b.classList.add('spin');
+      await refreshAmbassadors(true);
+      setTimeout(() => b && b.classList.remove('spin'), 400);
+    }
+
+    function applyViewMode() {
+      const compact = localStorage.getItem('dst-amb-compact') === 'true';
+      const list = document.getElementById('amb-list');
+      const txt = document.getElementById('amb-view-text');
+      if (list) list.classList.toggle('compact', compact);
+      if (txt) txt.innerText = compact ? 'Cards' : 'Compact';
+    }
+    function toggleCompactView() {
+      localStorage.setItem('dst-amb-compact', localStorage.getItem('dst-amb-compact') === 'true' ? 'false' : 'true');
+      applyViewMode();
+    }
+
+    // ── Alert when a starred streamer goes live (needs the bell enabled) ──
+    function checkFavoriteGoLive(list) {
+      const names = new Set((list || []).map(a => a.Name));
+      if (prevLiveNames && localStorage.getItem('dst-drops-notif-enabled') === 'true') {
+        const favs = getFavorites(), blacks = getBlacklist();
+        list.filter(a => !prevLiveNames.has(a.Name) && favs.includes(a.Name) && !blacks.includes(a.Name))
+          .forEach(a => triggerSafeNotification(`⭐ ${a.Name} is live!`, a.Title || "Streaming Don't Starve Together", a.ProfileIcon));
+      }
+      prevLiveNames = names;
+    }
+
+    // ── Install as app ──
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault(); deferredInstall = e;
+      // Install button is for phones/tablets only
+      const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      const b = document.getElementById('install-btn'); if (b && isTouch) b.hidden = false;
+    });
+    window.addEventListener('appinstalled', () => {
+      deferredInstall = null;
+      const b = document.getElementById('install-btn'); if (b) b.hidden = true;
+    });
+    async function installApp() {
+      if (!deferredInstall) return;
+      deferredInstall.prompt();
+      await deferredInstall.userChoice;
+      deferredInstall = null;
+      const b = document.getElementById('install-btn'); if (b) b.hidden = true;
+    }
+
+    // ── Widget presets + share link ──
+    function getWidgetSnapshot() {
+      const v = id => document.getElementById(id)?.value ?? '';
+      const c = id => !!document.getElementById(id)?.checked;
+      return {
+        tw: v('obs-twitch'), av: v('obs-avatar'), sp: v('obs-speed'),
+        g1: v('obs-glow1'), g2: v('obs-glow2'), g3: v('obs-glow3'), bc: v('obs-border-hex'), fc: v('obs-fill-hex'),
+        nb: c('obs-no-border'), nf: c('obs-no-fill'), hh: c('obs-hide-head'),
+        m: c('obs-carousel-toggle') ? 'carousel' : c('obs-solo-toggle') ? 'solo' : 'default',
+        ht: v('obs-seasonal-hat'), hu: v('obs-hat-url'), hp: v('obs-hat-pos'),
+        hx: v('obs-hat-x'), hy: v('obs-hat-y'), hs: v('obs-hat-scale'), hr: v('obs-hat-rot')
+      };
+    }
+
+    function applyWidgetSnapshot(o) {
+      if (!o || typeof o !== 'object') return;
+      const set = (id, val) => { const el = document.getElementById(id); if (el && val !== undefined && val !== null) el.value = String(val); };
+      const chk = (id, val) => { const el = document.getElementById(id); if (el) el.checked = !!val; };
+      const hex = /^[0-9a-f]{6}$/i;
+      [['obs-glow1', 'obs-color1', 'g1'], ['obs-glow2', 'obs-color2', 'g2'], ['obs-glow3', 'obs-color3', 'g3'],
+       ['obs-border-hex', 'obs-border-color', 'bc'], ['obs-fill-hex', 'obs-fill-color', 'fc']].forEach(([t, p, k]) => {
+        if (hex.test(o[k])) { set(t, o[k]); set(p, '#' + o[k]); }
+      });
+      set('obs-twitch', o.tw); set('obs-avatar', o.av); set('obs-speed', o.sp);
+      chk('obs-no-border', o.nb); chk('obs-no-fill', o.nf); chk('obs-hide-head', o.hh);
+      toggleBorderDisable(); toggleFillDisable();
+
+      const ht = hatMetadata[o.ht] ? o.ht : '';
+      selectHatOption(ht, hatMetadata[ht].label, hatMetadata[ht].icon);
+      if (o.hu) set('obs-hat-url', o.hu);
+      set('obs-hat-pos', ['avatar', 'flair', 'portrait', 'item'].includes(o.hp) ? o.hp : 'avatar');
+      set('obs-hat-x', o.hx); set('obs-hat-y', o.hy); set('obs-hat-scale', o.hs); set('obs-hat-rot', o.hr);
+      setWidgetMode(['solo', 'carousel'].includes(o.m) ? o.m : 'default');
+    }
+
+    function getWgPresets() { try { return JSON.parse(localStorage.getItem('dst-wg-presets') || '{}'); } catch (e) { return {}; } }
+
+    function renderWgPresets(selectName) {
+      const sel = document.getElementById('wg-preset-select'); if (!sel) return;
+      const names = Object.keys(getWgPresets());
+      if (!names.length) {
+        const o = document.createElement('option'); o.textContent = 'No saved presets yet'; o.disabled = true;
+        sel.replaceChildren(o); return;
+      }
+      sel.replaceChildren(...names.map(n => { const o = document.createElement('option'); o.value = o.textContent = n; return o; }));
+      if (selectName) sel.value = selectName;
+    }
+
+    function saveWgPreset() {
+      const input = document.getElementById('wg-preset-name');
+      const name = (input.value || '').trim().slice(0, 30);
+      if (!name) { showInAppToast('Name needed', 'Type a name for this setup first.'); return; }
+      const all = getWgPresets();
+      all[name] = getWidgetSnapshot();
+      localStorage.setItem('dst-wg-presets', JSON.stringify(all));
+      input.value = '';
+      renderWgPresets(name);
+      showInAppToast('Preset saved', `"${name}" is ready to load any time.`);
+    }
+
+    function loadWgPreset() {
+      const sel = document.getElementById('wg-preset-select');
+      const p = getWgPresets()[sel && sel.value];
+      if (!p) return;
+      applyWidgetSnapshot(p);
+      showInAppToast('Preset loaded', `"${sel.value}" applied to the widget.`);
+    }
+
+    function deleteWgPreset() {
+      const sel = document.getElementById('wg-preset-select');
+      const name = sel && sel.value; const all = getWgPresets();
+      if (!name || !all[name] || !confirm(`Delete preset "${name}"?`)) return;
+      delete all[name];
+      localStorage.setItem('dst-wg-presets', JSON.stringify(all));
+      renderWgPresets();
+    }
+
+    async function shareWgLink() {
+      const enc = btoa(unescape(encodeURIComponent(JSON.stringify(getWidgetSnapshot()))))
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      const link = location.origin + location.pathname + '?w=' + enc;
+      try { await navigator.clipboard.writeText(link); showInAppToast('Link copied', 'Anyone who opens it gets your exact widget setup.'); }
+      catch (e) { window.prompt('Copy this share link:', link); }
+    }
+
+    function applySharedWidgetFromUrl() {
+      const raw = new URLSearchParams(location.search).get('w');
+      if (!raw) return;
+      try {
+        const b64 = raw.replace(/-/g, '+').replace(/_/g, '/');
+        applyWidgetSnapshot(JSON.parse(decodeURIComponent(escape(atob(b64)))));
+        nav('widget');
+        showInAppToast('Shared setup loaded', 'Tweak it or save it as your own preset.');
+      } catch (e) { console.warn('Bad share link', e); }
+      history.replaceState(null, '', location.pathname + location.hash);
+    }
+
+    async function refreshAmbassadors(force = false) {
+      // don't hammer the server: skip if we fetched in the last 20s
+      if (!force && Date.now() - lastAmbFetch < 20000) return;
+      lastAmbFetch = Date.now();
+
+      try {
+        const res = await fetch(
+          'https://kleiforums.s3.amazonaws.com/gameimages/amblist.json?t=' + Date.now(),
+          { cache: 'no-store' }
+        );
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+
+        rawAmbassadors = await res.json();
+        markAmbUpdated();
+        checkFavoriteGoLive(rawAmbassadors);
+        const liveCount = rawAmbassadors.length;
+
+        const sideBadge = document.getElementById('side-live-badge');
+        const mobileBadge = document.getElementById('mobile-live-badge');
+        if (sideBadge) {
+          sideBadge.innerText = `${liveCount} LIVE`;
+          sideBadge.style.display = liveCount > 0 ? 'inline-block' : 'none';
+        }
+        if (mobileBadge) {
+          mobileBadge.innerText = liveCount;
+          mobileBadge.style.display = liveCount > 0 ? 'block' : 'none';
+        }
+
+        applyAmbassadorFilters();
+        lucide.createIcons();
+      } catch (e) {
+        console.warn('Ambassador refresh failed', e);
+        ambFetchFailed();
+      }
+    }
+
+    setInterval(() => { if (!document.hidden) refreshAmbassadors(); }, 60000);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) refreshAmbassadors();
+    });
+
+
+
+
+
+
 
     init();
   </script>

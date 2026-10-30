@@ -1,4 +1,4 @@
-const CACHE = 'dst-cache-v3.21'; // bump this number on every update
+const CACHE = 'dst-cache-v3.3'; // bump this number on every update
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
@@ -13,12 +13,18 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  if (e.request.method !== 'GET') return;
+  const url = new URL(e.request.url);
+
+  // only handle normal web requests (skips chrome-extension://, POSTs, etc.)
+  if (e.request.method !== 'GET' || !url.protocol.startsWith('http')) return;
+
   e.respondWith(
     fetch(e.request)
       .then(res => {
-        const copy = res.clone();
-        caches.open(CACHE).then(c => c.put(e.request, copy));
+        if (res && res.ok) {
+          const copy = res.clone();
+          caches.open(CACHE).then(c => c.put(e.request, copy)).catch(() => {});
+        }
         return res;
       })
       .catch(() => caches.match(e.request))

@@ -4238,26 +4238,210 @@
     .yt-fallback { display: inline-block; margin: -4px 0 14px; font-family: var(--font-hand); font-size: 1rem; color: var(--dst-flame-bright); }
 
 
-    /* ═══ HEADER v3: row 1 = brand + actions, row 2 = tabs ═══ */
+   /* ═══ CLEAN SINGLE-ROW TOP NAVBAR (DESKTOP) ═══ */
     @media (min-width: 901px) {
-      aside { flex-wrap: wrap; align-items: center; row-gap: 10px; padding: 12px 28px 10px; }
-      .brand { order: 1; margin: 0; }
-      .sidebar-footer { order: 2; margin-left: auto; }
-      aside::before {
-        content: ""; order: 3; flex: 0 0 100%; height: 1px; margin: 2px 0 0;
-        background: repeating-linear-gradient(90deg, #3a2b22 0 8px, transparent 8px 14px);
+      aside {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 6px;
+        padding: 8px 24px;
+        height: 64px;
       }
-      aside > .dst-tab, aside > a.dst-tab, aside > .nav-group-label { order: 4; }
-      aside a.dst-tab:first-of-type { margin-left: 10px; }
 
-      /* there is room again, so show full labels */
-      .brand-sub { display: block; }
-      .notif-button span { display: inline; }
-      .notif-button { padding: 8px 14px; }
-      .sidebar-footer { gap: 10px; }
-     
+      /* Clean logo and title */
+      .brand {
+        margin-right: 14px;
+        flex-shrink: 0;
+      }
+      .brand-sub {
+        display: none; /* Keeps the bar slim and centered */
+      }
+
+      /* Compact, neat navigation tabs */
+      aside .dst-tab {
+        padding: 6px 12px;
+        font-size: 1.05rem;
+        gap: 7px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      /* Utility tools pinned to the far right with a vertical divider */
+      .sidebar-footer {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding-left: 12px;
+        border-left: 1px dashed #3a2b22;
+        flex-shrink: 0;
+      }
+
+      /* Hide text labels on utility buttons so they become compact icon badges */
+      .sidebar-footer .notif-button span {
+        display: none;
+      }
+
+      .sidebar-footer .notif-button {
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--sketch-radius-soft, 6px);
+      }
+
+      .sidebar-footer .notif-button svg {
+        width: 18px;
+        height: 18px;
+      }
     }
-    @media (max-width: 900px) { aside::before { display: none; } }
+    /* ═══ CLEAN SINGLE-ROW TOP NAVBAR (DESKTOP) ═══ */
+    @media (min-width: 901px) {
+      aside {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 6px;
+        padding: 8px 24px;
+        height: 64px;
+      }
+
+      /* Clean logo and title */
+      .brand {
+        margin-right: 14px;
+        flex-shrink: 0;
+      }
+      .brand-sub {
+        display: none; /* Keeps the bar slim and centered */
+      }
+
+      /* Compact, neat navigation tabs */
+      aside .dst-tab {
+        padding: 6px 12px;
+        font-size: 1.05rem;
+        gap: 7px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      /* Utility tools pinned to the far right with a vertical divider */
+      .sidebar-footer {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding-left: 12px;
+        border-left: 1px dashed #3a2b22;
+        flex-shrink: 0;
+      }
+
+      /* Hide text labels on utility buttons so they become compact icon badges */
+      .sidebar-footer .notif-button span {
+        display: none;
+      }
+
+      .sidebar-footer .notif-button {
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--sketch-radius-soft, 6px);
+      }
+
+      .sidebar-footer .notif-button svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+/* ─── CLEAN MOBILE HEADER (< 900px) ────────────────────────── */
+    @media (max-width: 900px) {
+      aside {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        height: 56px;
+        padding: 8px 12px;
+        gap: 8px;
+      }
+
+      /* 1. Prevent brand from colliding with buttons */
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;          /* Enables graceful flex truncation */
+        flex: 1 1 auto;
+        margin: 0;
+      }
+
+      .brand-logo {
+        width: 28px;
+        height: 28px;
+        flex-shrink: 0;
+      }
+
+      .brand-title {
+        font-size: 1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; /* Truncates cleanly on narrow screens */
+      }
+
+      .brand-sub {
+        display: none;
+      }
+
+      /* 2. Pin buttons safely to the right */
+      .sidebar-footer {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;        /* Never let buttons collapse or wrap */
+        margin-left: auto;
+        padding: 0;
+        border: none;
+      }
+
+      /* Hide any button text on mobile */
+      .sidebar-footer .notif-button span {
+        display: none !important;
+      }
+
+      /* Clean, uniform square icon touch targets */
+      .sidebar-footer .notif-button {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--sketch-radius-soft, 6px);
+        flex-shrink: 0;
+      }
+
+      .sidebar-footer .notif-button svg {
+        width: 17px;
+        height: 17px;
+      }
+
+      /* Disable the dashed divider line on mobile */
+      aside::before {
+        display: none !important;
+      }
+    }
+
+
 
     /* ═══ ASSETS PAGE: roomy, centred cards ═══ */
     #download-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); justify-content: center; gap: 22px; }

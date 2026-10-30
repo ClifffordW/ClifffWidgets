@@ -1,4 +1,4 @@
-const CACHE = 'dst-cache-v3.7'; // bump this number on every update
+const CACHE = 'dst-cache-v3.71'; // bump this number on every update
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();

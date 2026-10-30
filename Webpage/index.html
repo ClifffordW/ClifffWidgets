@@ -5961,7 +5961,7 @@ function openDiscordModal() {
       const p = getWgPresets()[sel && sel.value];
       if (!p) return;
       applyWidgetSnapshot(p);
-      showInAppToast('Preset loaded', `"${sel.value}" applied to the widget.`);
+      showInAppToast('bookmark', `"${sel.value}" applied to the widget.`);
     }
 
 
@@ -6078,7 +6078,7 @@ function openDiscordModal() {
       const p = getWgPresets()[sel && sel.value];
       if (!p) return;
       applyWidgetSnapshot(p);
-      showInAppToast('Preset loaded', `"${sel.value}" applied to the widget.`, 'hard-drive-download');
+      showInAppToast('Preset loaded', `"${sel.value}" applied to the widget.`, 'bookmark-plus');
     }
 
     async function toggleDropNotifications() {
@@ -6110,7 +6110,7 @@ function openDiscordModal() {
       const enc = btoa(unescape(encodeURIComponent(JSON.stringify(getWidgetSnapshot()))))
         .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
       const link = location.origin + location.pathname + '?w=' + enc;
-      try { await navigator.clipboard.writeText(link); showInAppToast('Link copied', 'Anyone who opens it gets your exact widget setup.'); }
+      try { await navigator.clipboard.writeText(link); showInAppToast('Link copied', 'Anyone who opens it gets your exact widget setup.', 'clipboard-check'); }
       catch (e) { window.prompt('Copy this share link:', link); }
     }
 
@@ -6230,7 +6230,7 @@ let currentAssetCategory = 'all';
                 <i data-lucide="download" style="width: 14px;"></i> Save
               </button>
               <button type="button" class="dst-btn" onclick="copyAssetUrl('${a.url}')" title="Copy raw image URL for OBS or Discord">
-                <i data-lucide="link" style="width: 14px;"></i> Copy
+                <i data-lucide="clipboard-check" style="width: 14px;"></i> Copy
               </button>
             </div>
           </div>

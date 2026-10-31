@@ -307,6 +307,13 @@
     .header-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
     .header-actions .notif-button { width: 40px; height: 40px; min-height: 40px; padding: 0; }
     .header-actions .notif-button span { display: none; }
+    @media (max-width: 420px) {   /* four buttons plus the name: let the name wrap onto two lines instead of being cut off */
+      .header-actions { gap: 4px; }
+      .header-actions .notif-button { width: 34px; height: 34px; min-height: 34px; }
+      .mobile-header { gap: 6px; padding-left: 8px; padding-right: 8px; }
+      .mobile-header .brand { gap: 7px; }
+      .mobile-header .brand-title { font-size: 0.95rem; white-space: normal; line-height: 1.05; }
+    }
 
     .mobile-dock {
       display: none;
@@ -1083,8 +1090,8 @@
       .milestone-icon-slot { width: 50px; height: 50px; min-width: 50px; }
 
       /* six filters fit as a tidy 3×2 grid instead of a clipped scroll row */
-      #platform-filters { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-      #platform-filters .platform-pill { padding: 8px 4px; font-size: 1rem; width: 100%; }
+      #platform-filters { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+      #platform-filters .platform-pill { padding: 8px 4px; font-size: 1rem; width: 100%; min-width: 0; }
       .amb-grid { gap: 14px; }
 
       .update-card { padding: 16px; }
@@ -1930,8 +1937,12 @@
     @media (max-width: 900px) {
       .page-toolbar { padding: 12px; }
       .page-toolbar-row { flex-direction: column; align-items: stretch; }
-      .page-toolbar .platform-filter-bar:not(#platform-filters), .page-toolbar-tools { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; }
-      .page-toolbar-tools > * { width: 100%; padding: 6px 4px; }
+      .page-toolbar .platform-filter-bar:not(#platform-filters) { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+      .page-toolbar-tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+      .page-toolbar-tools > * { width: 100%; min-width: 0; padding: 6px 4px; justify-content: center; }
+      .page-toolbar-tools > * span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .page-toolbar-tools .tool-btn { font-size: 0.92rem; gap: 5px; }
+      .page-toolbar-tools .tool-btn svg { width: 15px; height: 15px; }
       .page-toolbar .platform-pill { padding: 8px 4px; }
     }
   </style>

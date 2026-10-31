@@ -846,6 +846,15 @@
     .patch-notes-body ul ul li { padding-left: 18px; color: var(--dst-paper-muted); }
     .patch-notes-body ul ul li::before { content: "❖"; color: var(--dst-flame); font-size: 0.7rem; }
     .patch-notes-body li p { margin: 0; display: inline; }
+    .patch-claim { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 0 0 18px; padding: 14px 16px; background: linear-gradient(180deg, rgba(255, 142, 60, 0.14), rgba(255, 142, 60, 0.05)); border: 2px solid var(--ui-accent); border-radius: var(--sketch-radius); box-shadow: 0 0 18px rgba(255, 142, 60, 0.18); }
+    .patch-claim-icon { display: grid; place-items: center; width: 46px; height: 46px; flex-shrink: 0; border: 2px solid var(--ui-accent); border-radius: 50%; color: var(--ui-accent); background: #140d0a; }
+    .patch-claim-icon svg { width: 22px; height: 22px; }
+    .patch-claim-text { flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+    .patch-claim-text b { font-family: var(--font-title); font-weight: normal; color: #fff; font-size: 1.15rem; }
+    .patch-claim-sub { font-size: 0.95rem; color: var(--dst-paper-muted); line-height: 1.3; }
+    .patch-claim-url { font-family: var(--font-mono); font-size: 0.85rem; color: var(--gold-bright); word-break: break-all; user-select: text; }
+    .patch-claim-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .patch-notes-body .patch-claim a.dst-btn { text-decoration: none; color: #fff; }
     .patch-notes-body a { color: var(--dst-flame-bright); text-decoration: underline; text-underline-offset: 3px; }
     .patch-notes-body blockquote { border-left: 3px solid var(--dst-flame); background: rgba(36, 27, 23, 0.4); padding: 8px 14px; margin: 10px 0; border-radius: 0 6px 6px 0; font-style: italic; }
     .patch-notes-body img { max-width: 100%; height: auto; display: block; margin: 14px auto; border: 2px solid var(--dst-border); border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8); }
@@ -3163,7 +3172,8 @@
       }
     }
 
-    function closePatchModal() { $('patch-modal').classList.remove('active'); }
+    // emptying the body also stops any video that is still playing (it is rebuilt the next time a patch opens)
+    function closePatchModal() { $('patch-modal').classList.remove('active'); $('patch-modal-content').innerHTML = ''; }
 
     document.addEventListener('keydown', (e) => {
       if (!$('patch-modal').classList.contains('active')) return;
@@ -6183,6 +6193,43 @@
       refreshIcons();
     }
 
+    // Klei sometimes slips reward links (accounts.klei.com/link/...) into the notes as plain text or hidden behind other words, so they get their own card at the top
+    const KLEI_CLAIM_RE = /^https:\/\/accounts\.klei\.com\/link\/[A-Za-z0-9_-]{2,60}\/?$/i;
+    // Steam routes outside links through steamcommunity.com/linkfilter/?u=<the real link>, so the real address has to be read back out
+    function unwrapSteamLink(h) {
+      h = String(h).trim();
+      try {
+        const u = new URL(h, 'https://steamcommunity.com/');
+        if (/(^|\.)steamcommunity\.com$/i.test(u.hostname) && /^\/linkfilter\/?$/i.test(u.pathname)) return (u.searchParams.get('u') || u.searchParams.get('url') || h).trim();
+      } catch (e) { }
+      return h;
+    }
+    function pullOutClaimLinks(body) {
+      const found = new Map();
+      body.querySelectorAll('a[href]').forEach(a => {
+        const href = unwrapSteamLink(a.getAttribute('href') || '').split('#')[0];
+        if (!KLEI_CLAIM_RE.test(href)) return;
+        const text = a.textContent.trim();
+        if (!found.has(href)) found.set(href, '');
+        if (text && !/^https?:\/\//i.test(text) && !found.get(href)) found.set(href, text);
+        if (!text || /^https?:\/\//i.test(text)) { const par = a.parentElement; a.remove(); if (par && par !== body && !par.textContent.trim() && !par.querySelector('img, iframe')) par.remove(); }
+        else a.replaceWith(document.createTextNode(text));   // words that hid the link stay, but the link itself lives in the card
+      });
+      [...found].reverse().forEach(([href, label]) => {
+        const card = document.createElement('div');
+        card.className = 'patch-claim';
+        card.innerHTML = '<div class="patch-claim-icon"><i data-lucide="gift"></i></div><div class="patch-claim-text"><b>Reward link in these notes</b><span class="patch-claim-sub"></span><code class="patch-claim-url"></code></div><div class="patch-claim-actions"><a class="dst-btn btn-primary" target="_blank" rel="noopener noreferrer"><i data-lucide="external-link"></i> Open link</a><button type="button" class="dst-btn" data-claim-copy><i data-lucide="copy"></i> Copy</button></div>';
+        card.querySelector('.patch-claim-sub').textContent = label ? `Hidden behind "${label}" in the notes, so it's pulled out here. Opens on accounts.klei.com.` : "Written into the notes, so it's pulled out here. Opens on accounts.klei.com.";
+        card.querySelector('.patch-claim-url').textContent = href;
+        card.querySelector('a').href = href;
+        card.dataset.href = href;
+        body.prepend(card);
+      });
+    }
+    document.addEventListener('click', async (e) => {
+      const b = e.target.closest('[data-claim-copy]');
+      if (b && await copyText(b.closest('.patch-claim').dataset.href)) showInAppToast('Link copied', 'Paste it into your browser to claim.', 'clipboard-check');
+    });
     function openPatchModal(i) {
       const item = rawGameUpdates[i];
       if (!item) return;
@@ -6196,6 +6243,7 @@
 
       const body = $('patch-modal-content');
       body.innerHTML = item.html;
+      pullOutClaimLinks(body);
       body.scrollTop = 0;
 
       // jump links for each section heading (Changes, Bug Fixes, ...)

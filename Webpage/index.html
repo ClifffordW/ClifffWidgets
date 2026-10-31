@@ -1768,6 +1768,12 @@
     .ed-side canvas { width: 100%; height: auto; border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); }
 
     .js-haptic-btn.muted { opacity: 0.55; }
+    body:not(.tools-unlocked) [data-tool] { display: none !important; }
+    .tools-modal-box { max-width: 420px; }
+    .tools-modal-box h3 { display: flex; align-items: center; gap: 8px; padding-right: 36px; }
+    .tools-modal-box .search-input-box { margin: 8px 0 4px; }
+    .tools-err { min-height: 1.3em; color: #ffb4ac; font-size: 1rem; }
+    .tools-modal-box.nudge { animation: disc-nudge 0.4s ease; }
     .translate-box { max-width: 560px; }
     .translate-box h3 { display: flex; align-items: center; gap: 8px; padding-right: 36px; }
     .translate-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 8px 0 12px; padding: 0; }
@@ -1994,6 +2000,20 @@
     </div>
   </div>
 
+  <!-- STREAMER TOOLS CODE -->
+  <div id="tools-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="tools-title" onclick="if(event.target===this) closeToolsModal()">
+    <div class="modal-box tools-modal-box">
+      <button type="button" class="modal-close" onclick="closeToolsModal()" aria-label="Close">&times;</button>
+      <h3 id="tools-title"><i data-lucide="key-round"></i> Streamer tools</h3>
+      <p class="modal-text">Enter the streamer code to unlock the OBS widget, kit editor and assets.</p>
+      <form onsubmit="submitToolsCode(event)" autocomplete="off">
+        <input type="password" id="tools-code" class="search-input-box" placeholder="Code" autocomplete="off" spellcheck="false">
+        <p id="tools-err" class="tools-err" role="alert"></p>
+        <div class="modal-actions"><button type="submit" class="dst-btn btn-primary"><i data-lucide="unlock"></i> Unlock</button></div>
+      </form>
+    </div>
+  </div>
+
   <!-- TRANSLATE HELP -->
   <div id="translate-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="translate-title" onclick="if(event.target===this) closeTranslateHelp()">
     <div class="modal-box translate-box">
@@ -2089,17 +2109,17 @@
         <span class="tab-content"><i data-lucide="ticket"></i><span>Card</span></span>
       </button>
 
-      <div class="nav-group-label">Streamer Tools</div>
+      <div class="nav-group-label" data-tool>Streamer Tools</div>
 
-      <button type="button" class="nav-item" data-nav="widget" title="OBS Widget">
+      <button type="button" class="nav-item" data-nav="widget" data-tool title="OBS Widget">
         <span class="tab-content"><i data-lucide="paintbrush"></i><span>OBS Widget</span></span>
       </button>
 
-      <button type="button" class="nav-item" data-nav="kit" title="Kit Editor">
+      <button type="button" class="nav-item" data-nav="kit" data-tool title="Kit Editor">
         <span class="tab-content"><i data-lucide="wand-sparkles"></i><span>Kit Editor</span></span>
       </button>
 
-      <button type="button" class="nav-item" data-nav="download" title="Assets">
+      <button type="button" class="nav-item" data-nav="download" data-tool title="Assets">
         <span class="tab-content"><i data-lucide="images"></i><span>Assets</span></span>
       </button>
 
@@ -2358,7 +2378,7 @@
     </section>
 
     <!-- ── OBS WIDGET ── -->
-    <section id="widget">
+    <section id="widget" data-tool>
       <h1 class="dst-heading">Ambassador OBS Widget</h1>
 
       <div class="dst-parchment-card wg-card">
@@ -2717,7 +2737,7 @@
     </section>
 
     <!-- ── KIT EDITOR ── -->
-    <section id="kit">
+    <section id="kit" data-tool>
       <h1 class="dst-heading">Kit Editor</h1>
       <div class="wg-seg kit-scope" id="kit-scope" role="group" aria-label="Kit or card">
         <button type="button" class="wg-seg-btn active" data-kitscope="kit"><i data-lucide="images"></i> Kit</button>
@@ -2812,7 +2832,7 @@
     </section>
 
     <!-- ── ASSETS ── -->
-    <section id="download">
+    <section id="download" data-tool>
       <h1 class="dst-heading">Campaign Assets &amp; Media Kit</h1>
 
       <div class="dst-parchment-card page-toolbar">
@@ -2997,7 +3017,45 @@
     /* ═══════════════════════════════════════════════════════════
        1. NAVIGATION
        ═══════════════════════════════════════════════════════════ */
+    /* ── streamer tools stay out of sight until a code is entered ──
+       This only keeps the tools away from casual visitors: everything still ships inside the page, so it is a doorway, not a lock.
+       The code is stored as a SHA-256 hash; to change it, replace TOOLS_HASH with sha256("dst-streamer:" + new code in lower case). */
+    const TOOLS_HASH = '4d701ae3f1019efc504f32f80f27a8a424fce01ef491ced62abc5d280f9ccf34';
+    const TOOL_TABS = ['widget', 'kit', 'download'];
+    async function toolsHash(code) {
+      const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('dst-streamer:' + String(code).trim().toLowerCase()));
+      return [...new Uint8Array(d)].map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+    function toolsUnlocked() { try { return localStorage.getItem('dst-tools-key') === TOOLS_HASH; } catch (e) { return false; } }
+    function applyToolsState() { document.body.classList.toggle('tools-unlocked', toolsUnlocked()); }
+    let toolsAfter = null;
+    function openToolsModal(after) { toolsAfter = after || null; $('tools-err').textContent = ''; $('tools-code').value = ''; $('tools-modal').classList.add('active'); setTimeout(() => $('tools-code').focus(), 50); refreshIcons(); }
+    function closeToolsModal() { $('tools-modal').classList.remove('active'); }
+    async function tryToolsCode(code) {
+      try { if (await toolsHash(code) === TOOLS_HASH) { store('dst-tools-key', TOOLS_HASH); applyToolsState(); return true; } } catch (e) { }
+      return false;
+    }
+    async function submitToolsCode(e) {
+      e.preventDefault();
+      if (await tryToolsCode($('tools-code').value)) {
+        closeToolsModal(); haptic('success');
+        showInAppToast('Streamer tools unlocked', 'The tools are now in the sidebar on this device.', 'unlock');
+        if (toolsAfter) nav(toolsAfter); toolsAfter = null;
+      } else {
+        haptic('error'); $('tools-err').textContent = "That's not it.";
+        const box = document.querySelector('.tools-modal-box'); box.classList.remove('nudge'); void box.offsetWidth; box.classList.add('nudge');
+      }
+    }
+    function lockTools() { try { localStorage.removeItem('dst-tools-key'); } catch (e) { } applyToolsState(); nav('drops'); showInAppToast('Streamer tools hidden', 'Enter the code again to bring them back.', 'lock'); }
+    // a quiet way in: tap the site name seven times (or open the page with ?key=<code>)
+    (() => { let n = 0, t = 0; document.addEventListener('click', (e) => {
+      if (!e.target.closest('.brand-title')) return;
+      const now = Date.now(); n = now - t < 1500 ? n + 1 : 1; t = now;
+      if (n >= 7) { n = 0; if (toolsUnlocked()) lockTools(); else openToolsModal(); }
+    }); })();
+
     function nav(id) {
+      if (TOOL_TABS.includes(id) && !toolsUnlocked()) id = 'drops';
       if (id !== 'card' && cardPending() && readCardRequest()) {   // a scratched card has to be claimed first
         haptic('warn');
         showInAppToast('Claim your card first', 'Copy your code (and open the link if there is one) before you leave, or the card is lost.', 'lock');
@@ -3367,7 +3425,7 @@
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        closeConfirmModal(); closeDiscordModal(); closePatchModal(); closeListsModal(); closeTranslateHelp();
+        closeConfirmModal(); closeDiscordModal(); closePatchModal(); closeListsModal(); closeTranslateHelp(); closeToolsModal();
         document.querySelectorAll('.custom-dst-dropdown.open').forEach(d => d.classList.remove('open', 'open-up'));
       }
     });
@@ -6960,7 +7018,10 @@
       renderDropHistory();
 
       // open the shared setup, or the last tab the user was on
-      const shared = applySharedWidgetFromUrl();
+      applyToolsState();
+      const keyParam = new URLSearchParams(location.search).get('key');
+      if (keyParam) { await tryToolsCode(keyParam); history.replaceState(null, '', location.pathname + location.hash); }
+      const shared = toolsUnlocked() ? applySharedWidgetFromUrl() : false;
       const cardReq = cardRequestFromUrl();
       if (cardReq) { setCardRequest(cardReq); history.replaceState(null, '', location.pathname + location.hash); }   // keep the card, drop the parameters from the address bar
       const firstVisit = !shared && !cardReq && !disclaimerAccepted();   // anyone who hasn't accepted yet starts on the Info tab, however they got here

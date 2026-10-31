@@ -13,6 +13,67 @@
 <!-- THEMATIC DROPS ENDED / EXTINGUISHED INDICATOR -->
 
   <style>
+    @font-face {
+      font-family: Hammerhead;
+      src: url(https://clifffordw.github.io/ClifffWidgets/Fonts/HammerheadBold.ttf);
+      font-display: swap;
+    }
+
+    /* ─── LOADING GATE: nothing animates until the drop images have loaded ─── */
+    body.waiting .asset-inner, body.waiting .asset-inner img,
+    body.waiting .streamer-wrap, body.waiting #partyhat-wrap {
+      animation-play-state: paused !important;
+      visibility: hidden;
+    }
+
+    /* ─── DROP COUNTDOWN RIBBON (countdown=1) ─── */
+    .drop-countdown {
+      position: fixed;
+      left: 50%;
+      bottom: 10px;
+      transform: translateX(-50%);
+      z-index: 60;
+      display: none;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 22px 9px;
+      background: linear-gradient(180deg, rgba(34, 24, 18, 0.96), rgba(14, 10, 8, 0.96));
+      border: 3px solid #d9b45a;
+      border-radius: 80px 8px 90px 10px / 10px 90px 8px 80px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.85), inset 0 0 14px rgba(0, 0, 0, 0.8), 0 0 0 2px #0c0806, 0 0 14px var(--glow1);
+      font-family: 'Hammerhead', serif;
+      color: #f3e6c4;
+      white-space: nowrap;
+      animation: ribbon-in 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s both;
+    }
+    .drop-countdown.show { display: flex; }
+
+    /* ─── ALSO LIVE (cross-promotion strip) ──────────────────────── */
+    .also-live {
+      position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 20;
+      display: flex; align-items: center; gap: 10px; max-width: 760px; padding: 6px 18px 6px 8px;
+      background: rgba(14, 10, 8, 0.9); border: 2px solid #d9b45a; border-radius: 999px;
+      font-family: 'Hammerhead', serif; color: #f2e9dc; white-space: nowrap;
+      opacity: 0; transition: opacity 0.45s ease; pointer-events: none;
+    }
+    .also-live.show { opacity: 1; }
+    .also-live img { width: 34px; height: 34px; border-radius: 50%; border: 2px solid #e76c1e; object-fit: cover; flex-shrink: 0; }
+    .also-live .al-tag { font-size: 13px; letter-spacing: 2px; color: #e8a040; text-transform: uppercase; }
+    .also-live .al-name { font-size: 20px; color: #fff; }
+    .also-live .al-title { font-size: 15px; color: #bdae99; overflow: hidden; text-overflow: ellipsis; max-width: 340px; }
+    body.waiting .also-live { visibility: hidden; }
+    .drop-countdown .dc-label { font-size: 18px; letter-spacing: 2px; color: #e8a040; text-transform: uppercase; }
+    .drop-countdown .dc-time { font-size: 28px; letter-spacing: 1px; color: #fff; text-shadow: 0 0 10px var(--glow1), 0 2px 0 #000; }
+    .drop-countdown .dc-diamond { width: 12px; height: 12px; background: #d9b45a; transform: rotate(45deg); box-shadow: 0 0 6px var(--glow1); }
+    body.solo .drop-countdown { bottom: 70px; }
+    body.solo .drop-countdown .dc-label { font-size: 24px; }
+    body.solo .drop-countdown .dc-time { font-size: 38px; }
+    body.waiting .drop-countdown { visibility: hidden; animation-play-state: paused; }
+    @keyframes ribbon-in {
+      from { opacity: 0; transform: translateX(-50%) translateY(30px) scale(0.8); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+    }
+
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap');
 
     /* ─── SHARED HAT ANIMATION & GLOW ────────────────────────────── */
@@ -493,7 +554,16 @@
   </style>
 </head>
 
-<body>
+<body class="waiting">
+
+  <div id="drop-countdown" class="drop-countdown">
+    <span class="dc-diamond"></span>
+    <span class="dc-label" id="dc-label">Drop ends in</span>
+    <span class="dc-time" id="dc-time">--</span>
+    <span class="dc-diamond"></span>
+  </div>
+
+  <div id="also-live" class="also-live"></div>
 
   <div class="drops" id="drops">
 
@@ -602,6 +672,7 @@ const avX = parseInt(urlParams.get('avx') || '0', 10);
     const showEndedBadge = urlParams.get('showended') === '1';
     const enableAutoPoll = urlParams.get('autopoll') !== '0'; // true unless opted out with autopoll=0
     const forceTestEnded = urlParams.get('testended') === '1'; // preview test mode
+    const showCountdown = urlParams.get('countdown') === '1';   // optional 'Drop ends in' ribbon
 
 
     const defaultHatUrls = {
@@ -667,7 +738,8 @@ const avX = parseInt(urlParams.get('avx') || '0', 10);
 
       const now = Date.now() / 1000;
       // If test mode is on, simulate drops concluded
-      const isLive = !forceTestEnded && dst && now >= dst.campaignStart && now < dst.campaignEnd;
+      const start = Number(dst?.campaignStart) || 0;   // some feeds omit the start time
+      const isLive = !forceTestEnded && dst && now >= start && now < Number(dst.campaignEnd);
 
       if (!isLive) {
         if (endedEl) endedEl.style.display = showEndedBadge ? 'flex' : 'none';
@@ -693,6 +765,7 @@ const avX = parseInt(urlParams.get('avx') || '0', 10);
         if (icon && flairEl) flairEl.src = icon;
         if (portrait && portraitEl) portraitEl.src = portrait;
         if (item && itemEl) itemEl.src = item;
+        revealWhenLoaded();
 
         // Restart carousel if in carousel mode
         if (isCarousel) {
@@ -731,6 +804,74 @@ const avX = parseInt(urlParams.get('avx') || '0', 10);
       }
     }
 
+    // Wait for every visible image (drop art, avatar, hat) before starting the spin-in,
+    // so viewers never see empty boxes animating. Gives up after 6s and shows what it has.
+    let revealed = false;
+    function revealWhenLoaded() {
+      if (revealed) return;
+      const imgs = [...document.querySelectorAll('.bg-flair, .bg-portrait, .bg-item, #streamer-head, #partyhat')]
+        .filter(img => img.getAttribute('src'));
+      const waitOne = img => (img.complete && img.naturalWidth) ? Promise.resolve()
+        : new Promise(res => { img.addEventListener('load', res, { once: true }); img.addEventListener('error', res, { once: true }); });
+      Promise.race([Promise.all(imgs.map(waitOne)), new Promise(res => setTimeout(res, 6000))]).then(() => {
+        revealed = true;
+        document.body.classList.remove('waiting');
+      });
+    }
+
+    function updateCountdownRibbon() {
+      const el = document.getElementById('drop-countdown');
+      if (!el || !showCountdown) return;
+      const d = cachedCampaignData;
+      const now = Date.now() / 1000;
+      const start = Number(d?.campaignStart) || 0;
+      const live = !forceTestEnded && d && now >= start && now < Number(d.campaignEnd);
+      const upcoming = !forceTestEnded && d && now < start;   // announced, not started yet
+      el.classList.toggle('show', !!(live || upcoming));
+      if (!live && !upcoming) return;
+      document.getElementById('dc-label').textContent = upcoming ? 'Drop starts in' : 'Drop ends in';
+      const left = Math.max(0, (upcoming ? start : Number(d.campaignEnd)) - now);
+      const days = Math.floor(left / 86400), hrs = Math.floor((left % 86400) / 3600), mins = Math.floor((left % 3600) / 60);
+      const pad = n => String(n).padStart(2, '0');
+      document.getElementById('dc-time').textContent = days > 0 ? `${days}d ${pad(hrs)}h ${pad(mins)}m` : `${pad(hrs)}h ${pad(mins)}m`;
+    }
+    if (showCountdown) setInterval(updateCountdownRibbon, 15000);
+
+    // Optional cross-promotion: rotate the other ambassadors who are live right now (alsolive=1, ch=your_channel to leave yourself out)
+    const showAlsoLive = urlParams.get('alsolive') === '1';
+    const ownChannel = (urlParams.get('ch') || '').toLowerCase().replace(/[^a-z0-9_]/g, '');
+    let alsoList = [], alsoIndex = 0;
+    async function loadAlsoLive() {
+      try {
+        const res = await fetch(`https://kleiforums.s3.amazonaws.com/gameimages/amblist.json?t=${Math.floor(Date.now() / 30000)}`, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const list = await res.json();
+        alsoList = (Array.isArray(list) ? list : []).filter(a => a && a.Name && /^https?:\/\//i.test(a.ProfileIcon || '')
+          && !(ownChannel && String(a.StreamURL || '').toLowerCase().includes('/' + ownChannel)));
+      } catch (err) { console.warn('Also-live list failed:', err); }
+    }
+    function showNextAlsoLive() {
+      const el = document.getElementById('also-live');
+      if (!el) return;
+      if (!alsoList.length) { el.classList.remove('show'); return; }
+      const a = alsoList[alsoIndex++ % alsoList.length];
+      el.classList.remove('show');
+      setTimeout(() => {
+        el.replaceChildren();
+        const tag = document.createElement('span'); tag.className = 'al-tag'; tag.textContent = 'Also live';
+        const img = document.createElement('img'); img.src = a.ProfileIcon; img.alt = '';
+        const name = document.createElement('span'); name.className = 'al-name'; name.textContent = a.Name;
+        const title = document.createElement('span'); title.className = 'al-title'; title.textContent = a.Title || '';
+        el.append(tag, img, name, title);
+        el.classList.add('show');
+      }, 450);
+    }
+    if (showAlsoLive) {
+      loadAlsoLive().then(showNextAlsoLive);
+      setInterval(loadAlsoLive, 60000);
+      setInterval(showNextAlsoLive, Math.max(3, Number(urlParams.get('alsospeed')) || 7) * 1000);
+    }
+
     // Fetches live JSON with cache-busting to bypass browser caching
     async function checkKleiCampaign() {
       try {
@@ -743,15 +884,19 @@ const avX = parseInt(urlParams.get('avx') || '0', 10);
         const data = await res.json();
         cachedCampaignData = data["Don't Starve Together"];
         applyCampaignUI(cachedCampaignData);
+        updateCountdownRibbon();
+        if (!revealed && document.querySelector('.bg-item')?.getAttribute('src') === '') revealWhenLoaded();
       } catch (err) {
         console.warn('Live drop check failed:', err);
         // Fall back to local check if network hiccups
         if (cachedCampaignData) applyCampaignUI(cachedCampaignData);
+        revealWhenLoaded();   // never stay hidden because of a network hiccup
       }
     }
 
 // Initial fetch
     checkKleiCampaign();
+    applyCampaignUI();
 
     // Only start polling and timer checks if auto-updates are enabled
     if (enableAutoPoll && !forceTestEnded) {
@@ -764,9 +909,7 @@ const avX = parseInt(urlParams.get('avx') || '0', 10);
       }, 2000);
     }
 
-    lucide.createIcons();
-
-
+    if (window.lucide) lucide.createIcons();   // the widget still works if the icon CDN is down
   </script>
 </body>
 

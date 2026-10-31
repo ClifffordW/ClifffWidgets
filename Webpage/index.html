@@ -158,12 +158,11 @@
       [title]:not(:is(button, a, label, summary, input, select, textarea, [onclick], [role="button"], [draggable="true"]),
         :is(button, a, label, summary, [onclick], [draggable="true"]) *, .dst-clock) { cursor: var(--cursor-help) 0 16, help; }
       /* not-allowed: anything switched off, plus the dark area behind popups that can't be tapped away */
-      button:disabled, [disabled], .locked, .disabled, [aria-disabled="true"], .arming,
-      #disclaimer-modal, #kit-disclaimer-modal, #tools-modal { cursor: var(--cursor-notallowed) 0 16, not-allowed !important; }
-      #disclaimer-modal .modal-box, #kit-disclaimer-modal .modal-box, #tools-modal .modal-box { cursor: var(--cursor-pointer) 0 16, default; }
-      #disclaimer-modal .modal-box :is(button, a), #kit-disclaimer-modal .modal-box :is(button, a), #tools-modal .modal-box :is(button, a) { cursor: var(--cursor-link) 0 16, pointer; }
-      #tools-modal .modal-box input { cursor: var(--cursor-text) 0 16, text; }
-      #disclaimer-modal .modal-box button:disabled, #kit-disclaimer-modal .modal-box button:disabled { cursor: var(--cursor-notallowed) 0 16, not-allowed !important; }
+      button:disabled, [disabled], .locked, .disabled, [aria-disabled="true"], .arming, .dst-modal { cursor: var(--cursor-notallowed) 0 16, not-allowed !important; }
+      .dst-modal .modal-box { cursor: var(--cursor-pointer) 0 16, default; }
+      .dst-modal .modal-box :is(button, a):not(:disabled) { cursor: var(--cursor-link) 0 16, pointer; }
+      .dst-modal .modal-box input:is([type="text"], [type="search"], [type="password"], :not([type])), .dst-modal .modal-box textarea { cursor: var(--cursor-text) 0 16, text; }
+      .dst-modal .modal-box :is(button, [disabled]):disabled { cursor: var(--cursor-notallowed) 0 16, not-allowed !important; }
     }
 
     /* ═══════════════════════════════════════════════════════════
@@ -246,6 +245,9 @@
 
     .tab-content { display: flex; align-items: center; gap: 11px; font-family: var(--font-hand); font-size: 1.15rem; font-weight: bold; letter-spacing: 0.5px; min-width: 0; }
     .tab-content span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    /* the logo drawn in the same pale tone as the other tab icons */
+    .nav-logo { width: 22px; height: 22px; flex-shrink: 0; object-fit: contain; filter: grayscale(1) sepia(0.45) brightness(1.5) contrast(0.95); transition: transform .2s; }
+    .nav-item:hover .nav-logo, .dock-slot:hover .nav-logo { transform: rotate(-8deg) scale(1.1); }
     .tab-content svg { width: 20px; height: 20px; stroke-width: 2.2; flex-shrink: 0; }
     .nav-ext { width: 14px; height: 14px; opacity: 0.5; flex-shrink: 0; }
 
@@ -1622,12 +1624,44 @@
     .info-welcome { display: flex; align-items: center; gap: 14px; padding: 14px 20px; margin-bottom: 22px; }
     .info-welcome svg { width: 26px; height: 26px; flex-shrink: 0; color: var(--ui-accent); }
     .info-welcome p { font-size: 1.1rem; line-height: 1.4; color: var(--dst-paper); }
+    .changelog-box { position: fixed; inset: 14px; max-width: none; width: auto; max-height: none; padding: 0; display: flex; flex-direction: column; overflow: hidden; }
+    #changelog-modal { padding: 0; }
+    .changelog-box .modal-close { top: 16px; right: 18px; }
+    .cl-head { padding: 24px 36px 16px; border-bottom: 1px dashed #3a2b22; flex-shrink: 0; }
+    .cl-head h3 { margin: 0 0 4px; font-size: 1.6rem; }
+    .changelog-intro { margin: 0; font-size: 1.05rem; color: var(--dst-paper-muted); }
+    .changelog-box .changelog-list { flex: 1; overflow-y: auto; padding: 24px 36px 36px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 520px), 1fr)); gap: 18px; align-content: start; align-items: start; }
+    .changelog-box .changelog-list details { margin: 0; background: #140d0a; border: 1px solid #3c2a1e; border-radius: 10px; }
+    .changelog-box .changelog-list summary { border-radius: 9px 9px 0 0; padding: 14px 18px; font-size: 1.2rem; background: linear-gradient(180deg, #24190f, #170f0b); }
+    .changelog-box .changelog-list summary svg { width: 22px; height: 22px; }
+    .changelog-box .changelog-list details[open] summary { border-bottom: 1px solid #3c2a1e; }
+    .changelog-box .changelog-list ul { padding: 14px 18px 16px; gap: 9px; }
+    .changelog-box .changelog-list li { font-size: 1.1rem; }
+    .brand { position: relative; }
+    body.cl-new .brand::after { content: ""; position: absolute; left: 34px; top: -3px; width: 11px; height: 11px; border-radius: 50%; background: var(--dst-flame-bright); border: 2px solid #120e0c; box-shadow: 0 0 8px var(--dst-flame); animation: clDot 1.6s ease-in-out infinite; pointer-events: none; }
+    .mobile-header .brand::after { left: 26px; top: -4px; }
+    @keyframes clDot { 50% { transform: scale(1.35); box-shadow: 0 0 14px var(--dst-flame-bright); } }
+    @media (prefers-reduced-motion: reduce) { body.cl-new .brand::after { animation: none; } }
+    .brand-logo { transition: transform .15s; }
+    .brand-logo:hover { transform: rotate(-6deg) scale(1.08); }
+    .changelog-list { display: flex; flex-direction: column; gap: 8px; }
+    .changelog-list details { background: #140d0a; border: 1px solid #3c2a1e; border-radius: var(--sketch-radius-soft); }
+    .changelog-list summary { display: flex; align-items: center; gap: 10px; padding: 10px 14px; list-style: none; color: #fff; font-size: 1.1rem; }
+    .changelog-list summary::-webkit-details-marker { display: none; }
+    .changelog-list summary svg { width: 18px; height: 18px; color: var(--ui-accent); flex-shrink: 0; }
+    .changelog-list summary small { margin-left: auto; color: var(--dst-paper-muted); font-size: 0.85rem; }
+    .changelog-list details[open] summary { border-bottom: 1px dashed #3c2a1e; }
+    .changelog-list ul { list-style: none; display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 10px 14px 12px 14px; }
+    .changelog-list li { position: relative; padding-left: 18px; line-height: 1.4; color: var(--dst-paper); }
+    .changelog-list li::before { content: "✦"; position: absolute; left: 0; top: 1px; font-size: 0.75rem; color: var(--dst-flame-bright); }
     .info-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 20px; padding: 14px 20px; }
     .info-foot p { flex: 1 1 320px; font-size: 1rem; line-height: 1.4; color: var(--dst-paper-muted); }
     .info-foot a { color: var(--gold-bright); text-underline-offset: 3px; }
     .disclaimer-box { max-width: 580px; border-color: var(--ui-accent); animation: disc-glow 1.8s ease-in-out infinite; }
     @keyframes disc-glow { 0%, 100% { box-shadow: 0 0 0 2px rgba(255, 142, 60, 0.35), 0 0 22px rgba(255, 142, 60, 0.25); } 50% { box-shadow: 0 0 0 3px rgba(255, 142, 60, 0.85), 0 0 46px rgba(255, 142, 60, 0.6); } }
     .disclaimer-box .btn-primary.arming { opacity: 0.45; animation: none; filter: grayscale(0.6); }
+    .dst-modal.active .modal-box.nudge { animation: disc-nudge 0.4s ease; }
+    .dst-modal.active .disclaimer-box.nudge { animation: disc-nudge 0.4s ease, disc-glow 1.8s ease-in-out infinite; }
     .disclaimer-box.nudge { animation: disc-nudge 0.4s ease, disc-glow 1.8s ease-in-out infinite; }
     @keyframes disc-nudge { 20%, 60% { transform: translateX(-9px); } 40%, 80% { transform: translateX(9px); } }
     .disclaimer-box .btn-primary { animation: disc-btn 1.8s ease-in-out infinite; }
@@ -1792,6 +1826,8 @@
     .translate-note { font-size: 1rem; }
     .lists-box { max-width: 640px; width: 100%; max-height: 92dvh; display: flex; flex-direction: column; gap: 12px; }
     .lists-box h3 { display: flex; align-items: center; gap: 8px; padding-right: 36px; }
+    #lists-alert-row { padding: 10px 14px; }
+    .lists-row .tool-btn svg.muted-bell, .lists-acts [data-lact="mute"] { color: var(--gold-bright); }
     .lists-intro { margin: 0; font-size: 1rem; }
     .lists-tabs .wg-seg-btn { flex-direction: row; justify-content: center; gap: 6px; min-height: 42px; }
     .lists-tabs b { font-weight: normal; font-size: 0.85rem; padding: 0 7px; border-radius: 9px; background: rgba(0, 0, 0, 0.45); }
@@ -1828,6 +1864,23 @@
     .clk-stage { position: relative; height: 200px; overflow: hidden; border: 2px solid #2c1f18; border-radius: 8px; box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.8);
       background: repeating-conic-gradient(#1d1511 0% 25%, #140d0a 0% 50%) 0 0 / 22px 22px; }
     .clk-stage iframe { position: absolute; left: 50%; top: 50%; border: 0; background: transparent; pointer-events: none; transform-origin: center; }
+    .tour-ask-box { max-width: 460px; }
+    .tour-ask-box h3 { display: flex; align-items: center; gap: 8px; padding-right: 10px; }
+    .tour-ask-note { font-size: 1rem; color: var(--dst-paper-muted); }
+    .tour { position: fixed; inset: 0; z-index: 9500; }
+    .tour-dim { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .tour-dim .tour-ring { fill: none; stroke: var(--ui-accent); stroke-width: 3px; filter: drop-shadow(0 0 8px rgba(255, 142, 60, 0.9)); animation: tourPulse 1.6s ease-in-out infinite; }
+    @keyframes tourPulse { 50% { stroke-width: 5px; } }
+    .tour-tip { position: absolute; width: min(360px, calc(100vw - 24px)); padding: 16px 18px 14px; background: #1c1512; border: 3px solid var(--ui-accent); border-radius: var(--sketch-radius);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.9), 0 0 18px rgba(255, 142, 60, 0.3); transition: left .25s ease, top .25s ease; }
+    .tour-count { font-size: 0.85rem; letter-spacing: 1px; color: var(--ui-accent); text-transform: uppercase; }
+    .tour-tip h4 { font-family: var(--font-title); font-weight: normal; color: #fff; font-size: 1.25rem; margin: 2px 0 6px; }
+    .tour-tip p { color: var(--dst-paper); font-size: 1.05rem; line-height: 1.4; margin: 0 0 12px; user-select: text; }
+    .tour-actions { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .tour-nav { display: flex; gap: 8px; }
+    .tour-start { margin-top: 10px; }
+    .kit-prefs .tour-start { margin-top: 0; }
+    @media (prefers-reduced-motion: reduce) { .tour-tip { transition: none; } .tour-dim .tour-ring { animation: none; } }
     .kit-prefs { display: flex; flex-wrap: wrap; gap: 10px; margin: -6px 0 18px; }
     .kit-prefs .toggle-row { width: auto; flex: 0 1 auto; padding: 8px 14px; }
     #kit[data-hints="0"] .wg-hint, #kit[data-hints="0"] .kit-profile-head p, #kit[data-hints="0"] .toggle-text small { display: none; }
@@ -1841,6 +1894,7 @@
     #kit-scratch { grid-template-columns: repeat(3, minmax(max-content, 1fr)) !important; }
     .card-todo { margin: 4px 0 10px; padding: 10px 14px; border: 2px solid var(--ui-accent); border-radius: var(--sketch-radius-soft); background: rgba(255, 142, 60, 0.12); color: #fff; font-size: 1.05rem; line-height: 1.35; animation: disc-glow 1.8s ease-in-out infinite; }
     .card-todo .done { color: var(--dst-green-bright); text-decoration: line-through; opacity: 0.8; }
+    .card-readnote { margin-top: 12px; }
     .card-disclaimer { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; padding: 12px 14px; text-align: left; background: #140d0a; border: 1px dashed var(--dst-border-highlight); border-radius: var(--sketch-radius-soft); color: var(--dst-paper-muted); font-size: 1rem; line-height: 1.4; }
     .card-disclaimer svg { flex-shrink: 0; width: 18px; height: 18px; margin-top: 2px; color: var(--ui-accent); }
     .card-disclaimer strong { color: var(--dst-paper); font-weight: normal; }
@@ -1911,8 +1965,7 @@
   </div>
 
   <!-- DISCORD SHARE MODAL -->
-  <div id="discord-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="discord-modal-title"
-    onclick="if(event.target===this) closeDiscordModal()">
+  <div id="discord-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="discord-modal-title">
     <div class="modal-box discord-box">
       <header class="dc-head">
         <h3 id="discord-modal-title"><i data-lucide="share-2"></i> Share to Discord</h3>
@@ -1985,11 +2038,16 @@
   </div>
 
   <!-- MY LISTS (favourites + hidden) -->
-  <div id="lists-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="lists-title" onclick="if(event.target===this) closeListsModal()">
+  <div id="lists-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="lists-title">
     <div class="modal-box lists-box">
       <button type="button" class="modal-close" onclick="closeListsModal()" aria-label="Close">&times;</button>
       <h3 id="lists-title"><i data-lucide="list-checks"></i> My lists</h3>
       <p class="modal-text lists-intro">Starred streamers are pinned to the top and can alert you when they go live. Hidden streamers never show up in the live list. Both lists stay in this browser.</p>
+      <label class="toggle-row" id="lists-alert-row">
+        <span class="dst-switch"><input type="checkbox" id="fav-notif-switch" onchange="toggleFavAlerts(this)"><span class="dst-slider"></span></span>
+        <i data-lucide="bell-ring"></i>
+        <span class="toggle-text">Alert me when a starred streamer goes live<small>Works while this page is open, even in a background tab. Tap the bell on a row to mute one streamer.</small></span>
+      </label>
       <div class="wg-seg lists-tabs" id="lists-tabs" role="group" aria-label="Lists" style="grid-template-columns: repeat(3, 1fr);">
         <button type="button" class="wg-seg-btn" data-ltab="favorites"><i data-lucide="star"></i> Starred <b id="lt-fav">0</b></button>
         <button type="button" class="wg-seg-btn" data-ltab="hidden"><i data-lucide="ban"></i> Hidden <b id="lt-hid">0</b></button>
@@ -2023,8 +2081,63 @@
     </div>
   </div>
 
+  <!-- WHAT'S NEW (opened from the logo) -->
+  <div id="changelog-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="changelog-title">
+    <div class="modal-box changelog-box">
+      <button type="button" class="modal-close" onclick="closeChangelog()" aria-label="Close">&times;</button>
+      <div class="cl-head">
+        <h3 id="changelog-title"><i data-lucide="sparkles"></i> What's new</h3>
+        <p class="changelog-intro">Everything that has been added or changed so far.</p>
+      </div>
+      <div id="changelog-list" class="changelog-list"></div>
+    </div>
+  </div>
+
+  <!-- CARD NOTE (first time a card is opened) -->
+  <div id="card-disclaimer-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="card-disclaimer-title">
+    <div class="modal-box disclaimer-box">
+      <h3 id="card-disclaimer-title"><i data-lucide="ticket"></i> About your card</h3>
+      <p class="modal-text"><strong>Nothing is filled in for you.</strong> This site never types a code into another website and never puts it in a link. To claim your prize, copy the code (or open the prize link) and paste or enter it yourself on the page it belongs to.</p>
+      <p class="modal-text">Once you've scratched the card you'll need to copy the code, and open the link if there is one, before you can leave. After that the card is used up, so keep the code somewhere safe.</p>
+      <p class="modal-text">This site isn't run by Klei or Steam and can't check or redeem codes.</p>
+      <div class="modal-actions">
+        <button type="button" id="card-disclaimer-accept" class="dst-btn btn-primary" onclick="acceptCardDisclaimer()"><i data-lucide="check"></i> I understand</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WALKTHROUGH QUESTION -->
+  <div id="tour-ask-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="tour-ask-title">
+    <div class="modal-box tour-ask-box">
+      <h3 id="tour-ask-title"><i data-lucide="graduation-cap"></i> <span id="tour-ask-head">Want a quick walkthrough?</span></h3>
+      <p class="modal-text" id="tour-ask-text"></p>
+      <p class="modal-text tour-ask-note">It takes under a minute, and you can run it again any time from the Tutorial button.</p>
+      <div class="modal-actions">
+        <button type="button" class="dst-btn" onclick="answerTour(false)">No thanks</button>
+        <button type="button" class="dst-btn btn-primary" onclick="answerTour(true)"><i data-lucide="play"></i> Show me</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUIDED TOUR -->
+  <div id="tour" class="tour" hidden>
+    <svg id="tour-dim" class="tour-dim" aria-hidden="true"></svg>
+    <div id="tour-tip" class="tour-tip" role="dialog" aria-live="polite" aria-labelledby="tour-title">
+      <div class="tour-count" id="tour-count"></div>
+      <h4 id="tour-title"></h4>
+      <p id="tour-text"></p>
+      <div class="tour-actions">
+        <button type="button" class="tool-btn" id="tour-skip" onclick="endTour()">Skip</button>
+        <span class="tour-nav">
+          <button type="button" class="tool-btn" id="tour-back" onclick="tourStep(-1)"><i data-lucide="chevron-left"></i> Back</button>
+          <button type="button" class="dst-btn btn-primary" id="tour-next" onclick="tourStep(1)"><span>Next</span> <i data-lucide="chevron-right"></i></button>
+        </span>
+      </div>
+    </div>
+  </div>
+
   <!-- TRANSLATE HELP -->
-  <div id="translate-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="translate-title" onclick="if(event.target===this) closeTranslateHelp()">
+  <div id="translate-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="translate-title">
     <div class="modal-box translate-box">
       <button type="button" class="modal-close" onclick="closeTranslateHelp()" aria-label="Close">&times;</button>
       <h3 id="translate-title"><i data-lucide="languages"></i> Read this site in your language</h3>
@@ -2040,8 +2153,7 @@
   </div>
 
   <!-- CONFIRM MODAL -->
-  <div id="confirm-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title"
-    onclick="if(event.target===this) closeConfirmModal()">
+  <div id="confirm-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title">
     <div class="modal-box modal-danger confirm-box">
       <button type="button" class="modal-close" onclick="closeConfirmModal()" aria-label="Close">&times;</button>
       <div class="confirm-head">
@@ -2059,8 +2171,7 @@
   </div>
 
   <!-- PATCH NOTES MODAL -->
-  <div id="patch-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="patch-modal-title"
-    onclick="if(event.target===this) closePatchModal()">
+  <div id="patch-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="patch-modal-title">
     <div class="modal-box patch-modal-box">
       <button type="button" class="modal-close" onclick="closePatchModal()" aria-label="Close">&times;</button>
       <div class="patch-head">
@@ -2089,7 +2200,7 @@
   <!-- ═════════ DESKTOP SIDEBAR ═════════ -->
   <aside class="sidebar" aria-label="Main navigation">
     <div class="brand">
-      <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt="" class="brand-logo">
+      <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt="" class="brand-logo" role="button" tabindex="0" title="What's new. Click the logo to see what has changed" onclick="openChangelog()" onkeydown="if(event.key==='Enter') openChangelog()">
       <div class="brand-text">
         <div class="brand-title" translate="no">Starving For Drops</div>
         <div class="brand-sub">Klei Drops &amp; Ambassadors</div>
@@ -2100,7 +2211,7 @@
       <div class="nav-group-label">Drops &amp; Streams</div>
 
       <button type="button" class="nav-item active" data-nav="drops" title="Active Drop">
-        <span class="tab-content"><i data-lucide="flame"></i><span>Active Drop</span></span>
+        <span class="tab-content"><img class="nav-logo" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt=""><span>Active Drop</span></span>
         <span id="side-drop-status" class="dst-badge">CHECKING</span>
       </button>
 
@@ -2174,7 +2285,7 @@
   <!-- ═════════ MOBILE HEADER ═════════ -->
   <header class="mobile-header">
     <div class="brand">
-      <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt="" class="brand-logo">
+      <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt="" class="brand-logo" role="button" tabindex="0" title="What's new. Click the logo to see what has changed" onclick="openChangelog()" onkeydown="if(event.key==='Enter') openChangelog()">
       <div class="brand-text"><div class="brand-title">Starving For Drops</div></div>
     </div>
     <div class="header-actions">
@@ -2300,6 +2411,9 @@
             <button type="button" id="amb-surprise-btn" class="tool-btn" onclick="surpriseMe()" title="Open a random live ambassador">
               <i data-lucide="dices"></i><span>Surprise me</span>
             </button>
+            <button type="button" class="tool-btn" onclick="startTour('live')" title="A quick walkthrough of this tab">
+              <i data-lucide="graduation-cap"></i><span>Tutorial</span>
+            </button>
             <button type="button" id="amb-lists-btn" class="tool-btn" onclick="openListsModal()" title="Manage your starred and hidden streamers">
               <i data-lucide="list-checks"></i><span>My lists</span>
             </button>
@@ -2379,10 +2493,7 @@
         </div>
         <p class="card-todo" id="card-todo" hidden></p>
         <p class="card-note" id="card-note"></p>
-        <div class="card-disclaimer" id="card-disclaimer" hidden>
-          <i data-lucide="info"></i>
-          <p><strong>Nothing is filled in for you.</strong> This site never types a code into another website and never puts it in a link. To claim a prize, copy the code (or open the prize link provided by the Ambassador) and paste or enter it yourself on the page it belongs to. This site isn't run by Klei or Steam and can't check or redeem codes.</p>
-        </div>
+        <button type="button" class="tool-btn card-readnote" id="card-disclaimer" onclick="showCardDisclaimer()" hidden><i data-lucide="info"></i><span>How redeeming works</span></button>
       </div>
     </section>
 
@@ -2394,6 +2505,7 @@
         <div class="wg-intro">
           <h3><i data-lucide="paintbrush"></i> Stream Overlay Creator</h3>
           <p>Pick a layout, add your avatar, tune the glow, then drag the generated link straight into an OBS Browser Source.</p>
+          <button type="button" class="tool-btn tour-start" onclick="startTour('widget')" title="A quick walkthrough of this page"><i data-lucide="graduation-cap"></i><span>Tutorial</span></button>
         </div>
 
         <div class="wg-layout">
@@ -2753,6 +2865,7 @@
         <button type="button" class="wg-seg-btn" data-kitscope="card"><i data-lucide="ticket"></i> Card</button>
       </div>
       <div class="kit-prefs" role="group" aria-label="Editor display">
+        <button type="button" class="tool-btn tour-start" onclick="startTour('kit')" title="A quick walkthrough of the kit and card editors"><i data-lucide="graduation-cap"></i><span>Tutorial</span></button>
         <label class="toggle-row"><span class="dst-switch"><input type="checkbox" id="pref-hints" checked><span class="dst-slider"></span></span><i data-lucide="lightbulb"></i><span class="toggle-text">Show hints</span></label>
         <label class="toggle-row"><span class="dst-switch"><input type="checkbox" id="pref-hl" checked><span class="dst-slider"></span></span><i data-lucide="scan-search"></i><span class="toggle-text">Highlight what I'm editing</span></label>
       </div>
@@ -2958,7 +3071,7 @@
 
   <!-- ═════════ MOBILE DOCK ═════════ -->
   <nav class="mobile-dock" aria-label="Main navigation">
-    <button type="button" class="dock-slot active" data-nav="drops"><i data-lucide="flame"></i><span>Drops</span></button>
+    <button type="button" class="dock-slot active" data-nav="drops"><img class="nav-logo" src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt=""><span>Drops</span></button>
     <button type="button" class="dock-slot" data-nav="live"><i data-lucide="tv"></i><span>Live</span>
       <span id="mobile-live-badge" class="dock-badge" hidden>0</span></button>
     <button type="button" class="dock-slot" data-nav="updates"><i data-lucide="scroll"></i><span>Updates</span>
@@ -3087,6 +3200,7 @@
       } else {
         refreshUpdatesBadge();
       }
+      if (TOUR_ASK[id] && tourAsk === null) setTimeout(() => whenFree(() => askTour(id), id), 900);
       if (id === 'live') { refreshAmbassadors(); if (!ambRosterTried) loadAmbRoster().then(() => applyAmbassadorFilters()); }
       if (id === 'card') renderCardTab();
       if (id === 'kit' && !kitDisclaimerAccepted() && disclaimerAccepted()) setTimeout(showKitDisclaimer, 400);
@@ -3386,10 +3500,11 @@
       $('disclaimer-modal').classList.remove('active');
       lockPage(false);
       $('info-welcome').hidden = true;
+      setTimeout(() => whenFree(() => askTour('live', 'live')), 700);   // first visit: offer the tour of the Ambassadors tab
     }
     // the popup can't be clicked away: poking the dark area just nudges it
     document.addEventListener('click', (e) => {
-      const m = e.target.classList && e.target.classList.contains('dst-modal') && (e.target.id.includes('disclaimer') || e.target.id === 'tools-modal') ? e.target : null;
+      const m = e.target.classList && e.target.classList.contains('dst-modal') ? e.target : null;
       if (!m) return;
       const box = m.querySelector('.modal-box'); box.classList.remove('nudge'); void box.offsetWidth; box.classList.add('nudge');
     });
@@ -3406,6 +3521,19 @@
     function showKitDisclaimer() { lockPage(true); $('kit-disclaimer-modal').classList.add('active'); armAccept($('kit-disclaimer-accept')); }
     function acceptKitDisclaimer() { if (Date.now() < acceptReadyAt) return; store(KIT_DISCLAIMER_KEY, '1'); $('kit-disclaimer-modal').classList.remove('active'); lockPage(false); }
     function kitDisclaimerAccepted() { try { return !!localStorage.getItem(KIT_DISCLAIMER_KEY); } catch (e) { return false; } }
+    // the note about redeeming a card: shown the first time a card is opened
+    const CARD_DISCLAIMER_KEY = 'dst-card-disclaimer-accepted';
+    function cardDisclaimerAccepted() { try { return !!localStorage.getItem(CARD_DISCLAIMER_KEY); } catch (e) { return false; } }
+    function showCardDisclaimer() { lockPage(true); $('card-disclaimer-modal').classList.add('active'); armAccept($('card-disclaimer-accept')); refreshIcons(); }
+    function acceptCardDisclaimer() { if (Date.now() < acceptReadyAt) return; store(CARD_DISCLAIMER_KEY, '1'); $('card-disclaimer-modal').classList.remove('active'); lockPage(false); }
+    // run something once no other popup is in the way (and the visitor hasn't wandered off the page it belongs to)
+    function whenFree(fn, section, tries = 14) {
+      const busy = document.querySelector('.dst-modal.active') || (typeof tour !== 'undefined' && tour);
+      const here = !section || document.querySelector('main > section.active')?.id === section;
+      if (!here) return;
+      if (!busy) { fn(); return; }
+      if (tries > 0) setTimeout(() => whenFree(fn, section, tries - 1), 1500);
+    }
     function disclaimerAccepted() { try { return !!localStorage.getItem(DISCLAIMER_KEY); } catch (e) { return false; } }
 
     async function copyText(text) {
@@ -3441,7 +3569,7 @@
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        closeConfirmModal(); closeDiscordModal(); closePatchModal(); closeListsModal(); closeTranslateHelp(); closeToolsModal();
+        closeConfirmModal(); closeDiscordModal(); closePatchModal(); closeListsModal(); closeTranslateHelp(); closeToolsModal(); closeChangelog();
         document.querySelectorAll('.custom-dst-dropdown.open').forEach(d => d.classList.remove('open', 'open-up'));
       }
     });
@@ -3449,7 +3577,7 @@
     /* ═══════════════════════════════════════════════════════════
        4. NOTIFICATIONS (drops, starred streamers, game updates)
        ═══════════════════════════════════════════════════════════ */
-    async function triggerSafeNotification(title, body, iconUrl, sound = 'generic') {
+    async function triggerSafeNotification(title, body, iconUrl, sound = 'generic', openUrl = '') {
       playDstChime(sound); haptic('alert');
       showInAppToast(title, body, iconUrl || LOGO);
       if (!('Notification' in window) || Notification.permission !== 'granted') return;
@@ -3457,11 +3585,12 @@
         if ('serviceWorker' in navigator) {
           const reg = await navigator.serviceWorker.getRegistration();
           if (reg && reg.showNotification) {
-            await reg.showNotification(title, { body, icon: iconUrl || LOGO, badge: LOGO, vibrate: [200, 100, 200], tag: 'dst-' + title, renotify: true });
+            await reg.showNotification(title, { body, icon: iconUrl || LOGO, badge: LOGO, vibrate: [200, 100, 200], tag: 'dst-' + title, renotify: true, data: { url: openUrl } });
             return;
           }
         }
-        new Notification(title, { body, icon: iconUrl || LOGO });
+        const n = new Notification(title, { body, icon: iconUrl || LOGO });
+        if (openUrl) n.onclick = () => { window.open(openUrl, '_blank', 'noopener'); n.close(); };
       } catch (e) { console.error('Notification error:', e); }
     }
 
@@ -3549,12 +3678,24 @@
       }
     }
 
+    // starred-streamer alerts have their own switch (in My lists); until it's touched they follow the Drop Alerts switch, as before
+    const favAlertsOn = () => { const v = localStorage.getItem('dst-fav-notif-enabled'); return v === null ? localStorage.getItem('dst-drops-notif-enabled') === 'true' : v === 'true'; };
+    const getFavMuted = () => readList('dst-fav-muted');
+    // a starred name matches a live streamer by display name, or by channel when the name came from the roster
+    function isStarredLive(a, favs) {
+      if (favs.includes(a.Name)) return a.Name;
+      const h = ambHandleOf(a.StreamURL);
+      const r = h && ambRoster.find(x => favs.includes(x.Name) && ambHandleOf(x.url) === h);
+      return r ? r.Name : '';
+    }
     function checkFavoriteGoLive(list) {
       const names = new Set((list || []).map(a => a.Name));
-      if (prevLiveNames && localStorage.getItem('dst-drops-notif-enabled') === 'true') {
-        const favs = getFavorites(), blacks = getBlacklist();
-        list.filter(a => !prevLiveNames.has(a.Name) && favs.includes(a.Name) && !blacks.includes(a.Name))
-          .forEach(a => triggerSafeNotification(`⭐ ${a.Name} is live!`, a.Title || "Streaming Don't Starve Together", safeUrl(a.ProfileIcon) || LOGO));
+      if (prevLiveNames && favAlertsOn()) {
+        const favs = getFavorites(), blacks = getBlacklist(), muted = getFavMuted();
+        list.filter(a => !prevLiveNames.has(a.Name)).forEach(a => {
+          const fav = isStarredLive(a, favs);
+          if (fav && !blacks.includes(fav) && !blacks.includes(a.Name) && !muted.includes(fav)) triggerSafeNotification(`⭐ ${a.Name} is live!`, a.Title || "Streaming Don't Starve Together", safeUrl(a.ProfileIcon) || LOGO, 'generic', safeUrl(a.StreamURL));
+        });
       }
       prevLiveNames = names;
     }
@@ -3775,8 +3916,165 @@
       refreshIcons();
     }
     // the browser does the translating; this just points people to it (and nudges visitors whose browser isn't in English, once)
+    const CHANGELOG_VERSION = '2026-10-31b';
+    const CHANGELOG = [
+      {
+        "title": "For everyone",
+        "icon": "users",
+        "tools": false,
+        "items": [
+          "Star your favourite streamers (even when they're offline) and get an alert when they go live. Mute single streamers with the bell.",
+          "My lists (Ambassadors tab): manage Starred and Hidden in one place, search every ambassador from Klei's full list on Twitch, YouTube and Bilibili, and copy your lists to another device.",
+          "Ambassadors tab: a YouTube filter, profile pictures for everyone, and a language row you can scroll sideways.",
+          "The drop page shows the real drop art, a Don't Starve day clock that follows your own time, and a teaser for the next drop.",
+          "Game updates: reward links Klei hides in the patch notes are pulled into a card at the top, and videos stop when you close them.",
+          "Got a giveaway card from a streamer? Scratch it, then copy the code or open the link. Nothing is ever filled in for you.",
+          "New optional Tutorial button on the Ambassadors tab: a step-by-step tour that lights up each control and explains it.",
+      "On phones: vibration feedback (with an off switch) and a Translate page button to read the site in your language."
+        ]
+      },
+      {
+        "title": "For ambassadors",
+        "icon": "wand-sparkles",
+        "tools": true,
+        "items": [
+          "Kit editor: one click gives you a zip of images with your name and avatar. Kit and Card have their own editors, a live preview, and a highlight showing what each box changes.",
+          "Giveaway cards: pick a biome look or build your own colours, switch the scenery off, customise the stamp, and choose how winners redeem (code, Klei gift page, Steam key or a direct link). Share the card link.",
+          "OBS widget: show other live ambassadors along the bottom, with a never-show list you can search, and an optional countdown ribbon that no longer overlaps it.",
+          "Drop clock overlay for OBS, with a live preview that fits the box.",
+          "Tutorial buttons on the OBS widget and Kit editor pages walk you through every panel, step by step.",
+      "The tools stay hidden for visitors. Tap the site name seven times, or use a link ending in ?key= followed by your code."
+        ]
+      }
+    ];
+    function renderChangelog() {
+      const box = $('changelog-list'); if (!box) return;
+      box.innerHTML = CHANGELOG.filter(g => !g.tools || toolsUnlocked()).map((g, i) => `<details open><summary><i data-lucide="${esc(g.icon)}"></i><span>${esc(g.title)}</span><small>${g.items.length}</small></summary><ul>${g.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul></details>`).join('');
+    }
+    function changelogSeen() { try { return localStorage.getItem('dst-changelog-seen') === CHANGELOG_VERSION; } catch (e) { return true; } }
+    function openChangelog() { store('dst-changelog-seen', CHANGELOG_VERSION); document.body.classList.remove('cl-new'); renderChangelog(); $('changelog-modal').classList.add('active'); refreshIcons(); }
+    function closeChangelog() { $('changelog-modal').classList.remove('active'); }
+
+    /* ── optional guided tours: the page dims, one thing at a time is lit, and a note says what it does ── */
+    const tourEl = (id) => () => document.getElementById(id);
+    const tourPanel = (word) => () => [...document.querySelectorAll('#widget .wg-panel')].find(p => (p.querySelector('h4')?.textContent || '').includes(word));
+    const TOURS = {
+      live: [
+        { sel: '#platform-filters', title: 'Filter by platform', text: 'Show only Twitch, Bilibili, Douyu or YouTube streams. The star and ban buttons at the end open your starred and hidden streamers.' },
+        { sel: '#lang-bar', title: 'Pick a language', text: 'Only see streams in the language you want. The number on each chip is how many are live in it.' },
+        { sel: '#amb-search', title: 'Search', text: 'Find a streamer by name, by something in their stream title, or by a Twitch tag.' },
+        { sel: '.amb-card-container', title: 'A live stream', text: 'Click the card to open the stream. The star pins a streamer to the top (and can alert you when they go live). The ban button hides them.' },
+        { sel: '#amb-lists-btn', title: 'My lists', text: 'Manage everyone you starred or hid in one place, search every ambassador (even offline ones), switch go-live alerts on and mute single streamers.' },
+        { sel: '#amb-surprise-btn', title: 'Surprise me', text: 'Opens a random live ambassador that matches your filters. Good for finding someone new.' },
+        { sel: '#amb-view-btn', title: 'Refresh and view', text: 'The list refreshes itself every minute. Refresh forces it, and Compact turns the cards into a tight list.' },
+      ],
+      widget: [
+        { sel: () => document.querySelector('#widget .wg-preview-card'), title: 'Live preview', text: 'This is exactly what your viewers will see in OBS. Everything you change on the left shows up here straight away.' },
+        { sel: tourPanel('General'), title: 'General', text: 'Auto-update keeps the widget in step with Klei, the countdown ribbon shows when the drop ends, and "Show other live ambassadors" promotes fellow streamers. Switch that one on to get a never-show list.' },
+        { sel: tourPanel('Presets'), title: 'Presets and sharing', text: 'Save your whole setup under a name, or copy a share link that rebuilds it for anyone who opens it.' },
+        { sel: tourPanel('Layout'), title: 'Layout', text: 'Default shows flair, portrait and item together. Solo shows one piece, and Carousel rotates through them.' },
+        { sel: tourPanel('Streamer'), title: 'Your avatar', text: 'Paste a link to your profile picture and nudge, scale or rotate it until it sits right.' },
+        { sel: tourPanel('Glow'), title: 'Glow and frame', text: 'Choose the three glow colours and the colour of the border and fill, or turn the border and fill off.' },
+        { sel: tourPanel('Hat'), title: 'Seasonal hat', text: 'Optional. Put a hat on your avatar or any of the pieces.' },
+        { sel: () => document.getElementById('obs-result-url')?.parentElement, title: 'Your OBS link', text: 'Copy this link, then in OBS add a Browser source, paste it as the URL or you can drag and drop it and set the size shown above the preview. Full preview opens it in a tab.' },
+        { sel: tourPanel('Drop clock'), title: 'Drop clock overlay', text: 'A separate overlay: the Don\'t Starve day clock counting the days left. Add it to OBS as its own Browser source.' },
+      ],
+      kit: [
+        { before: () => setEdScope('kit'), sel: '#kit-scope', title: 'Kit and Card', text: 'Kit is the set of images for your channel. Card is the scratch-off giveaway card. Each has its own settings.' },
+        { sel: '#kit-profile', title: 'Your channel', text: 'Add your channel name and an avatar link. Every kit image is redrawn with them.' },
+        { sel: '#kit-zip-btn', title: 'Download everything', text: 'One click makes all the images, named for your channel, and saves them as a zip.' },
+        { sel: () => document.querySelector('#kit-editor .ed-tabs'), title: 'Colours, background, text', text: 'Change the colours, swap the background (artwork, dark, your colours or your own picture) and rewrite the wording. Anything on Auto keeps the original look.' },
+        { sel: '#kit-preview-card', title: 'Live preview', text: 'These redraw as you type. Click into any box and the part of the picture it changes is highlighted.' },
+        { sel: '.kit-prefs', title: 'Hints and highlight', text: 'Switch the helper text or the highlight off here if you find them distracting.' },
+        { before: () => setEdScope('card'), sel: '#card-profile', title: 'The giveaway card', text: 'Enter the prize code, a prize name and picture, and what viewers scratch. Codes only live inside the card link, so only share it with the people who should get the prize.' },
+        { sel: '#kit-look', title: 'Card look', text: 'Pick a biome look, or choose Custom to build your own colours with sliders.' },
+        { sel: '#kit-redeem', title: 'How winners redeem', text: 'Just the code, the Klei gift page, a Steam key or a direct link. The site never fills a code in for them.' },
+        { sel: '#card-editor', title: 'Card editor', text: 'The card has its own colours, background, wording and a rubber stamp you can restyle. It never changes your kit images.' },
+        { sel: () => document.querySelector('#card-profile .kit-profile-actions'), title: 'Share it', text: 'Preview the card to try scratching it yourself, then copy the giveaway link and send it to your winner.' },
+      ]
+    };
+    // the first time someone opens one of these pages (or finishes the disclaimer) they're asked if they want the walkthrough, once
+    const TOUR_ASK = {
+      live: ['Want a quick walkthrough?', 'See how the Ambassadors tab works: filters, language, search, starring streamers and My lists.'],
+      widget: ['Want a walkthrough of the OBS Widget?', 'A short tour of the overlay builder: preview, layout, avatar, colours and getting the link into OBS.'],
+      kit: ['Want a walkthrough of the Kit Editor?', 'A short tour of the kit images and the giveaway card, from your channel details to sharing the card link.'],
+    };
+    let tourAsk = null;
+    function tourAsked() { try { return JSON.parse(localStorage.getItem('dst-tour-asked') || '{}') || {}; } catch (e) { return {}; } }
+    function askTour(id, goTo) {
+      if (!TOUR_ASK[id] || tourAsked()[id] || tour || !disclaimerAccepted()) return;
+      store('dst-tour-asked', JSON.stringify({ ...tourAsked(), [id]: 1 }));
+      tourAsk = { id, goTo }; lockPage(true);
+      $('tour-ask-head').textContent = TOUR_ASK[id][0]; $('tour-ask-text').textContent = TOUR_ASK[id][1];
+      $('tour-ask-modal').classList.add('active'); refreshIcons();
+    }
+    function answerTour(yes) {
+      const a = tourAsk; tourAsk = null;
+      $('tour-ask-modal').classList.remove('active'); lockPage(false);
+      if (yes && a) { if (a.goTo) nav(a.goTo); setTimeout(() => startTour(a.id), 450); }
+    }
+    let tour = null;
+    function tourTarget(st) { const el = typeof st.sel === 'function' ? st.sel() : document.querySelector(st.sel); return el && el.offsetParent !== null && el.getBoundingClientRect().height > 0 ? el : null; }
+    function startTour(id) {
+      if (tour || !TOURS[id] || document.querySelector('.dst-modal.active')) return;
+      tour = { id, i: -1, steps: TOURS[id] };
+      $('tour').hidden = false; refreshIcons();
+      tourShow(0, 1);
+    }
+    function endTour() { tour = null; $('tour').hidden = true; $('tour-dim').innerHTML = ''; }
+    function tourStep(d) { if (tour) tourShow(tour.i + d, d); }
+    function tourShow(i, dir) {
+      let el = null;
+      while (i >= 0 && i < tour.steps.length) {
+        const st = tour.steps[i]; if (st.before) st.before();
+        el = tourTarget(st); if (el) break;
+        i += dir;   // nothing to show for this step right now (for example a hidden panel), so skip it
+      }
+      if (i >= tour.steps.length) { endTour(); showInAppToast('Tutorial finished', 'You can run it again from the Tutorial button any time.', 'check'); return; }
+      if (i < 0) { tour.i = 0; return tourShow(0, 1); }
+      tour.i = i;
+      const st = tour.steps[i], total = tour.steps.length;
+      $('tour-count').textContent = `Step ${i + 1} of ${total}`;
+      $('tour-title').textContent = st.title; $('tour-text').textContent = st.text;
+      $('tour-back').disabled = i === 0;
+      $('tour-next').querySelector('span').textContent = i === total - 1 ? 'Finish' : 'Next';
+      el.scrollIntoView({ block: 'center', inline: 'nearest' });
+      tourLayout();
+      $('tour-next').focus();
+    }
+    function tourLayout() {
+      if (!tour) return;
+      const st = tour.steps[tour.i], el = tourTarget(st); if (!el) return;
+      const r = el.getBoundingClientRect(), vw = innerWidth, vh = innerHeight, pad = 8;
+      const x = Math.max(4, r.left - pad), y = Math.max(4, r.top - pad), w = Math.min(vw - 8, r.width + pad * 2), h = Math.min(vh - 8, r.height + pad * 2);
+      $('tour-dim').setAttribute('viewBox', `0 0 ${vw} ${vh}`);
+      $('tour-dim').innerHTML = `<defs><mask id="tourMask"><rect width="${vw}" height="${vh}" fill="#fff"/><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="#000"/></mask></defs>` +
+        `<rect width="${vw}" height="${vh}" fill="rgba(8,4,2,0.74)" mask="url(#tourMask)"/><rect class="tour-ring" x="${x}" y="${y}" width="${w}" height="${h}" rx="10"/>`;
+      const tip = $('tour-tip'), tw = tip.offsetWidth, th = tip.offsetHeight, gap = 14;
+      let tx, ty;
+      if (y + h + gap + th <= vh - 8) { ty = y + h + gap; tx = x; }                 // below
+      else if (y - gap - th >= 8) { ty = y - gap - th; tx = x; }                    // above
+      else if (x + w + gap + tw <= vw - 8) { tx = x + w + gap; ty = y; }            // beside
+      else if (x - gap - tw >= 8) { tx = x - gap - tw; ty = y; }
+      else { tx = vw - tw - 16; ty = vh - th - 16; }                                // big target: tuck into the corner
+      tip.style.left = Math.max(8, Math.min(tx, vw - tw - 8)) + 'px'; tip.style.top = Math.max(8, Math.min(ty, vh - th - 8)) + 'px';
+    }
+    window.addEventListener('resize', tourLayout);
+    document.addEventListener('scroll', tourLayout, true);
+    document.addEventListener('keydown', (e) => {
+      if (!tour) return;
+      if (e.key === 'Escape') { endTour(); e.stopPropagation(); }
+      else if (e.key === 'ArrowRight') tourStep(1);
+      else if (e.key === 'ArrowLeft') tourStep(-1);
+    }, true);
     function openTranslateHelp() { $('translate-modal').classList.add('active'); refreshIcons(); }
     function closeTranslateHelp() { $('translate-modal').classList.remove('active'); }
+    // a small pulsing dot on the logo says there's something new to read; a one-time message says where to look
+    function hintChangelog() {
+      if (changelogSeen()) return;
+      document.body.classList.add('cl-new');
+      if (disclaimerAccepted()) setTimeout(() => { if (!changelogSeen()) showInAppToast("What's new", 'Tap the logo (top left) to see what has been added.', 'sparkles'); }, 7000);
+    }
     function maybeSuggestTranslate() {
       try {
         if ((navigator.language || 'en').toLowerCase().startsWith('en') || localStorage.getItem('dst-translate-hint') || !disclaimerAccepted()) return;
@@ -3785,6 +4083,16 @@
       } catch (e) { }
     }
     function closeListsModal() { $('lists-modal').classList.remove('active'); }
+    async function toggleFavAlerts(cb) {
+      if (cb.checked) {
+        if (await requestNotifPermission()) { store('dst-fav-notif-enabled', 'true'); playDstChime('generic'); showInAppToast('Starred alerts on', "You'll hear when a starred streamer goes live while this page is open.", 'bell-ring', true); }
+        else cb.checked = false;
+      } else { store('dst-fav-notif-enabled', 'false'); showInAppToast('Starred alerts off', 'No more go-live alerts for starred streamers.', 'bell-off', true); }
+    }
+    function toggleFavMute(name) {
+      const m = getFavMuted(); store('dst-fav-muted', JSON.stringify(m.includes(name) ? m.filter(n => n !== name) : [...m, name]));
+      renderLists();
+    }
     function listsAfterChange() {
       rememberSavedAmbassadors(); updateListCounts(); applyAmbassadorFilters(); renderLists();
     }
@@ -3801,7 +4109,8 @@
     function listRowHTML(name, mode) {
       const info = ambInfo(name), n = esc(name), plat = info.url ? ambPlatform(info.url)[1] : '';
       const btn = (act, icon, label, title) => `<button type="button" class="tool-btn" data-lact="${act}" data-lname="${n}" title="${title}"><i data-lucide="${icon}"></i>${label ? `<span>${label}</span>` : ''}</button>`;
-      const acts = mode === 'favorites' ? btn('hide', 'ban', '', 'Hide instead') + btn('remove', 'x', '', 'Remove from starred')
+      const muted = getFavMuted().includes(name);
+      const acts = mode === 'favorites' ? btn('mute', muted ? 'bell-off' : 'bell', '', muted ? 'Muted. Click to get alerts for them again' : 'Alerts on. Click to mute them') + btn('hide', 'ban', '', 'Hide instead') + btn('remove', 'x', '', 'Remove from starred')
         : mode === 'hidden' ? btn('fav', 'star', '', 'Star instead') + btn('remove', 'eye', 'Unhide', 'Show them again')
         : btn('fav', 'star', 'Star', 'Star ' + n) + btn('hide', 'ban', 'Hide', 'Hide ' + n);
       return `<div class="lists-row ${info.live ? 'live' : ''}"><img src="${esc(info.icon || letterAvatar(name))}" ${!info.icon && info.url ? `data-ico="${esc(info.url)}"` : ''} alt="" loading="lazy" onerror="this.src='${LOGO}'">
@@ -3811,6 +4120,7 @@
     function renderLists() {
       const favs = getFavorites(), blacks = getBlacklist(), q = ($('lists-search').value || '').toLowerCase().trim(), box = $('lists-body');
       $('lt-fav').textContent = favs.length; $('lt-hid').textContent = blacks.length;
+      $('fav-notif-switch').checked = favAlertsOn();
       document.querySelectorAll('#lists-tabs [data-ltab]').forEach(b => b.classList.toggle('active', b.dataset.ltab === listsTab));
       $('lists-clear').hidden = listsTab === 'add';
       let html = '';
@@ -3836,7 +4146,7 @@
     document.addEventListener('click', (e) => {
       const tab = e.target.closest('#lists-tabs [data-ltab]'), act = e.target.closest('#lists-body [data-lact]');
       if (tab) { listsTab = tab.dataset.ltab; renderLists(); }
-      if (act) listsMove(act.dataset.lname, act.dataset.lact);
+      if (act) { if (act.dataset.lact === 'mute') toggleFavMute(act.dataset.lname); else listsMove(act.dataset.lname, act.dataset.lact); }
     });
     async function exportLists() {
       const text = JSON.stringify({ app: 'starving-for-drops', favorites: getFavorites(), hidden: getBlacklist() });
@@ -6517,6 +6827,7 @@
     async function renderCardTab() {
       const has = !!(cardRequest || readCardRequest());
       $('card-stage').hidden = !has; $('card-disclaimer').hidden = !has;
+      if (has && !cardDisclaimerAccepted() && !(cardRequest || readCardRequest()).preview) setTimeout(() => whenFree(() => { if (!cardDisclaimerAccepted()) showCardDisclaimer(); }, 'card'), 500);
       if (!has) {
         $('card-actions').hidden = true; $('card-note').textContent = ''; $('card-todo').hidden = true;   // nothing to show until a streamer's card link has been opened on this device
         $('card-heading').textContent = 'Collector Card';
@@ -7088,7 +7399,7 @@
       hideLoader();
       refreshIcons();
       startDisclaimerFlow(firstVisit);
-      maybeSuggestTranslate();
+      maybeSuggestTranslate(); hintChangelog();
     }
 
     init();

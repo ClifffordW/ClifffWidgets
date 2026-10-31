@@ -1,4 +1,4 @@
-const CACHE = 'dst-cache-v3.117'; // bump this number on every update
+const CACHE = 'dst-cache-v3.128'; // bump this number on every update
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
@@ -35,4 +35,15 @@ self.addEventListener('fetch', (e) => {
       })
       .catch(() => caches.match(req))
   );
+});
+
+// clicking a go-live alert opens that stream (or brings the tracker forward)
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const url = event.notification.data && event.notification.data.url;
+  event.waitUntil((async () => {
+    if (url) { await clients.openWindow(url); return; }
+    const all = await clients.matchAll({ type: 'window', includeUncontrolled: true });
+    if (all.length) await all[0].focus(); else await clients.openWindow('./');
+  })());
 });

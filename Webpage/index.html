@@ -1281,6 +1281,7 @@
     }
     .amb-platform.twitch { color: #c9a7ff; border-color: #7d4ad6; }
     .amb-platform.bilibili { color: #7fd4ff; border-color: #1e88c9; }
+    .amb-platform.youtube { color: #ff9a9a; border-color: #d33a3a; }
     .amb-platform.douyu { color: #ffb36b; border-color: #d46019; }
     .amb-platform.other { color: var(--dst-paper-muted); border-color: #4a3628; }
     .card-icon-btn { border-radius: 8px; width: 36px; height: 36px; background: rgba(14, 10, 8, 0.88); border: 2px solid #4a3628; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); }
@@ -1360,15 +1361,20 @@
     .history-card p { font-size: 0.9rem; color: var(--dst-paper-muted); }
 
     /* ── Live: language chips + surprise ── */
-    .lang-bar { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; align-items: center; }
-    .lang-bar .lang-label { font-size: 0.95rem; color: var(--dst-paper-muted); margin-right: 4px; display: inline-flex; align-items: center; gap: 4px; }
-    .lang-bar .lang-label svg { width: 15px; height: 15px; }
+    .lang-bar { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .lang-bar .lang-label { flex-shrink: 0; font-size: 0.95rem; color: var(--dst-paper-muted); display: inline-flex; align-items: center; gap: 5px; }
+    .lang-bar .lang-label svg { width: 16px; height: 16px; color: var(--ui-accent); }
+    .lang-scroll { flex: 1; min-width: 0; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 3px 14px 3px 2px;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6px, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(90deg, transparent 0, #000 6px, #000 calc(100% - 28px), transparent); }
+    .lang-scroll::-webkit-scrollbar { display: none; }
     .lang-chip {
-      font-family: var(--font-hand); font-size: 0.95rem; padding: 2px 10px; border-radius: 12px;
-      background: #150e0a; border: 1px solid #4a3628; color: var(--dst-paper-muted);
+      flex-shrink: 0; display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-hand); font-size: 1rem; padding: 4px 6px 4px 12px; border-radius: 999px;
+      background: #150e0a; border: 1px solid #4a3628; color: var(--dst-paper); white-space: nowrap;
     }
+    .lang-chip b { font-weight: normal; font-size: 0.8rem; min-width: 22px; text-align: center; padding: 1px 6px; border-radius: 999px; background: rgba(0, 0, 0, 0.5); color: var(--dst-paper-muted); }
     .lang-chip:hover { border-color: var(--ui-accent); color: #fff; }
-    .lang-chip.active { background: var(--gold); border-color: var(--gold-bright); color: #1a120d; font-weight: bold; }
+    .lang-chip.active { background: linear-gradient(180deg, #f08a3e 0%, #c9561a 100%); border-color: var(--gold-bright); color: #fff; box-shadow: 0 0 12px rgba(231, 108, 30, 0.45); }
+    .lang-chip.active b { background: rgba(0, 0, 0, 0.35); color: #fff; }
     .amb-lang { font-size: 0.8rem; color: var(--gold); border: 1px solid var(--gold-dark); border-radius: 4px; padding: 0 5px; margin-left: 6px; vertical-align: middle; }
 
     /* ── Discord popup ── */
@@ -1472,7 +1478,7 @@
     /* ── Toolbars: same layout on Ambassadors, Game Updates and Assets ── */
     .page-toolbar { margin-bottom: 18px; padding: 14px 18px; display: flex; flex-direction: column; gap: 12px; }
     .page-toolbar-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
-    .page-toolbar .platform-filter-bar, .page-toolbar .lang-bar { justify-content: flex-start; }
+    .page-toolbar .platform-filter-bar { justify-content: flex-start; }
     .page-toolbar-tools { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
     .page-toolbar-tools .notif-button { width: auto; min-height: 36px; padding: 6px 12px; font-size: 1rem; font-weight: normal; border-width: 1px; }
     .status-line { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; font-size: 1.05rem; color: var(--dst-paper-muted); text-align: left; margin-bottom: 14px; }
@@ -1654,7 +1660,6 @@
     .nav-item.active { background: linear-gradient(90deg, rgba(var(--ui-accent-rgb), 0.24) 0%, rgba(var(--ui-accent-rgb), 0) 80%), var(--sel-body); }
     .dst-btn.btn-primary:hover { background: var(--sel-tint-hi), var(--sel-body); border-color: #ffd9b8; color: #fff; box-shadow: var(--bevel), inset 0 0 0 1px rgba(255, 208, 160, 0.8); }
     .dst-btn.btn-primary:active { background: var(--sel-tint), var(--sel-body); box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.7), var(--sel-ring); }
-    .lang-chip.active { font-weight: bold; }
 
     .dst-btn.btn-discord { background: linear-gradient(180deg, rgba(139, 148, 255, 0.22), rgba(139, 148, 255, 0) 90%), var(--sel-body); border-color: #8b94ff; color: #c9cfff; box-shadow: var(--bevel), inset 0 0 0 1px rgba(139, 148, 255, 0.5); }
     .dst-btn.btn-discord:hover { background: linear-gradient(180deg, rgba(139, 148, 255, 0.36), rgba(139, 148, 255, 0.04) 90%), var(--sel-body); border-color: #d4d8ff; color: #fff; box-shadow: var(--bevel), inset 0 0 0 1px rgba(212, 216, 255, 0.8); }
@@ -1762,6 +1767,52 @@
     .ed-side { display: flex; flex-direction: column; gap: 6px; position: sticky; top: 0; }
     .ed-side canvas { width: 100%; height: auto; border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); }
 
+    .js-haptic-btn.muted { opacity: 0.55; }
+    .translate-box { max-width: 560px; }
+    .translate-box h3 { display: flex; align-items: center; gap: 8px; padding-right: 36px; }
+    .translate-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 8px 0 12px; padding: 0; }
+    .translate-list li { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; background: #140d0a; border: 1px solid #3c2a1e; border-radius: var(--sketch-radius-soft); line-height: 1.35; }
+    .translate-list b { color: #fff; font-weight: normal; }
+    .translate-list span { color: var(--dst-paper-muted); font-size: 1rem; }
+    .translate-note { font-size: 1rem; }
+    .lists-box { max-width: 640px; width: 100%; max-height: 92dvh; display: flex; flex-direction: column; gap: 12px; }
+    .lists-box h3 { display: flex; align-items: center; gap: 8px; padding-right: 36px; }
+    .lists-intro { margin: 0; font-size: 1rem; }
+    .lists-tabs .wg-seg-btn { flex-direction: row; justify-content: center; gap: 6px; min-height: 42px; }
+    .lists-tabs b { font-weight: normal; font-size: 0.85rem; padding: 0 7px; border-radius: 9px; background: rgba(0, 0, 0, 0.45); }
+    .lists-body { flex: 1; min-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 4px; }
+    .lists-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; background: #140d0a; border: 1px solid #3c2a1e; border-radius: var(--sketch-radius-soft); }
+    .lists-row img { width: 38px; height: 38px; border-radius: 50%; border: 2px solid #5a4030; object-fit: cover; flex-shrink: 0; background: #1a120e; }
+    .lists-row.live img { border-color: var(--dst-green-bright); }
+    .lists-name { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.15; }
+    .lists-name b { font-weight: normal; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lists-name small { color: var(--dst-paper-muted); font-size: 0.85rem; }
+    .lists-name small.on { color: var(--dst-green-bright); }
+    .lists-acts { display: flex; gap: 6px; flex-shrink: 0; }
+    .lists-acts .tool-btn { min-height: 34px; padding: 4px 10px; font-size: 0.95rem; }
+    .lists-acts .tool-btn svg { width: 15px; height: 15px; }
+    .lists-empty { margin: auto; text-align: center; color: var(--dst-paper-muted); padding: 24px 12px; line-height: 1.4; }
+    .lists-import { display: flex; flex-direction: column; gap: 8px; }
+    .lists-foot { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; padding-top: 10px; border-top: 1px dashed #3a2b22; }
+    .lists-foot .dst-btn.confirm { border-color: var(--dst-crimson); }
+    .hide-box { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+    .hide-chips { display: flex; flex-wrap: wrap; gap: 6px; min-height: 30px; align-items: center; }
+    .hide-chip { font-family: var(--font-hand); display: inline-flex; align-items: center; gap: 7px; padding: 3px 8px 3px 4px; font-size: 0.95rem; color: #ffd0cb; background: rgba(166, 43, 32, 0.22); border: 1px solid var(--dst-crimson); border-radius: 999px; }
+    .hide-chip:hover { background: rgba(166, 43, 32, 0.45); color: #fff; }
+    .hide-chip img { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; }
+    .hide-chip svg { width: 13px; height: 13px; }
+    .hide-search { position: relative; }
+    .hide-results { position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 30; display: flex; flex-direction: column; padding: 4px; background: #120c09; border: 2px solid var(--ui-accent); border-radius: var(--sketch-radius-soft); box-shadow: 0 10px 24px rgba(0, 0, 0, 0.8); max-height: 320px; overflow-y: auto; }
+    .hide-result { background: transparent; border: 0; width: 100%; font-family: var(--font-hand); display: flex; align-items: center; gap: 10px; padding: 6px 8px; font-size: 1rem; color: var(--dst-paper); text-align: left; border-radius: 6px; }
+    .hide-result:hover { background: rgba(255, 142, 60, 0.16); color: #fff; }
+    .hide-result img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+    .hide-result .hr-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .hide-result small { color: var(--dst-paper-muted); font-size: 0.85rem; }
+    .hide-result small b { color: var(--dst-green-bright); font-weight: normal; }
+    .hide-none { padding: 10px; color: var(--dst-paper-muted); text-align: center; }
+    .clk-stage { position: relative; height: 200px; overflow: hidden; border: 2px solid #2c1f18; border-radius: 8px; box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.8);
+      background: repeating-conic-gradient(#1d1511 0% 25%, #140d0a 0% 50%) 0 0 / 22px 22px; }
+    .clk-stage iframe { position: absolute; left: 50%; top: 50%; border: 0; background: transparent; pointer-events: none; transform-origin: center; }
     .kit-prefs { display: flex; flex-wrap: wrap; gap: 10px; margin: -6px 0 18px; }
     .kit-prefs .toggle-row { width: auto; flex: 0 1 auto; padding: 8px 14px; }
     #kit[data-hints="0"] .wg-hint, #kit[data-hints="0"] .kit-profile-head p, #kit[data-hints="0"] .toggle-text small { display: none; }
@@ -1918,6 +1969,47 @@
     </div>
   </div>
 
+  <!-- MY LISTS (favourites + hidden) -->
+  <div id="lists-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="lists-title" onclick="if(event.target===this) closeListsModal()">
+    <div class="modal-box lists-box">
+      <button type="button" class="modal-close" onclick="closeListsModal()" aria-label="Close">&times;</button>
+      <h3 id="lists-title"><i data-lucide="list-checks"></i> My lists</h3>
+      <p class="modal-text lists-intro">Starred streamers are pinned to the top and can alert you when they go live. Hidden streamers never show up in the live list. Both lists stay in this browser.</p>
+      <div class="wg-seg lists-tabs" id="lists-tabs" role="group" aria-label="Lists" style="grid-template-columns: repeat(3, 1fr);">
+        <button type="button" class="wg-seg-btn" data-ltab="favorites"><i data-lucide="star"></i> Starred <b id="lt-fav">0</b></button>
+        <button type="button" class="wg-seg-btn" data-ltab="hidden"><i data-lucide="ban"></i> Hidden <b id="lt-hid">0</b></button>
+        <button type="button" class="wg-seg-btn" data-ltab="add"><i data-lucide="user-plus"></i> Add</button>
+      </div>
+      <input type="search" id="lists-search" class="search-input-box" placeholder="Search by name..." autocomplete="off" oninput="renderLists()">
+      <div id="lists-body" class="lists-body"></div>
+      <div id="lists-import" class="lists-import" hidden>
+        <textarea id="lists-import-text" class="search-input-box" rows="3" placeholder="Paste the text you exported from My lists"></textarea>
+        <button type="button" class="dst-btn btn-primary" onclick="importLists()"><i data-lucide="check"></i> Add these</button>
+      </div>
+      <div class="lists-foot">
+        <button type="button" class="dst-btn" onclick="exportLists()"><i data-lucide="copy"></i> Copy my lists</button>
+        <button type="button" class="dst-btn" onclick="$('lists-import').hidden = !$('lists-import').hidden"><i data-lucide="clipboard-paste"></i> Import</button>
+        <button type="button" id="lists-clear" class="dst-btn" onclick="clearList()"><i data-lucide="trash-2"></i> <span>Clear this list</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRANSLATE HELP -->
+  <div id="translate-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="translate-title" onclick="if(event.target===this) closeTranslateHelp()">
+    <div class="modal-box translate-box">
+      <button type="button" class="modal-close" onclick="closeTranslateHelp()" aria-label="Close">&times;</button>
+      <h3 id="translate-title"><i data-lucide="languages"></i> Read this site in your language</h3>
+      <p class="modal-text">Your browser can translate the whole page for you. Pick yours:</p>
+      <ul class="translate-list">
+        <li><b>Chrome / Edge</b> <span>Click the translate icon at the right end of the address bar, or right-click the page and choose "Translate to…". On a phone: menu (⋮) → Translate.</span></li>
+        <li><b>Safari</b> <span>Tap the <em>aA</em> button in the address bar → Translate to…</span></li>
+        <li><b>Firefox</b> <span>Click the translate icon in the address bar if it shows up. Firefox only offers some languages.</span></li>
+      </ul>
+      <p class="modal-text translate-note">Streamer names, countdowns and links are marked so they stay as they are. If a translation ever mangles live numbers, switch back to the original from the same icon.</p>
+      <div class="modal-actions"><button type="button" class="dst-btn btn-primary" onclick="closeTranslateHelp()"><i data-lucide="check"></i> Got it</button></div>
+    </div>
+  </div>
+
   <!-- CONFIRM MODAL -->
   <div id="confirm-modal" class="dst-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title"
     onclick="if(event.target===this) closeConfirmModal()">
@@ -1970,7 +2062,7 @@
     <div class="brand">
       <img src="https://clifffordw.github.io/ClifffWidgets/Webpage/drop_logo.svg" alt="" class="brand-logo">
       <div class="brand-text">
-        <div class="brand-title">Starving For Drops</div>
+        <div class="brand-title" translate="no">Starving For Drops</div>
         <div class="brand-sub">Klei Drops &amp; Ambassadors</div>
       </div>
     </div>
@@ -2034,6 +2126,12 @@
         <i data-lucide="volume-2" class="snd-on"></i><i data-lucide="volume-x" class="snd-off"></i>
         <span class="js-sound-text">Sound On</span>
       </button>
+      <button type="button" class="notif-button side-btn js-haptic-btn" onclick="toggleHaptics()" title="Vibrate a little when you tap things" hidden>
+        <i data-lucide="vibrate"></i><span class="js-haptic-text">Haptics On</span>
+      </button>
+      <button type="button" class="notif-button side-btn" onclick="openTranslateHelp()" title="Read this site in your language">
+        <i data-lucide="languages"></i><span>Translate page</span>
+      </button>
       <button type="button" class="collapse-btn" onclick="toggleSidebar()" title="Collapse or expand the sidebar">
         <i data-lucide="chevrons-left"></i><span>Collapse</span>
       </button>
@@ -2060,6 +2158,12 @@
       <button type="button" class="notif-button sound-button js-sound-btn" onclick="toggleSound()" aria-label="Sound" title="Sound">
         <i data-lucide="volume-2" class="snd-on"></i><i data-lucide="volume-x" class="snd-off"></i>
         <span class="js-sound-text">Sound On</span>
+      </button>
+      <button type="button" class="notif-button js-haptic-btn" onclick="toggleHaptics()" aria-label="Haptics" title="Vibrate a little when you tap things" hidden>
+        <i data-lucide="vibrate"></i>
+      </button>
+      <button type="button" class="notif-button" onclick="openTranslateHelp()" aria-label="Translate page" title="Read this site in your language">
+        <i data-lucide="languages"></i>
       </button>
     </div>
   </header>
@@ -2100,7 +2204,7 @@
             <i data-lucide="flame"></i>
             <span id="timer-status-text">DROPS BLAZIN!</span>
           </div>
-          <div id="timer" class="drop-left" aria-live="off"><span class="cd-text">CALCULATING...</span></div>
+          <div id="timer" class="drop-left" translate="no" aria-live="off"><span class="cd-text">CALCULATING...</span></div>
           <button type="button" id="timer-date" class="campfire-date" onclick="toggleTimerTimezone()">Consulting Klei Records...</button>
         </div>
       </div>
@@ -2159,12 +2263,16 @@
             <button type="button" class="platform-pill" data-filter="twitch">Twitch</button>
             <button type="button" class="platform-pill" data-filter="bilibili">Bilibili</button>
             <button type="button" class="platform-pill" data-filter="douyu">Douyu</button>
+            <button type="button" class="platform-pill" data-filter="youtube">YouTube</button>
             <button type="button" class="platform-pill" data-filter="favorites"><i data-lucide="star"></i> <span id="fav-count" class="pill-count">0</span></button>
             <button type="button" class="platform-pill" data-filter="blacklist" title="Hidden streamers"><i data-lucide="ban"></i> <span id="black-count" class="pill-count">0</span></button>
           </div>
           <div class="page-toolbar-tools">
             <button type="button" id="amb-surprise-btn" class="tool-btn" onclick="surpriseMe()" title="Open a random live ambassador">
               <i data-lucide="dices"></i><span>Surprise me</span>
+            </button>
+            <button type="button" id="amb-lists-btn" class="tool-btn" onclick="openListsModal()" title="Manage your starred and hidden streamers">
+              <i data-lucide="list-checks"></i><span>My lists</span>
             </button>
             <button type="button" id="amb-refresh-btn" class="tool-btn" onclick="manualRefreshAmb()" title="Refresh the list now">
               <i data-lucide="refresh-cw"></i><span>Refresh</span>
@@ -2293,7 +2401,21 @@
               </label>
               <div id="obs-channel-row" hidden>
                 <label class="wg-label wg-label-sm" for="obs-channel">Your channel <span class="wg-sub">(so you're left out of the list)</span></label>
-                <input type="text" id="obs-channel" class="search-input-box" maxlength="25" placeholder="e.g. eternal_grudge" autocomplete="off" oninput="updateObsUrlBuilder()">
+                <input type="text" id="obs-channel" class="search-input-box" maxlength="25" placeholder="e.g. dontstarve_streamer" autocomplete="off" oninput="updateObsUrlBuilder()">
+                <div class="hide-box">
+                  <span class="wg-label wg-label-sm">Never show these streamers</span>
+                  <input type="hidden" id="obs-hide">
+                  <div id="obs-hide-chips" class="hide-chips"></div>
+                  <div class="hide-search">
+                    <input type="search" id="obs-hide-search" class="search-input-box" placeholder="Search every ambassador to hide..." autocomplete="off" oninput="renderHideResults()" onfocus="renderHideResults()">
+                    <div id="obs-hide-results" class="hide-results" hidden></div>
+                  </div>
+                  <label class="toggle-row" title="Also leaves out everyone on your Hidden list in My lists">
+                    <span class="dst-switch"><input type="checkbox" id="obs-hide-mine" onchange="updateObsUrlBuilder()"><span class="dst-slider"></span></span>
+                    <i data-lucide="eye-off"></i>
+                    <span class="toggle-text">Also hide my Hidden list<small id="obs-hide-mine-note"></small></span>
+                  </label>
+                </div>
               </div>
             </div>
 
@@ -2580,6 +2702,7 @@
                   </div>
                 </div>
               </div>
+              <div class="clk-stage" id="clk-stage"><iframe id="clk-frame" title="Drop clock preview" tabindex="-1"></iframe></div>
               <div class="wg-url-row">
                 <input type="text" id="clk-url" readonly class="search-input-box" onclick="copyClockUrl()" title="Click to copy">
                 <button type="button" class="dst-btn btn-primary" onclick="copyClockUrl()"><i data-lucide="copy"></i> Copy</button>
@@ -2616,7 +2739,7 @@
         </div>
         <div class="kit-profile-fields">
           <div><label class="wg-label wg-label-sm" for="kit-name">Channel name</label>
-            <input type="text" id="kit-name" data-hl="avatar" class="search-input-box" maxlength="25" placeholder="e.g. eternal_grudge" autocomplete="off" oninput="kitProfileChanged()"></div>
+            <input type="text" id="kit-name" data-hl="avatar" class="search-input-box" maxlength="25" placeholder="e.g. dontstarve_streamer" autocomplete="off" oninput="kitProfileChanged()"></div>
           <div><label class="wg-label wg-label-sm" for="kit-avatar">Avatar image URL <span class="wg-sub">(optional)</span></label>
             <input type="text" id="kit-avatar" data-hl="avatar" class="search-input-box" placeholder="https://..." autocomplete="off" oninput="kitProfileChanged()"></div>
         </div>
@@ -2876,6 +2999,7 @@
        ═══════════════════════════════════════════════════════════ */
     function nav(id) {
       if (id !== 'card' && cardPending() && readCardRequest()) {   // a scratched card has to be claimed first
+        haptic('warn');
         showInAppToast('Claim your card first', 'Copy your code (and open the link if there is one) before you leave, or the card is lost.', 'lock');
         id = 'card';
       }
@@ -2896,7 +3020,7 @@
       } else {
         refreshUpdatesBadge();
       }
-      if (id === 'live') refreshAmbassadors();
+      if (id === 'live') { refreshAmbassadors(); if (!ambRosterTried) loadAmbRoster().then(() => applyAmbassadorFilters()); }
       if (id === 'card') renderCardTab();
       if (id === 'kit' && !kitDisclaimerAccepted() && disclaimerAccepted()) setTimeout(showKitDisclaimer, 400);
       if (id === 'widget') setTimeout(updateObsUrlBuilder, 50);   // recalc preview scale once visible
@@ -2991,7 +3115,45 @@
     }
     function playDstChime(kind = 'generic') { playCustomSound(dstSounds[kind]); }
 
+    /* ── haptics: a short buzz on taps and a pattern on alerts (phones only; iPhones get a tick where the browser allows it) ── */
+    let hapticsEnabled = true;
+    try { hapticsEnabled = localStorage.getItem('dst-haptics') !== 'false'; } catch (e) { }
+    const HAPTIC_PATTERNS = { tap: 8, tick: 4, toggle: 14, success: [12, 50, 18], warn: [35, 50, 35], error: [70, 40, 70], alert: [20, 60, 20, 60, 40], reveal: [10, 30, 10, 30, 70] };
+    const isTouchDevice = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    const isIosTouch = () => /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const canHaptic = () => isTouchDevice() && (!!navigator.vibrate || isIosTouch());
+    let iosSwitch = null;
+    function haptic(kind = 'tap') {
+      if (!hapticsEnabled || !canHaptic() || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const pat = HAPTIC_PATTERNS[kind] || HAPTIC_PATTERNS.tap;
+      try { if (navigator.vibrate) { navigator.vibrate(pat); return; } } catch (e) { }
+      try {   // Safari 17.4+ ticks when a native switch is toggled, so a hidden one is clicked
+        if (!iosSwitch) { iosSwitch = document.createElement('label'); iosSwitch.setAttribute('aria-hidden', 'true'); iosSwitch.style.cssText = 'position:fixed;left:-99px;top:0;opacity:0;pointer-events:none'; iosSwitch.innerHTML = '<input type="checkbox" switch tabindex="-1">'; document.body.append(iosSwitch); }
+        const n = Array.isArray(pat) ? Math.ceil(pat.length / 2) : 1;
+        for (let i = 0; i < Math.min(n, 3); i++) setTimeout(() => iosSwitch.click(), i * 70);
+      } catch (e) { }
+    }
+    function updateHapticUI() {
+      const show = canHaptic();
+      document.querySelectorAll('.js-haptic-btn').forEach(b => { b.hidden = !show; b.classList.toggle('muted', !hapticsEnabled); });
+      document.querySelectorAll('.js-haptic-text').forEach(t => { t.innerText = hapticsEnabled ? 'Haptics On' : 'Haptics Off'; });
+    }
+    function toggleHaptics() {
+      hapticsEnabled = !hapticsEnabled;
+      store('dst-haptics', hapticsEnabled);
+      updateHapticUI();
+      if (hapticsEnabled) haptic('success');
+    }
+    // sliders tick as they move, but not on every pixel
+    let lastTick = 0;
+    document.addEventListener('input', (e) => {
+      if (e.target.type !== 'range') return;
+      const now = performance.now(); if (now - lastTick > 45) { lastTick = now; haptic('tick'); }
+    }, { passive: true });
+    document.addEventListener('change', (e) => { if (e.target.type === 'checkbox' && !e.target.hasAttribute('switch')) haptic('toggle'); }, { passive: true });
+
     function initCustomSoundEngine() {
+      updateHapticUI();
       const sel = 'button, a, .nav-item, .dock-slot, .amb-card, .dst-btn, .platform-pill, .toggle-row, input[type="checkbox"], input[type="color"], input[type="range"], input[type="text"], input[type="number"], input[type="search"], .custom-dropdown-trigger, .custom-dropdown-item, #obs-result-url';
       const isTouch = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
       let pressed = false;
@@ -3002,7 +3164,7 @@
         if (t && t !== r) playCustomSound(dstSounds.hover);
       }, { passive: true });
       document.addEventListener('pointerdown', (e) => {
-        if (e.target.closest(sel)) { pressed = true; playCustomSound(dstSounds.clickDown); }
+        if (e.target.closest(sel)) { pressed = true; playCustomSound(dstSounds.clickDown); if (!e.target.closest('input[type="range"], input[type="checkbox"]')) haptic('tap'); }
       });
       document.addEventListener('pointerup', () => {
         if (pressed) { pressed = false; playCustomSound(dstSounds.clickUp); }
@@ -3031,6 +3193,7 @@
       const danger = ['trash-2', 'bell-off', 'alert-circle', 'circle-x', 'x-circle', 'triangle-alert', 'cloud-off'];
       const success = ['clipboard-check', 'bookmark-check', 'bookmark-plus', 'bell-ring', 'check', 'circle-check', 'link', 'download', 'users'];
       toast.dataset.tone = danger.includes(iconOrUrl) ? 'danger' : success.includes(iconOrUrl) ? 'success' : 'flame';
+      if (!silent) haptic(toast.dataset.tone === 'success' ? 'success' : toast.dataset.tone === 'danger' ? 'error' : 'tap');
       if (silent) { /* the caller plays its own sound */ }
       else if (toast.dataset.tone === 'success') playCustomSound(dstSounds.toastOk);
       else if (toast.dataset.tone === 'danger') playCustomSound(dstSounds.toastError);
@@ -3142,7 +3305,7 @@
       document.querySelectorAll('body > :not(.dst-modal):not(script):not(style)').forEach(el => { if (on) el.setAttribute('inert', ''); else el.removeAttribute('inert'); });
       document.body.classList.toggle('page-locked', on);
     }
-    function showDisclaimer() { lockPage(true); $('disclaimer-modal').classList.add('active'); $('disclaimer-accept').focus(); }
+    function showDisclaimer() { haptic('warn'); lockPage(true); $('disclaimer-modal').classList.add('active'); $('disclaimer-accept').focus(); }
     function acceptDisclaimer() {
       store(DISCLAIMER_KEY, '1');
       readingGuide = false;
@@ -3204,7 +3367,7 @@
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        closeConfirmModal(); closeDiscordModal(); closePatchModal();
+        closeConfirmModal(); closeDiscordModal(); closePatchModal(); closeListsModal(); closeTranslateHelp();
         document.querySelectorAll('.custom-dst-dropdown.open').forEach(d => d.classList.remove('open', 'open-up'));
       }
     });
@@ -3213,7 +3376,7 @@
        4. NOTIFICATIONS (drops, starred streamers, game updates)
        ═══════════════════════════════════════════════════════════ */
     async function triggerSafeNotification(title, body, iconUrl, sound = 'generic') {
-      playDstChime(sound);
+      playDstChime(sound); haptic('alert');
       showInAppToast(title, body, iconUrl || LOGO);
       if (!('Notification' in window) || Notification.permission !== 'granted') return;
       try {
@@ -3499,6 +3662,135 @@
       $('black-count').innerText = getBlacklist().length;
     }
 
+    /* ── My lists: one place to manage starred and hidden streamers ── */
+    // the full ambassador roster: Klei's published sheet (one "name,link" row each), so offline ambassadors can be searched and added too
+    const AMB_ROSTER_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhyj6WousYy_RrKcejs5m2eyN2yWkbuY5Rl246fhy-or08bfIVPn_AgxY6jINSVgrMYI_xSMFoP76X/pub?output=csv';
+    const AMB_ROSTER_KEY = 'dst-amb-roster';
+    let ambRoster = [], ambRosterTried = false, listsTab = 'favorites', listsClearTimer = null;
+    const ambHandleOf = (url) => { try { const u = new URL(url); return (u.hostname.replace(/^www\./, '').split('.')[0] + ':' + decodeURIComponent(u.pathname.split('/').filter(Boolean).pop() || '').replace(/^@/, '').toLowerCase()); } catch (e) { return ''; } };
+    function parseRosterCsv(t) {
+      return String(t).split(/\r?\n/).map(l => { const m = l.match(/^\s*("([^"]*)"|[^,]*)\s*,\s*(\S+)\s*$/); return m ? { Name: (m[2] ?? m[1]).trim(), url: m[3].replace(/^"|"$/g, '') } : null; })
+        .filter(r => r && r.Name && /^https?:\/\//i.test(r.url)).map(r => ({ Name: r.Name.slice(0, 60), url: r.url }));
+    }
+    async function loadAmbRoster() {
+      if (ambRosterTried) return;
+      ambRosterTried = true;
+      let saved = null; try { saved = JSON.parse(localStorage.getItem(AMB_ROSTER_KEY) || 'null'); } catch (e) { }
+      if (saved && Array.isArray(saved.rows)) ambRoster = saved.rows;
+      if (saved && Date.now() - saved.t < 12 * 3600000) return;   // fresh enough, no need to ask again
+      try {
+        const rows = parseRosterCsv(await (await fetch(AMB_ROSTER_URL)).text());
+        if (rows.length > 20) { ambRoster = rows; store(AMB_ROSTER_KEY, JSON.stringify({ t: Date.now(), rows })); }
+      } catch (e) { console.warn('Roster load failed', e); ambRosterTried = false; }
+    }
+    function ambInfo(name) {
+      const live = rawAmbassadors.find(a => a.Name === name);
+      if (live) return { live: true, icon: safeUrl(live.ProfileIcon), url: safeUrl(live.StreamURL) };
+      const c = readAmbCache()[name];
+      const r = ambRoster.find(x => x.Name.toLowerCase() === name.toLowerCase());
+      if (r && rawAmbassadors.some(a => ambHandleOf(a.StreamURL) === ambHandleOf(r.url))) { const l = rawAmbassadors.find(a => ambHandleOf(a.StreamURL) === ambHandleOf(r.url)); return { live: true, icon: safeUrl(l.ProfileIcon), url: safeUrl(l.StreamURL) }; }
+      if (c) return { live: false, icon: safeUrl(c.icon), url: safeUrl(c.url) || (r ? safeUrl(r.url) : '') };
+      return r ? { live: false, icon: '', url: safeUrl(r.url) } : { live: false, icon: '', url: '' };
+    }
+    function openListsModal(tab) {
+      if (tab) listsTab = tab;
+      $('lists-modal').classList.add('active');
+      $('lists-search').value = '';
+      loadAmbRoster().then(renderLists);
+      renderLists();
+      refreshIcons();
+    }
+    // the browser does the translating; this just points people to it (and nudges visitors whose browser isn't in English, once)
+    function openTranslateHelp() { $('translate-modal').classList.add('active'); refreshIcons(); }
+    function closeTranslateHelp() { $('translate-modal').classList.remove('active'); }
+    function maybeSuggestTranslate() {
+      try {
+        if ((navigator.language || 'en').toLowerCase().startsWith('en') || localStorage.getItem('dst-translate-hint') || !disclaimerAccepted()) return;
+        store('dst-translate-hint', '1');
+        setTimeout(() => showInAppToast('Read this in your language?', 'Your browser can translate this page. Tap the translate button in the menu to see how.', 'languages'), 2500);
+      } catch (e) { }
+    }
+    function closeListsModal() { $('lists-modal').classList.remove('active'); }
+    function listsAfterChange() {
+      rememberSavedAmbassadors(); updateListCounts(); applyAmbassadorFilters(); renderLists();
+    }
+    function listsMove(name, act) {
+      const info = ambInfo(name);
+      if (act !== 'remove' && !info.live) {   // keep what is known about them so they can still be listed while offline
+        const cache = readAmbCache(); if (!cache[name]) { cache[name] = { icon: info.icon, url: info.url, lang: 'EN' }; store(AMB_CACHE_KEY, JSON.stringify(cache)); }
+      }
+      const f = getFavorites().filter(n => n !== name), b = getBlacklist().filter(n => n !== name);
+      if (act === 'fav') f.push(name); if (act === 'hide') b.push(name);
+      store('dst-favorite-ambassadors', JSON.stringify(f)); store('dst-blacklisted-streamers', JSON.stringify(b));
+      listsAfterChange();
+    }
+    function listRowHTML(name, mode) {
+      const info = ambInfo(name), n = esc(name), plat = info.url ? ambPlatform(info.url)[1] : '';
+      const btn = (act, icon, label, title) => `<button type="button" class="tool-btn" data-lact="${act}" data-lname="${n}" title="${title}"><i data-lucide="${icon}"></i>${label ? `<span>${label}</span>` : ''}</button>`;
+      const acts = mode === 'favorites' ? btn('hide', 'ban', '', 'Hide instead') + btn('remove', 'x', '', 'Remove from starred')
+        : mode === 'hidden' ? btn('fav', 'star', '', 'Star instead') + btn('remove', 'eye', 'Unhide', 'Show them again')
+        : btn('fav', 'star', 'Star', 'Star ' + n) + btn('hide', 'ban', 'Hide', 'Hide ' + n);
+      return `<div class="lists-row ${info.live ? 'live' : ''}"><img src="${esc(info.icon || letterAvatar(name))}" ${!info.icon && info.url ? `data-ico="${esc(info.url)}"` : ''} alt="" loading="lazy" onerror="this.src='${LOGO}'">
+        <div class="lists-name"><b title="${n}" translate="no">${n}</b><small class="${info.live ? 'on' : ''}">${info.live ? 'Live now' : 'Offline'}${plat ? ' · ' + plat : ''}</small></div>
+        <div class="lists-acts">${acts}</div></div>`;
+    }
+    function renderLists() {
+      const favs = getFavorites(), blacks = getBlacklist(), q = ($('lists-search').value || '').toLowerCase().trim(), box = $('lists-body');
+      $('lt-fav').textContent = favs.length; $('lt-hid').textContent = blacks.length;
+      document.querySelectorAll('#lists-tabs [data-ltab]').forEach(b => b.classList.toggle('active', b.dataset.ltab === listsTab));
+      $('lists-clear').hidden = listsTab === 'add';
+      let html = '';
+      if (listsTab === 'add') {
+        const seen = new Set([...favs, ...blacks].map(n => n.toLowerCase())), liveHandles = new Map(rawAmbassadors.map(a => [ambHandleOf(a.StreamURL), a.Name])), pool = [];
+        [...rawAmbassadors.map(a => a.Name), ...Object.keys(readAmbCache()), ...ambRoster.map(r => liveHandles.get(ambHandleOf(r.url)) || r.Name)].forEach(n => { if (n && !seen.has(n.toLowerCase())) { seen.add(n.toLowerCase()); pool.push(n); } });
+        const found = pool.filter(n => !q || n.toLowerCase().includes(q)).sort((a, b) => (ambInfo(b).live ? 1 : 0) - (ambInfo(a).live ? 1 : 0) || a.localeCompare(b, undefined, { sensitivity: 'base' })).slice(0, q ? 80 : 50);
+        html = found.map(n => listRowHTML(n, 'add')).join('');
+        if (q && !pool.some(n => n.toLowerCase() === q) && ![...favs, ...blacks].some(n => n.toLowerCase() === q)) {
+          const typed = $('lists-search').value.trim().slice(0, 40);
+          html += `<div class="lists-row"><div class="lists-name"><b>${esc(typed)}</b><small>Add by name</small></div><div class="lists-acts"><button type="button" class="tool-btn" data-lact="fav" data-lname="${esc(typed)}"><i data-lucide="star"></i><span>Star</span></button><button type="button" class="tool-btn" data-lact="hide" data-lname="${esc(typed)}"><i data-lucide="ban"></i><span>Hide</span></button></div></div>`;
+        }
+        if (!html) html = `<div class="lists-empty">${q ? 'Nobody matches that.' : 'Everyone you know about is already on a list.'}</div>`;
+        if (!q && pool.length > found.length) html += `<div class="lists-empty">Showing ${found.length} of ${pool.length}. Search to find someone.</div>`;
+      } else {
+        const names = (listsTab === 'favorites' ? favs : blacks).filter(n => !q || n.toLowerCase().includes(q));
+        html = names.map(n => listRowHTML(n, listsTab)).join('') || `<div class="lists-empty">${(listsTab === 'favorites' ? favs : blacks).length ? 'Nobody matches that.' : listsTab === 'favorites' ? 'No starred streamers yet. Star someone from the live list, or use the Add tab.' : 'You have not hidden anyone.'}</div>`;
+      }
+      box.innerHTML = html;
+      hydrateIcons(box);
+      refreshIcons();
+    }
+    document.addEventListener('click', (e) => {
+      const tab = e.target.closest('#lists-tabs [data-ltab]'), act = e.target.closest('#lists-body [data-lact]');
+      if (tab) { listsTab = tab.dataset.ltab; renderLists(); }
+      if (act) listsMove(act.dataset.lname, act.dataset.lact);
+    });
+    async function exportLists() {
+      const text = JSON.stringify({ app: 'starving-for-drops', favorites: getFavorites(), hidden: getBlacklist() });
+      if (await copyText(text)) showInAppToast('Lists copied', 'Paste it into Import on another browser or device.', 'clipboard-check');
+    }
+    function importLists() {
+      let o; try { o = JSON.parse($('lists-import-text').value.trim()); } catch (e) { o = null; }
+      const clean = (a) => (Array.isArray(a) ? a : []).map(x => String(x).replace(/[\u0000-\u001f<>]/g, '').trim().slice(0, 60)).filter(Boolean);
+      if (!o || (!Array.isArray(o.favorites) && !Array.isArray(o.hidden))) { showInAppToast("Couldn't read that", 'Paste the text you got from "Copy my lists".', 'alert-circle'); return; }
+      const nf = clean(o.favorites), nb = clean(o.hidden);
+      const f = [...new Set([...getFavorites().filter(n => !nb.includes(n)), ...nf])].slice(0, 500), b = [...new Set([...getBlacklist().filter(n => !nf.includes(n)), ...nb])].slice(0, 500);
+      store('dst-favorite-ambassadors', JSON.stringify(f)); store('dst-blacklisted-streamers', JSON.stringify(b));
+      $('lists-import-text').value = ''; $('lists-import').hidden = true;
+      listsAfterChange();
+      showInAppToast('Lists imported', `${nf.length} starred and ${nb.length} hidden added.`, 'check');
+    }
+    function clearList() {
+      const btn = $('lists-clear'), label = btn.querySelector('span');
+      if (!btn.classList.contains('confirm')) {   // two clicks, so it can't happen by accident
+        btn.classList.add('confirm'); label.textContent = 'Click again to clear';
+        clearTimeout(listsClearTimer); listsClearTimer = setTimeout(() => { btn.classList.remove('confirm'); label.textContent = 'Clear this list'; }, 3000);
+        return;
+      }
+      clearTimeout(listsClearTimer); btn.classList.remove('confirm'); label.textContent = 'Clear this list';
+      store(listsTab === 'favorites' ? 'dst-favorite-ambassadors' : 'dst-blacklisted-streamers', '[]');
+      listsAfterChange();
+    }
+
     function setPlatformFilter(platform) {
       currentPlatformFilter = platform;
       store('dst-last-platform-filter', platform);
@@ -3527,9 +3819,52 @@
       return names.filter(n => !live.has(n));
     }
 
+    /* ── avatars: the live list has them, the roster doesn't. Twitch ones are looked up (and remembered), YouTube ones come from unavatar.io, anything else gets a letter ── */
+    const ICON_KEY = 'dst-amb-icons';
+    let iconCache = {}, iconSaveTimer = null;
+    try { iconCache = JSON.parse(localStorage.getItem(ICON_KEY) || '{}') || {}; } catch (e) { }
+    function saveIcons() {
+      clearTimeout(iconSaveTimer);
+      iconSaveTimer = setTimeout(() => {
+        const keys = Object.keys(iconCache);
+        if (keys.length > 600) keys.sort((a, b) => iconCache[a].t - iconCache[b].t).slice(0, keys.length - 600).forEach(k => delete iconCache[k]);
+        store(ICON_KEY, JSON.stringify(iconCache));
+      }, 800);
+    }
+    function letterAvatar(name) {
+      const str = String(name || '?').trim(), h = hash32(str) % 360, ch = ([...str][0] || '?').toUpperCase().replace(/[&<>"']/g, '?');
+      return 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="hsl(${h} 35% 24%)"/><text x="32" y="43" font-size="32" text-anchor="middle" fill="hsl(${h} 70% 78%)" font-family="Georgia,serif">${ch}</text></svg>`);
+    }
+    function iconHandle(url) { try { return decodeURIComponent(new URL(url).pathname.split('/').filter(Boolean).pop() || '').replace(/^@/, ''); } catch (e) { return ''; } }
+    const iconQueue = []; let iconBusy = 0;
+    function resolveIcon(url) {
+      const plat = ambPlatform(url)[0], h = iconHandle(url);
+      if (!h) return Promise.resolve('');
+      if (plat === 'youtube') return Promise.resolve('https://unavatar.io/youtube/' + encodeURIComponent(h));
+      if (plat !== 'twitch') return Promise.resolve('');
+      const k = 'tw:' + h.toLowerCase(), c = iconCache[k];
+      if (c && Date.now() - c.t < 7 * 864e5) return Promise.resolve(c.u);
+      return new Promise(res => { iconQueue.push({ k, h, res }); pumpIcons(); });
+    }
+    function pumpIcons() {
+      while (iconBusy < 2 && iconQueue.length) {
+        const j = iconQueue.shift(); iconBusy++;
+        (async () => {
+          let u = '';
+          try { const t = (await (await fetch('https://decapi.me/twitch/avatar/' + encodeURIComponent(j.h))).text()).trim(); if (/^https:\/\/static-cdn\.jtvnw\.net\//.test(t)) u = t; } catch (e) { }
+          iconCache[j.k] = { u, t: Date.now() }; saveIcons(); j.res(u); iconBusy--; pumpIcons();
+        })();
+      }
+    }
+    function hydrateIcons(root) {
+      root.querySelectorAll('img[data-ico]').forEach(img => {
+        const url = img.dataset.ico; delete img.dataset.ico;
+        resolveIcon(url).then(u => { if (u && img.isConnected) { const fb = img.src; img.onerror = () => { img.onerror = null; img.src = fb; }; img.src = u; } });
+      });
+    }
     function ambPlatform(url) {
       const u = (url || '').toLowerCase();
-      return u.includes('twitch.tv') ? ['twitch', 'Twitch'] : u.includes('bilibili') ? ['bilibili', 'Bilibili'] : u.includes('douyu') ? ['douyu', 'Douyu'] : ['other', 'Live'];
+      return u.includes('twitch.tv') ? ['twitch', 'Twitch'] : u.includes('bilibili') ? ['bilibili', 'Bilibili'] : (u.includes('youtube.com') || u.includes('youtu.be')) ? ['youtube', 'YouTube'] : u.includes('douyu') ? ['douyu', 'Douyu'] : ['other', 'Live'];
     }
 
     function ambButtonsHTML(name, isFav, isHidden) {
@@ -3561,7 +3896,7 @@
             <div class="amb-card-body">
               <img class="profile-portrait" src="${esc(safeUrl(a.ProfileIcon) || LOGO)}" alt="" loading="lazy" onerror="this.src='${LOGO}'">
               <div class="amb-card-text">
-                <span class="streamer-name">${n}${lang && lang !== 'EN' ? `<span class="amb-lang" title="${LANG_NAMES[lang]}">${lang}</span>` : ''}</span>
+                <span class="streamer-name" translate="no">${n}${lang && lang !== 'EN' ? `<span class="amb-lang" title="${LANG_NAMES[lang]}">${lang}</span>` : ''}</span>
                 <span class="stream-topic">${esc(a.Title || "Don't Starve Together")}</span>
               </div>
               <span class="amb-platform ${plat[0]}">${plat[1]}</span>
@@ -3576,9 +3911,9 @@
       const inner = `
         <div class="thumb-wrapper offline-thumb"><i data-lucide="moon"></i><span>Offline</span></div>
         <div class="amb-card-body">
-          <img class="profile-portrait" src="${esc(safeUrl(info?.icon) || LOGO)}" alt="" loading="lazy" onerror="this.src='${LOGO}'">
+          <img class="profile-portrait" src="${esc(safeUrl(info?.icon) || letterAvatar(name))}" ${!safeUrl(info?.icon) && url ? `data-ico="${esc(url)}"` : ''} alt="" loading="lazy" onerror="this.src='${LOGO}'">
           <div class="amb-card-text">
-            <span class="streamer-name">${n}${lang}</span>
+            <span class="streamer-name" translate="no">${n}${lang}</span>
             <span class="stream-topic">${info ? 'Offline right now' : 'Offline · details appear after they next go live'}</span>
           </div>
           ${url ? `<span class="amb-platform ${plat[0]}">${plat[1]}</span>` : ''}
@@ -3603,6 +3938,7 @@
         if (f === 'twitch' && !url.includes('twitch.tv')) return false;
         if (f === 'bilibili' && !url.includes('bilibili')) return false;
         if (f === 'douyu' && !url.includes('douyu')) return false;
+        if (f === 'youtube' && !/youtube\.com|youtu\.be/.test(url)) return false;
         if (f === 'favorites' && !favs.includes(a.Name)) return false;
         if (currentLangFilter !== 'all' && langOf(a) !== currentLangFilter) return false;
         return !q || name.includes(q) || title.includes(q) || tags.includes(q);
@@ -3629,10 +3965,11 @@
       const bucket = Math.floor(Date.now() / 300000);   // Twitch only refreshes thumbnails every few minutes
       const html = filtered.map(a => ambLiveCardHTML(a, favs, blacks, bucket)).join('')
         + (offline.length ? `<div class="amb-offline-head"><i data-lucide="moon"></i><span>Offline</span><small>${offline.length}</small></div>`
-          + offline.map(n => ambOfflineCardHTML(n, cache[n], favs.includes(n), blacks.includes(n))).join('') : '');
+          + offline.map(n => { const i = ambInfo(n); return ambOfflineCardHTML(n, cache[n] || (i.url ? i : null), favs.includes(n), blacks.includes(n)); }).join('') : '');
       if (listEl._html === html) return;   // nothing changed, so don't rebuild the cards (and reload every thumbnail)
       listEl._html = html;
       listEl.innerHTML = html;
+      hydrateIcons(listEl);
       refreshIcons();
     }
 
@@ -3968,6 +4305,12 @@
       const countdown = chk('obs-countdown');
       const alsoLive = chk('obs-alsolive'), channel = val('obs-channel').toLowerCase().replace(/[^a-z0-9_]/g, '').slice(0, 25);
       $('obs-channel-row').hidden = !alsoLive;
+      const mineOn = chk('obs-hide-mine');
+      const mineKeys = mineOn ? getBlacklist().map(n => hideKeyOf(n, ambInfo(n).url)).filter(Boolean) : [];
+      const dir = hideDirectory(), manualKeys = cleanHideList(val('obs-hide'));
+      const nameKeys = manualKeys.map(k => dir.get(k)).filter(Boolean).map(e => String(e.name).toLowerCase().replace(/[^\p{L}\p{N}_]/gu, ''));   // the widget matches either the channel name or the display name
+      const hideList = [...new Set([...manualKeys, ...nameKeys, ...mineKeys])].slice(0, 40), hideStr = hideList.join(',');
+      if (alsoLive) { renderHideChips(); if (!ambRosterTried) loadAmbRoster().then(() => { renderHideChips(); renderHideResults(); }); }
       const avX = val('obs-avatar-x') || '0', avY = val('obs-avatar-y') || '0', avScale = val('obs-avatar-scale') || '100', avRot = val('obs-avatar-rot') || '0';
       const g1 = cleanHex(val('obs-glow1')), g2 = cleanHex(val('obs-glow2')), g3 = cleanHex(val('obs-glow3'));
       const borderHex = cleanHex(val('obs-border-hex')), fillHex = cleanHex(val('obs-fill-hex'));
@@ -4011,7 +4354,7 @@
         avatar, solo: isSolo, carousel: isCarousel, hidehead: hideHead, speed, g1, g2, g3,
         noborder: noBorder, nofill: noFill, border: borderHex, fill: fillHex,
         hattype: hatType, haturl: hatUrl, hatpos: chosenHatPos, hatx: hatX, haty: hatY, hatscale: hatScale, hatrot: hatRot,
-        showended: showEnded, autoupdate: autoUpdate, countdown, alsolive: alsoLive, channel,
+        showended: showEnded, autoupdate: autoUpdate, countdown, alsolive: alsoLive, channel, hide: cleanHideList(val('obs-hide')).join(','), hidemine: mineOn,
         'avatar-x': avX, 'avatar-y': avY, 'avatar-scale': avScale, 'avatar-rot': avRot
       };
       Object.entries(save).forEach(([k, v]) => store('dst-obs-' + k, v));
@@ -4031,7 +4374,7 @@
       if (!autoUpdate) add('autopoll', 0);
       if (showEnded) add('showended', 1);
       if (countdown) add('countdown', 1);
-      if (alsoLive) { add('alsolive', 1); if (channel) add('ch', channel); }
+      if (alsoLive) { add('alsolive', 1); if (channel) add('ch', channel); if (hideStr) add('hide', hideStr); }
       if (hatType) {
         add('hat', hatType);
         if (hatUrl) add('haturl', hatUrl);
@@ -4063,6 +4406,47 @@
       if (frame.dataset.src !== previewUrl) { frame.dataset.src = previewUrl; frame.src = previewUrl; }
     }
 
+    // streamers the broadcaster never wants shown in their "also live" strip, stored as keys (channel name, or the name for anyone without one)
+    const hideKeyOf = (name, url) => {   // Twitch and YouTube are matched on the channel name; Bilibili and Douyu links use ids that differ between pages, so those go by display name
+      const plat = url ? ambPlatform(url)[0] : '';
+      return ((plat === 'twitch' || plat === 'youtube') && iconHandle(url) ? iconHandle(url) : String(name || '')).toLowerCase().replace(/[^\p{L}\p{N}_]/gu, '').slice(0, 40);
+    };
+    function cleanHideList(v) { return [...new Set(String(v || '').toLowerCase().split(/[,\s]+/).map(x => x.replace(/^.*\//, '').replace(/^@/, '').replace(/[^\p{L}\p{N}_]/gu, '').slice(0, 40)).filter(Boolean))].slice(0, 40); }
+    function hideDirectory() {
+      const map = new Map();
+      rawAmbassadors.forEach(a => { const k = hideKeyOf(a.Name, a.StreamURL); if (k && !map.has(k)) map.set(k, { key: k, name: a.Name, url: safeUrl(a.StreamURL), icon: safeUrl(a.ProfileIcon), live: true }); });
+      ambRoster.forEach(r => { const k = hideKeyOf(r.Name, r.url); if (k && !map.has(k)) map.set(k, { key: k, name: r.Name, url: safeUrl(r.url), icon: '', live: false }); });
+      return map;
+    }
+    const hideImg = (e) => `<img src="${esc(e.icon || letterAvatar(e.name))}" ${!e.icon && e.url ? `data-ico="${esc(e.url)}"` : ''} alt="" loading="lazy">`;
+    function renderHideChips() {
+      const manual = cleanHideList($('obs-hide').value), dir = hideDirectory(), box = $('obs-hide-chips');
+      const mine = getBlacklist().length;
+      $('obs-hide-mine-note').textContent = $('obs-hide-mine').checked ? (mine ? `${mine} from your list are left out too` : 'Your Hidden list is empty') : '';
+      box.replaceChildren();
+      if (!manual.length) { box.innerHTML = '<span class="wg-hint">Nobody yet.</span>'; return; }
+      box.innerHTML = manual.map(k => { const e = dir.get(k) || { name: k, url: '', icon: '' }; return `<button type="button" class="hide-chip" data-hide-del="${esc(k)}" title="Show ${esc(e.name)} again">${hideImg(e)}<span translate="no">${esc(e.name)}</span><i data-lucide="x"></i></button>`; }).join('');
+      hydrateIcons(box); refreshIcons();
+    }
+    function renderHideResults() {
+      const q = ($('obs-hide-search').value || '').trim().toLowerCase(), box = $('obs-hide-results');
+      if (!q) { box.hidden = true; return; }
+      const manual = new Set(cleanHideList($('obs-hide').value)), dir = [...hideDirectory().values()];
+      const found = dir.filter(e => !manual.has(e.key) && (e.name.toLowerCase().includes(q) || e.key.includes(q))).sort((a, b) => (b.live ? 1 : 0) - (a.live ? 1 : 0) || a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })).slice(0, 8);
+      let html = found.map(e => `<button type="button" class="hide-result" data-hide-add="${esc(e.key)}">${hideImg(e)}<span class="hr-name" translate="no">${esc(e.name)}</span><small>${e.live ? '<b>live</b> · ' : ''}${e.url ? esc(ambPlatform(e.url)[1]) : ''}</small></button>`).join('');
+      const typed = hideKeyOf(q, '');
+      if (typed && !dir.some(e => e.key === typed) && !manual.has(typed)) html += `<button type="button" class="hide-result" data-hide-add="${esc(typed)}"><img src="${esc(letterAvatar(q))}" alt=""><span class="hr-name">Hide “${esc(q)}”</span><small>by name</small></button>`;
+      box.innerHTML = html || '<div class="hide-none">Nobody matches that.</div>';
+      box.hidden = false;
+      hydrateIcons(box);
+    }
+    document.addEventListener('click', (e) => {
+      const del = e.target.closest('[data-hide-del]'), add = e.target.closest('[data-hide-add]');
+      if (del) { $('obs-hide').value = cleanHideList($('obs-hide').value).filter(k => k !== del.dataset.hideDel).join(','); updateObsUrlBuilder(); }
+      if (add) { $('obs-hide').value = [...cleanHideList($('obs-hide').value), add.dataset.hideAdd].join(','); $('obs-hide-search').value = ''; $('obs-hide-results').hidden = true; updateObsUrlBuilder(); }
+      if (!e.target.closest('.hide-search')) $('obs-hide-results').hidden = true;
+    });
+
     // ── drop clock overlay: its own page, so it gets its own small URL builder ──
     const CLOCK_BASE = WIDGET_BASE.replace('drop_universal.html', 'drop_clock.html');
     let clockOpts = { size: '300', hand: 'time' };
@@ -4078,7 +4462,17 @@
       $('clk-preview').href = url;
       const box = Number(clockOpts.size) + 20;
       $('clk-size-note').textContent = `Browser Source size in OBS: ${box} × ${box} px.`;
+      const fr = $('clk-frame');   // live preview: the real overlay page, scaled down to fit the box
+      if (fr.dataset.src !== url) { fr.dataset.src = url; fr.src = url; }
+      fr.style.width = fr.style.height = box + 'px';
+      fitClockPreview();
     }
+    function fitClockPreview() {
+      const st = $('clk-stage'), fr = $('clk-frame'), box = parseFloat(fr.style.width) || 320;
+      if (!st.clientWidth) return;
+      fr.style.transform = `translate(-50%, -50%) scale(${Math.min(1, (st.clientWidth - 16) / box, (st.clientHeight - 16) / box).toFixed(3)})`;
+    }
+    if (window.ResizeObserver) new ResizeObserver(fitClockPreview).observe($('clk-stage'));
     async function copyClockUrl() {
       if (await copyText($('clk-url').value)) showInAppToast('Clock link copied', 'Paste it into a Browser Source in OBS.', 'clipboard-check');
     }
@@ -4097,7 +4491,7 @@
       $('obs-show-ended').checked = g('showended') === 'true';
       $('obs-countdown').checked = g('countdown') === 'true';
       $('obs-alsolive').checked = g('alsolive') === 'true';
-      setIf('obs-channel', g('channel'));
+      setIf('obs-channel', g('channel')); setIf('obs-hide', g('hide')); $('obs-hide-mine').checked = g('hidemine') === 'true';
       $('obs-hide-head').checked = g('hidehead') === 'true';
       $('obs-no-border').checked = g('noborder') === 'true';
       $('obs-no-fill').checked = g('nofill') === 'true';
@@ -4173,9 +4567,9 @@
       Object.keys(localStorage).filter(k => k.startsWith('dst-obs-')).forEach(k => localStorage.removeItem(k));
       testEndedPreviewActive = false;
       $('obs-auto-update').checked = true;
-      ['obs-show-ended', 'obs-countdown', 'obs-alsolive', 'obs-no-border', 'obs-no-fill', 'obs-hide-head'].forEach(id => $(id).checked = false);
+      ['obs-show-ended', 'obs-countdown', 'obs-alsolive', 'obs-hide-mine', 'obs-no-border', 'obs-no-fill', 'obs-hide-head'].forEach(id => $(id).checked = false);
       setVals({
-        'obs-avatar': '', 'obs-channel': '', 'obs-speed': '4.5', 'obs-hat-url': '', 'obs-hat-pos': 'avatar',
+        'obs-avatar': '', 'obs-channel': '', 'obs-hide': '', 'obs-speed': '4.5', 'obs-hat-url': '', 'obs-hat-pos': 'avatar',
         'obs-glow1': '90EE90', 'obs-color1': '#90EE90', 'obs-glow2': '64F89D', 'obs-color2': '#64F89D',
         'obs-glow3': 'AFFF60', 'obs-color3': '#AFFF60', 'obs-border-hex': '443429', 'obs-border-color': '#443429',
         'obs-fill-hex': '1C1613', 'obs-fill-color': '#1c1613',
@@ -4196,7 +4590,7 @@
       const v = id => $(id)?.value ?? '';
       const c = id => !!$(id)?.checked;
       return {
-        au: c('obs-auto-update'), se: c('obs-show-ended'), cd: c('obs-countdown'), al: c('obs-alsolive'), ch: v('obs-channel'),
+        au: c('obs-auto-update'), se: c('obs-show-ended'), cd: c('obs-countdown'), al: c('obs-alsolive'), ch: v('obs-channel'), hd: v('obs-hide'), hm: c('obs-hide-mine'),
         ax: v('obs-avatar-x'), ay: v('obs-avatar-y'), as: v('obs-avatar-scale'), ar: v('obs-avatar-rot'),
         av: v('obs-avatar'), sp: v('obs-speed'),
         g1: v('obs-glow1'), g2: v('obs-glow2'), g3: v('obs-glow3'), bc: v('obs-border-hex'), fc: v('obs-fill-hex'),
@@ -4219,6 +4613,7 @@
       $('obs-speed').value = num(o.sp, 4.5);
       $('obs-no-border').checked = !!o.nb; $('obs-no-fill').checked = !!o.nf; $('obs-hide-head').checked = !!o.hh;
       $('obs-auto-update').checked = o.au !== false; $('obs-show-ended').checked = !!o.se; $('obs-countdown').checked = !!o.cd;
+      $('obs-hide').value = cleanHideList(o.hd).join(','); $('obs-hide-mine').checked = !!o.hm;
       $('obs-alsolive').checked = !!o.al; $('obs-channel').value = String(o.ch || '').replace(/[^A-Za-z0-9_]/g, '').slice(0, 25);
       $('border-picker-wrapper').classList.toggle('disabled', !!o.nb);
       $('fill-picker-wrapper').classList.toggle('disabled', !!o.nf);
@@ -4402,12 +4797,18 @@
       if (currentLangFilter !== 'all' && !counts[currentLangFilter]) currentLangFilter = 'all';
       if (!langs.length) { bar.hidden = true; return; }
       bar.hidden = false;
-      bar.innerHTML = '<span class="lang-label"><i data-lucide="languages"></i> Language</span>' +
-        `<button type="button" class="lang-chip ${currentLangFilter === 'all' ? 'active' : ''}" data-lang="all">Any</button>` +
-        langs.map(l => `<button type="button" class="lang-chip ${currentLangFilter === l ? 'active' : ''}" data-lang="${l}" title="${LANG_NAMES[l] || l}">${l} · ${counts[l]}</button>`).join('');
+      const total = Object.values(counts).reduce((x, y) => x + y, 0);
+      bar.innerHTML = '<span class="lang-label"><i data-lucide="languages"></i> Language</span><div class="lang-scroll" id="lang-scroll">' +
+        `<button type="button" class="lang-chip ${currentLangFilter === 'all' ? 'active' : ''}" data-lang="all">Any <b>${total}</b></button>` +
+        langs.map(l => `<button type="button" class="lang-chip ${currentLangFilter === l ? 'active' : ''}" data-lang="${l}" title="${l}">${esc(LANG_NAMES[l] || l)} <b>${counts[l]}</b></button>`).join('') + '</div>';
+      const act = bar.querySelector('.lang-chip.active'); if (act) act.scrollIntoView({ inline: 'nearest', block: 'nearest' });
       refreshIcons();
     }
 
+    document.addEventListener('wheel', (e) => {
+      const sc = e.target.closest && e.target.closest('#lang-scroll');
+      if (sc && Math.abs(e.deltaY) > Math.abs(e.deltaX) && sc.scrollWidth > sc.clientWidth) { sc.scrollLeft += e.deltaY; e.preventDefault(); }
+    }, { passive: false });
     function setLangFilter(l) {
       currentLangFilter = l;
       store('dst-last-lang', l);
@@ -5929,6 +6330,7 @@
       const pos = (e) => [e.offsetX * foil.width / foil.clientWidth, e.offsetY * foil.height / foil.clientHeight];
       const stroke = (e) => {
         const [x, y] = pos(e);
+        if (performance.now() - lastTick > 90) { lastTick = performance.now(); haptic('tick'); }
         ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.globalCompositeOperation = 'destination-out'; ctx.strokeStyle = '#000'; ctx.lineCap = ctx.lineJoin = 'round'; ctx.lineWidth = 64;   // opaque, so it really erases
         ctx.beginPath(); ctx.moveTo(last ? last[0] : x, last ? last[1] : y); ctx.lineTo(x, y); ctx.stroke();
@@ -5969,6 +6371,7 @@
       try { localStorage.removeItem('dst-card-request'); localStorage.removeItem(CARD_PENDING_KEY); } catch (e) { }
       cardState = null; cardRenderedKey = '';
       syncCardNav();
+      haptic('success');
       showInAppToast('All set', 'Your card has been used up, so the Card tab is gone. Enjoy the prize!', 'party-popper');
       nav('drops');
     }
@@ -5978,7 +6381,7 @@
       cardState.revealed = true;
       store('dst-card-revealed', cardState.key);
       $('card-foil').classList.add('gone');
-      playCustomSound(dstSounds.alert);
+      playCustomSound(dstSounds.alert); haptic('reveal');
       showCardActions();
     }
 
@@ -6443,7 +6846,7 @@
         card.className = 'patch-claim';
         card.innerHTML = '<div class="patch-claim-icon"><i data-lucide="gift"></i></div><div class="patch-claim-text"><b>Reward link in these notes</b><span class="patch-claim-sub"></span><code class="patch-claim-url"></code></div><div class="patch-claim-actions"><a class="dst-btn btn-primary" target="_blank" rel="noopener noreferrer"><i data-lucide="external-link"></i> Open link</a><button type="button" class="dst-btn" data-claim-copy><i data-lucide="copy"></i> Copy</button></div>';
         card.querySelector('.patch-claim-sub').textContent = label ? `Hidden behind "${label}" in the notes, so it's pulled out here. Opens on accounts.klei.com.` : "Written into the notes, so it's pulled out here. Opens on accounts.klei.com.";
-        card.querySelector('.patch-claim-url').textContent = href;
+        card.querySelector('.patch-claim-url').textContent = href; card.querySelector('.patch-claim-url').setAttribute('translate', 'no');
         card.querySelector('a').href = href;
         card.dataset.href = href;
         body.prepend(card);
@@ -6607,6 +7010,7 @@
       hideLoader();
       refreshIcons();
       startDisclaimerFlow(firstVisit);
+      maybeSuggestTranslate();
     }
 
     init();
